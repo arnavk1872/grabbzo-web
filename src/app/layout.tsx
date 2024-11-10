@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Provider } from "@/components/ui/provider"
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Grabbzo Web",
@@ -13,10 +11,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-       <Provider>{children}</Provider>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
