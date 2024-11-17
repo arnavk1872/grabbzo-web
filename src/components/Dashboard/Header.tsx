@@ -6,10 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { DatePickerDemo } from "./DatePicker";
 import Settings from "../Icons/Settings";
 import Bell from "../Icons/Bell";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/UI/Popover";
+import Notifications from "../Messages/Notifications";
 
 const Header = () => {
   return (
-    <section className="m-6 px-4 h-[98px] rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
+    <section className="m-6 px-4 h-[98px] font-poppins rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
       <div className="flex items-center gap-x-24">
         {" "}
         <Image
@@ -30,7 +36,12 @@ const Header = () => {
       <div className="flex gap-x-4 items-center">
         <DatePickerDemo />
         <Settings className="cursor-pointer" />
-        <Bell className="cursor-pointer" />
+        <Popover>
+          <PopoverTrigger>
+            <Bell className="cursor-pointer" />
+          </PopoverTrigger>
+          <PopoverContent className="mr-24"><Notifications/></PopoverContent>
+        </Popover>
 
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />

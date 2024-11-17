@@ -12,6 +12,8 @@ export default {
   		colors: {
 			bgGray:"#F9F9F9",
 			borderColor:"#EFEFF4",
+			LightGreen:"#78D25B",
+			Red:"#F75757",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

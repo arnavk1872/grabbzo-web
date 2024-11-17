@@ -57,7 +57,7 @@ export function DatePickerDemo() {
           {date ? (
             format(date, "PPP")
           ) : (
-            <span className=" text-[15px] font-medium text-black">
+            <span className=" text-[14px] font-semibold text-black">
               {formattedDate}
             </span>
           )}
