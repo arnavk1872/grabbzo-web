@@ -45,11 +45,11 @@ const Sidebar: React.FC = () => {
       icon: <FoodIcon />,
       href: "/dashboard/menus",
     },
-    {
-      name: "Upload Menu",
-      icon: <UploadMenuIcon />,
-      href: "/dashboard/",
-    },
+    // {
+    //   name: "Upload Menu",
+    //   icon: <UploadMenuIcon />,
+    //   href: "/dashboard/",
+    // },
     {
       name: "Customers Reviews",
       icon: <CustomerRevIcon />,
@@ -63,7 +63,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col w-5/6  h-screen bg-white border-borderColor border p-4 rounded-3xl font-poppins">
+    <div className="flex flex-col max-w-[320px] h-screen bg-white border-borderColor border p-4 rounded-3xl font-poppins">
       {/* Dashboard and Menu Links */}
       <div className="space-y-4">
         {menuItems.map((item) => (
@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
             key={item.name}
             href={item.href}
             onClick={() => handleItemClick(item.name)}
-            className={`flex items-center space-x-6 p-[5px] text-[18px] whitespace-nowrap ${
+            className={`flex items-center space-x-6 p-[5px] font-medium text-[16px] whitespace-nowrap ${
               activeItem === item.name
                 ? "bg-blue-600 text-white"
                 : "text-gray-600 hover:bg-gray-100"
@@ -90,7 +90,7 @@ const Sidebar: React.FC = () => {
       >
         <div
           className={`flex justify-center items-center h-[46px] w-1/2 p-2 rounded-xl transition-all duration-300 ${
-            isOnline ? " bg-[#78D25B] text-white" : "text-[[#8A8A8F]"
+            isOnline ? " bg-LightGreen text-white" : "text-[[#8A8A8F]"
           }`}
         >
           Online

@@ -1,3 +1,4 @@
+import SalesOverview from "@/components/Dashboard/SalesOverview";
 import React from "react";
 
 const page = () => {
@@ -5,6 +6,7 @@ const page = () => {
     <div>
       <section className="">
         <div className="">DASHBOARD</div>
+        <SalesOverview/>
       </section>
     </div>
   );
