@@ -1,16 +1,7 @@
-import SalesOverview from "@/components/Dashboard/SalesOverview";
-import React from "react";
+import Dashboard from "@/components/Dashboard/Dashboard";
 
 const page = () => {
-  return (
-    <div>
-      <section className="">
-        <div className="">DASHBOARD</div>
-        <SalesOverview/>
-      </section>
-    </div>
-  );
+  return <Dashboard />;
 };
 
 export default page;
-//

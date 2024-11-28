@@ -97,7 +97,7 @@ const Sidebar: React.FC = () => {
         </div>
         <div
           className={`flex justify-center items-center h-[46px] text-[#8A8A8F] w-1/2 p-2 rounded-xl transition-all duration-300 ${
-            !isOnline ? "bg-white " : ""
+            !isOnline ? "bg-Red text-white " : ""
           }`}
         >
           Offline

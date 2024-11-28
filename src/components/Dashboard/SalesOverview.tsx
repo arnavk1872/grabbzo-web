@@ -1,26 +1,43 @@
-import React from 'react'
-import SalesGraph from '../Icons/SalesGraph'
+"use client"
+import React from "react";
+import dynamic from "next/dynamic";
+const SalesGraph= dynamic(()=>import ("../Icons/SalesGraph"),{ssr:false});
+
+
 
 const SalesOverview = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Sales Overview</h2>
-        <select className="text-gray-500">
+    <div className="bg-white  border border-borderColor mx-4 font-poppins  rounded-[30px] max-w-[750px] flex-[2]">
+      <div className="flex justify-between items-center mb-4 pt-6 pb-2 px-6">
+        <h2 className="font-semibold text-[18px]">Sales Overview</h2>
+        <select className="bg-borderColor border-borderColor rounded-[16px] p-1 text-[14px]">
           <option>Yearly</option>
           <option>Monthly</option>
         </select>
       </div>
-      <div className="text-gray-700 mb-4">
-        <p>Revenue: ₹24,523 <span className="text-green-500">↑ 12%</span></p>
-        <p>Total Sales: ₹73,635 <span className="text-red-500">↓ 13%</span></p>
-        <p>Refunded: ₹4,834 <span className="text-green-500">↑ 17%</span></p>
+      <div className="text-gray-700 mb-4 flex justify-around">
+        <p className="flex flex-col  border-r-2 border-borderColor pr-4">
+          <span className="text-[14px]">Revenue:</span>{" "}
+          <span className="text-[24px] font-bold">
+            ₹24,523 <span className="text-LightGreen text-[16px]">↑ 12%</span>
+          </span>
+        </p>
+        <p className="flex flex-col border-r-2 border-borderColor pr-4">
+        <span className="text-[14px]">Total Sales:</span>{" "}
+          <span className="text-[24px] font-bold">
+            ₹73,635 <span className="text-Red text-[16px]"> ↓ 13%</span>
+          </span>
+        </p>
+        <p className="flex flex-col ">
+        <span className="text-[14px]"> Refunded:</span>{" "}
+          <span className="text-[24px] font-bold">
+            ₹18,121 <span className="text-LightGreen text-[16px]">↑ 21%</span>
+          </span>
+        </p>
       </div>
-      {/* Include the Sales Graph here */}
-      <SalesGraph/>
-
+      <SalesGraph />
     </div>
-  )
-}
+  );
+};
 
-export default SalesOverview
+export default SalesOverview;

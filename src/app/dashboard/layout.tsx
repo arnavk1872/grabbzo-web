@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <Header />
-      <div className="flex mx-6 ">
+      <div className="flex mx-6 w-full ">
         <Sidebar />
         {children}
       </div>

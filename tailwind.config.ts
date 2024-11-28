@@ -14,6 +14,8 @@ export default {
 			borderColor:"#EFEFF4",
 			LightGreen:"#78D25B",
 			Red:"#F75757",
+			Purple:"#6257F7",
+			Orange:"#FA9441",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
