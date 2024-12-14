@@ -18,7 +18,7 @@ const data = [
 
 const EarningGraph: React.FC = () => {
   return (
-    <div className="bg-white rounded-[30px] p-6 shadow-md h-[350px] w-1/2">
+    <div className="bg-white rounded-[30px] p-6 shadow-md h-[350px] w-[48%]">
       <div className="flex  justify-between items-center mb-4 px-2"> <h3 className="text-xl font-semibold ">Earning Graph</h3>
       <select className="bg-borderColor font-poppins border-borderColor rounded-[16px] p-1 text-[14px]">
           <option>Yearly</option>

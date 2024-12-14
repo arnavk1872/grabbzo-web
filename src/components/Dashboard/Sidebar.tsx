@@ -63,7 +63,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col max-w-[320px] h-screen bg-white border-borderColor border p-4 rounded-3xl font-poppins">
+    <div className="flex flex-col max-w-[320px] h-screen bg-white border-borderColor border p-4 mx-4 rounded-3xl font-poppins">
       {/* Dashboard and Menu Links */}
       <div className="space-y-4">
         {menuItems.map((item) => (
@@ -73,7 +73,7 @@ const Sidebar: React.FC = () => {
             onClick={() => handleItemClick(item.name)}
             className={`flex items-center space-x-6 p-[5px] font-medium text-[16px] whitespace-nowrap ${
               activeItem === item.name
-                ? "bg-blue-600 text-white"
+                ? "bg-blue-600 text-white !space-x-10"
                 : "text-gray-600 hover:bg-gray-100"
             } rounded-lg`}
           >
