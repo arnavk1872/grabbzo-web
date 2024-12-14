@@ -28,7 +28,7 @@ const Header = () => {
         <div className="relative w-96">
           <Input
             className="w-full h-12 rounded-3xl bg-bgGray pl-10 pr-4 !font-poppins shadow-none !text-[18px] !font-normal"
-            placeholder="Search"
+            placeholder="Search by OrderId"
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
@@ -40,7 +40,7 @@ const Header = () => {
           <PopoverTrigger>
             <Bell className="cursor-pointer" />
           </PopoverTrigger>
-          <PopoverContent className="mr-24"><Notifications/></PopoverContent>
+          <PopoverContent className="mr-72 "><Notifications/></PopoverContent>
         </Popover>
 
         <Avatar>

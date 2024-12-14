@@ -1,12 +1,17 @@
-import React from 'react'
 
-const layout = ({children}) => {
-  return (
-    <div>
-        Sidebar
-       <div className="bg-bgGray">{children}</div>
-    </div>
-  )
+import React, { ReactNode } from 'react';
+
+interface LayoutProps {
+  children: ReactNode;
 }
 
-export default layout
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  return (
+    <div>
+      Sidebar
+      <div className="bg-bgGray">{children}</div>
+    </div>
+  );
+};
+
+export default Layout;

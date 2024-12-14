@@ -4,17 +4,12 @@ import Heart from "../Icons/Heart";
 interface FeedbackItemProps {
   name: string;
   likes: number;
-  stock: number;
-  maxStock: number;
 }
 
 const FeedbackItem: React.FC<FeedbackItemProps> = ({
   name,
   likes,
-  stock,
-  maxStock,
 }) => {
-  const progressWidth = (stock / maxStock) * 100;
 
   return (
     <div className="flex items-center bg-white py-4  ">
@@ -26,7 +21,7 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
         <div className="flex justify-between items-center">
           
           <div className="flex gap-x-2">
-            <h3 className="text-lg font-medium text-gray-800">{name}</h3>
+            <h3 className="text-[18px] font-medium text-yellow-500">{name}</h3>
             
           </div>
           <p className="text-sm text-red-500 flex items-center">
@@ -39,13 +34,14 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
           </p> */}
         </div>
 
-        <div className="relative mt-2">
-          <div className="h-2 bg-gray-300 rounded-full">
+        <div className="relative mt-2 line-clamp-1 font-poppins text-[13px]">
+          {/* <div className="h-2 bg-gray-300 rounded-full">
             <div
               className="h-2 bg-yellow-400 rounded-full"
               style={{ width: `${progressWidth}%` }}
             ></div>
-          </div>
+          </div> */}
+          {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vehicula nisi vel massa consectetur consectetur. Ut quam magna, tempus vel mauris eu, fermentum volutpat diam"}
         </div>
       </div>
     </div>

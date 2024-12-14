@@ -1,68 +1,25 @@
-type RequestConfig = {
-    method: "GET" | "POST" | "PUT" | "DELETE";
-    url: string;
-    payload?: Record<string, unknown>;
-    headers?: Record<string, string>;
-    revalidate?: number; //optional
-  };
+import axios from "axios";
+
+  export const getOrders = async (type: string) => {
   
-  export async function apiRequest({
-    method,
-    url,
-    payload,
-    headers = {},
-    revalidate,
-  }: RequestConfig) {
+  const IP = "52.66.237.148";
+  const token =
+    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwibmFtZSI6IjIiLCJyb2xlcyI6WyJSRVNUQVVSQU5UIl0sImlhdCI6MTczMzg1NjQ5MiwiZXhwIjoxNzM0NzIwNDkyfQ.mj74SPkwKECOYw15ouSMAD2GGfTx8Dqog0rUMVQfhWMJDgAbY7JVXB2ZEDxsbmxwqNDDBfBBSm4quCuhIGRymg"; // Replace with your actual token
+
     try {
-      const options: RequestInit = {
-        method,
+      const response = await axios.get(`http://${IP}/orders?state=${type}`, {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Credentials": "true",
-          ...headers,
+          Authorization: `Bearer ${token}`,
         },
-        credentials: "include",
-      };
-  
-      if (payload) {
-        options.body = JSON.stringify(payload);
-      }
+      });
 
-      if (revalidate !== undefined) {
-        (options as any).next = { revalidate };
-      }
-  
-      const response = await fetch(url, options);
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      return await response.json();
-    } catch (error: unknown) {
-      let errorMessage = "An unknown error occurred";
-
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-  
-      console.error(`Error in ${method} request:`, errorMessage);
-  
-      return { status: 404, error: errorMessage };
+      console.log(response.data, "CHECK");
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }
+  };
 
-//EXAMPLES FOR USAGE
+ 
 
-//   const data = await apiRequest({
-//     method: "GET",
-//     url: "/api/resource",
-//     revalidate: 10, // ISR caching for 10 seconds
-//   });
 
-//   const data = await apiRequest({
-//     method: "POST",
-//     url: "/api/resource",
-//     payload: { name: "Example", value: 42 },
-//   });
-  

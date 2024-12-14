@@ -27,12 +27,12 @@ const OrderStatusCard: React.FC<
 > = ({ image, count, label, color, route, isSelected, onClick }) => {
   return (
     <div
-      className={`flex  cursor-pointer border-2 p-8 ${
+      className={`flex  cursor-pointer border-2  p-4 md:p-8 ${
         isSelected ? "border-blue-500 rounded-[29px] h-[120px] items-center bg-blue-50" : "border-transparent rounded-lg "
       }`}
       onClick={onClick}
     >
-      <Image src={image} height={95} width={85} alt={label} />
+      <span className="md:block hidden"><Image src={image} height={95} width={85} alt={label} /></span>
       <div className="flex flex-col justify-center text-left">
         <span className={`${color} text-[32px] font-bold font-sans`}>{count}</span>
         <div className="text-[16px] font-semibold">{label}</div>
