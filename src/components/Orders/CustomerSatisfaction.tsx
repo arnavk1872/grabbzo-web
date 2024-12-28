@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 
 const CustomerSatisfaction = () => {
   const totalStars = 5;
-  const filledStars = 1; 
+  const filledStars = 5; 
 
   return (
     <div className="h-[160px] bg-white rounded-[30px] max-w-[380px] mx-2 my-2 flex items-center space-x-4 px-8 gap-x-4 ">
@@ -23,7 +23,7 @@ const CustomerSatisfaction = () => {
               fill={index < filledStars ? "currentColor" : "none"}
             />
           ))}
-          <span className="text-[30px] text-[#FFBA4D] font-bold  inline-block pl-2">1.0</span>
+          <span className="text-[30px] text-[#FFBA4D] font-bold  inline-block pl-2">5.0</span>
         </div>
         <span className="text-gray-700 text-lg font-medium">
           Customer Satisfaction
