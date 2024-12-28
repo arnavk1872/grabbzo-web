@@ -1,5 +1,3 @@
-
-
 import Header from '@/components/Details/Header';
 import Sidebar from '@/components/Details/Sidebar';
 import React, { ReactNode } from 'react';
