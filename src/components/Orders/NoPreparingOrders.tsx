@@ -1,13 +1,19 @@
-import React from 'react'
-import Image from 'next/image'
-import preparing from "public/preparing.png"
+import React from "react";
+import Image from "next/image";
+import preparing from "public/preparing.png";
 
 const NoPreparingOrders = () => {
   return (
-    <div>
-       <Image src={preparing} height={100} width={100} alt="No preparing Orders"/>
+    <div className="flex flex-col items-center justify-center h-[500px]">
+      <Image
+        src={preparing}
+        height={200}
+        width={200}
+        alt="No preparing Orders"
+      />
+      <div className="font-poppins">No Orders Being Prepared!</div>
     </div>
-  )
-}
+  );
+};
 
-export default NoPreparingOrders
+export default NoPreparingOrders;

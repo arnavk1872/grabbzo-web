@@ -12,6 +12,7 @@ import HelpIcon from "../Icons/HelpIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import Link from "next/link";
 import { Button } from "../UI/Button";
+import { changeStatus } from "@/helpers/api-utils";
 
 type MenuItem = {
   href: string;
@@ -25,6 +26,7 @@ const Sidebar: React.FC = () => {
 
   const handleToggle = () => {
     setIsOnline(!isOnline);
+    changeStatus(isOnline);
   };
 
   // Function to handle item click
@@ -43,7 +45,7 @@ const Sidebar: React.FC = () => {
     {
       name: "Menus",
       icon: <FoodIcon />,
-      href: "/dashboard/menus",
+      href: "/dashboard/menus/availableItems",
     },
     // {
     //   name: "Upload Menu",
@@ -56,7 +58,7 @@ const Sidebar: React.FC = () => {
       href: "/dashboard/reviews",
     },
     {
-      name: "Messages",
+      name: "Messages (0)",
       icon: <MessagesIcon />,
       href: "/dashboard/messages",
     },
@@ -119,7 +121,7 @@ const Sidebar: React.FC = () => {
         {/* Bottom Links */}
         <div className="flex flex-col ">
           <a
-            href="#"
+             href="https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team," target="_blank"
             className="flex items-center space-x-6 p-6 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
           >
             <HelpIcon />

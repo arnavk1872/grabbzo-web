@@ -1,14 +1,9 @@
-import NoReadyOrders from '@/components/Orders/NoReadyOrders'
-import OrderTable from '@/components/Orders/OrderTable'
-import React from 'react'
+import NoReadyOrders from "@/components/Orders/NoReadyOrders";
+import OrderTable from "@/components/Orders/OrderTable";
+import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      <OrderTable/>
-      <NoReadyOrders/>
-    </div>
-  )
-}
+  return <div>{true ? <NoReadyOrders /> : <OrderTable />}</div>;
+};
 
-export default page
+export default page;
