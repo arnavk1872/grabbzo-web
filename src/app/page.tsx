@@ -10,6 +10,7 @@ import {
 } from "@/components/UI/InputOtp"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 
 export default function Home() {
   const [phoneNumber, setPhoneNumber] = useState<string>(''); // Store phone number input
@@ -30,9 +31,10 @@ export default function Home() {
       });
       console.log(otp,phoneNumber);
       const data = await response.json();
-      console.log(data);
+      console.log(data, data.data.accessToken);
       if (data.statusCode === 200) {
- 
+        const token = 'Bearer ' + data.data.accessToken;
+        setCookie('AuthToken' , token);
         router.push('/dashboard');  
       } else {
         alert("OTP is incorrect. Please try again.");
