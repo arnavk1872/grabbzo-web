@@ -6,7 +6,7 @@ const ComingSoon = () => {
    <div className="overflow-x-hidden">
         <div className="w-full bg-white">
           <Image
-            src={"/logo.jpg"}
+            src={"/Logo.jpg"}
             width={143}
             height={70}
             alt={"logo"}
@@ -16,7 +16,7 @@ const ComingSoon = () => {
         <div
           className="relative w-[100vw] h-[100vh]"
           style={{
-            backgroundImage: "url('/pancake.png')",
+            backgroundImage: "url('/Pancake.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

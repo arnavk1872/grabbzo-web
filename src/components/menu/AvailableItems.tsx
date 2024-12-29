@@ -18,7 +18,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({ items, changeToggleEdit
   const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
   const isEditor = pathname.includes('editor');
-
+  
   useEffect(() => {
     setLocalItems(items);
   }, [items]);
