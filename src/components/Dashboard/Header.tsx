@@ -25,16 +25,16 @@ const Header = () => {
           alt={"logo"}
           className="flex items-center justify-center pb-2"
         />
-        <div className="relative w-96">
+        {/* <div className="relative w-96">
           <Input
             className="w-full h-12 rounded-3xl bg-bgGray pl-10 pr-4 !font-poppins shadow-none !text-[18px] !font-normal"
             placeholder="Search by OrderId"
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </div>
+        </div> */}
       </div>
       <div className="flex gap-x-4 items-center">
-        <DatePickerDemo />
+        {/* <DatePickerDemo /> */}
         <Settings className="cursor-pointer" />
         <Popover>
           <PopoverTrigger>

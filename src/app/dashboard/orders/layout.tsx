@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="w-full">
       <div className="flex">
         <Orders />
-        <CustomerSatisfaction />
+        <div className="2xl:block hidden"><CustomerSatisfaction /></div>
       </div>
       {children}
     </div>
