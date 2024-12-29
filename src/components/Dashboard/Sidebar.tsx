@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import DashboardIcon from "../Icons/DashboardIcon";
 import MenuIcon from "../Icons/MenuIcon";
 import FoodIcon from "../Icons/FoodIcon";
-import UploadMenuIcon from "../Icons/UploadMenuIcon";
 import CustomerRevIcon from "../Icons/CustomerRevIcon";
 import MessagesIcon from "../Icons/MessagesIcon";
 import RocketIcon from "../Icons/RocketIcon";
@@ -13,6 +12,7 @@ import LogoutIcon from "../Icons/LogoutIcon";
 import Link from "next/link";
 import { Button } from "../UI/Button";
 import { changeStatus } from "@/helpers/api-utils";
+import { useRouter } from "next/navigation";
 
 type MenuItem = {
   href: string;
@@ -23,6 +23,7 @@ type MenuItem = {
 const Sidebar: React.FC = () => {
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
   const [isOnline, setIsOnline] = useState(true);
+  const router = useRouter();
 
   const handleToggle = () => {
     setIsOnline(!isOnline);
@@ -47,11 +48,6 @@ const Sidebar: React.FC = () => {
       icon: <FoodIcon />,
       href: "/dashboard/menus/availableItems",
     },
-    // {
-    //   name: "Upload Menu",
-    //   icon: <UploadMenuIcon />,
-    //   href: "/dashboard/",
-    // },
     {
       name: "Customers Reviews",
       icon: <CustomerRevIcon />,
@@ -113,7 +109,7 @@ const Sidebar: React.FC = () => {
           <p className="mt-2 text-left text-[24px]">
             Updating your plan for Premium!
           </p>
-          <Button className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full">
+          <Button onClick={()=>{router.push('/pricing')}} className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full">
             Upgrade Now
           </Button>
         </div>

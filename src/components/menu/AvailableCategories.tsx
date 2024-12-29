@@ -38,7 +38,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         <div
           key={category}
           onClick={() => handleCategoryClick(category)}
-          className={`px-4 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] whitespace-nowrap xl:w-[400px] ${
+          className={`px-4 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] whitespace-nowrap 2xl:w-[400px] ${
             selectedCategory === category
               ? "bg-blue-500 text-white"
               : "bg-white text-black"

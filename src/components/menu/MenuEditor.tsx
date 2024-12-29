@@ -7,7 +7,7 @@ interface MenuEditorProps {
   allCategories: {
     id: number;
     name: string;
-    items: { id: number; name: string; isEnabled: boolean }[];
+    items: { id: number; title: string; isStock: boolean }[];
   }[];
 }
 
@@ -16,8 +16,9 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
 
   return (
     <>
-      <AvailableMenu allCategories={allCategories} changeToggleEditor={changeToggleEditor} />
-      <ChangeMenu toggleEditor={toggleEditor} allCategories={allCategories} />
+<AvailableMenu allCategories={allCategories as any} changeToggleEditor={changeToggleEditor} />
+<ChangeMenu toggleEditor={toggleEditor} allCategories={allCategories as any} />
+
     </>
   );
 };
