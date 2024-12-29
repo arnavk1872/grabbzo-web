@@ -16,6 +16,7 @@ export default {
 			Red:"#F75757",
 			Purple:"#6257F7",
 			Orange:"#FA9441",
+			primary: "#1663de",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -26,7 +27,7 @@ export default {
   				DEFAULT: 'hsl(var(--popover))',
   				foreground: 'hsl(var(--popover-foreground))'
   			},
-  			primary: {
+  			primary1: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
