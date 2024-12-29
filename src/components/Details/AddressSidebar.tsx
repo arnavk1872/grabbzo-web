@@ -12,7 +12,7 @@ import { Button } from "../UI/Button";
 
 import { ArrowRight } from "lucide-react";
 import { Input } from "../UI/Input";
-import MapComponent from "./MapComponent";
+// import MapComponent from "./MapComponent";
 
 const AddressSidebar = () => {
     return (
