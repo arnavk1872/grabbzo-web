@@ -19,7 +19,6 @@ const Sidebar: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const pathname = usePathname();
 
-
     // Main navigation items
     const menuItems: MenuItem[] = [
         {
@@ -32,7 +31,7 @@ const Sidebar: React.FC = () => {
             name: "Restaurant Documents",
             title: "Location,Owner detsils, open & Close hrs.",
             icon: <RestDocIcon />,
-            href: "/details/document"
+            href: "/details/document",
         },
         {
             name: "Menu Setup",
@@ -49,43 +48,66 @@ const Sidebar: React.FC = () => {
     ];
 
     useEffect(() => {
-        const index = menuItems.findIndex(item => item.href === pathname);
+        const index = menuItems.findIndex((item) => item.href === pathname);
         if (index !== -1) {
             setCurrentIndex(index);
         }
     }, [pathname]);
 
     return (
-        <div className="flex flex-col max-w-[466px] bg-white border-borderColor border rounded-3xl font-poppins ml-36 py-12 pl-12 pr-20 mt-[75px]">
+        <div className="flex flex-col max-w-[466px] h-fit bg-white border-borderColor border rounded-3xl font-poppins ml-60 py-12 pl-12 pr-20 mt-[75px] sticky top-5 z-10">
             {/* SideBar Links */}
             <div className="space-y-8">
                 {menuItems.map((item, index) => {
-                    console.log(index , currentIndex);
-                    const bgColor = index < currentIndex ? "#cff1e1" : index === currentIndex ? "#fff9c4" : "#D9D9D9";
-                    const borderColor = index < currentIndex ? "#46b480" : index === currentIndex ? "#FBC02D" : "#8E8E8E";
-                    return(
-                    <div
-                        key={item.name}
-                        className="flex items-center space-x-6"
-                    >
-                        <div className="relative">
-                            <span className={`relative z-10`}>{React.cloneElement(item.icon, { bgColor, borderColor })}</span>
-                            {index < menuItems.length - 1 && (
-                                <div className="absolute left-[50%] top-[50%] -translate-x-1/2 h-full border border-solid border-black" />
-                            )}
+                    const bgColor =
+                        index < currentIndex
+                            ? "#cff1e1"
+                            : index === currentIndex
+                            ? "#fff9c4"
+                            : "#D9D9D9";
+                    const borderColor =
+                        index < currentIndex
+                            ? "#46b480"
+                            : index === currentIndex
+                            ? "#FBC02D"
+                            : "#8E8E8E";
+                    return (
+                        <div
+                            key={item.name}
+                            className="flex items-center space-x-6"
+                        >
+                            <div className="relative">
+                                <span className={`relative z-10`}>
+                                    {React.cloneElement(item.icon, {
+                                        bgColor,
+                                        borderColor,
+                                    })}
+                                </span>
+                                {index < menuItems.length - 1 && (
+                                    <div className="absolute left-[50%] top-[50%] -translate-x-1/2 h-full border border-solid border-black" />
+                                )}
+                            </div>
+                            <div className="flex flex-col">
+                                <h6 className="text-xl text-black font-semibold">
+                                    {item.name}
+                                </h6>
+                                <span className="text-[11px] text-neutral-600">
+                                    {item.title}
+                                </span>
+                                <Link
+                                    href={item.href}
+                                    className={`text-indigo-700 text-xs font-semibold hover:opacity-70 ${
+                                        index < currentIndex
+                                            ? "block"
+                                            : "hidden"
+                                    }`}
+                                >
+                                    Edit Info
+                                </Link>
+                            </div>
                         </div>
-                        <div className="flex flex-col">
-                            <h6 className="text-xl text-black font-semibold">{item.name}</h6>
-                            <span className="text-[11px] text-neutral-600">{item.title}</span>
-                            <Link 
-                                href={item.href} 
-                                className={`text-indigo-700 text-xs font-semibold hover:opacity-70 ${index < currentIndex ? "block" : "hidden"}`}
-                            >
-                                Edit Info
-                            </Link>
-                        </div>
-                    </div>
-                )})}
+                    );
+                })}
             </div>
         </div>
     );
