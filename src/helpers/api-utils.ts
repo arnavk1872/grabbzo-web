@@ -2,7 +2,7 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 
-const IP = "52.66.237.148"; 
+const IP = "https://api.grabbzo.com"; 
 
 export const getToken = async (): Promise<string | undefined> => {
   const cookieStore = cookies(); 
@@ -21,7 +21,7 @@ export const getOrders = async (type: string) => {
   if (!token) return;
 
   try {
-    const response = await axios.get(`http://${IP}/orders?state=${type}`, {
+    const response = await axios.get(`${IP}/orders?state=${type}`, {
       headers: {
         Authorization: ` ${token}`,
       },
@@ -41,7 +41,7 @@ export const changeStatus = async (status: boolean) => {
   const value = status ? "offline" : "online";
   try {
     const response = await axios.post(
-      `http://${IP}/restaurant-admins/status?restaurantId=3`,
+      `${IP}/restaurant-admins/status?restaurantId=3`,
       { value }, // Data sent in the body
       {
         headers: {
@@ -65,7 +65,7 @@ export const getCategories = async () => {
 
   try {
     const response = await axios.get(
-      `http://${IP}/api/menu/restaurant/categories/?restaurantId=1`,
+      `${IP}/api/menu/restaurant/categories/?restaurantId=1`,
       {
         headers: {
           Authorization: `${token}`,
@@ -87,7 +87,7 @@ export const inStock = async (id: number, status: boolean) => {
 
   try {
     const response = await axios.post(
-      `http://${IP}/menu/restaurant/menu-item/in-stock`,
+      `${IP}/menu/restaurant/menu-item/in-stock`,
       { id, inStock: status },
       {
         headers: {

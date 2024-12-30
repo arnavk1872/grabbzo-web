@@ -36,7 +36,7 @@ const InputBox = () => {
 
   const handleOtpVerification = async () => {
     try {
-      const response = await fetch("http://52.66.237.148/restaurant/auth/login", {
+      const response = await fetch("https://api.grabbzo.com/restaurant/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
