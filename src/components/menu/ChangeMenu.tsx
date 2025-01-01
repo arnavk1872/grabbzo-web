@@ -52,7 +52,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
     <div className="flex flex-col items-end px-12">
       <Button
         onClick={handleSaveChanges}
-        className="bg-blue-600 hover:bg-blue-800  2xl:w-1/4 text-[17px]"
+        className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 text-[16px]"
       >
         Save Changes
       </Button>
