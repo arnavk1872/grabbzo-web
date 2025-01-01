@@ -23,7 +23,7 @@ export const getOrders = async (type: string) => {
   try {
     const response = await axios.get(`${IP}/orders?state=${type}`, {
       headers: {
-        Authorization: ` ${token}`,
+        Authorization: `${token}`,
       },
     });
 
