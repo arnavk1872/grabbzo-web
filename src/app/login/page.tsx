@@ -1,4 +1,4 @@
-import InputBox from "@/components/Login/InputBox";
+import InputBox from "@/components/login/InputBox";
 import Image from "next/image";
 import React from "react";
 

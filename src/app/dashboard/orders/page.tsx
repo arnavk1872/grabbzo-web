@@ -7,7 +7,7 @@ const page = async () => {
   // const orderDetails =await getOrders("new");
 
   return (
-    <div className="w-full">{true ? <NoNewOrders /> : <OrderTable />}</div>
+    <div className="w-full">{true ? <NoNewOrders /> : <OrderTable orderDetails={[]} />}</div>
   );
 };
 

@@ -5,7 +5,7 @@ import React from "react";
 
 const page = async () => {
   // const orderDetails =await getOrders("done");
-  return <div>{true ? <NoPickedOrders /> : <OrderTable />}</div>;
+  return <div>{true ? <NoPickedOrders /> : <OrderTable orderDetails={[]} />}</div>;
 };
 
 export default page;
