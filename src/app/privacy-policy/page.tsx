@@ -3,7 +3,7 @@ import React from "react";
 const page = () => {
   return (
     <div className="-mt-20">
-      <h2 className="text-[64px] font-semibold text-center">Privacy Policy</h2>
+      <h2 className="text-[64px] font-semibold text-center">Privacy Policyy</h2>
       <div className="text-justify px-12 flex flex-col gap-3">
         <p>
           That <strong>Grabbzo Enterprises Private Limited</strong>, a company
