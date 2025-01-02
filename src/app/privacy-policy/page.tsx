@@ -22,7 +22,7 @@ const page = () => {
         </p>
         <p>
           The Company and Channel Partner are hereinafter collectively referred
-          to as <strong>“parties”</strong> and individually as{" "}
+          to as <strong>“parties”</strong> and individually as
           <strong>“party”</strong>
         </p>
         <p>
