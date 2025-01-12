@@ -53,8 +53,10 @@ const InputBox = () => {
       const data = await response.json();
 
       if (data.statusCode === 200) {
+        console.log(data);
         const token = "Bearer " + data.data.accessToken;
-        setCookie("AuthToken", token);
+        console.log(token);
+        setCookie("AuthToken", token, { sameSite: "none" });
         router.push("/dashboard");
       } else {
         alert("OTP is incorrect. Please try again.");
