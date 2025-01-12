@@ -32,7 +32,6 @@ const InputBox = () => {
       return;
     }
     setShowOtpDialog(true);
-    console.log(showOtpDialog);
   };
 
   const handleOtpVerification = async () => {
@@ -53,10 +52,8 @@ const InputBox = () => {
       const data = await response.json();
 
       if (data.statusCode === 200) {
-        console.log(data);
         const token = "Bearer " + data.data.accessToken;
-        console.log(token);
-        setCookie("AuthToken", token, { sameSite: "none" });
+        setCookie("AuthToken", token);
         router.push("/dashboard");
       } else {
         alert("OTP is incorrect. Please try again.");
