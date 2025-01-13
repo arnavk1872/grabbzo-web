@@ -13,6 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <meta name="google-site-verification" content="wUUKwkNQ1XsgHvDHMjTK612NxSt5b73-9XoJEqev95k" />
       <body className="bg-bgGray" >{children}</body>
     </html>
   );
