@@ -6,7 +6,7 @@ import React from 'react'
 const page = () => {
   return (
       <div className='w-full' ><OrderDetails />
-      <div className='flex w-full justify-between items-start'><CustomerDetails /><ItemsOrdered/></div>
+      <div className='flex w-full justify-between items-start 2xl:px-12'><CustomerDetails /><ItemsOrdered/></div>
       
       </div>
   )

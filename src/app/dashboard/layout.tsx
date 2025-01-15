@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <Header />
-      <div className="flex  w-full  ">
+      <div className="flex  sticky w-full  ">
         <Sidebar />
         {children}
       </div>

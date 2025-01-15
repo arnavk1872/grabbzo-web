@@ -15,15 +15,16 @@ import Notifications from "../Messages/Notifications";
 
 const Header = () => {
   return (
-    <section className="m-6 px-4 h-[98px] font-poppins rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
+    <section className="mx-6 my-3 px-4 h-[82px] font-poppins rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
       <div className="flex items-center gap-x-24">
         {" "}
         <Image
-          src={"/Logo.jpg"}
-          width={143}
-          height={70}
-          alt={"logo"}
+          src="/grabbzo.png"
+          width={170} // Adjusted for better quality
+          height={140} // Adjusted for better quality
+          alt="logo"
           className="flex items-center justify-center pb-2"
+          quality={100} // Ensures best quality
         />
         {/* <div className="relative w-96">
           <Input
@@ -40,7 +41,9 @@ const Header = () => {
           <PopoverTrigger>
             <Bell className="cursor-pointer" />
           </PopoverTrigger>
-          <PopoverContent className="mr-72 "><Notifications/></PopoverContent>
+          <PopoverContent className="mr-72 ">
+            <Notifications />
+          </PopoverContent>
         </Popover>
 
         <Avatar>

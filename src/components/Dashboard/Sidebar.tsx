@@ -34,6 +34,14 @@ const Sidebar: React.FC = () => {
     setActiveItem(itemName);
   };
 
+  const handleLogout = () => {
+    // Remove the authToken cookie (from the client side)
+    document.cookie = 'AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+
+    // Redirect to the login page
+    router.push('/login');
+  };
+
   const menuItems: MenuItem[] = [
     {
       name: "Dashboard",
@@ -59,9 +67,10 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen sticky top-0 max-w-[320px] bg-white border border-borderColor p-4 mx-4 rounded-3xl font-poppins">
+    <div className="flex flex-col  h-fit sticky top-0 max-w-[320px] bg-white border border-borderColor p-4 mx-4 rounded-3xl font-poppins">
+
       {/* Dashboard and Menu Links */}
-      <div className="space-y-4">
+      <div className="space-y-1">
         {menuItems.map((item) => (
           <Link
             key={item.name}
@@ -82,7 +91,7 @@ const Sidebar: React.FC = () => {
       {/* Online/Offline Toggle */}
       <div
         onClick={handleToggle}
-        className={`flex items-center p-1 w-full rounded-xl mt-8 h-[56px] cursor-pointer ${"bg-bgGray"}`}
+        className={`flex items-center p-1 w-full rounded-xl mt-2 h-[56px] cursor-pointer ${"bg-bgGray"}`}
       >
         <div
           className={`flex justify-center items-center h-[46px] w-1/2 p-2 rounded-xl transition-all duration-300 ${
@@ -101,20 +110,21 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Premium Upgrade Section */}
-      <div className="mt-auto space-y-3">
-        <div className="mt-8 p-4 bg-black text-white rounded-3xl text-center">
+      <div className=" space-y-1">
+        <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
-          <p className="mt-2 text-left text-[24px]">
-            Updating your plan for Premium!
+          <p className="mt-2 text-left text-[20px]">
+            Update your plan to Premium!
           </p>
-          <Button
-            onClick={() => {
-              router.push("/pricing");
-            }}
-            className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
-          >
-            Upgrade Now
-          </Button>
+            <Button
+              onClick={() => {
+                window.open("/pricing", "_blank");
+              }}
+              className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
+            >
+              Upgrade Now
+            </Button>
+
         </div>
 
         {/* Bottom Links */}
@@ -122,7 +132,7 @@ const Sidebar: React.FC = () => {
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team,"
             target="_blank"
-            className="flex items-center space-x-6 p-6 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
+            className="flex items-center space-x-6 px-6 py-4 mt-1 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
           >
             <HelpIcon />
             <span>Get Help</span>
@@ -130,7 +140,8 @@ const Sidebar: React.FC = () => {
 
           <a
             href="#"
-            className="flex items-center space-x-2 p-2 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
+            onClick={handleLogout}
+            className="flex items-center space-x-2 p-1 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
           >
             <LogoutIcon />
             <span>Logout</span>

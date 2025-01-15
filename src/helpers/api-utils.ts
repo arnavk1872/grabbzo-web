@@ -103,3 +103,29 @@ export const inStock = async (id: number, status: boolean) => {
     throw error;
   }
 };
+
+export const addNewCategory = async (value: string) => {
+  const token = await getToken();
+  console.log(token,value);
+  
+  if (!token) return;
+
+  try {
+    const response = await axios.post(
+      `${IP}/api/menu/category-with-items?restaurantId=1`,
+      { "name": value }, // Dynamically set key-value pair
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response, "cKJHSBDK");
+
+    return response;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};

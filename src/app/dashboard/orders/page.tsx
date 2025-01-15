@@ -4,10 +4,16 @@ import { getOrders } from "@/helpers/api-utils";
 import React from "react";
 
 const page = async () => {
-  // const orderDetails =await getOrders("new");
+  const orderDetails = await getOrders("NEW");
 
   return (
-    <div className="w-full">{true ? <NoNewOrders /> : <OrderTable orderDetails={[]} />}</div>
+    <div className="w-full">
+      {orderDetails.length == 0 ? (
+        <NoNewOrders />
+      ) : (
+        <OrderTable orderDetails={orderDetails} />
+      )}
+    </div>
   );
 };
 

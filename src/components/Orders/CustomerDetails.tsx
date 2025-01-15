@@ -1,14 +1,18 @@
 import React from "react";
 import PhoneIcon from "../Icons/PhoneIcon";
+import ETATimer from "./ETATimer";
 
 const CustomerDetails = () => {
   return (
     <div className="flex flex-col items-center justify-center w-1/2">
       <div className="bg-white border rounded-[40px] flex flex-col items-center w-full ">
+        <div className="py-4">
         <h1 className="font-poppins font-bold text-[22px] mt-4">Harsh Ghai</h1>
-        <div className="my-2 text-[#1663DE] border border-[#1663DE] bg-[#d0e0f8] rounded-[16px] font-semibold font-poppins px-2 py-1">
+        <div className="my-2 text-[#1663DE] text-center border border-[#1663DE] bg-[#d0e0f8] rounded-[16px] font-semibold font-poppins px-2 py-1">
           Customer
         </div>
+        </div>
+
 
         <div className="w-full">
           <div className="bg-[#3F4354] w-full rounded-t-[16px] p-4">
@@ -42,7 +46,7 @@ const CustomerDetails = () => {
         </div>
       </div>
       <div className="border border-borderColor rounded-[24px] w-full  bg-white flex gap-x-4 items-center justify-center py-4">
-        <span className="text-[36px] font-poppins font-bold">5:44</span>
+        <span className=" font-poppins font-bold"><ETATimer targetTime={new Date().getTime() + 1000000} /></span>
       </div>
     </div>
   );
