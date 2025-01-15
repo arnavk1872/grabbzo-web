@@ -4,9 +4,16 @@ import { getOrders } from "@/helpers/api-utils";
 import React from "react";
 
 const page = async () => {
-
-  const orderDetails = await getOrders("pending");
-  return <div>{true ? <NoPreparingOrders /> : <OrderTable orderDetails={orderDetails} />}</div>;
+  const orderDetails = await getOrders("PREPARING");
+  return (
+    <div>
+      {orderDetails.length == 0 ? (
+        <NoPreparingOrders />
+      ) : (
+        <OrderTable orderDetails={orderDetails} />
+      )}
+    </div>
+  );
 };
 
 export default page;

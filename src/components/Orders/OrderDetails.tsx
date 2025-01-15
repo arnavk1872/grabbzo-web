@@ -6,10 +6,9 @@ import { Button } from "../UI/Button";
 
 const OrderDetails = () => {
   const { slug } = useParams();
-  console.log(slug, "123");
 
   return (
-    <div className="w-full px-6">
+    <div className="w-full px-8">
       <section className="flex justify-between items-center w-full">
         <div className="font-poppins text-[44px] font-semibold text-[#1663DE]">
           ORDER ID #{slug}

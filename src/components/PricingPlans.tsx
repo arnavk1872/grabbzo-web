@@ -26,7 +26,7 @@ const plans: Plan[] = [
       "Customer feedback",
       "Order History",
     ],
-    buttonBg: "bg-white text-black border border-black",
+    buttonBg: "bg-white text-black border border-black font-semibold",
     btnText: "Join for FREE",
   },
   {
@@ -41,7 +41,7 @@ const plans: Plan[] = [
       "Enhanced promotional tools",
       "Targeted campaigns",
     ],
-    buttonBg: "bg-black text-white",
+    buttonBg: "bg-black text-white font-semibold",
     btnText: "Join GOLD",
   },
   {
@@ -51,13 +51,13 @@ const plans: Plan[] = [
     features: [
       "₹8/day",
       "₹500 ad credits",
-      "3% commission on dining",
+      "2.5% commission charges on dining",
       "Free help with menu setup",
       "Comprehensive analytics  ",
       "Predictive insights",
       "24-hour dedicated reply",
     ],
-    buttonBg: "bg-blue-500 text-white border border-gray-400",
+    buttonBg: "bg-blue-500 text-white border border-gray-400 font-semibold",
     btnText: "Join DIAMOND",
   },
   {
@@ -67,12 +67,12 @@ const plans: Plan[] = [
     features: [
       "₹6.5/day",
       "₹750 ad credits",
-      "Zero commission on dining",
+      "1.5% commission charges on dining",
       "Professional image of full menu",
       "Personalized marketing stratergies",
       "Full-service support ",
     ],
-    buttonBg: "bg-green-700 text-white",
+    buttonBg: "bg-green-700 text-white font-semibold",
     btnText: "Join PLATINUM",
   },
 ];
@@ -98,7 +98,7 @@ const PricingPlans: React.FC = () => {
           </Button>
 
           {plan.name !== "SILVER" && (
-            <div className="flex mt-4">
+            <div className="flex mt-5 gap-x-1">
               <ArrowLeft />
               <div>
                 Everything included in{" "}
@@ -108,12 +108,12 @@ const PricingPlans: React.FC = () => {
                       ?.name
                   }
                 </span>
-                , plus..
+                , plus...
               </div>
             </div>
           )}
 
-          <div className="mt-4 min-h-[400px]">
+          <div className="mt-3 min-h-[400px]">
             {plan.features.map((feature, index) => (
               <div key={index} className="flex items-center mt-2">
                 <Tick />

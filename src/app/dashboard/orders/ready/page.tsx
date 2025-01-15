@@ -1,9 +1,21 @@
 import NoReadyOrders from "@/components/Orders/NoReadyOrders";
 import OrderTable from "@/components/Orders/OrderTable";
+import { getOrders } from "@/helpers/api-utils";
 import React from "react";
 
-const page = () => {
-  return <div>{true ? <NoReadyOrders /> : <OrderTable orderDetails={[]} />}</div>;
+
+const page = async() => {
+
+  const orderDetails = await getOrders("READY");
+  return (
+    <div>
+      {orderDetails.length == 0 ? (
+        <NoReadyOrders />
+      ) : (
+        <OrderTable orderDetails={orderDetails} />
+      )}
+    </div>
+  );
 };
 
 export default page;

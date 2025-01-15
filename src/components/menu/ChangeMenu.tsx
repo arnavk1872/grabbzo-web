@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
 import AddCategory from "./AddCategory";
-// import { addNewCategory } from "@/helpers/api-utils";
+import { addNewCategory } from "@/helpers/api-utils";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
@@ -36,14 +36,16 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
         alert("Category name is required.");
         return;
       }
-
+      console.log(categoryNameRef,"NAMEREF");
+      
       try {
-        // await addNewCategory(categoryNameRef.current);
+        const value = categoryNameRef.current
+        await addNewCategory(value);
         alert("Category added successfully!");
         categoryNameRef.current = "";
       } catch (error) {
         console.error("Error adding category:", error);
-        alert("Failed to add category.");
+        // alert("Failed to add category.");
       }
     }
   };
