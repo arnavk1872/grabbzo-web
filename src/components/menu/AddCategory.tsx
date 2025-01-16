@@ -1,13 +1,14 @@
-import React from 'react';
-import { Input } from '../UI/Input';
+import React, { useState } from "react";
+import { Input } from "../UI/Input";
 
 interface AddCategoryProps {
-  categoryNameRef: React.MutableRefObject<string>;
+  categoryName: string;
+  setCategoryName: (name: string) => void;
 }
 
-const AddCategory: React.FC<AddCategoryProps> = ({ categoryNameRef }) => {
+const AddCategory: React.FC<AddCategoryProps> = ({ categoryName, setCategoryName }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    categoryNameRef.current = e.target.value; // Update the ref value on input change
+    setCategoryName(e.target.value); // Update state on input change
   };
 
   return (
@@ -16,6 +17,7 @@ const AddCategory: React.FC<AddCategoryProps> = ({ categoryNameRef }) => {
       <Input
         className="my-2 shadow-none border border-gray-300 rounded p-2 w-full"
         placeholder="Add Name"
+        value={categoryName}
         onChange={handleInputChange}
       />
     </div>

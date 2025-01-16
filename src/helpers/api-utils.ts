@@ -112,8 +112,8 @@ export const addNewCategory = async (value: string) => {
 
   try {
     const response = await axios.post(
-      `${IP}/api/menu/category-with-items?restaurantId=1`,
-      { "name": value }, // Dynamically set key-value pair
+      `https://api.grabbzo.com/api/menu/category-with-items?restaurantId=1`,
+      { name:value }, // Dynamically set key-value pair
       {
         headers: {
           Authorization: ` ${token}`,
@@ -121,9 +121,34 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-    console.log(response, "cKJHSBDK");
+    console.log(response.data, "cKJHSBDK");
 
-    return response;
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const addNewItem = async (formData: object) => {
+  const token = await getToken();
+  
+  if (!token) return;
+
+  try {
+    const response = await axios.put(
+      `https://api.grabbzo.com/api/menu/restaurant/categories/1/add-items`,
+      { formData }, // Dynamically set key-value pair
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "cKJHSBDK");
+
+    return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;

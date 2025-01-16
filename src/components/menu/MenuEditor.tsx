@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from 'react';
-import AvailableMenu from './AvailableMenu';
-import ChangeMenu from './ChangeMenu';
+import React, { useState } from "react";
+import AvailableMenu from "./AvailableMenu";
+import ChangeMenu from "./ChangeMenu";
 
 interface MenuEditorProps {
   allCategories: {
@@ -16,9 +16,14 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
 
   return (
     <>
-<AvailableMenu allCategories={allCategories as any} changeToggleEditor={changeToggleEditor} />
-<ChangeMenu toggleEditor={toggleEditor} allCategories={allCategories as any} />
-
+      <AvailableMenu
+        allCategories={allCategories as any}
+        changeToggleEditor={changeToggleEditor}
+      />
+      <ChangeMenu
+        toggleEditor={toggleEditor}
+        allCategories={allCategories as any}
+      />
     </>
   );
 };

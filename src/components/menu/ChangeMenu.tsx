@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
 import AddCategory from "./AddCategory";
-import { addNewCategory } from "@/helpers/api-utils";
+import { addNewCategory, addNewItem } from "@/helpers/api-utils";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
@@ -10,42 +10,58 @@ interface ChangeMenuProps {
 }
 
 const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) => {
-  const categoryNameRef = useRef<string>(""); 
+  const [categoryName, setCategoryName] = React.useState<string>("");
+  const [formData, setFormData] = React.useState({
+    title: "",
+    description: "",
+    price: "",
+    selectedCategory: null,
+    isVeg:true,
+    servingInfo: null,
+    portionSize: null,
+    isStock:true
+  });
+
   const itemDataRef = useRef<any>(null);
 
-  const handleSaveChanges = async () => {
+  const handleFormDataChange = (field: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSaveChanges = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
     if (toggleEditor) {
       const itemData = itemDataRef.current?.getItemData();
       console.log("Save changes for AddItem:", itemData);
-      
+
       if (!itemData) {
         alert("Item data is incomplete.");
         return;
       }
 
       try {
-        // API call for AddItem
-        // await addNewCategory(itemData); 
+        await addNewItem(formData); // Use the updated formData
         alert("Item added successfully!");
       } catch (error) {
         console.error("Error adding item:", error);
         alert("Failed to add item.");
       }
     } else {
-      if (!categoryNameRef.current.trim()) {
+      if (!categoryName.trim()) {
         alert("Category name is required.");
         return;
       }
-      console.log(categoryNameRef,"NAMEREF");
-      
+
       try {
-        const value = categoryNameRef.current
-        await addNewCategory(value);
+        await addNewCategory(categoryName); // Ensure this function works correctly
         alert("Category added successfully!");
-        categoryNameRef.current = "";
+        setCategoryName(""); // Clear input
       } catch (error) {
         console.error("Error adding category:", error);
-        // alert("Failed to add category.");
+        alert("Failed to add category.");
       }
     }
   };
@@ -60,9 +76,14 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
       </Button>
       <div className="bg-white h-[90vh] min-w-[300px] 2xl:w-[600px] rounded-[24px] my-4">
         {toggleEditor ? (
-          <AddItem ref={itemDataRef} allCategories={allCategories} />
+          <AddItem
+            ref={itemDataRef}
+            allCategories={allCategories}
+            formData={formData} // Pass formData
+            onFormDataChange={handleFormDataChange} // Pass callback to handle updates
+          />
         ) : (
-          <AddCategory categoryNameRef={categoryNameRef} />
+          <AddCategory categoryName={categoryName} setCategoryName={setCategoryName} />
         )}
       </div>
     </div>

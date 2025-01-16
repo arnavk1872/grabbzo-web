@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("AuthToken");
   const url = request.nextUrl;
 
-  const allowedPaths = ["/", "/pricing", "/login"];
+  const allowedPaths = ["/", "/pricing", "/login","/terms-and-conditions","/privacy-policy"];
 
   if (!accessToken && !allowedPaths.includes(url.pathname)) {
     const loginUrl = new URL("/login", request.url);
