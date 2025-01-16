@@ -2,15 +2,88 @@
 import { Button } from "@/components/UI/Button";
 import { Label } from "@/components/UI/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
+import useRestaurantDocStore from "@/store/restrauntDocStore";
+import useRestaurantInfoStore from "@/store/restrauntInfoStore";
+import useRestaurantMenuStore from "@/store/restrauntMenuStore";
+import axios from "axios";
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState } from "react";
+import { enqueueSnackbar } from "notistack";
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");
+  const { basicDetailsData } = useRestaurantInfoStore();
+  const { docDetailsData } = useRestaurantDocStore();
+  const { menuDetailsData } = useRestaurantMenuStore();
+  const router = useRouter();
+  const handleSubmit = async () => {
+    // console.log("Button clicked");
+    // Do the API call
+    const payload = {
+      ownerName: basicDetailsData.ownerName,
+      restaurantName: basicDetailsData.restaurantName,
+      restaurantImage: "baaase64_encoded_image_here",
+      emailAddress: basicDetailsData.email,
+      mobileNumber: basicDetailsData.mobileNumber,
+      latitude: "40.7128",
+      longitude: "-74.0060",
+      shopNumber: basicDetailsData.shopNo,
+      floorOrTower: basicDetailsData.floor,
+      areaOrSectorOrLocality: basicDetailsData.area,
+      landmark: basicDetailsData.landmark,
+      pincode: basicDetailsData.pinCode,
+      state: basicDetailsData.state,
+      city: basicDetailsData.city,
+      isVeg: false,
+      rating: 4.5,
+      panNumber: docDetailsData.panNumber,
+      fssaiNumber: docDetailsData.FssaiNumber,
+      gstinNumber: "qwerty",
+      restaurantBankDetails: {
+        accountHolderName: basicDetailsData.restaurantName,
+        accountNumber: docDetailsData.BankAccountNumber,
+        ifsc: docDetailsData.BankIfscCode,
+        bankName: "HDFC Bank",
+      },
+    };
+    const signupPayload = {
+      mobileNumber: basicDetailsData.mobileNumber,
+      otp: "123456",
+    };
+    // console.log(signupPayload, payload);
+    // try {
+    //   const signupResponse = await axios.post(
+    //     "https://api.grabbzo.com/restaurant/auth/signup",
+    //     signupPayload
+    //   );
+    //   console.log(signupResponse);
+    const token: string =
+      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwibmFtZSI6IjEiLCJyb2xlcyI6WyJSRVNUQVVSQU5UIl0sInVzZXJJZCI6MSwiaWF0IjoxNzM3MDUzNDk4LCJleHAiOjE3Mzc5MTc0OTh9.LUAzAQ-HklEn8qfidpt03XsZRKCof5AgafIknWgS9Griq0vovjP0rfH-hldx9PhjW1Naz2YUGCbKIrQgf-7W9A";
+    setCookie("AuthToken", token);
 
-  const handleSubmit = () => {
-    // Empty function for now, you can add functionality here
-    console.log("Button clicked");
+    //   await axios.post(
+    //     "https://api.grabbzo.com/restaurant-admins/update",
+    //     payload,
+    //     {
+    //       headers: {
+    //         Authorization: `${token}`,
+    //       },
+    //     }
+    //   );
+    const message = "SignUp is Successful";
+    // enqueueSnackbar(message, {
+    //   preventDuplicate: true,
+    //   variant: "success",
+    //   autoHideDuration: 5000,
+    // });
+    router.push("/dashboard");
+    // } catch (error) {
+    //   // Handle errors
+    //   console.error("Error updating data:", error);
+    //   alert("Failed to update data, please try again.");
+    // }
   };
   return (
     <div className="font-poppins ml-10 min-w-[750px]">

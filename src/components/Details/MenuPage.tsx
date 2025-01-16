@@ -3,53 +3,38 @@ import FileUpload from "@/components/Details/FileUpload";
 import { Button } from "@/components/UI/Button";
 import { Label } from "@/components/UI/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
+import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 const MenuPage = () => {
-  const [formData, setFormData] = useState({
-    foodType: "",
-    deliveryToCars: "",
-    serviceType: "",
-    restaurantImage: null,
-    menuImage: null,
-  });
+  const router = useRouter();
+  const { menuDetailsData, setMenuDetailsData } = useRestaurantMenuStore();
 
   const handleRadioChange = (name: string, value: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setMenuDetailsData(name, value);
   };
 
   const handleFileChange = (file: File | null, field: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [field]: file,
-    }));
+    setMenuDetailsData(field, file);
     if (file) {
-      console.log(`${field} file uploaded:`, file.name);
+      // console.log(`${field} file uploaded:`, file.name);
     } else {
-      console.log(`No file selected for ${field}`);
+      // console.log(`No file selected for ${field}`);
     }
   };
 
   const isFormComplete =
-    formData.foodType &&
-    formData.deliveryToCars &&
-    formData.serviceType &&
-    formData.restaurantImage &&
-    formData.menuImage;
+    menuDetailsData.foodType &&
+    menuDetailsData.deliveryToCars &&
+    menuDetailsData.serviceType &&
+    menuDetailsData.restaurantImage &&
+    menuDetailsData.menuImage;
 
   const handleProceed = () => {
-    console.log(formData);
-    setFormData({
-      foodType: "",
-      deliveryToCars: "",
-      serviceType: "",
-      restaurantImage: null,
-      menuImage: null,
-    });
+    // console.log(menuDetailsData);
+    router.push("/details/contract");
   };
 
   return (
@@ -69,7 +54,7 @@ const MenuPage = () => {
           Select the service you want to register for
         </h4>
         <RadioGroup
-          value={formData.foodType}
+          value={menuDetailsData.foodType}
           onValueChange={(value) => handleRadioChange("foodType", value)}
           className="flex gap-20 mt-5"
         >
@@ -90,11 +75,11 @@ const MenuPage = () => {
 
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6 mt-12">
         <h4 className="text-zinc-800 font-bold text-xl">
-          Select the service you want to register for
+          Select the options you are providing
         </h4>
         <RadioGroup
           className="flex gap-20 mt-5"
-          value={formData.serviceType}
+          value={menuDetailsData.serviceType}
           onValueChange={(value) => handleRadioChange("serviceType", value)}
         >
           <div className="flex items-center space-x-2">
@@ -117,7 +102,7 @@ const MenuPage = () => {
         </h4>
         <RadioGroup
           className="flex gap-20 mt-5"
-          value={formData.deliveryToCars}
+          value={menuDetailsData.deliveryToCars}
           onValueChange={(value) => handleRadioChange("deliveryToCars", value)}
         >
           <div className="flex items-center space-x-2">

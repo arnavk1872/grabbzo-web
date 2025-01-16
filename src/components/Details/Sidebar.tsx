@@ -23,25 +23,25 @@ const Sidebar: React.FC = () => {
   const menuItems: MenuItem[] = [
     {
       name: "Restaurant Information",
-      title: "Location,Owner detsils, open & Close hrs.",
+      title: "Location, Owner detsils, Closing Day",
       icon: <RestInfoIcon />,
       href: "/details/information",
     },
     {
       name: "Restaurant Documents",
-      title: "Location,Owner detsils, open & Close hrs.",
+      title: "FSSAI, PAN, GST, and Bank Account",
       icon: <RestDocIcon />,
       href: "/details/document",
     },
     {
       name: "Menu Setup",
-      title: "Location,Owner detsils, open & Close hrs.",
+      title: "Menu Details, Food Deliviry Options",
       icon: <MenuSetupIcon />,
       href: "/details/menu",
     },
     {
       name: "Partner Contract",
-      title: "Location,Owner detsils, open & Close hrs.",
+      title: "Channel Partnership Contract",
       icon: <PartnerContactIcon />,
       href: "/details/contract",
     },

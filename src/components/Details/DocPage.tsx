@@ -4,77 +4,60 @@ import { Button } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import { Label } from "@/components/UI/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
+import useRestaurantDocStore from "@/store/restrauntDocStore";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const DocPage = () => {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [formData, setFormData] = useState({
-    panNumber: "",
-    panName: "",
-    panFile: null,
-    IsGst: false,
-    GstNumber: "",
-    GstFile: null,
-    FssaiNumber: "",
-    FssaiExpiry: "",
-    FssaiFile: null,
-    BankAccountNumber: "",
-    ReBankAccountNumber: "",
-    BankIfscCode: "",
-  });
+  const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
+  const router = useRouter();
 
   const [isGstRegistered, setIsGstRegistered] = useState<string>("no");
 
   const handleGstRegistrationChange = (value: string) => {
     setIsGstRegistered(value);
-    setFormData((prevState) => ({
-      ...prevState,
-      IsGst: value === "yes",
-    }));
+    const gst = value === "yes";
+    setDocDetailsData("IsGst", gst);
   };
 
   const handleInputChange = (name: string, value: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setDocDetailsData(name, value);
   };
 
   const handleAccountValidation = (value: string) => {
-    if (formData.BankAccountNumber !== value) {
-      console.log("Account is not same!");
+    if (docDetailsData.BankAccountNumber !== value) {
+      // console.log("Account is not same!");
     }
-
-    setFormData((prevState) => ({
-      ...prevState,
-      ["ReBankAccountNumber"]: value,
-    }));
+    setDocDetailsData("ReBankAccountNumber", value);
   };
 
   const handleFileChange = (file: File | null, field: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [field]: file,
-    }));
+    setDocDetailsData(field, file);
     if (file) {
-      console.log(`${field} file uploaded:`, file.name);
+      // console.log(`${field} file uploaded:`, file.name);
     } else {
-      console.log(`No file selected for ${field}`);
+      // console.log(`No file selected for ${field}`);
     }
   };
 
+  const handleClick = () => {
+    // console.log(docDetailsData);
+    router.push("/details/menu");
+  };
+
   const isFormComplete =
-    formData.panNumber &&
-    formData.panName &&
-    formData.panFile &&
-    formData.FssaiNumber &&
-    formData.FssaiExpiry &&
-    formData.FssaiFile &&
-    formData.BankAccountNumber &&
-    formData.ReBankAccountNumber &&
-    formData.BankIfscCode &&
-    (!formData.IsGst || (formData.GstNumber && formData.GstFile));
+    docDetailsData.panNumber &&
+    docDetailsData.panName &&
+    docDetailsData.panFile &&
+    docDetailsData.FssaiNumber &&
+    // docDetailsData.FssaiExpiry &&
+    docDetailsData.FssaiFile &&
+    docDetailsData.BankAccountNumber &&
+    docDetailsData.ReBankAccountNumber &&
+    docDetailsData.BankIfscCode &&
+    (!docDetailsData.IsGst ||
+      (docDetailsData.GstNumber && docDetailsData.GstFile));
 
   return (
     <div className="font-poppins ml-10 min-w-[750px]">
@@ -100,10 +83,12 @@ const DocPage = () => {
         <Input
           placeholder="PAN Number*"
           onChange={(e) => handleInputChange("panNumber", e.target.value)}
+          value={docDetailsData.panNumber}
         />
         <Input
           placeholder="Full Name As Per PAN*"
           onChange={(e) => handleInputChange("panName", e.target.value)}
+          value={docDetailsData.panName}
         />
         <FileUpload
           onFileChange={(file) => handleFileChange(file, "panFile")}
@@ -162,11 +147,13 @@ const DocPage = () => {
         <Input
           placeholder="FSSAI Certificate Number*"
           onChange={(e) => handleInputChange("FssaiNumber", e.target.value)}
+          value={docDetailsData.FssaiNumber}
         />
-        <Input
+        {/* <Input
           placeholder="Full Name As Per PAN*"
           onChange={(e) => handleInputChange("FssaiExpiry", e.target.value)}
-        />
+          value={docDetailsData.FssaiExpiry}
+        /> */}
         <FileUpload
           onFileChange={(file) => handleFileChange(file, "FssaiFile")}
         />
@@ -184,20 +171,24 @@ const DocPage = () => {
           onChange={(e) =>
             handleInputChange("BankAccountNumber", e.target.value)
           }
+          value={docDetailsData.BankAccountNumber}
         />
         <Input
           placeholder="Re-Enter Account Number*"
           onChange={(e) => handleAccountValidation(e.target.value)}
+          value={docDetailsData.ReBankAccountNumber}
         />
         <Input
           placeholder="Bank IFSC Code*"
           onChange={(e) => handleInputChange("BankIfscCode", e.target.value)}
+          value={docDetailsData.BankIfscCode}
         />
       </div>
 
       <Button
         className="my-6 w-full text-white font-medium text-lg"
         disabled={!isFormComplete}
+        onClick={handleClick}
       >
         Proceed
       </Button>

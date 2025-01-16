@@ -113,7 +113,7 @@ const InputBox = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <div className="flex gap-24 -mb-12 text-blue-600 font-semibold text-lg">
+      <div className="flex gap-24 -mb-12 text-blue-600 font-semibold text-lg absolute bottom-1/4">
         <Link className="hover:underline" href={"/terms-and-conditions"}>
           Terms & Conditions
         </Link>
