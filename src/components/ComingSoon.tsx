@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import logo from "public/grabbzo.png"
+import logo from "public/grabbzo.png";
+import background from "public/Pancake.png";
 
 const ComingSoon = () => {
   return (
@@ -18,14 +19,13 @@ const ComingSoon = () => {
 
       <div className="relative w-[100vw] h-[100vh]">
         <Image
-          src="/Pancake.png"
+          src={background}
           fill
           style={{
             objectFit: "cover",
             objectPosition: "center",
           }}
           alt="background"
-          priority
         />
 
         <div className="absolute font-poppins 2xl:top-1/4 top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-md w-1/3">
