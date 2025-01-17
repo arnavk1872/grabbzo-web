@@ -27,36 +27,60 @@ const InputBox = () => {
   const router = useRouter();
   const handleClick = async () => {
     // Check if phone number matches predefined number before showing OTP dialog
-    if (phoneNumber !== "9829699382") {
-      router.push("/details/information");
-      return;
-    }
+    // if (phoneNumber !== "9829699382") {
+    //   router.push("/details/information");
+    //   return;
+    // }
     setShowOtpDialog(true);
   };
 
   const handleOtpVerification = async () => {
     try {
-      const response = await fetch(
-        "https://api.grabbzo.com/restaurant/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            mobileNumber: phoneNumber,
-            otp: otp,
-          }),
+      console.log(phoneNumber, otp);
+      if (phoneNumber === "9829699382") {
+        const response = await fetch(
+          "https://api.grabbzo.com/restaurant/auth/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mobileNumber: phoneNumber,
+              otp: otp,
+            }),
+          }
+        );
+        const data = await response.json();
+        if (data.statusCode === 200) {
+          const token = "Bearer " + data.data.accessToken;
+          setCookie("AuthToken", token);
+          router.push("/dashboard");
+        } else {
+          alert("OTP is incorrect. Please try again.");
         }
-      );
-      const data = await response.json();
-
-      if (data.statusCode === 200) {
-        const token = "Bearer " + data.data.accessToken;
-        setCookie("AuthToken", token);
-        router.push("/dashboard");
       } else {
-        alert("OTP is incorrect. Please try again.");
+        const response = await fetch(
+          "https://api.grabbzo.com/restaurant/auth/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              mobileNumber: phoneNumber,
+              otp: otp,
+            }),
+          }
+        );
+        const data = await response.json();
+        if (data.statusCode === 200) {
+          const token = "Bearer " + data.data.accessToken;
+          setCookie("AuthToken", token);
+          router.push("/details/information");
+        } else {
+          alert("OTP is incorrect. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Error during OTP verification", error);

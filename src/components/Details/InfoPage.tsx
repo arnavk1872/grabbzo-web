@@ -23,7 +23,7 @@ const InfoPage = () => {
     basicDetailsData.ownerName &&
     basicDetailsData.restaurantName &&
     basicDetailsData.email &&
-    basicDetailsData.mobileNumber &&
+    // basicDetailsData.mobileNumber &&
     basicDetailsData.shopNo &&
     basicDetailsData.floor &&
     basicDetailsData.area &&
@@ -60,11 +60,11 @@ const InfoPage = () => {
           onChange={(e) => handleInputChange("email", e.target.value)}
           value={basicDetailsData.email}
         />
-        <Input
+        {/* <Input
           placeholder="Mobile Number*"
           onChange={(e) => handleInputChange("mobileNumber", e.target.value)}
           value={basicDetailsData.mobileNumber}
-        />
+        /> */}
         <div>
           <h6 className="text-zinc-800 font-medium text-base">
             Restaurant's primary contact number
