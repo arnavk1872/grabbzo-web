@@ -1,18 +1,25 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import ComingSoon from "@/components/ComingSoon";
-import DownloadApp from "@/components/DownloadApp"; // Assuming you have a DownloadApp component
-
-const isSmallScreen = () => {
-  if (typeof navigator !== "undefined" && typeof window !== "undefined") {
-    const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isSmallWidth = window.innerWidth < 1024;
-    return isMobileDevice || isSmallWidth;
-  }
-  return false;
-};
+import DownloadApp from "@/components/DownloadApp"; 
 
 const Home = () => {
-  const showDownloadApp = isSmallScreen();
+  const [showDownloadApp, setShowDownloadApp] = useState(false);
+
+  useEffect(() => {
+    const checkSmallScreen = () => {
+      const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      return isMobileDevice ;
+    };
+
+    setShowDownloadApp(checkSmallScreen());
+    const handleResize = () => setShowDownloadApp(checkSmallScreen());
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return showDownloadApp ? <DownloadApp /> : <ComingSoon />;
 };

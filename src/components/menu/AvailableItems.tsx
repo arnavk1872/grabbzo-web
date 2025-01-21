@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Plus from "../Icons/Plus";
 import { usePathname } from "next/navigation";
 import { inStock } from "@/helpers/api-utils";
+import Dustbin from "../Icons/Dustbin";
+import Pencil from "../Icons/Pencil";
 
 interface Item {
   id: number;
@@ -14,19 +16,22 @@ interface AvailableItemsProps {
   changeToggleEditor: (toggle: boolean) => void;
 }
 
-const AvailableItems: React.FC<AvailableItemsProps> = ({ items, changeToggleEditor }) => {
+const AvailableItems: React.FC<AvailableItemsProps> = ({
+  items,
+  changeToggleEditor,
+}) => {
   const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
-  const isEditor = pathname.includes('editor');
-  
+  const isEditor = pathname.includes("editor");
+
   useEffect(() => {
     setLocalItems(items);
   }, [items]);
 
   const handleToggle = async (id: number, currentStatus: boolean) => {
     try {
-      const updatedStatus = !currentStatus; 
-      await inStock( id, updatedStatus ); 
+      const updatedStatus = !currentStatus;
+      await inStock(id, updatedStatus);
       setLocalItems((prevItems) =>
         prevItems.map((item) =>
           item.id === id ? { ...item, isEnabled: updatedStatus } : item
@@ -36,7 +41,6 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({ items, changeToggleEdit
       console.error("Failed to update stock status:", error);
     }
   };
-  
 
   return (
     <div className="flex w-[80%] flex-col">
@@ -51,18 +55,30 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({ items, changeToggleEdit
               className="flex items-center cursor-pointer text-[17px] font-poppins justify-between py-2 border-b last:border-b-0"
             >
               <span>{item.title}</span>
-             {!isEditor && <button
-                onClick={() => handleToggle(item.id, item.isEnabled)}
-                className={`w-10 h-6 flex items-center rounded-full p-1 ${
-                  item.isEnabled ? "bg-green-500" : "bg-gray-300"
-                }`}
-              >
-                <div
-                  className={`h-4 w-4 rounded-full bg-white transform ${
-                    item.isEnabled ? "translate-x-4" : ""
-                  } transition`}
-                ></div>
-              </button> } 
+              {isEditor && (
+                <>
+                  <div className="flex gap-x-2">
+                    <Dustbin />
+                    <Pencil />
+                  </div>
+                  
+
+                </>
+              )}
+              {!isEditor && (
+                <button
+                  onClick={() => handleToggle(item.id, item.isEnabled)}
+                  className={`w-10 h-6 flex items-center rounded-full p-1 ${
+                    item.isEnabled ? "bg-green-500" : "bg-gray-300"
+                  }`}
+                >
+                  <div
+                    className={`h-4 w-4 rounded-full bg-white transform ${
+                      item.isEnabled ? "translate-x-4" : ""
+                    } transition`}
+                  ></div>
+                </button>
+              )}
             </div>
           ))
         ) : (
@@ -70,7 +86,9 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({ items, changeToggleEdit
         )}
         {isEditor && (
           <div
-            onClick={() => { changeToggleEditor(true); }}
+            onClick={() => {
+              changeToggleEditor(true);
+            }}
             className="flex my-4 items-center w-fit cursor-pointer gap-x-1 text-[14px] font-poppins font-bold text-blue-700"
           >
             <Plus /> Add Item

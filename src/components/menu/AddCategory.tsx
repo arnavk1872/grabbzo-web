@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "../UI/Input";
+import { z } from "zod";
 
 interface AddCategoryProps {
   categoryName: string;
@@ -7,8 +8,20 @@ interface AddCategoryProps {
 }
 
 const AddCategory: React.FC<AddCategoryProps> = ({ categoryName, setCategoryName }) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const categoryNameSchema = z.string().min(1, "Category name is required");
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategoryName(e.target.value); // Update state on input change
+    const value = e.target.value;
+    setCategoryName(value);
+
+    const validationResult = categoryNameSchema.safeParse(value);
+    if (!validationResult.success) {
+      setError(validationResult.error.errors[0].message); 
+    } else {
+      setError(null); 
+    }
   };
 
   return (
@@ -20,6 +33,7 @@ const AddCategory: React.FC<AddCategoryProps> = ({ categoryName, setCategoryName
         value={categoryName}
         onChange={handleInputChange}
       />
+      {error && <div className="text-red-500 text-[14px] mt-1">{error}</div>}
     </div>
   );
 };
