@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
             onClick={() => handleItemClick(item.name)}
             className={`flex items-center space-x-6 p-[5px] font-medium text-[16px] whitespace-nowrap ${
               activeItem === item.name
-                ? "bg-blue-600 text-white !space-x-10"
+                ? "bg-blue-600 text-white !space-x-8"
                 : "text-gray-600 hover:bg-gray-100"
             } rounded-lg`}
           >
