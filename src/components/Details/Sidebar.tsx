@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
   const menuItems: MenuItem[] = [
     {
       name: "Restaurant Information",
-      title: "Location, Owner detsils, Closing Day",
+      title: "Location, Owner details, Closing Day",
       icon: <RestInfoIcon />,
       href: "/details/information",
     },

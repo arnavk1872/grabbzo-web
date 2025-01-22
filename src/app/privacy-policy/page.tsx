@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="-mt-20">
+    <div className="-mt-20 pb-16">
       <h2 className="text-[64px] font-semibold text-center">Privacy Policy</h2>
       <div className="text-justify px-12 flex flex-col gap-3">
         <p>
