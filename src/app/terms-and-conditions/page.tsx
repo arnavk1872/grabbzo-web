@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="-mt-20">
+    <div className="-mt-20 pb-16">
       <h2 className="text-[64px] font-semibold text-center">
         TERMS OF SERVICES
       </h2>

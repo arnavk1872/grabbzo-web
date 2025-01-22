@@ -89,7 +89,7 @@ const InputBox = () => {
   };
 
   return (
-    <div className="bg-white w-[45%] absolute flex flex-col justify-center items-center -top-1/2 rounded-3xl">
+    <div className="bg-white w-[45%] absolute flex flex-col justify-center items-center bottom-[15%] rounded-3xl">
       <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-12">
         <span className="text-blue-600 font-extrabold">Login</span> to your
         Account to manage all the service and explore our tools
@@ -137,12 +137,18 @@ const InputBox = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <div className="flex gap-24 -mb-12 text-blue-600 font-semibold text-lg absolute bottom-1/4">
+      <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold text-lg absolute bottom-1/4">
         <Link className="hover:underline" href={"/terms-and-conditions"}>
           Terms & Conditions
         </Link>
         <Link className="hover:underline" href={"/privacy-policy"}>
-          Policy Policy
+          Privacy Policy
+        </Link>
+        <Link
+          className="hover:underline"
+          href="/GRABBZO CHANNEL PARTNER AGREEMENT.pdf"
+        >
+          Channel Partner Agreement
         </Link>
       </div>
     </div>
