@@ -19,7 +19,10 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
     isVeg:true,
     servingInfo: null,
     portionSize: null,
-    isStock:true
+    isStock:true,
+    restaurantCategory: {
+      id: 16
+    }
   });
 
   const itemDataRef = useRef<any>(null);
@@ -43,21 +46,18 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
       }
 
       try {
-        await addNewItem(formData); // Use the updated formData
-        alert("Item added successfully!");
+        await addNewItem(formData); 
       } catch (error) {
         console.error("Error adding item:", error);
         alert("Failed to add item.");
       }
     } else {
       if (!categoryName.trim()) {
-        alert("Category name is required.");
         return;
       }
 
       try {
-        await addNewCategory(categoryName); // Ensure this function works correctly
-        alert("Category added successfully!");
+        await addNewCategory(categoryName); 
         setCategoryName(""); // Clear input
       } catch (error) {
         console.error("Error adding category:", error);
@@ -79,8 +79,8 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
           <AddItem
             ref={itemDataRef}
             allCategories={allCategories}
-            formData={formData} // Pass formData
-            onFormDataChange={handleFormDataChange} // Pass callback to handle updates
+            formData={formData}
+            onFormDataChange={handleFormDataChange} 
           />
         ) : (
           <AddCategory categoryName={categoryName} setCategoryName={setCategoryName} />

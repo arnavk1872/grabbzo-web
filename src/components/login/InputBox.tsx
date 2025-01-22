@@ -131,7 +131,7 @@ const InputBox = () => {
             </InputOTPGroup>
           </InputOTP>
           <DialogFooter>
-            <Button type="submit" onClick={handleOtpVerification}>
+            <Button type="submit" className="text-white" onClick={handleOtpVerification}>
               Verify
             </Button>
           </DialogFooter>
