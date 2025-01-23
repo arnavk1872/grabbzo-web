@@ -131,7 +131,11 @@ const InputBox = () => {
             </InputOTPGroup>
           </InputOTP>
           <DialogFooter>
-            <Button type="submit" className="text-white" onClick={handleOtpVerification}>
+            <Button
+              type="submit"
+              className="text-white"
+              onClick={handleOtpVerification}
+            >
               Verify
             </Button>
           </DialogFooter>
@@ -144,12 +148,13 @@ const InputBox = () => {
         <Link className="hover:underline" href={"/privacy-policy"}>
           Privacy Policy
         </Link>
-        <Link
+        <a
           className="hover:underline"
           href="/GRABBZO CHANNEL PARTNER AGREEMENT.pdf"
+          download
         >
           Channel Partner Agreement
-        </Link>
+        </a>
       </div>
     </div>
   );
