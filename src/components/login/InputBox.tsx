@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -15,22 +18,14 @@ import {
 } from "@/components/UI/InputOtp";
 import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { setCookie } from "cookies-next";
-import Link from "next/link";
 
 const InputBox = () => {
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [otp, setOtp] = useState<string>(""); // Store OTP input
-  const [showOtpDialog, setShowOtpDialog] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showOtpDialog, setShowOtpDialog] = useState(false);
   const router = useRouter();
-  const handleClick = async () => {
-    // Check if phone number matches predefined number before showing OTP dialog
-    // if (phoneNumber !== "9829699382") {
-    //   router.push("/details/information");
-    //   return;
-    // }
+
+  const handleClick = () => {
     setShowOtpDialog(true);
   };
 
@@ -87,7 +82,6 @@ const InputBox = () => {
       alert("An error occurred. Please try again later.");
     }
   };
-
   return (
     <div className="bg-white w-[45%] absolute flex flex-col justify-center items-center bottom-[15%] rounded-3xl">
       <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-12">
@@ -109,39 +103,64 @@ const InputBox = () => {
         >
           Continue
         </Button>
-        <DialogContent className="sm:max-w-[425px]">
+
+        <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle>One-Time Password</DialogTitle>
-            <DialogDescription>
-              Please enter the one-time password sent to your phone.
+            <DialogTitle className="pb-2 text-xl">
+              Enter <span className="bg-yellow-400">OTP</span>
+            </DialogTitle>
+            <DialogDescription className="pb-2">
+              4 digit <span className="bg-yellow-400">OTP</span> has been sent
+              to Customer
             </DialogDescription>
           </DialogHeader>
+
           <InputOTP
             maxLength={6}
             value={otp}
             onChange={(value) => setOtp(value)}
           >
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
+            <InputOTPGroup className="flex justify-center space-x-3 w-full">
+              {[...Array(6)].map((_, index) => (
+                <InputOTPSlot
+                  key={index}
+                  index={index}
+                  className={`w-full h-14 rounded-full text-center font-bold text-xl flex items-center justify-center transition-all ${
+                    otp[index] ? "bg-blue-600 text-white" : "bg-gray-100"
+                  }`}
+                />
+              ))}
             </InputOTPGroup>
           </InputOTP>
-          <DialogFooter>
-            <Button type="submit" className="text-white" onClick={handleOtpVerification}>
-              Verify
+
+          <div className="flex items-center mt-2 w-full">
+            <span className="text-gray-500 text-sm ">
+              Didn't receive the code?
+            </span>
+            <button
+              className="text-blue-600 font-semibold ml-9 text-m"
+              onClick={() => alert("A new OTP has been sent!")}
+            >
+              Resend Code
+            </button>
+          </div>
+
+          <DialogFooter className="w-full flex justify-center">
+            <Button
+              className="w-full py-3 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white text-lg font-semibold"
+              onClick={handleOtpVerification}
+            >
+              Continue
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
       <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold text-lg absolute bottom-1/4">
-        <Link className="hover:underline" href={"/terms-and-conditions"}>
+        <Link className="hover:underline" href="/terms-and-conditions">
           Terms & Conditions
         </Link>
-        <Link className="hover:underline" href={"/privacy-policy"}>
+        <Link className="hover:underline" href="/privacy-policy">
           Privacy Policy
         </Link>
         <Link
