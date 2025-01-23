@@ -150,8 +150,7 @@ const InputBox = () => {
         </Link>
         <a
           className="hover:underline"
-          href="/GRABBZO CHANNEL PARTNER AGREEMENT.pdf"
-          download
+          href="https://drive.google.com/file/d/1bUw6cW7D9sS45kwMyIekxXKhCHSUQi3S"
         >
           Channel Partner Agreement
         </a>
