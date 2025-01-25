@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "../AlertDialog";
 import { changeCategoryStatus, deleteCategory } from "@/helpers/api-utils";
+import { useSnackbar } from "notistack";
 
 interface Item {
   id: number;
@@ -44,10 +45,13 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   changeToggleEditor,
 }) => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
-  const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>({});
+  const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>(
+    {}
+  );
 
   // Initialize `isDisabledMap` only once when `categories` changes
   useEffect(() => {
@@ -69,9 +73,24 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     onCategoryChange(category);
   };
 
-  const toggleCategoryStatus = async (status: boolean, categoryId: number, categoryName: string) => {
+  const toggleCategoryStatus = async (
+    status: boolean,
+    categoryId: number,
+    categoryName: string
+  ) => {
     try {
       await changeCategoryStatus(!status, categoryId);
+      if (status == true) {
+        enqueueSnackbar("Catgeory Enabled !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+      } else {
+        enqueueSnackbar("Category Disabled !", {
+          variant: "warning",
+          className: "font-poppins",
+        });
+      }
       setIsDisabledMap((prev) => ({
         ...prev,
         [categoryName]: !status,
@@ -101,7 +120,11 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
             <Switch
               checked={!isDisabledMap[categoryName]}
               onCheckedChange={() =>
-                toggleCategoryStatus(isDisabledMap[categoryName], categoryData.categoryId, categoryName)
+                toggleCategoryStatus(
+                  isDisabledMap[categoryName],
+                  categoryData.categoryId,
+                  categoryName
+                )
               }
             />
           )}
@@ -120,7 +143,16 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction className="text-white" onClick={async ()=>{await deleteCategory(categoryData.categoryId)}}>
+                    <AlertDialogAction
+                      className="text-white"
+                      onClick={async () => {
+                        await deleteCategory(categoryData.categoryId);
+                        enqueueSnackbar("Category has been deleted !", {
+                          variant: "error", 
+                          className:"font-poppins"
+                        });
+                      }}
+                    >
                       Continue
                     </AlertDialogAction>
                   </AlertDialogFooter>
