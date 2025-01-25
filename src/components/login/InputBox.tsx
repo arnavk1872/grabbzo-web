@@ -132,25 +132,13 @@ const InputBox = () => {
               ))}
             </InputOTPGroup>
           </InputOTP>
-
-          <div className="flex items-center mt-2 w-full">
-            <span className="text-gray-500 text-sm ">
-              Didn't receive the code?
-            </span>
-            <button
-              className="text-blue-600 font-semibold ml-9 text-m"
-              onClick={() => alert("A new OTP has been sent!")}
-            >
-              Resend Code
-            </button>
-          </div>
-
-          <DialogFooter className="w-full flex justify-center">
+          <DialogFooter>
             <Button
-              className="w-full py-3 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white text-lg font-semibold"
+              type="submit"
+              className="text-white"
               onClick={handleOtpVerification}
             >
-              Continue
+              Verify
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -163,12 +151,12 @@ const InputBox = () => {
         <Link className="hover:underline" href="/privacy-policy">
           Privacy Policy
         </Link>
-        <Link
+        <a
           className="hover:underline"
-          href="/GRABBZO CHANNEL PARTNER AGREEMENT.pdf"
+          href="https://drive.google.com/file/d/1bUw6cW7D9sS45kwMyIekxXKhCHSUQi3S"
         >
           Channel Partner Agreement
-        </Link>
+        </a>
       </div>
     </div>
   );
