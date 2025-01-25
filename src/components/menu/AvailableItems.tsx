@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { inStock } from "@/helpers/api-utils";
 import Dustbin from "../Icons/Dustbin";
 import Pencil from "../Icons/Pencil";
+import { useSnackbar } from "notistack";
 
 interface Item {
   id: number;
@@ -23,6 +24,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setLocalItems(items);
@@ -32,6 +34,17 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
     try {
       const updatedStatus = !currentStatus;
       await inStock(id, updatedStatus);
+      if (updatedStatus == true) {
+        enqueueSnackbar("Item in Stock !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+      } else {
+        enqueueSnackbar("Item Out of Stock !", {
+          variant: "warning",
+          className: "font-poppins",
+        });
+      }
       setLocalItems((prevItems) =>
         prevItems.map((item) =>
           item.id === id ? { ...item, isEnabled: updatedStatus } : item
@@ -61,8 +74,6 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                     <Dustbin />
                     <Pencil />
                   </div>
-                  
-
                 </>
               )}
               {!isEditor && (

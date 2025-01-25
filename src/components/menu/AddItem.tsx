@@ -65,7 +65,7 @@ const AddItem = forwardRef(
         </div>
 
         <div className="mx-6 text-[17px]">Category</div>
-        <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div>
+        {/* <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div> */}
         <div className="w-1/3 whitespace-nowrap mx-6">
         <Dropdown
           label="Select Category"
