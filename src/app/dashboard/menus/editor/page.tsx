@@ -1,5 +1,3 @@
-import AvailableMenu from '@/components/menu/AvailableMenu'
-import ChangeMenu from '@/components/menu/ChangeMenu'
 import MenuEditor from '@/components/menu/MenuEditor';
 import { getCategories } from '@/helpers/api-utils';
 import React from 'react'
