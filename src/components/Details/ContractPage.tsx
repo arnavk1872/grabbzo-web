@@ -10,7 +10,6 @@ import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState } from "react";
-import { enqueueSnackbar } from "notistack";
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");

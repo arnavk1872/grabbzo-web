@@ -2,48 +2,55 @@
 import FileUpload from "@/components/Details/FileUpload";
 import { Button } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
-import { Label } from "@/components/UI/Label";
-import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
 import useRestaurantDocStore from "@/store/restrauntDocStore";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { DocFormSchema } from "./formSchema";
 
 const DocPage = () => {
   const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const router = useRouter();
-
-  const [isGstRegistered, setIsGstRegistered] = useState<string>("no");
-
-  const handleGstRegistrationChange = (value: string) => {
-    setIsGstRegistered(value);
-    const gst = value === "yes";
-    setDocDetailsData("IsGst", gst);
-  };
-
-  const handleInputChange = (name: string, value: string) => {
-    setDocDetailsData(name, value);
-  };
 
   const handleAccountValidation = (value: string) => {
     if (docDetailsData.BankAccountNumber !== value) {
-      // console.log("Account is not same!");
+      setErrors((prev) => ({
+        ...prev,
+        ReBankAccountNumber: "Account Number does not match!!",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, ReBankAccountNumber: "" }));
     }
     setDocDetailsData("ReBankAccountNumber", value);
   };
 
   const handleFileChange = (file: File | null, field: string) => {
     setDocDetailsData(field, file);
-    if (file) {
-      // console.log(`${field} file uploaded:`, file.name);
-    } else {
-      // console.log(`No file selected for ${field}`);
-    }
   };
 
-  const handleClick = () => {
-    // console.log(docDetailsData);
-    router.push("/details/menu");
+  const validateForm = () => {
+    const validationResult = DocFormSchema.safeParse(docDetailsData);
+    const validationErrors: Record<string, string> = {};
+
+    if (!validationResult.success) {
+      validationResult.error.errors.forEach((err) => {
+        const path = err.path.join(".");
+        validationErrors[path] = err.message;
+      });
+    }
+
+    setErrors(validationErrors);
+    return validationErrors;
+  };
+
+  const handleProceedClick = () => {
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length === 0 && isFormComplete) {
+      router.push("/details/menu");
+    }
   };
 
   const isFormComplete =
@@ -51,13 +58,12 @@ const DocPage = () => {
     docDetailsData.panName &&
     docDetailsData.panFile &&
     docDetailsData.FssaiNumber &&
-    // docDetailsData.FssaiExpiry &&
     docDetailsData.FssaiFile &&
     docDetailsData.BankAccountNumber &&
     docDetailsData.ReBankAccountNumber &&
     docDetailsData.BankIfscCode &&
-    (!docDetailsData.IsGst ||
-      (docDetailsData.GstNumber && docDetailsData.GstFile));
+    docDetailsData.GstNumber &&
+    docDetailsData.GstFile;
 
   return (
     <div className="font-poppins ml-10 min-w-[750px]">
@@ -80,16 +86,30 @@ const DocPage = () => {
             We will verify the legal entity with this information
           </span>
         </div>
-        <Input
-          placeholder="PAN Number*"
-          onChange={(e) => handleInputChange("panNumber", e.target.value)}
-          value={docDetailsData.panNumber}
-        />
-        <Input
-          placeholder="Full Name As Per PAN*"
-          onChange={(e) => handleInputChange("panName", e.target.value)}
-          value={docDetailsData.panName}
-        />
+        <div>
+          <Input
+            placeholder="PAN Number*"
+            onChange={(e) => {
+              setDocDetailsData("panNumber", e.target.value);
+              setErrors((prev) => ({ ...prev, panNumber: "" }));
+            }}
+            value={docDetailsData.panNumber}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.panNumber}
+          </div>
+        </div>
+        <div>
+          <Input
+            placeholder="Full Name As Per PAN*"
+            onChange={(e) => {
+              setDocDetailsData("panName", e.target.value);
+              setErrors((prev) => ({ ...prev, panName: "" }));
+            }}
+            value={docDetailsData.panName}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">{errors.panName}</div>
+        </div>
         <FileUpload
           onFileChange={(file) => handleFileChange(file, "panFile")}
         />
@@ -104,36 +124,22 @@ const DocPage = () => {
             This will help us in calculate your taxes, verify PAN to proceed
           </span>
         </div>
-        <div className="">
-          <h4 className="text-zinc-800 font-bold text-lg">
-            Are you GST registered?
-          </h4>
-          <RadioGroup
-            className="flex gap-16 mt-4"
-            onValueChange={handleGstRegistrationChange}
-            value={isGstRegistered}
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="yes" id="yes" />
-              <Label htmlFor="yes">Yes</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="no" id="no" color="" />
-              <Label htmlFor="no">No</Label>
-            </div>
-          </RadioGroup>
+        <div>
+          <Input
+            placeholder="GST Number*"
+            onChange={(e) => {
+              setDocDetailsData("GstNumber", e.target.value);
+              setErrors((prev) => ({ ...prev, GstNumber: "" }));
+            }}
+            value={docDetailsData.GstNumber}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.GstNumber}
+          </div>
         </div>
-        {isGstRegistered === "yes" && (
-          <>
-            <Input
-              placeholder="GST Number*"
-              onChange={(e) => handleInputChange("GstNumber", e.target.value)}
-            />
-            <FileUpload
-              onFileChange={(file) => handleFileChange(file, "GstFile")}
-            />
-          </>
-        )}
+        <FileUpload
+          onFileChange={(file) => handleFileChange(file, "GstFile")}
+        />
       </div>
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12">
         <div>
@@ -144,11 +150,19 @@ const DocPage = () => {
             This is required to comply with regulations on food safety
           </span>
         </div>
-        <Input
-          placeholder="FSSAI Certificate Number*"
-          onChange={(e) => handleInputChange("FssaiNumber", e.target.value)}
-          value={docDetailsData.FssaiNumber}
-        />
+        <div>
+          <Input
+            placeholder="FSSAI Certificate Number*"
+            onChange={(e) => {
+              setDocDetailsData("FssaiNumber", e.target.value);
+              setErrors((prev) => ({ ...prev, FssaiNumber: "" }));
+            }}
+            value={docDetailsData.FssaiNumber}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.FssaiNumber}
+          </div>
+        </div>
         {/* <Input
           placeholder="Full Name As Per PAN*"
           onChange={(e) => handleInputChange("FssaiExpiry", e.target.value)}
@@ -166,29 +180,50 @@ const DocPage = () => {
             Let us know where to deposit your money
           </span>
         </div>
-        <Input
-          placeholder="Bank Account Number*"
-          onChange={(e) =>
-            handleInputChange("BankAccountNumber", e.target.value)
-          }
-          value={docDetailsData.BankAccountNumber}
-        />
-        <Input
-          placeholder="Re-Enter Account Number*"
-          onChange={(e) => handleAccountValidation(e.target.value)}
-          value={docDetailsData.ReBankAccountNumber}
-        />
-        <Input
-          placeholder="Bank IFSC Code*"
-          onChange={(e) => handleInputChange("BankIfscCode", e.target.value)}
-          value={docDetailsData.BankIfscCode}
-        />
+        <div>
+          <Input
+            placeholder="Bank Account Number*"
+            onChange={(e) => {
+              setDocDetailsData("BankAccountNumber", e.target.value);
+              setErrors((prev) => ({ ...prev, BankAccountNumber: "" }));
+              handleAccountValidation(docDetailsData.ReBankAccountNumber);
+            }}
+            value={docDetailsData.BankAccountNumber}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.BankAccountNumber}
+          </div>
+        </div>
+        <div>
+          <Input
+            placeholder="Re-Enter Account Number*"
+            type="password"
+            onChange={(e) => handleAccountValidation(e.target.value)}
+            value={docDetailsData.ReBankAccountNumber}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.ReBankAccountNumber}
+          </div>
+        </div>
+        <div>
+          <Input
+            placeholder="Bank IFSC Code*"
+            onChange={(e) => {
+              setDocDetailsData("BankIfscCode", e.target.value);
+              setErrors((prev) => ({ ...prev, BankIfscCode: "" }));
+            }}
+            value={docDetailsData.BankIfscCode}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.BankIfscCode}
+          </div>
+        </div>
       </div>
 
       <Button
         className="my-6 w-full text-white font-medium text-lg"
         disabled={!isFormComplete}
-        onClick={handleClick}
+        onClick={handleProceedClick}
       >
         Proceed
       </Button>

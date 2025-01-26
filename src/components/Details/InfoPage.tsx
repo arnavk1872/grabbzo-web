@@ -4,26 +4,66 @@ import { Checkbox } from "@/components/UI/Checkbox";
 import { Input } from "@/components/UI/Input";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { BasicFormSchema } from "./formSchema";
+import { City, ICity, State } from "country-state-city";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../UI/Select";
 
 const InfoPage = () => {
   const router = useRouter();
   const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [city, setCity] = useState<ICity[]>([
+    { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
+  ]);
 
-  const handleInputChange = (name: string, value: string) => {
-    setBasicDetailsData(name, value);
+  const states = State.getStatesOfCountry("IN");
+
+  const validateForm = () => {
+    const validationResult = BasicFormSchema.safeParse(basicDetailsData);
+    const validationErrors: Record<string, string> = {};
+
+    if (!validationResult.success) {
+      validationResult.error.errors.forEach((err) => {
+        const path = err.path.join(".");
+        validationErrors[path] = err.message;
+      });
+    }
+
+    setErrors(validationErrors);
+    return validationErrors;
+  };
+
+  const handleStateChange = (value: string) => {
+    setBasicDetailsData("state", value);
+    const state = states.find((state) => state.name == value);
+    var cityData: ICity[] = [];
+    if (state) cityData = City.getCitiesOfState("IN", state.isoCode);
+    else
+      cityData = [
+        { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
+      ];
+    setCity(cityData);
   };
 
   const handleClick = () => {
-    // console.log(basicDetailsData);
-    router.push("/details/document");
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length === 0 && isFormComplete) {
+      router.push("/details/document");
+    }
   };
   const isFormComplete =
     basicDetailsData.ownerName &&
     basicDetailsData.restaurantName &&
     basicDetailsData.email &&
-    // basicDetailsData.mobileNumber &&
     basicDetailsData.shopNo &&
     basicDetailsData.floor &&
     basicDetailsData.area &&
@@ -45,26 +85,43 @@ const InfoPage = () => {
       </div>
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl">
         <h3 className="text-zinc-800 text-xl font-extrabold">Basic Details</h3>
-        <Input
-          placeholder="Owner Full Name*"
-          onChange={(e) => handleInputChange("ownerName", e.target.value)}
-          value={basicDetailsData.ownerName}
-        />
-        <Input
-          placeholder="Restaurant Name*"
-          onChange={(e) => handleInputChange("restaurantName", e.target.value)}
-          value={basicDetailsData.restaurantName}
-        />
-        <Input
-          placeholder="Email Address"
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          value={basicDetailsData.email}
-        />
-        {/* <Input
-          placeholder="Mobile Number*"
-          onChange={(e) => handleInputChange("mobileNumber", e.target.value)}
-          value={basicDetailsData.mobileNumber}
-        /> */}
+        <div>
+          <Input
+            placeholder="Owner Full Name*"
+            onChange={(e) => {
+              setBasicDetailsData("ownerName", e.target.value);
+              setErrors((prev) => ({ ...prev, ownerName: "" }));
+            }}
+            value={basicDetailsData.ownerName}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.ownerName}
+          </div>
+        </div>
+        <div>
+          <Input
+            placeholder="Restaurant Name*"
+            onChange={(e) => {
+              setBasicDetailsData("restaurantName", e.target.value);
+              setErrors((prev) => ({ ...prev, restaurantName: "" }));
+            }}
+            value={basicDetailsData.restaurantName}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">
+            {errors.restaurantName}
+          </div>
+        </div>
+        <div>
+          <Input
+            placeholder="Email Address"
+            onChange={(e) => {
+              setBasicDetailsData("email", e.target.value);
+              setErrors((prev) => ({ ...prev, email: "" }));
+            }}
+            value={basicDetailsData.email}
+          />
+          <div className="ml-2 text-red-500 text-[14px]">{errors.email}</div>
+        </div>
         <div>
           <h6 className="text-zinc-800 font-medium text-base">
             Restaurant's primary contact number
@@ -90,41 +147,90 @@ const InfoPage = () => {
           Restaurant Location
         </h3>
         <div className="grid gap-8 py-4">
-          <Input
-            placeholder="Shop No. / Building No.*"
-            onChange={(e) => handleInputChange("shopNo", e.target.value)}
-            value={basicDetailsData.shopNo}
-          />
-          <Input
-            placeholder="Floor / Tower"
-            onChange={(e) => handleInputChange("floor", e.target.value)}
-            value={basicDetailsData.floor}
-          />
-          <Input
-            placeholder="Area / Sector /Locality*"
-            onChange={(e) => handleInputChange("area", e.target.value)}
-            value={basicDetailsData.area}
-          />
-          <Input
-            placeholder="State"
-            onChange={(e) => handleInputChange("state", e.target.value)}
+          <div>
+            <Input
+              placeholder="Shop No. / Building No.*"
+              onChange={(e) => {
+                setBasicDetailsData("shopNo", e.target.value);
+                setErrors((prev) => ({ ...prev, shopNo: "" }));
+              }}
+              value={basicDetailsData.shopNo}
+            />
+            <div className="ml-2 text-red-500 text-[14px]">{errors.shopNo}</div>
+          </div>
+          <div>
+            <Input
+              placeholder="Floor / Tower"
+              onChange={(e) => {
+                setBasicDetailsData("floor", e.target.value);
+                setErrors((prev) => ({ ...prev, floor: "" }));
+              }}
+              value={basicDetailsData.floor}
+            />
+            <div className="ml-2 text-red-500 text-[14px]">{errors.floor}</div>
+          </div>
+          <div>
+            <Input
+              placeholder="Area / Sector /Locality*"
+              onChange={(e) => {
+                setBasicDetailsData("area", e.target.value);
+                setErrors((prev) => ({ ...prev, area: "" }));
+              }}
+              value={basicDetailsData.area}
+            />
+            <div className="ml-2 text-red-500 text-[14px]">{errors.area}</div>
+          </div>
+          <Select
             value={basicDetailsData.state}
-          />
-          <Input
-            placeholder="City"
-            onChange={(e) => handleInputChange("city", e.target.value)}
+            onValueChange={handleStateChange}
+          >
+            <SelectTrigger className="text-gray-800">
+              <SelectValue placeholder="State*" />
+            </SelectTrigger>
+            <SelectContent>
+              {states.map((option) => (
+                <SelectItem key={option.isoCode} value={option.name}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
             value={basicDetailsData.city}
-          />
-          <Input
-            placeholder="PinCode"
-            onChange={(e) => handleInputChange("pinCode", e.target.value)}
-            value={basicDetailsData.pinCode}
-          />
+            onValueChange={(value) => setBasicDetailsData("city", value)}
+          >
+            <SelectTrigger className="text-gray-800">
+              <SelectValue placeholder="City*" />
+            </SelectTrigger>
+            <SelectContent>
+              {city.map((option) => (
+                <SelectItem key={option.name} value={option.name}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <div>
+            <Input
+              placeholder="PinCode"
+              onChange={(e) => {
+                setBasicDetailsData("pinCode", e.target.value);
+                setErrors((prev) => ({ ...prev, pinCode: "" }));
+              }}
+              value={basicDetailsData.pinCode}
+            />
+            <div className="ml-2 text-red-500 text-[14px]">
+              {errors.pinCode}
+            </div>
+          </div>
           <Input
             placeholder="Add Any Nearby Landmark (Optional)"
-            onChange={(e) => handleInputChange("landmark", e.target.value)}
+            onChange={(e) => {
+              setBasicDetailsData("landmark", e.target.value);
+            }}
             value={basicDetailsData.landmark}
           />
+
           {/* <MapComponent /> */}
         </div>
       </div>

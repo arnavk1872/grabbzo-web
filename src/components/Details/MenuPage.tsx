@@ -51,7 +51,7 @@ const MenuPage = () => {
       </div>
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6">
         <h4 className="text-zinc-800 font-bold text-xl">
-          Select the service you want to register for
+          Select the service you want to register
         </h4>
         <RadioGroup
           value={menuDetailsData.foodType}
@@ -134,7 +134,7 @@ const MenuPage = () => {
             Add delivery menu image
           </h3>
           <span className="text-neutral-400 text-sm font-light">
-            These will be used to creat your in-app menu.
+            These will be used verify the item prices.
           </span>
         </div>
         <FileUpload

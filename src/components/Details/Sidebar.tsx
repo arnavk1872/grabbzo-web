@@ -35,7 +35,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: "Menu Setup",
-      title: "Menu Details, Food Deliviry Options",
+      title: "Menu Details, Food Delivery Options",
       icon: <MenuSetupIcon />,
       href: "/details/menu",
     },
