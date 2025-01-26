@@ -86,7 +86,7 @@ const InputBox = () => {
     <div className="bg-white w-[45%] absolute flex flex-col justify-center items-center bottom-[15%] rounded-3xl">
       <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-12">
         <span className="text-blue-600 font-extrabold">Login</span> to your
-        Account to manage all the service and explore our tools
+        Account
       </h4>
       <Input
         className="w-1/2 my-9"
@@ -106,12 +106,9 @@ const InputBox = () => {
 
         <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle className="pb-2 text-xl">
-              Enter <span className="bg-yellow-400">OTP</span>
-            </DialogTitle>
+            <DialogTitle className="pb-2 text-xl">Enter OTP</DialogTitle>
             <DialogDescription className="pb-2">
-              4 digit <span className="bg-yellow-400">OTP</span> has been sent
-              to Customer
+              6 digit OTP has been sent to you
             </DialogDescription>
           </DialogHeader>
 
@@ -125,7 +122,7 @@ const InputBox = () => {
                 <InputOTPSlot
                   key={index}
                   index={index}
-                  className={`w-full h-14 rounded-full text-center font-bold text-xl flex items-center justify-center transition-all ${
+                  className={`w-full h-14 rounded-full text-center focus:outline-gray-500 font-bold text-xl flex items-center justify-center transition-all ${
                     otp[index] ? "bg-blue-600 text-white" : "bg-gray-100"
                   }`}
                 />
@@ -156,19 +153,42 @@ const InputBox = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold text-lg absolute bottom-1/4">
-        <Link className="hover:underline" href="/terms-and-conditions">
-          Terms & Conditions
+      <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold absolute bottom-1/4 text-xs">
+        <Link
+          className="hover:underline"
+          href="https://drive.google.com/uc?export=download&id=191Qxs4O0ip_aIcEa5n0LL2_KNNclBf90"
+          download
+        >
+          Guildlines and Policy
         </Link>
-        <Link className="hover:underline" href="/privacy-policy">
+        <Link
+          className="hover:underline"
+          href="https://drive.google.com/uc?export=download&id=1sazdBnKFEkgeKZnrJqRBtXdcVRC_BUJE"
+          download
+        >
           Privacy Policy
         </Link>
-        <a
+        <Link
           className="hover:underline"
-          href="https://drive.google.com/file/d/1bUw6cW7D9sS45kwMyIekxXKhCHSUQi3S"
+          href="https://drive.google.com/uc?export=download&id=1bUw6cW7D9sS45kwMyIekxXKhCHSUQi3S"
+          download
         >
           Channel Partner Agreement
-        </a>
+        </Link>
+        <Link
+          className="hover:underline"
+          href="https://drive.google.com/uc?export=download&id=1Rp5V00SOgV3SkabZM88OSsUEzAQiEvzs"
+          download
+        >
+          Terms of Services
+        </Link>
+        <Link
+          className="hover:underline"
+          href="https://drive.google.com/uc?export=download&id=1cr2q5_IqkAsLjb2Lg7QmH20-GQg2ZM-L"
+          download
+        >
+          Cancellation and Refund Policy
+        </Link>
       </div>
     </div>
   );
