@@ -154,38 +154,21 @@ const InputBox = () => {
       </Dialog>
 
       <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold absolute bottom-1/4 text-xs">
-        <Link
-          className="hover:underline"
-          href="/guidelines-and-policy"
-          target="_blank"
-        >
+        <Link className="hover:underline" href="/guidelines-and-policy">
           Guidelines and Policy
         </Link>
-        <Link
-          className="hover:underline"
-          href="/privacy-policy"
-          target="_blank"
-        >
+        <Link className="hover:underline" href="/privacy-policy">
           Privacy Policy
         </Link>
-        <Link
-          className="hover:underline"
-          href="/channel-partner-agreement"
-          target="_blank"
-        >
+        <Link className="hover:underline" href="/channel-partner-agreement">
           Channel Partner Agreement
         </Link>
-        <Link
-          className="hover:underline"
-          href="/terms-and-conditions"
-          target="_blank"
-        >
+        <Link className="hover:underline" href="/terms-and-conditions">
           Terms of Services
         </Link>
         <Link
           className="hover:underline"
           href="/cancellation-and-refund-policy"
-          target="_blank"
         >
           Cancellation and Refund Policy
         </Link>
