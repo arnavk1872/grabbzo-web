@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     "/",
     "/pricing",
     "/login",
-    "/terms-and-conditions",
+    "/terms-of-services",
     "/privacy-policy",
     "/cancellation-and-refund-policy",
     "/channel-partner-agreement",

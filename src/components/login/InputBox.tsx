@@ -163,7 +163,7 @@ const InputBox = () => {
         <Link className="hover:underline" href="/channel-partner-agreement">
           Channel Partner Agreement
         </Link>
-        <Link className="hover:underline" href="/terms-and-conditions">
+        <Link className="hover:underline" href="/terms-of-services">
           Terms of Services
         </Link>
         <Link

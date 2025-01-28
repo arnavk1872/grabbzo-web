@@ -2,10 +2,8 @@ import React from "react";
 
 const TermsOfServices = () => {
   return (
-    <div className="-mt-20 pb-16">
-      <h2 className="text-[64px] font-semibold text-center">
-        TERMS OF SERVICES FOR GRABBZO ENTERPRISES PRIVATE LIMITED
-      </h2>
+    <div className="mx-auto px-12 text-justify -mt-14 mb-10">
+      <h2 className="text-4xl font-semibold text-center">Terms Of Services</h2>
       <div className="text-justify px-12 flex flex-col gap-3">
         <h3 className="text-xl font-bold">1. Introduction</h3>
         <p>
@@ -94,22 +92,20 @@ const TermsOfServices = () => {
         </ul>
 
         <h3 className="text-xl font-bold">8. Payment Terms</h3>
+
+        <ul className="list-disc pl-8 space-y-2">
+          <li>
+            <strong>Customers</strong>: All transactions are processed through.
+            You agree to pay for orders placed via the Service, including any
+            applicable taxes, delivery fees, and tips.
+          </li>
+        </ul>
         <p>
-          <ul className="list-disc pl-8 space-y-2">
-            <li>
-              <strong>Customers</strong>: All transactions are processed
-              through. You agree to pay for orders placed via the Service,
-              including any applicable taxes, delivery fees, and tips.
-            </li>
-          </ul>
-          <br />
           You agree Order placed shall be a pre-paid order.
-          <br />
           <br />
           You agree to pay a platform fee in favour of Grabbzo ranging from Rs.
           6 to Rs. 20, varying on the quantity of the Order as well as the mode
           of services availed by you.
-          <br />
           <br />
           Prices may vary based on availability, location, and demand.
         </p>
@@ -235,7 +231,13 @@ const TermsOfServices = () => {
         <h3 className="text-xl font-bold">17. Contact Information</h3>
         <p>
           For any questions about these Terms or our services, please contact us
-          at: <b>CONTACT@GRABBZO.COM</b>
+          at:{" "}
+          <a
+            href="mailto:contact@grabbzo.com"
+            className="text-blue-600 hover:underline"
+          >
+            contact@grabbzo.com
+          </a>
         </p>
       </div>
     </div>
