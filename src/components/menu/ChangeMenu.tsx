@@ -3,29 +3,34 @@ import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
 import AddCategory from "./AddCategory";
 import { addNewCategory, addNewItem } from "@/helpers/api-utils";
+import { useSnackbar } from "notistack";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
   allCategories?: any;
 }
 
-const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) => {
+const ChangeMenu: React.FC<ChangeMenuProps> = ({
+  toggleEditor,
+  allCategories,
+}) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
   const [formData, setFormData] = React.useState({
     title: "",
     description: "",
     price: "",
     selectedCategory: null,
-    isVeg:true,
+    isVeg: true,
     servingInfo: null,
     portionSize: null,
-    isStock:true,
+    isStock: true,
     restaurantCategory: {
-      id: 16
-    }
+      id: null,
+    },
   });
 
   const itemDataRef = useRef<any>(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleFormDataChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -34,22 +39,24 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
     }));
   };
 
-  const handleSaveChanges = async (e: { preventDefault: () => void; }) => {
+  const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (toggleEditor) {
       const itemData = itemDataRef.current?.getItemData();
-      console.log("Save changes for AddItem:", itemData);
 
       if (!itemData) {
-        alert("Item data is incomplete.");
+        console.error("Item data is incomplete.");
         return;
       }
 
       try {
-        await addNewItem(formData); 
+        await addNewItem(formData);
+        enqueueSnackbar("Item added successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
       } catch (error) {
         console.error("Error adding item:", error);
-        alert("Failed to add item.");
       }
     } else {
       if (!categoryName.trim()) {
@@ -57,11 +64,10 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
       }
 
       try {
-        await addNewCategory(categoryName); 
+        await addNewCategory(categoryName);
         setCategoryName(""); // Clear input
       } catch (error) {
         console.error("Error adding category:", error);
-        alert("Failed to add category.");
       }
     }
   };
@@ -80,10 +86,13 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({ toggleEditor, allCategories }) 
             ref={itemDataRef}
             allCategories={allCategories}
             formData={formData}
-            onFormDataChange={handleFormDataChange} 
+            onFormDataChange={handleFormDataChange}
           />
         ) : (
-          <AddCategory categoryName={categoryName} setCategoryName={setCategoryName} />
+          <AddCategory
+            categoryName={categoryName}
+            setCategoryName={setCategoryName}
+          />
         )}
       </div>
     </div>
