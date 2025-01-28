@@ -1,4 +1,4 @@
-import Header from "@/components/login/Header";
+import Header from "@/components/Details/Header";
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="">
+    <div className="min-h-screen">
       <Header />
       {children}
     </div>

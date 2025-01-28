@@ -154,38 +154,21 @@ const InputBox = () => {
       </Dialog>
 
       <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold absolute bottom-1/4 text-xs">
-        <Link
-          className="hover:underline"
-          href="https://drive.google.com/uc?export=download&id=191Qxs4O0ip_aIcEa5n0LL2_KNNclBf90"
-          download
-        >
-          Guildlines and Policy
+        <Link className="hover:underline" href="/guidelines-and-policy">
+          Guidelines and Policy
         </Link>
-        <Link
-          className="hover:underline"
-          href="https://drive.google.com/uc?export=download&id=1sazdBnKFEkgeKZnrJqRBtXdcVRC_BUJE"
-          download
-        >
+        <Link className="hover:underline" href="/privacy-policy">
           Privacy Policy
         </Link>
-        <Link
-          className="hover:underline"
-          href="https://drive.google.com/uc?export=download&id=1bUw6cW7D9sS45kwMyIekxXKhCHSUQi3S"
-          download
-        >
+        <Link className="hover:underline" href="/channel-partner-agreement">
           Channel Partner Agreement
         </Link>
-        <Link
-          className="hover:underline"
-          href="https://drive.google.com/uc?export=download&id=1Rp5V00SOgV3SkabZM88OSsUEzAQiEvzs"
-          download
-        >
+        <Link className="hover:underline" href="/terms-of-services">
           Terms of Services
         </Link>
         <Link
           className="hover:underline"
-          href="https://drive.google.com/uc?export=download&id=1cr2q5_IqkAsLjb2Lg7QmH20-GQg2ZM-L"
-          download
+          href="/cancellation-and-refund-policy"
         >
           Cancellation and Refund Policy
         </Link>
