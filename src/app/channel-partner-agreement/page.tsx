@@ -1,9 +1,8 @@
-// components/Pages/ChannelPartnerAgreement.tsx
 import React from "react";
 
 const ChannelPartnerAgreement = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="mx-auto px-12 text-justify -mt-14 mb-10">
       <h2 className="text-4xl font-semibold text-center mb-8">
         Channel Partner Agreement
       </h2>
@@ -32,7 +31,7 @@ const ChannelPartnerAgreement = () => {
         <strong>“party”</strong>
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">WHEREAS</h3>
+      <h3 className="text-xl font-semibold mb-4">WHEREAS</h3>
 
       <p className="mb-6">
         <strong>A. </strong> The Company is engaged in the business of providing
@@ -51,13 +50,13 @@ const ChannelPartnerAgreement = () => {
         provided in terms of SAAS platform.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         NOW, THEREFORE, IN CONSIDERATION OF THE MUTUAL PROMISES AND OTHER
         CONSIDERATION, THE SUFFICIENCY OF WHICH IS ACKNOWLEDGED, THE PARTIES
         AGREE AS FOLLOWS:
       </h3>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         1. Obligations of the Channel Partner
       </h3>
       <p className="text-justify mb-6">Channel Partner agrees to:</p>
@@ -96,7 +95,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         2. Obligations of the Company
       </h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
@@ -116,7 +115,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">3. Fees</h3>
+      <h3 className="text-xl font-semibold mb-4">3. Fees</h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
         <li>
           <p className="text-justify">
@@ -168,7 +167,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         4. Representation and Warranties
       </h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
@@ -228,7 +227,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">5. Term and Termination</h3>
+      <h3 className="text-xl font-semibold mb-4">5. Term and Termination</h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
         <li>
           <p className="text-justify">
@@ -270,7 +269,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">6. Confidentiality</h3>
+      <h3 className="text-xl font-semibold mb-4">6. Confidentiality</h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
         <li>
           <p className="text-justify">
@@ -307,7 +306,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         7. Non-Compete, Non-Disclosure and Non-Solicitation
       </h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
@@ -335,7 +334,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         8. Intellectual Property Rights
       </h3>
       <p className="text-justify mb-6">
@@ -350,7 +349,7 @@ const ChannelPartnerAgreement = () => {
         the prior written consent of the other Party.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         9. Warranty Disclaimer; No Guarantee.
       </h3>
       <p className="text-justify mb-6">
@@ -389,7 +388,7 @@ const ChannelPartnerAgreement = () => {
         COMPATIBLE WITH OR FUNCTION IN THE MERCHANT’S COMPUTER ENVIRONMENT.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">10. Indemnification.</h3>
+      <h3 className="text-xl font-semibold mb-4">10. Indemnification.</h3>
       <p className="text-justify mb-6">
         The Channel Partner will indemnify, defend, and hold harmless the
         Company, its affiliates, officers, employees, customers, and vendors
@@ -399,7 +398,7 @@ const ChannelPartnerAgreement = () => {
         or violation of applicable laws.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         11. Limitation of Liability.
       </h3>
       <p className="text-justify mb-6">
@@ -411,7 +410,7 @@ const ChannelPartnerAgreement = () => {
         IF THAT PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         12. Governing Law and Dispute Resolution.
       </h3>
       <ul className="list-disc pl-8 space-y-4 mb-6">
@@ -451,7 +450,7 @@ const ChannelPartnerAgreement = () => {
         </li>
       </ul>
 
-      <h3 className="text-2xl font-semibold mb-4">13. Force Majeure.</h3>
+      <h3 className="text-xl font-semibold mb-4">13. Force Majeure.</h3>
       <p className="text-justify mb-6">
         In the event, either Party’s performance under this Agreement is
         prevented or delayed in whole or any part due to, circumstances or
@@ -466,7 +465,7 @@ const ChannelPartnerAgreement = () => {
         obligation, to terminate this Agreement.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl font-semibold mb-4">
         14. Independent Contractors.
       </h3>
       <p className="text-justify mb-6">
@@ -478,7 +477,7 @@ const ChannelPartnerAgreement = () => {
         party.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">15. Entire Agreement.</h3>
+      <h3 className="text-xl font-semibold mb-4">15. Entire Agreement.</h3>
       <p className="text-justify mb-6">
         This Agreement constitutes the entire agreement of the parties with
         regard to the subject matter hereof, and supersedes all previous written
@@ -486,7 +485,7 @@ const ChannelPartnerAgreement = () => {
         parties, whether expressed or implied.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">16. Severability.</h3>
+      <h3 className="text-xl font-semibold mb-4">16. Severability.</h3>
       <p className="text-justify mb-6">
         If any provision of this Agreement shall be determined by any court of
         competent jurisdiction to be invalid or unenforceable, such invalidity
@@ -496,7 +495,7 @@ const ChannelPartnerAgreement = () => {
         out as nearly as possible the parties' original intent.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">17. Counterparts.</h3>
+      <h3 className="text-xl font-semibold mb-4">17. Counterparts.</h3>
       <p className="text-justify mb-6">
         This Agreement may be executed in any number of originals or
         counterparts, each in the like form and all of which when taken together
@@ -505,7 +504,7 @@ const ChannelPartnerAgreement = () => {
         counterparts.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">18. Waiver.</h3>
+      <h3 className="text-xl font-semibold mb-4">18. Waiver.</h3>
       <p className="text-justify mb-6">
         No waiver of any provision of this Agreement shall be valid unless it is
         in writing and signed by the Party who is asserted to have made the
@@ -514,7 +513,7 @@ const ChannelPartnerAgreement = () => {
         subsequent breach.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">19. Assignment.</h3>
+      <h3 className="text-xl font-semibold mb-4">19. Assignment.</h3>
       <p className="text-justify mb-6">
         Neither party may assign, transfer, or delegate its rights or
         obligations under this Agreement without the prior written consent of
@@ -523,13 +522,13 @@ const ChannelPartnerAgreement = () => {
         delegation in violation of the foregoing will be null and void.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">20. Amendment.</h3>
+      <h3 className="text-xl font-semibold mb-4">20. Amendment.</h3>
       <p className="text-justify mb-6">
         No amendment or modification of this Agreement shall be valid unless it
         is in writing and signed by both Parties.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">21. Notices.</h3>
+      <h3 className="text-xl font-semibold mb-4">21. Notices.</h3>
       <p className="text-justify mb-6 ">
         All notices, demands, and other communications required or desired to be
         given hereunder shall be in writing and shall be deemed to be given: If
@@ -545,24 +544,23 @@ const ChannelPartnerAgreement = () => {
       </p>
 
       <p className="text-justify mb-6">
-        <span className="text-2xl font-semibold mb-4:"> 22.</span> This
-        Agreement is for the sole benefit of the parties and their respective
-        successors and permitted assigns, and nothing in the Agreement, express
-        or implied, will confer any legal or equitable right, benefit, or remedy
-        upon any other person.
+        <span className="text-xl font-semibold mb-4:"> 22.</span> This Agreement
+        is for the sole benefit of the parties and their respective successors
+        and permitted assigns, and nothing in the Agreement, express or implied,
+        will confer any legal or equitable right, benefit, or remedy upon any
+        other person.
       </p>
 
       <p className="text-justify mb-6">
-        {" "}
-        <span className="text-2xl font-semibold mb-4:"> 23. </span>
+        <span className="text-xl font-semibold mb-4:"> 23. </span>
         Both parties acknowledge that they do not have any ownership rights or
         interests in the trademarks, trade names, service marks, or logos of the
         other party. Any use of these trademarks, trade names, service marks, or
         logos must receive prior written approval from the respective party.
       </p>
       <p className="text-justify mb-6">
-        <span className=" font-semibold mb-4">IN WITNESS WHEREOF</span>
-        {""} the Parties have caused this Agreement to be executed by their duly
+        <span className=" font-semibold mb-4 pr-1">IN WITNESS WHEREOF</span>
+        the Parties have caused this Agreement to be executed by their duly
         authorized representatives on the date first written above.
       </p>
     </div>

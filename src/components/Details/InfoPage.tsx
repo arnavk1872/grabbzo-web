@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../UI/Select";
+import info from "public/Restaruant-Information.png";
 
 const InfoPage = () => {
   const router = useRouter();
@@ -76,7 +77,7 @@ const InfoPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Restaurant Information</h2>
         <Image
-          src="/Restaruant-Information.png"
+          src={info}
           width={114}
           height={73}
           alt="information"

@@ -7,6 +7,7 @@ import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import menu from "public/Menu-Setup.png";
 
 const MenuPage = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const MenuPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Menu Setup</h2>
         <Image
-          src="/Menu-Setup.png"
+          src={menu}
           width={114}
           height={73}
           alt="menu"
