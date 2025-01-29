@@ -9,7 +9,7 @@ export default function CustomSnackbarProvider({
 }) {
   return (
     <SnackbarProvider
-      maxSnack={3}
+      maxSnack={1}
       anchorOrigin={{
         vertical: "bottom", 
         horizontal: "left", 

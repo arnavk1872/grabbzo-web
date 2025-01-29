@@ -36,7 +36,7 @@ const ETATimer: React.FC<ETATimerProps> = ({ targetTime }) => {
 
   return (
     <div className="p-4 text-center font-poppins">
-      <p className="text-[36px] ">{formatTime(timeRemaining)}</p>
+      <p className="text-[34px] ">{formatTime(timeRemaining)}</p>
     </div>
   );
 };

@@ -38,6 +38,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       [field]: value,
     }));
   };
+  
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -65,6 +66,10 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
 
       try {
         await addNewCategory(categoryName);
+        enqueueSnackbar("Category added successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
         setCategoryName(""); // Clear input
       } catch (error) {
         console.error("Error adding category:", error);

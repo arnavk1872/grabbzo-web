@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Input } from "../UI/Input";
 import { z } from "zod";
+import { useSnackbar } from "notistack";
 
 interface AddCategoryProps {
   categoryName: string;
   setCategoryName: (name: string) => void;
 }
 
-const AddCategory: React.FC<AddCategoryProps> = ({ categoryName, setCategoryName }) => {
+const AddCategory: React.FC<AddCategoryProps> = ({
+  categoryName,
+  setCategoryName,
+}) => {
   const [error, setError] = useState<string | null>(null);
 
   const categoryNameSchema = z.string().min(1, "Category name is required");
@@ -16,11 +20,12 @@ const AddCategory: React.FC<AddCategoryProps> = ({ categoryName, setCategoryName
     const value = e.target.value;
     setCategoryName(value);
 
+
     const validationResult = categoryNameSchema.safeParse(value);
     if (!validationResult.success) {
-      setError(validationResult.error.errors[0].message); 
+      setError(validationResult.error.errors[0].message);
     } else {
-      setError(null); 
+      setError(null);
     }
   };
 

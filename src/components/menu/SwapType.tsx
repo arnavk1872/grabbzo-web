@@ -8,7 +8,7 @@ const SwapType = () => {
   const router = useRouter();
 
   const options = [
-    { label: 'Available Items', value: 'availableItems' },
+    { label: 'Menu Overview', value: 'availableItems' },
     { label: 'Menu Editor', value: 'editor' },
   ];
 

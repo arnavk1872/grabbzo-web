@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import AvailableCategories from "./AvailableCategories";
 import AvailableItems from "./AvailableItems";
 
@@ -39,29 +39,36 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(
     allCategories[0]?.name || ""
   );
-console.log(allCategories,"CONSOLE");
 
-  const categoryData = allCategories.reduce<
-    Record<string, { isDisabled: boolean;categoryId:number; items: Item[] }>
-  >((acc, category) => {
-    acc[category.name] = {
-      isDisabled: category.isDisabled,
-      categoryId:category.id, // Include `isDisabled` field
-      items: category.items.map((item) => ({
-        id: item.id,
-        title: item.title, // Map `name` to `title`
-        isEnabled: item.isStock,
-      })),
-    };
-    return acc;
-  }, {});
+  const categoryData = useMemo(() => {
+    return allCategories.reduce<
+      Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
+    >((acc, category) => {
+      acc[category.name] = {
+        isDisabled: category.isDisabled,
+        categoryId: category.id,
+        items: category.items.map((item) => ({
+          id: item.id,
+          title: item.title, // Map `name` to `title`
+          isEnabled: item.isStock,
+        })),
+      };
+      return acc;
+    }, {});
+  }, [JSON.stringify(allCategories)]); // Deep comparison using JSON.stringify
+
+  // Trigger re-render when the number of categories changes
+  const categoryCount = useMemo(() => Object.keys(categoryData).length, [categoryData]);
+  const [categories, setCategories] = useState(categoryData);
 
   const handleToggleEditor = changeToggleEditor || (() => {});
+  
 
   return (
-    <div className="p-4 flex gap-x-4 w-full">
+    <div key={categoryCount} className="p-4 flex gap-x-4 w-full">
       <AvailableCategories
-        categories={categoryData}
+        categories={categories}
+        setCategories={setCategories}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
         changeToggleEditor={handleToggleEditor}

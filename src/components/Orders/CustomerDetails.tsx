@@ -1,6 +1,7 @@
 import React from "react";
 import PhoneIcon from "../Icons/PhoneIcon";
 import ETATimer from "./ETATimer";
+import Clock from "../Icons/Clock";
 
 const CustomerDetails = () => {
   return (
@@ -46,7 +47,7 @@ const CustomerDetails = () => {
         </div>
       </div>
       <div className="border border-borderColor rounded-[24px] w-full  bg-white flex gap-x-4 items-center justify-center py-4">
-        <span className=" font-poppins font-bold"><ETATimer targetTime={new Date().getTime() + 1000000} /></span>
+        <Clock/><span className=" font-poppins font-bold"><ETATimer targetTime={new Date().getTime() + 1000000} /></span>
       </div>
     </div>
   );
