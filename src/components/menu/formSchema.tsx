@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   title: z.string().min(1, "Item name is required"),
-  // name: z.string().min(1, "Please select Category"),
+  selectedCategory: z.string().min(1, "Please select a Category"), 
+  restaurantCategory: z.object({
+    id: z.number().positive("Please select a valid Category"), 
+  }),
   isVeg: z.boolean(),
   price: z.preprocess(
     (value) => {

@@ -21,15 +21,14 @@ const AddItem = forwardRef(
           const validationErrors: Record<string, string> = {};
           validationResult.error.errors.forEach((err) => {
             const path = err.path.join(".");
-
             validationErrors[path] = err.message;
           });
           setErrors(validationErrors);
           throw new Error("Validation failed");
         }
-
+    
         return {
-          name: formData.selectedCategory,
+          name: formData.selectedCategory, 
           description: formData.description,
           isDisabled: false,
           items: [
@@ -43,11 +42,12 @@ const AddItem = forwardRef(
             },
           ],
           restaurantCategory: {
-            id: formData.restaurantCategory.id,
+            id: formData.restaurantCategory.id, 
           },
         };
       },
     }));
+    
 
     return (
       <div className="font-poppins">
@@ -65,50 +65,47 @@ const AddItem = forwardRef(
         </div>
 
         <div className="mx-6 text-[17px]">Category</div>
-        {/* <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div> */}
+        <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div>
         <div className="w-1/3 whitespace-nowrap mx-6">
-        <Dropdown
-          label="Select Category"
-          options={allCategories}
-          selected={
-            formData.restaurantCategory?.id
-              ? allCategories.find(
-                  (category) => category.id === formData.restaurantCategory?.id
-                )?.name || ""
-              : "Select Category"
-          }
-          onSelect={(selectedId) => {
-            const selectedCategory = allCategories.find(
-              (category) => category.id === selectedId
-            );
-            if (selectedCategory) {
-              onFormDataChange("restaurantCategory", {
-                id: selectedCategory.id,
-              });
-              setErrors((prev) => ({
-                ...prev,
-                "restaurantCategory.id": "",
-              }));
-            }
-          }}
-        />
-        </div>
+                    <Dropdown
+              label="Select Category"
+              options={allCategories}
+              selected={
+                formData.selectedCategory || "Select Category"
+              }
+              onSelect={(selectedId) => {
+                const selectedCategory = allCategories.find(
+                  (category) => category.id === selectedId
+                );
 
+                if (selectedCategory) {
+                  onFormDataChange("restaurantCategory", { id: selectedCategory.id }); 
+                  onFormDataChange("selectedCategory", selectedCategory.name); 
+                  setErrors((prev) => ({
+                    ...prev,
+                    selectedCategory: "", 
+                    "restaurantCategory.id": "", 
+                  }));
+                }
+              }}
+            />
+        </div>
         <div className="mx-6 mt-2 text-[17px]">Food Type</div>
         <div className="flex gap-x-6 px-4 py-1">
-          {[{ label: "Veg", value: true }, { label: "Non-Veg", value: false }].map(
-            ({ label, value }) => (
-              <div
-                key={label}
-                className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 ${
-                  formData.isVeg === value ? "bg-green-500 text-white" : ""
-                }`}
-                onClick={() => onFormDataChange("isVeg", value)}
-              >
-                {label}
-              </div>
-            )
-          )}
+          {[
+            { label: "Veg", value: true },
+            { label: "Non-Veg", value: false },
+          ].map(({ label, value }) => (
+            <div
+              key={label}
+              className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 ${
+                formData.isVeg === value ? "bg-green-500 text-white" : ""
+              }`}
+              onClick={() => onFormDataChange("isVeg", value)}
+            >
+              {label}
+            </div>
+          ))}
         </div>
 
         <div className="mx-6 my-2">

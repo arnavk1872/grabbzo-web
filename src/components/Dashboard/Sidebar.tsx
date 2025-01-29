@@ -11,7 +11,7 @@ import HelpIcon from "../Icons/HelpIcon";
 import LogoutIcon from "../Icons/LogoutIcon";
 import Link from "next/link";
 import { Button } from "../UI/Button";
-import { changeStatus } from "@/helpers/api-utils";
+import { changeStatus, getStatus } from "@/helpers/api-utils";
 import { useRouter } from "next/navigation";
 
 type MenuItem = {
@@ -24,7 +24,8 @@ const Sidebar: React.FC = () => {
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
   const [isOnline, setIsOnline] = useState(true);
   const router = useRouter();
-
+  
+  // const storeStatus = getStatus();
   const handleToggle = () => {
     setIsOnline(!isOnline);
     changeStatus(isOnline);
@@ -35,10 +36,7 @@ const Sidebar: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Remove the authToken cookie (from the client side)
     document.cookie = 'AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-
-    // Redirect to the login page
     router.push('/login');
   };
 
@@ -114,11 +112,12 @@ const Sidebar: React.FC = () => {
         <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
           <p className="mt-2 text-left text-[20px]">
-            Update your plan to Premium!
+          Invest in the Best: Go Premium
           </p>
             <Button
               onClick={() => {
-                window.open("/pricing", "_blank");
+                // window.open("/pricing", "_blank"); Open Pricing plans on new page
+                router.push("/pricing");
               }}
               className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
             >
