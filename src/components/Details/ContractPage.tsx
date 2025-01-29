@@ -5,11 +5,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
 import useRestaurantDocStore from "@/store/restrauntDocStore";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import useRestaurantMenuStore from "@/store/restrauntMenuStore";
-import axios from "axios";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState } from "react";
+import contract from "public/Partner-Contract.png";
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");
@@ -89,7 +89,7 @@ const ContractPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Partner Contract</h2>
         <Image
-          src="/Partner-Contract.png"
+          src={contract}
           width={114}
           height={73}
           alt="menu"

@@ -1,13 +1,16 @@
 import InputBox from "@/components/login/InputBox";
 import Image from "next/image";
 import React from "react";
+import homeImage from "public/home-main.png";
+import logo from "public/logo-white.png";
+import homeFooterImage from "public/home-footer.png";
 
 const page = () => {
   return (
     <div>
       <div className="relative">
         <Image
-          src={"/home-main.png"}
+          src={homeImage}
           width={1920}
           height={774}
           alt={"home-main"}
@@ -16,7 +19,7 @@ const page = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-[790px] text-center flex items-center flex-col gap-5">
             <Image
-              src={"/logo-white.png"}
+              src={logo}
               width={194}
               height={68}
               alt={"logo"}
@@ -37,7 +40,7 @@ const page = () => {
       <div className="flex justify-center relative">
         <InputBox />
         <Image
-          src={"/home-footer.png"}
+          src={homeFooterImage}
           width={1920}
           height={296}
           alt={"home-footer"}

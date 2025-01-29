@@ -20,13 +20,20 @@ import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
 
 const InputBox = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [otp, setOtp] = useState("");
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const router = useRouter();
 
   const handleClick = () => {
-    setShowOtpDialog(true);
+    if (phoneNumber.length !== 10) {
+      setError("Please enter a valid Mobile Number!");
+      return;
+    } else {
+      setError("");
+      setShowOtpDialog(true);
+    }
   };
 
   const handleOtpVerification = async () => {
@@ -89,12 +96,12 @@ const InputBox = () => {
         Account
       </h4>
       <Input
-        className="w-1/2 my-9"
+        className="w-1/2 mt-9"
         placeholder="Enter Phone number / Restaurant ID"
         minLength={10}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
-
+      <div className="mb-9 mt-1 -ml-28 text-red-500 text-[14px]">{error}</div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <Button
           className="mb-20 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white"

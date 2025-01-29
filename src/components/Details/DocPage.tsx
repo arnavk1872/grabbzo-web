@@ -7,6 +7,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DocFormSchema } from "./formSchema";
+import docs from "public/Restaurant-Documents.png";
 
 const DocPage = () => {
   const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
@@ -70,7 +71,7 @@ const DocPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Restaurant Document</h2>
         <Image
-          src="/Restaurant-Documents.png"
+          src={docs}
           width={114}
           height={73}
           alt="document"
