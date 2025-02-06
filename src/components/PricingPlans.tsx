@@ -68,7 +68,7 @@ const plans: Plan[] = [
       "Join for ₹6.5/day",
       "₹750 ad credits",
       "1.5% commission on pre dine-in orders",
-      "Professional shoot for enu setup",
+      "Professional shoot for menu setup",
       "Personalized marketing stratergies",
       "Full-service support ",
     ],
