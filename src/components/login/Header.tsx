@@ -14,12 +14,20 @@ const Header = () => {
           className="flex items-center justify-center cursor-pointer"
         />
       </Link>
-      <Link
-        href="/about"
-        className="text-black text-lg my-auto font-semibold hover:underline duration-300 hover:duration-300"
-      >
-        About Us
-      </Link>
+      <div className="flex gap-10">
+        <Link
+          href="/about"
+          className="text-black text-lg my-auto font-semibold hover:underline duration-300 hover:duration-300"
+        >
+          About Us
+        </Link>
+        <Link
+          href="/pricing"
+          className="text-black text-lg my-auto font-semibold hover:underline duration-300 hover:duration-300"
+        >
+          Pricing
+        </Link>
+      </div>
     </div>
   );
 };
