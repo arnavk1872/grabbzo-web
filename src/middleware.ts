@@ -15,6 +15,7 @@ export function middleware(request: NextRequest) {
     "/channel-partner-agreement",
     "/guidelines-and-policy",
     "/about",
+    "/order-history",
   ];
 
   if (!accessToken && !allowedPaths.includes(url.pathname)) {

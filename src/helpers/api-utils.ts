@@ -27,15 +27,12 @@ export async function decodeJWT(token: string) {
     const header = JSON.parse(base64UrlDecode(parts[0]));
     const payload = JSON.parse(base64UrlDecode(parts[1]));
 
-
     return payload;
-  
   } catch (error) {
     console.error("Error decoding JWT:", error);
     throw new Error("Failed to decode JWT");
   }
 }
-
 
 export async function getRestaurantId() {
   const token = await getToken();
@@ -97,8 +94,6 @@ export const getStatus = async () => {
   }
 };
 
-
-
 export const changeStatus = async (status: boolean) => {
   const token = await getToken();
   if (!token) return;
@@ -106,8 +101,8 @@ export const changeStatus = async (status: boolean) => {
   const restaurantId = await getRestaurantId();
   const value = status ? "offline" : "online";
 
-  const payload = { "status": value, "restaurantId": restaurantId };
-  
+  const payload = { status: value, restaurantId: restaurantId };
+
   try {
     const response = await axios.post(
       `${IP}/restaurant-admins/status`,
@@ -119,7 +114,7 @@ export const changeStatus = async (status: boolean) => {
         },
       }
     );
-    
+
     return response.data.status;
   } catch (error) {
     console.error("Error changing status:", error);
@@ -159,7 +154,6 @@ export const changeStatus = async (status: boolean) => {
 //     throw error;
 //   }
 // };
-
 
 // ------------------------------------------------------------  MENU API's START ------------------------------------//
 export const getCategories = async () => {
@@ -328,13 +322,16 @@ export const deleteItem = async (id: number) => {
   }
 };
 
-export const editCategory = async (categoryId: number,categoryName :string) => {
+export const editCategory = async (
+  categoryId: number,
+  categoryName: string
+) => {
   const token = await getToken();
   if (!token) return;
-
   try {
     const response = await axios.put(
-      `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,categoryName,
+      `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
+      categoryName,
       {
         headers: {
           Authorization: ` ${token}`,
@@ -349,6 +346,109 @@ export const editCategory = async (categoryId: number,categoryName :string) => {
   }
 };
 
+export const getItemDetails = async (ItemId: number) => {
+  const token = await getToken();
+  if (!token) return;
 
+  try {
+    const response = await axios.get(
+      `${IP}/api/menu/restaurant/item/${ItemId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const updateItemDetails = async (ItemId: number, updatedItem: any) => {
+  const token = await getToken();
+  if (!token) return;
+  console.log(updatedItem, "CONSOLEEE  E EE  EE", ItemId);
+  try {
+    const response = await axios.put(
+      `${IP}/api/menu/restaurant/categories/${ItemId}/add-items`,
+      updatedItem,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const getOrderbyId = async (id: string) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(`${IP}/orders/getOrderDetails/${id}`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
 
 // --------------------------------------------------- MENU API's END --------------------------------------------------
+
+// ----------------------------------------------------RESTAURANT PROFILE GET ------------------------------------------
+
+export const getRestaurantDetails = async () => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(`${IP}/restaurant-admins/details`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching the Restaurant Details: ", error);
+    throw error;
+  }
+};
+
+export const updateRestaurantDetails = async (RestaurantData: any) => {
+  const token = await getToken();
+
+  if (!token) return;
+
+  try {
+    const response = await axios.post(
+      `${IP}/restaurant-admins/update`,
+      RestaurantData,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};

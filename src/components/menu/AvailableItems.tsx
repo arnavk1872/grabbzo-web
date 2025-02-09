@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Plus from "../Icons/Plus";
 import { usePathname } from "next/navigation";
-import { deleteItem, inStock } from "@/helpers/api-utils";
+import { deleteItem, getItemDetails, inStock } from "@/helpers/api-utils";
 import Dustbin from "../Icons/Dustbin";
 import Pencil from "../Icons/Pencil";
 import { useSnackbar } from "notistack";
@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../AlertDialog";
+import { useItemStore } from "@/store/MenuStore";
 
 interface Item {
   id: number;
@@ -40,6 +41,15 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   useEffect(() => {
     setLocalItems(items);
   }, [items]);
+
+  const handleEditItem = async (itemId: number) => {
+    try {
+      const response = await getItemDetails(itemId);
+      useItemStore.getState().setSelectedItem(response);
+    } catch (error) {
+      console.error("Error fetching item details:", error);
+    }
+  };
 
   const handleToggle = async (id: number, currentStatus: boolean) => {
     try {
@@ -66,21 +76,20 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
     }
   };
 
-  const handleDeleteItem = async(itemId: number) =>{
+  const handleDeleteItem = async (itemId: number) => {
     await deleteItem(itemId);
     enqueueSnackbar("Item Deleted !", {
       variant: "error",
       className: "font-poppins",
     });
-
-  }
+  };
 
   return (
     <div className="flex w-[80%] flex-col">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         ITEMS
       </div>
-      <div className="border rounded-[30px] p-4 bg-white w-[90%] h-[80vh] px-8 mx-6">
+      <div className="border rounded-[30px] p-4 bg-white w-[90%] h-[80vh] px-8 mx-6  overflow-y-auto no-scrollbar">
         {localItems.length > 0 ? (
           localItems.map((item) => (
             <div
@@ -99,7 +108,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                         <AlertDialogHeader>
                           <AlertDialogTitle>Confirmation</AlertDialogTitle>
                           <AlertDialogDescription>
-                          This action is irreversible, and all item details will be permanently lost.
+                            This action is irreversible, and all item details
+                            will be permanently lost.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -113,7 +123,9 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
-                    <Pencil />
+                    <div onClick={() => handleEditItem(item.id)}>
+                      <Pencil />
+                    </div>
                   </div>
                 </>
               )}

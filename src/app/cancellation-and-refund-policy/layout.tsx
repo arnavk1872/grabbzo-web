@@ -1,4 +1,5 @@
 import Header from "@/components/Details/Header";
+import PoliciesSidebar from "@/components/PoliciesSidebar";
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
@@ -9,7 +10,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen">
       <Header />
-      {children}
+      <div className="flex w-full">
+        <PoliciesSidebar />
+        {children}
+      </div>
     </div>
   );
 };

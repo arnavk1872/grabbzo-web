@@ -1,8 +1,14 @@
-import React, { useImperativeHandle, forwardRef, useState } from "react";
+import React, {
+  useImperativeHandle,
+  forwardRef,
+  useState,
+  useEffect,
+} from "react";
 import { Input } from "../UI/Input";
 import Dropdown from "./DropDown";
 import { Textarea } from "../UI/TextArea";
 import { formSchema } from "./formSchema";
+import { useItemStore } from "@/store/MenuStore";
 
 interface AddItemProps {
   allCategories: { id: number; name: string }[];
@@ -14,10 +20,44 @@ const AddItem = forwardRef(
   ({ allCategories, formData, onFormDataChange }: AddItemProps, ref) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
 
+    const { selectedItem, setSelectedItem } = useItemStore();
+    const savedItem = selectedItem?.data;
+    const { categoryValue } = useItemStore();
+
+    useEffect(() => {
+      if (savedItem) {
+        onFormDataChange("title", savedItem.title);
+        onFormDataChange("description", savedItem.description);
+        onFormDataChange("price", savedItem.price);
+        onFormDataChange("selectedCategory", categoryValue);
+        // onFormDataChange("selectedCategory", savedItem.name);
+        onFormDataChange("foodType", savedItem.isVeg);
+        onFormDataChange("id", savedItem.id);
+        onFormDataChange("restaurantCategory", { id: 1 });
+      }
+    }, [savedItem, categoryValue]);
+
+    useEffect(() => {
+      if (selectedItem) {
+        // Update the selectedItem object entirely
+        setSelectedItem({
+          title: formData.title,
+          id: formData.id,
+          description: formData.description,
+          price: formData.price,
+          selectedCategory: categoryValue,
+          isVeg: formData.foodType,
+          isStock: true,
+          restaurantCategory: { id: 1 },
+        });
+      }
+    }, [formData, categoryValue]);
+
     useImperativeHandle(ref, () => ({
       getItemData: () => {
         const validationResult = formSchema.safeParse(formData);
         if (!validationResult.success) {
+          console.error("Validation Errors:", validationResult.error.errors);
           const validationErrors: Record<string, string> = {};
           validationResult.error.errors.forEach((err) => {
             const path = err.path.join(".");
@@ -26,9 +66,9 @@ const AddItem = forwardRef(
           setErrors(validationErrors);
           throw new Error("Validation failed");
         }
-    
+
         return {
-          name: formData.selectedCategory, 
+          name: formData.selectedCategory,
           description: formData.description,
           isDisabled: false,
           items: [
@@ -42,12 +82,11 @@ const AddItem = forwardRef(
             },
           ],
           restaurantCategory: {
-            id: formData.restaurantCategory.id, 
+            id: formData.restaurantCategory.id,
           },
         };
       },
     }));
-    
 
     return (
       <div className="font-poppins">
@@ -67,39 +106,39 @@ const AddItem = forwardRef(
         <div className="mx-6 text-[17px]">Category</div>
         <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div>
         <div className="w-1/3 whitespace-nowrap mx-6">
-                    <Dropdown
-              label="Select Category"
-              options={allCategories}
-              selected={
-                formData.selectedCategory || "Select Category"
-              }
-              onSelect={(selectedId) => {
-                const selectedCategory = allCategories.find(
-                  (category) => category.id === selectedId
-                );
+          <Dropdown
+            label="Select Category"
+            options={allCategories}
+            selected={formData.selectedCategory || "Select Category"}
+            onSelect={(selectedId) => {
+              const selectedCategory = allCategories.find(
+                (category) => category.id === selectedId
+              );
 
-                if (selectedCategory) {
-                  onFormDataChange("restaurantCategory", { id: selectedCategory.id }); 
-                  onFormDataChange("selectedCategory", selectedCategory.name); 
-                  setErrors((prev) => ({
-                    ...prev,
-                    selectedCategory: "", 
-                    "restaurantCategory.id": "", 
-                  }));
-                }
-              }}
-            />
+              if (selectedCategory) {
+                onFormDataChange("restaurantCategory", {
+                  id: selectedCategory.id,
+                });
+                onFormDataChange("selectedCategory", selectedCategory.name);
+                setErrors((prev) => ({
+                  ...prev,
+                  selectedCategory: "",
+                  "restaurantCategory.id": "",
+                }));
+              }
+            }}
+          />
         </div>
         <div className="mx-6 mt-2 text-[17px]">Food Type</div>
         <div className="flex gap-x-6 px-4 py-1">
           {[
-            { label: "Veg", value: true },
-            { label: "Non-Veg", value: false },
-          ].map(({ label, value }) => (
+            { label: "Veg", value: true, color: "bg-green-500" },
+            { label: "Non-Veg", value: false, color: "bg-red-500" },
+          ].map(({ label, value, color }) => (
             <div
               key={label}
               className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 ${
-                formData.isVeg === value ? "bg-green-500 text-white" : ""
+                formData.isVeg === value ? `${color} text-white` : ""
               }`}
               onClick={() => onFormDataChange("isVeg", value)}
             >

@@ -3,17 +3,27 @@ import PhoneIcon from "../Icons/PhoneIcon";
 import ETATimer from "./ETATimer";
 import Clock from "../Icons/Clock";
 
-const CustomerDetails = () => {
+type OrderDetails = {
+  customerName: string;
+  orderNote: string;
+};
+
+type CustomerDetailsProps = {
+  orderDetails: OrderDetails;
+};
+
+const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
   return (
     <div className="flex flex-col items-center justify-center w-1/2">
       <div className="bg-white border rounded-[40px] flex flex-col items-center w-full ">
         <div className="py-4">
-        <h1 className="font-poppins font-bold text-[22px] mt-4">Harsh Ghai</h1>
-        <div className="my-2 text-[#1663DE] text-center border border-[#1663DE] bg-[#d0e0f8] rounded-[16px] font-semibold font-poppins px-2 py-1">
-          Customer
+          <h1 className="font-poppins font-bold text-[22px] mt-4">
+            {orderDetails?.customerName}
+          </h1>
+          <div className="my-2 text-[#1663DE] text-center border border-[#1663DE] bg-[#d0e0f8] rounded-[16px] font-semibold font-poppins px-2 py-1">
+            Customer
+          </div>
         </div>
-        </div>
-
 
         <div className="w-full">
           <div className="bg-[#3F4354] w-full rounded-t-[16px] p-4">
@@ -21,7 +31,7 @@ const CustomerDetails = () => {
               Order Note
             </h2>
             <p className="text-white font-poppins text-[12px] text-left">
-              Order ka note
+              {orderDetails?.orderNote}
             </p>
           </div>
 
@@ -46,8 +56,11 @@ const CustomerDetails = () => {
           <div className="font-poppins text-[14px]">+91 9879385252</div>
         </div>
       </div>
-      <div className="border border-borderColor rounded-[24px] w-full  bg-white flex gap-x-4 items-center justify-center py-4">
-        <Clock/><span className=" font-poppins font-bold"><ETATimer targetTime={new Date().getTime() + 1000000} /></span>
+      <div className="border border-borderColor rounded-[24px] w-full bg-white flex gap-x-4 items-center justify-center py-4">
+        <Clock />
+        <span className=" font-poppins font-bold">
+          <ETATimer targetTime={new Date().getTime() + 1000000} />
+        </span>
       </div>
     </div>
   );

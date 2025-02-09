@@ -80,4 +80,15 @@
       U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@layer utilities {
+
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+
+  .no-scrollbar {
+      -ms-overflow-style: none;  
+      scrollbar-width: none;  
+}
+}
 

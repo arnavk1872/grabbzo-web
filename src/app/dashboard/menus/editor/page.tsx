@@ -6,7 +6,7 @@ const page = async() => {
 
   const allCategories= await getCategories();
   return (
-    <div className='flex'>
+    <div className='flex overflow-x-hidden'>
       <MenuEditor allCategories={allCategories}/>
      
     </div>

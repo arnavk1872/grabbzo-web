@@ -37,6 +37,7 @@ interface CategorySelectorProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
   changeToggleEditor: (toggle: boolean) => void;
+  onCategoryIdChange:(category:number)=>void;
 }
 
 const AvailableCategories: React.FC<CategorySelectorProps> = ({
@@ -45,6 +46,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   selectedCategory,
   onCategoryChange,
   changeToggleEditor,
+  onCategoryIdChange,
 }) => {
   const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>({});
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
@@ -113,19 +115,9 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       setEditingCategory(null);
       return;
     }
-   
+
     try {
       await editCategory(categoryId,updatedCategoryName);
-      // const response = await fetch(
-      //   `https://api.grabbzo.com/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
-      //   {
-      //     method: "PUT",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify({ name: updatedCategoryName }),
-      //   }
-      // );
-
-      // if (!response.ok) throw new Error("Failed to update category name");
 
       enqueueSnackbar("Category updated successfully!", { variant: "success", className: "font-poppins" });
 
@@ -144,14 +136,19 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   };
 
   return (
-    <div>
+    <div >
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         CATEGORY
       </div>
+      <div className="h-[630px] overflow-y-auto no-scrollbar">
       {Object.entries(categories).map(([categoryName, categoryData]) => (
         <div
           key={categoryName}
-          onClick={() => onCategoryChange(categoryName)}
+          onClick={() => {
+            onCategoryChange(categoryName);
+            onCategoryIdChange(categoryData.categoryId);
+          }}
+          
           className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
             selectedCategory === categoryName && !isEditor
               ? "bg-blue-500 text-white"
@@ -215,6 +212,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
           )}
         </div>
       ))}
+      </div>
       {isEditor && (
         <div onClick={() => changeToggleEditor(false)} className="flex items-center cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700">
           <Plus /> Add Category
