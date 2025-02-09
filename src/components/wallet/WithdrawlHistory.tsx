@@ -10,12 +10,48 @@ type Transaction = {
 };
 
 const transactions: Transaction[] = [
-  { id: 1, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
-  { id: 2, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
-  { id: 3, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
-  { id: 4, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
-  { id: 5, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
-  { id: 6, bankName: "SBI", transactionType: "Bank Account Debit", amount: "₹1,000", logo: "/sbi-logo.png" },
+  {
+    id: 1,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 2,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 3,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 4,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 5,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 6,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
 ];
 
 const WithdrawlHistory: React.FC = () => {
@@ -32,19 +68,22 @@ const WithdrawlHistory: React.FC = () => {
       <p className="text-gray-500 text-sm mb-2">Yesterday</p>
       <div className="space-y-3">
         {transactions.map((transaction) => (
-          <div key={transaction.id} className="flex justify-between items-center pr-2">
+          <div
+            key={transaction.id}
+            className="flex justify-between items-center pr-2"
+          >
             <div className="flex items-center gap-3">
-           
-              <Avatar >
-                  <AvatarImage
-                   src="https://github.com/shadcn.png"
-                    
-                  />
-                  <AvatarFallback>TM</AvatarFallback>
-                </Avatar>
-              <span className="text-gray-800 font-medium">{transaction.transactionType}</span>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>TM</AvatarFallback>
+              </Avatar>
+              <span className="text-gray-800 font-medium">
+                {transaction.transactionType}
+              </span>
             </div>
-            <span className="text-gray-800 font-semibold">{transaction.amount}</span>
+            <span className="text-gray-800 font-semibold">
+              {transaction.amount}
+            </span>
           </div>
         ))}
       </div>
