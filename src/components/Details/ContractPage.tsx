@@ -5,11 +5,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
 import useRestaurantDocStore from "@/store/restrauntDocStore";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import useRestaurantMenuStore from "@/store/restrauntMenuStore";
-import { setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useState } from "react";
 import contract from "public/Partner-Contract.png";
+import { usePageStore } from "@/store/CurrentPage";
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");
@@ -17,6 +17,14 @@ const ContractPage = () => {
   const { docDetailsData } = useRestaurantDocStore();
   const { menuDetailsData } = useRestaurantMenuStore();
   const router = useRouter();
+  const pathname = usePathname();
+  const { currentPage } = usePageStore();
+  const lastSegment: string = pathname.split("/").pop() || "information";
+
+  if (currentPage.page != lastSegment) {
+    router.push(`/details/${currentPage}`);
+    return;
+  }
   const handleSubmit = async () => {
     // console.log("Button clicked");
     // Do the API call
@@ -58,9 +66,6 @@ const ContractPage = () => {
     //     signupPayload
     //   );
     //   console.log(signupResponse);
-    const token: string =
-      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwibmFtZSI6IjEiLCJyb2xlcyI6WyJSRVNUQVVSQU5UIl0sInVzZXJJZCI6MSwiaWF0IjoxNzM3MDUzNDk4LCJleHAiOjE3Mzc5MTc0OTh9.LUAzAQ-HklEn8qfidpt03XsZRKCof5AgafIknWgS9Griq0vovjP0rfH-hldx9PhjW1Naz2YUGCbKIrQgf-7W9A";
-    setCookie("AuthToken", token);
 
     //   await axios.post(
     //     "https://api.grabbzo.com/restaurant-admins/update",
