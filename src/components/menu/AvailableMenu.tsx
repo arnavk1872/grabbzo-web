@@ -1,7 +1,8 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AvailableCategories from "./AvailableCategories";
 import AvailableItems from "./AvailableItems";
+import { useItemStore } from "@/store/MenuStore";
 
 type Category = {
   id: number;
@@ -18,7 +19,7 @@ type Item = {
 interface AvailableMenuProps {
   allCategories: {
     isDisabled: boolean;
-    categoryId:number;
+    categoryId: number;
     id: number;
     name: string;
     items: {
@@ -39,6 +40,15 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(
     allCategories[0]?.name || ""
   );
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(
+    allCategories[0]?.id
+  );
+  const { setCategoryValue, setCategoryId } = useItemStore();
+
+  useEffect(() => {
+    setCategoryId(selectedCategoryId);
+    setCategoryValue(selectedCategory);
+  }, [selectedCategory]);
 
   const categoryData = useMemo(() => {
     return allCategories.reduce<
@@ -55,14 +65,16 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
       };
       return acc;
     }, {});
-  }, [JSON.stringify(allCategories)]); // Deep comparison using JSON.stringify
+  }, [JSON.stringify(allCategories)]);
 
   // Trigger re-render when the number of categories changes
-  const categoryCount = useMemo(() => Object.keys(categoryData).length, [categoryData]);
+  const categoryCount = useMemo(
+    () => Object.keys(categoryData).length,
+    [categoryData]
+  );
   const [categories, setCategories] = useState(categoryData);
 
   const handleToggleEditor = changeToggleEditor || (() => {});
-  
 
   return (
     <div key={categoryCount} className="p-4 flex gap-x-4 w-full">
@@ -71,6 +83,7 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
         setCategories={setCategories}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
+        onCategoryIdChange={setSelectedCategoryId}
         changeToggleEditor={handleToggleEditor}
       />
       <AvailableItems

@@ -77,7 +77,7 @@ const Header = () => {
             </div>
             {/* Settings Options */}
             <div className="p-4 space-y-2">
-              {["Order history", "Payouts", "Customer issues", "Support"].map(
+              {["Order history", "Wallet", "Customer issues", "Support"].map(
                 (item, index) => (
                   <div
                     key={index}
