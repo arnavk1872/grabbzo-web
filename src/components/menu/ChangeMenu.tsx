@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
 import AddCategory from "./AddCategory";
-import { addNewCategory, addNewItem } from "@/helpers/api-utils";
+import { addNewCategory, addNewItem, updateItemDetails } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
+import { useItemStore } from "@/store/MenuStore";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
@@ -39,6 +40,14 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
     }));
   };
   
+  const { selectedItem, categoryValue ,categoryId } = useItemStore();
+
+  const savedItem = selectedItem ? JSON.stringify([
+    {
+      ...selectedItem,
+      selectedCategory: categoryValue
+    }
+  ]) : "";
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -49,13 +58,21 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         console.error("Item data is incomplete.");
         return;
       }
-
       try {
-        await addNewItem(formData);
-        enqueueSnackbar("Item added successfully !", {
-          variant: "success",
-          className: "font-poppins",
-        });
+        if(savedItem  && Object.keys(savedItem).length > 1){
+          await updateItemDetails(categoryId,savedItem);
+          enqueueSnackbar("Item updated successfully !", {
+            variant: "success",
+            className: "font-poppins",
+          });
+        }else{
+          await addNewItem(formData);
+          enqueueSnackbar("Item added successfully !", {
+            variant: "success",
+            className: "font-poppins",
+          });
+        }
+       
       } catch (error) {
         console.error("Error adding item:", error);
       }
@@ -70,7 +87,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
           variant: "success",
           className: "font-poppins",
         });
-        setCategoryName(""); // Clear input
+        setCategoryName(""); 
       } catch (error) {
         console.error("Error adding category:", error);
       }
@@ -78,7 +95,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-end px-12">
+    <div className="flex flex-col items-end pr-12">
       <Button
         onClick={handleSaveChanges}
         className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 text-[16px]"

@@ -328,7 +328,6 @@ export const editCategory = async (
 ) => {
   const token = await getToken();
   if (!token) return;
-
   try {
     const response = await axios.put(
       `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
@@ -341,6 +340,67 @@ export const editCategory = async (
       }
     );
     return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const getItemDetails = async (ItemId: number) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(
+      `${IP}/api/menu/restaurant/item/${ItemId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const updateItemDetails = async (ItemId: number, updatedItem: any) => {
+  const token = await getToken();
+  if (!token) return;
+  console.log(updatedItem, "CONSOLEEE  E EE  EE", ItemId);
+  try {
+    const response = await axios.put(
+      `${IP}/api/menu/restaurant/categories/${ItemId}/add-items`,
+      updatedItem,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const getOrderbyId = async (id: string) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(`${IP}/orders/getOrderDetails/${id}`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;
