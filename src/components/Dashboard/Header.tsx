@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { Input } from "../UI/Input";
 import Image from "next/image";
-import Search from "../Icons/Search";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import {
   Popover,
@@ -22,19 +20,41 @@ import {
 } from "@/components/UI/Sheet";
 import { X } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import Settings from "../Icons/Settings"; //
+import Settings from "../Icons/Settings";
+import Link from "next/link";
 const Header = () => {
+  const Routes: any[] = [
+    {
+      name: "Order History",
+      route: "/order-history",
+    },
+    {
+      name: "Wallet",
+      route: "/wallet",
+    },
+    {
+      name: "Customer Issues",
+      route: "/reviews",
+    },
+    {
+      name: "Support",
+      route: "mailto:support@grabbzo.com",
+    },
+  ];
+
   return (
     <section className="mx-6 my-3 px-4 h-[82px] font-poppins rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
       <div className="flex items-center gap-x-24">
-        <Image
-          src="/grabbzo.png"
-          width={170}
-          height={140}
-          alt="logo"
-          className="flex items-center justify-center pb-2"
-          quality={100}
-        />
+        <Link href={"/dashboard"}>
+          <Image
+            src="/grabbzo.png"
+            width={170}
+            height={140}
+            alt="logo"
+            className="flex items-center justify-center pb-2 cursor-pointer"
+            quality={100}
+          />
+        </Link>
       </div>
       <div className="flex gap-x-4 items-center">
         <Sheet>
@@ -70,24 +90,23 @@ const Header = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold">Taj Mahal Hotel</h2>
-                <a href="#" className="text-sm text-blue-500">
+                <Link href={"/edit-details"} className="text-sm text-blue-500">
                   View Account Details
-                </a>
+                </Link>
               </div>
             </div>
             {/* Settings Options */}
             <div className="p-4 space-y-2">
-              {["Order history", "Payouts", "Customer issues", "Support"].map(
-                (item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100"
-                  >
-                    <span className="text-md">{item}</span>
-                    <ChevronRight size={20} />
-                  </div>
-                )
-              )}
+              {Routes.map((item, index) => (
+                <Link
+                  href={item.route}
+                  key={index}
+                  className="flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100"
+                >
+                  <span className="text-md">{item.name}</span>
+                  <ChevronRight size={20} />
+                </Link>
+              ))}
             </div>
           </SheetContent>
         </Sheet>

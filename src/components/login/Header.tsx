@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import logo from "public/Logo.jpg";
 
 const Header = () => {
   return (
     <div className="px-24 h-[68px] font-poppins bg-white flex-shrink-0 flex justify-between overflow-hidden">
       <Link href="/">
         <Image
-          src={"/Logo.jpg"}
+          src={logo}
           width={143}
           height={60}
           alt={"logo"}
