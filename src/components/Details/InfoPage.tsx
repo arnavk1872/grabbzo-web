@@ -16,15 +16,32 @@ import {
   SelectValue,
 } from "../UI/Select";
 import info from "public/Restaruant-Information.png";
+import MapComponent from "./MapComponent";
+import { usePageStore } from "@/store/CurrentPage";
+import { usePathname } from "next/navigation";
 
 const InfoPage = () => {
   const router = useRouter();
-  const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [city, setCity] = useState<ICity[]>([
-    { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
-  ]);
+  const pathname = usePathname();
+  const { currentPage, setCurrentPage } = usePageStore();
+  const lastSegment: string = pathname.split("/").pop() || "information";
 
+  if (currentPage.page != lastSegment) {
+    router.push(`/details/${currentPage}`);
+    return;
+  }
+  const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [city, setCity] = useState<ICity[]>(() => {
+    if (basicDetailsData.city.trim() !== "") {
+      return [
+        { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
+      ];
+    } else {
+      return [];
+    }
+  });
   const states = State.getStatesOfCountry("IN");
 
   const validateForm = () => {
@@ -58,6 +75,7 @@ const InfoPage = () => {
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length === 0 && isFormComplete) {
+      setCurrentPage("document");
       router.push("/details/document");
     }
   };
@@ -182,7 +200,7 @@ const InfoPage = () => {
             <div className="ml-2 text-red-500 text-[14px]">{errors.area}</div>
           </div>
           <Select
-            value={basicDetailsData.state}
+            value={basicDetailsData.state || ""}
             onValueChange={handleStateChange}
           >
             <SelectTrigger className="text-gray-800">
@@ -197,14 +215,14 @@ const InfoPage = () => {
             </SelectContent>
           </Select>
           <Select
-            value={basicDetailsData.city}
+            value={basicDetailsData.city || ""}
             onValueChange={(value) => setBasicDetailsData("city", value)}
           >
             <SelectTrigger className="text-gray-800">
               <SelectValue placeholder="City*" />
             </SelectTrigger>
             <SelectContent>
-              {city.map((option) => (
+              {city?.map((option) => (
                 <SelectItem key={option.name} value={option.name}>
                   {option.name}
                 </SelectItem>
@@ -232,7 +250,7 @@ const InfoPage = () => {
             value={basicDetailsData.landmark}
           />
 
-          {/* <MapComponent /> */}
+          <MapComponent />
         </div>
       </div>
       <Button

@@ -14,6 +14,8 @@ interface RestaurantInfoState {
     city: string;
     pinCode: string;
     landmark: string;
+    latitude: string;
+    longitude: string;
   };
   setBasicDetailsData: (field: string, value: string) => void;
 }
@@ -32,6 +34,8 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set) => ({
     city: "",
     pinCode: "",
     landmark: "",
+    latitude: "28.632136674970926",
+    longitude: "77.21846936089494",
   },
   setBasicDetailsData: (field, value) => {
     set((state) => ({

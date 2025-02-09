@@ -6,11 +6,20 @@ import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
 import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import menu from "public/Menu-Setup.png";
+import { usePageStore } from "@/store/CurrentPage";
 
 const MenuPage = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { currentPage, setCurrentPage } = usePageStore();
+  const lastSegment: string = pathname.split("/").pop() || "information";
+
+  if (currentPage.page != lastSegment) {
+    router.push(`/details/${currentPage}`);
+    return;
+  }
   const { menuDetailsData, setMenuDetailsData } = useRestaurantMenuStore();
 
   const handleRadioChange = (name: string, value: string) => {
@@ -35,6 +44,7 @@ const MenuPage = () => {
 
   const handleProceed = () => {
     // console.log(menuDetailsData);
+    setCurrentPage("contract");
     router.push("/details/contract");
   };
 

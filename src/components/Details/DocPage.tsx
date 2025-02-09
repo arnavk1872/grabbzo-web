@@ -5,15 +5,24 @@ import { Input } from "@/components/UI/Input";
 import useRestaurantDocStore from "@/store/restrauntDocStore";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { DocFormSchema } from "./formSchema";
 import docs from "public/Restaurant-Documents.png";
+import { usePageStore } from "@/store/CurrentPage";
 
 const DocPage = () => {
   const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const router = useRouter();
+  const pathname = usePathname();
+  const { currentPage, setCurrentPage } = usePageStore();
+  const lastSegment: string = pathname.split("/").pop() || "information";
+
+  if (currentPage.page != lastSegment) {
+    router.push(`/details/${currentPage}`);
+    return;
+  }
 
   const handleAccountValidation = (value: string) => {
     if (docDetailsData.BankAccountNumber !== value) {
@@ -50,6 +59,7 @@ const DocPage = () => {
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length === 0 && isFormComplete) {
+      setCurrentPage("menu");
       router.push("/details/menu");
     }
   };
