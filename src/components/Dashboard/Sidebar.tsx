@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
   const [isOnline, setIsOnline] = useState(true);
   const router = useRouter();
-  
+
   // const storeStatus = getStatus();
   const handleToggle = () => {
     setIsOnline(!isOnline);
@@ -36,8 +36,9 @@ const Sidebar: React.FC = () => {
   };
 
   const handleLogout = () => {
-    document.cookie = 'AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    router.push('/login');
+    document.cookie =
+      "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    router.push("/login");
   };
 
   const menuItems: MenuItem[] = [
@@ -66,7 +67,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="flex flex-col  h-fit sticky top-0 max-w-[320px] bg-white border border-borderColor p-4 mx-4 rounded-3xl font-poppins">
-
       {/* Dashboard and Menu Links */}
       <div className="space-y-1">
         {menuItems.map((item) => (
@@ -112,30 +112,29 @@ const Sidebar: React.FC = () => {
         <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
           <p className="mt-2 text-left text-[20px]">
-          Invest in the Best: Go Premium
+            Invest in the Best: Go Premium
           </p>
-            <Button
-              onClick={() => {
-                // window.open("/pricing", "_blank"); Open Pricing plans on new page
-                router.push("/pricing");
-              }}
-              className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
-            >
-              Upgrade Now
-            </Button>
-
+          <Button
+            onClick={() => {
+              // window.open("/pricing", "_blank"); Open Pricing plans on new page
+              router.push("/pricing");
+            }}
+            className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
+          >
+            Upgrade Now
+          </Button>
         </div>
 
         {/* Bottom Links */}
         <div className="flex flex-col ">
-          <a
+          {/* <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team,"
             target="_blank"
             className="flex items-center space-x-6 px-6 py-4 mt-1 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
           >
             <HelpIcon />
             <span>Get Help</span>
-          </a>
+          </a> */}
 
           <a
             href="#"
