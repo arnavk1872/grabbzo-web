@@ -34,7 +34,7 @@ const Header = () => {
     },
     {
       name: "Customer Issues",
-      route: "/reviews",
+      route: "dashboard/reviews",
     },
     {
       name: "Support",
