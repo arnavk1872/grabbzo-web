@@ -4,7 +4,7 @@ import Search from "../Icons/Search";
 
 const SearchBar = () => {
   return (
-    <div className="relative">
+    <div className="relative px-2">
       <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
       <Input
         placeholder="Search Orders"

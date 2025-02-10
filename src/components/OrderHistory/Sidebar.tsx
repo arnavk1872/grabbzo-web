@@ -41,12 +41,12 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="min-w-[350px] ml-12 bg-white rounded-t-3xl pr-2 min-h-[50vh]">
-      <h3 className="text-center font-medium text-xl border-b-2 pb-5 mb-8 ">
+    <div className="min-w-[350px] ml-12 bg-white rounded-3xl min-h-[75vh]">
+      <h3 className="text-center font-medium text-xl border-b-2 py-5 mb-8 ">
         Order History
       </h3>
       <SearchBar />
-      <div className="min-h-full">
+      <div className="">
         <h2 className="text-xl font-semibold text-center mt-20">
           No Orders Fulfiled Yet
         </h2>

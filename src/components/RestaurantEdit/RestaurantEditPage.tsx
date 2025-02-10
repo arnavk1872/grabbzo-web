@@ -109,18 +109,15 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
         validationErrors[path] = err.message;
       });
     }
-    console.log(validationErrors);
     setErrors(validationErrors);
     return validationErrors;
   };
 
   const handleBtnClick = async () => {
     const validationErrors = validateForm();
-    console.log(restaurantData);
     if (Object.keys(validationErrors).length === 0) {
       setEdit(false);
       const res = await updateRestaurantDetails(restaurantData);
-      console.log(res);
     }
   };
   return (

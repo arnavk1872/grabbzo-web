@@ -38,7 +38,8 @@ const Header = () => {
     },
     {
       name: "Support",
-      route: "mailto:support@grabbzo.com",
+      route:
+        "https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team",
     },
   ];
 
