@@ -10,13 +10,13 @@ export default {
   theme: {
   	extend: {
   		colors: {
-			bgGray:"#F9F9F9",
-			borderColor:"#EFEFF4",
-			LightGreen:"#78D25B",
-			Red:"#F75757",
-			Purple:"#6257F7",
-			Orange:"#FA9441",
-			primary: "#1663de",
+  			bgGray: '#F9F9F9',
+  			borderColor: '#EFEFF4',
+  			LightGreen: '#78D25B',
+  			Red: '#F75757',
+  			Purple: '#6257F7',
+  			Orange: '#FA9441',
+  			primary: '#1663de',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -63,12 +63,46 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-		  fontFamily: {
-			poppins :['Poppins','sans-serif'],
-			poppins500 :['Poppins500','sans-serif'],
-			poppins600 :['Poppins600','sans-serif'],
-			poppins300 :['Poppins300','sans-serif']
-		  },
+  		fontFamily: {
+  			poppins: [
+  				'Poppins',
+  				'sans-serif'
+  			],
+  			poppins500: [
+  				'Poppins500',
+  				'sans-serif'
+  			],
+  			poppins600: [
+  				'Poppins600',
+  				'sans-serif'
+  			],
+  			poppins300: [
+  				'Poppins300',
+  				'sans-serif'
+  			]
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
