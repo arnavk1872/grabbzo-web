@@ -452,3 +452,35 @@ export const updateRestaurantDetails = async (RestaurantData: any) => {
     throw error;
   }
 };
+
+// ---------------------------------------------- LOGIN / SIGNUP API ---------------------------------------------------
+
+export const postLogin = async (data: any) => {
+  try {
+    const response = await axios.post(`${IP}/restaurant/auth/login`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error while trying to login :", error);
+    throw error;
+  }
+};
+
+export const postSignup = async (data: any) => {
+  try {
+    const response = await axios.post(`${IP}/restaurant/auth/signup`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error while signup :", error);
+    throw error;
+  }
+};
