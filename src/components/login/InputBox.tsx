@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
 import Link from "next/link";
@@ -18,11 +18,13 @@ import {
 } from "@/components/UI/InputOtp";
 import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
+import { postLogin, postSignup } from "@/helpers/api-utils";
 
 const InputBox = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState<string>("");
+  const [login, setLogin] = useState<boolean>(true);
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const router = useRouter();
 
@@ -37,51 +39,33 @@ const InputBox = () => {
   };
 
   const handleOtpVerification = async () => {
+    const data = JSON.stringify({
+      mobileNumber: phoneNumber,
+      otp: otp,
+    });
+    //9829699382
     try {
-      console.log(phoneNumber, otp);
-      if (phoneNumber === "9829699382") {
-        const response = await fetch(
-          "https://api.grabbzo.com/restaurant/auth/login",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              mobileNumber: phoneNumber,
-              otp: otp,
-            }),
-          }
-        );
-        const data = await response.json();
-        if (data.statusCode === 200) {
-          const token = "Bearer " + data.data.accessToken;
+      if (login) {
+        const loginData = await postLogin(data);
+        console.log(loginData);
+        if (loginData.status === "success") {
+          const token = "Bearer " + loginData.data.accessToken;
           setCookie("AuthToken", token);
           router.push("/dashboard");
         } else {
-          alert("OTP is incorrect. Please try again.");
+          // Notistack Error
+          alert("Number not registered, Signup First");
         }
       } else {
-        const response = await fetch(
-          "https://api.grabbzo.com/restaurant/auth/signup",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              mobileNumber: phoneNumber,
-              otp: otp,
-            }),
-          }
-        );
-        const data = await response.json();
-        if (data.statusCode === 200) {
-          const token = "Bearer " + data.data.accessToken;
+        const signupData = await postSignup(data);
+        console.log(signupData);
+        if (signupData.status === "success") {
+          const token = "Bearer " + signupData.data.accessToken;
           setCookie("AuthToken", token);
           router.push("/details/information");
         } else {
-          alert("OTP is incorrect. Please try again.");
+          // Notistack Error
+          alert("Number already registered, Login");
         }
       }
     } catch (error) {
@@ -89,22 +73,37 @@ const InputBox = () => {
       alert("An error occurred. Please try again later.");
     }
   };
+
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLInputElement>,
+    action: () => void
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      action();
+    }
+  };
   return (
-    <div className="bg-white w-[45%] absolute flex flex-col justify-center items-center bottom-[15%] rounded-3xl">
-      <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-12">
-        <span className="text-blue-600 font-extrabold">Login</span> to your
-        Account
+    <div className="bg-white w-[40%] absolute flex flex-col justify-center items-center rounded-3xl left-1/2 transform -translate-x-1/2 bottom-[5%]">
+      <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-8">
+        <span className="text-blue-600 font-extrabold pr-2">
+          {login ? "Login" : "Sign Up"}
+        </span>
+        into your Account
       </h4>
       <Input
-        className="w-1/2 mt-9"
+        className="w-2/3 mt-8 outline outline-1"
         placeholder="Enter Phone number / Restaurant ID"
         minLength={10}
         onChange={(e) => setPhoneNumber(e.target.value)}
+        onKeyDown={(e) => handleKeyDown(e, handleClick)}
       />
-      <div className="mb-9 mt-1 -ml-28 text-red-500 text-[14px]">{error}</div>
+      <div className="mb-8 mt-1 -ml-36 text-red-500 text-[14px] h-4">
+        {error}
+      </div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <Button
-          className="mb-20 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white"
+          className="mb-10 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white w-2/3 rounded-full"
           size="lg"
           onClick={handleClick}
         >
@@ -115,7 +114,7 @@ const InputBox = () => {
           <DialogHeader>
             <DialogTitle className="pb-2 text-xl">Enter OTP</DialogTitle>
             <DialogDescription className="pb-2">
-              6 digit OTP has been sent to you
+              6 digit OTP has been sent
             </DialogDescription>
           </DialogHeader>
 
@@ -123,6 +122,7 @@ const InputBox = () => {
             maxLength={6}
             value={otp}
             onChange={(value) => setOtp(value)}
+            onKeyDown={(e) => handleKeyDown(e, handleOtpVerification)}
           >
             <InputOTPGroup className="flex justify-center space-x-3 w-full">
               {[...Array(6)].map((_, index) => (
@@ -159,27 +159,15 @@ const InputBox = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      <div className="flex justify-between w-full px-5 -mb-12 text-blue-600 font-semibold absolute bottom-1/4 text-xs">
-        <Link className="hover:underline" href="/guidelines-and-policy">
-          Guidelines and Policy
-        </Link>
-        <Link className="hover:underline" href="/privacy-policy">
-          Privacy Policy
-        </Link>
-        <Link className="hover:underline" href="/channel-partner-agreement">
-          Channel Partner Agreement
-        </Link>
-        <Link className="hover:underline" href="/terms-of-services">
-          Terms of Services
-        </Link>
-        <Link
-          className="hover:underline"
-          href="/cancellation-and-refund-policy"
+      <p className="pb-2">
+        {login ? "Don't have an account ?" : "Already have an account ?"}
+        <button
+          className="text-blue-600 hover:underline pl-2"
+          onClick={() => setLogin(!login)}
         >
-          Cancellation and Refund Policy
-        </Link>
-      </div>
+          {login ? "Sign Up" : "Login"}
+        </button>
+      </p>
     </div>
   );
 };
