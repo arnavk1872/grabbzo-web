@@ -9,13 +9,22 @@ import { useItemStore } from "@/store/MenuStore";
 interface ChangeMenuProps {
   toggleEditor: boolean;
   allCategories?: any;
+  categories:any
+  setCategories:any
+  localItems:any
+  setLocalItems:any
 }
 
 const ChangeMenu: React.FC<ChangeMenuProps> = ({
   toggleEditor,
   allCategories,
+  categories,
+  setCategories,
+  localItems,
+        setLocalItems,
 }) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
+
   const [formData, setFormData] = React.useState({
     title: "",
     description: "",
@@ -66,11 +75,22 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
             className: "font-poppins",
           });
         }else{
-          await addNewItem(formData);
+          const response = await addNewItem(formData);
+          console.log(response,"HAHAHAHAHA")
           enqueueSnackbar("Item added successfully !", {
             variant: "success",
             className: "font-poppins",
           });
+          setLocalItems((prevItems: any[]) => [
+            ...prevItems,  // Keep existing items
+            {
+              isDisabled: false,
+              categoryId: response.id,
+              title:response.title
+            }
+          ]);
+          
+          
         }
        
       } catch (error) {
@@ -82,7 +102,18 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       }
 
       try {
-        await addNewCategory(categoryName);
+        const response = await addNewCategory(categoryName);
+
+        setCategories((prevCategories: any) => ({
+          ...prevCategories,  // Keep existing categories
+          [categoryName]: {   // Add new category with dynamic key
+            isDisabled: false,
+            categoryId: response.id,
+            items: [],
+          },
+        }));
+        
+        
         enqueueSnackbar("Category added successfully !", {
           variant: "success",
           className: "font-poppins",
@@ -102,7 +133,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       >
         Save Changes
       </Button>
-      <div className="bg-white h-[90vh] min-w-[300px] 2xl:w-[600px] rounded-[24px] my-4">
+      <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[385px] 2xl:w-[600px] rounded-[24px] my-4">
         {toggleEditor ? (
           <AddItem
             ref={itemDataRef}

@@ -8,17 +8,17 @@ export function middleware(request: NextRequest) {
   const allowedPaths = [
     "/",
     "/pricing",
-    "/login",
     "/terms-of-services",
     "/privacy-policy",
     "/cancellation-and-refund-policy",
     "/channel-partner-agreement",
     "/guidelines-and-policy",
     "/about",
+    "/restaurant"
   ];
 
   if (!accessToken && !allowedPaths.includes(url.pathname)) {
-    const loginUrl = new URL("/login", request.url);
+    const loginUrl = new URL("/restaurant", request.url);
     return NextResponse.redirect(loginUrl);
   }
 
