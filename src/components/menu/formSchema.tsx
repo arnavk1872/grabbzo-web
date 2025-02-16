@@ -20,4 +20,8 @@ export const formSchema = z.object({
       .refine((val) => val > 0, "Price must be greater than 0")
   ),
   description: z.string().min(1, "Description is required"),
+
+  // imageFile: z
+  //   .instanceof(File, { message: "Please upload an image" })
+  //   .refine((file) => file.size < 500 * 1024, "File size must be under 500KB"),
 });

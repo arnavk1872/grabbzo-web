@@ -16,10 +16,10 @@ interface OrderStatus {
 }
 
 const orderStatuses: OrderStatus[] = [
-  { image: newOrder, count: 62, label: "New", color: "text-Red", route: "/dashboard/orders" },
-  { image: prep, count: 44, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
-  { image: ready, count: 33, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
-  { image: pickedUp, count: 11, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
+  { image: newOrder, count: 3, label: "New", color: "text-Red", route: "/dashboard/orders" },
+  { image: prep, count: 11, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
+  { image: ready, count: 4, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
+  { image: pickedUp, count: 2, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
 ];
 
 const OrderStatusCard: React.FC<
@@ -51,7 +51,7 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-8 my-2 flex h-[160px] gap-x-16 pl-8 items-center">
+    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-8 my-2 flex h-[160px] gap-x-8 whitespace-nowrap pl-8 items-center">
       {orderStatuses.map((status, index) => (
         <OrderStatusCard
           key={index}

@@ -16,6 +16,7 @@ const AddCategory: React.FC<AddCategoryProps> = ({
 
   const categoryNameSchema = z.string().min(1, "Category name is required");
 
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCategoryName(value);

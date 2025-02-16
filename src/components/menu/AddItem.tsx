@@ -3,12 +3,14 @@ import React, {
   forwardRef,
   useState,
   useEffect,
+  useRef,
 } from "react";
 import { Input } from "../UI/Input";
 import Dropdown from "./DropDown";
 import { Textarea } from "../UI/TextArea";
 import { formSchema } from "./formSchema";
 import { useItemStore } from "@/store/MenuStore";
+import { X } from "lucide-react";
 
 interface AddItemProps {
   allCategories: { id: number; name: string }[];
@@ -21,8 +23,34 @@ const AddItem = forwardRef(
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const { selectedItem, setSelectedItem } = useItemStore();
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const savedItem = selectedItem?.data;
     const { categoryValue } = useItemStore();
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]; // Get the selected file
+
+      if (file) {
+        if (file.size > 500 * 1024) {
+          // Check if file size is over 500KB
+          alert("File size must be under 500KB.");
+          return;
+        }
+        console.log(file,URL.createObjectURL(file),"FILE");
+        setImageFile(file);
+        setImagePreview(URL.createObjectURL(file)); // Create a preview URL
+      }
+    };
+
+    const handleRemoveImage = () => {
+      setImagePreview(null);
+      setImageFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""; // Reset input field to allow selecting the same file again
+      }
+    };
 
     useEffect(() => {
       if (savedItem) {
@@ -103,9 +131,9 @@ const AddItem = forwardRef(
           />
         </div>
 
-        <div className="mx-6 text-[17px]">Category</div>
+        <div className="mx-6 text-[17px] font-bold">Category</div>
         <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div>
-        <div className="w-1/3 whitespace-nowrap mx-6">
+        <div className="w-fit whitespace-nowrap mx-6">
           <Dropdown
             label="Select Category"
             options={allCategories}
@@ -129,7 +157,7 @@ const AddItem = forwardRef(
             }}
           />
         </div>
-        <div className="mx-6 mt-2 text-[17px]">Food Type</div>
+        <div className="mx-6 mt-2 text-[17px] font-bold">Food Type</div>
         <div className="flex gap-x-6 px-4 py-1">
           {[
             { label: "Veg", value: true, color: "bg-green-500" },
@@ -148,7 +176,7 @@ const AddItem = forwardRef(
         </div>
 
         <div className="mx-6 my-2">
-          Pricing
+          <span className="font-bold">Pricing</span>
           <div className="mb-2 text-red-500 text-[14px]">{errors.price}</div>
           <Input
             placeholder="₹"
@@ -160,9 +188,36 @@ const AddItem = forwardRef(
             }}
           />
         </div>
+        <div className="mx-6 my-2 flex flex-col py-2">
+          <span className="font-bold">Item Image</span>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            className="my-2"
+          />
+
+          {imagePreview && (
+            <div className="relative mt-2 w-32 h-32">
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-full h-full rounded-md object-cover"
+              />
+              <button
+                type="button"
+                className="absolute top-1 right-1 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600"
+                onClick={handleRemoveImage}
+              >
+                <X size={18} />
+              </button>
+            </div>
+          )}
+        </div>
 
         <div className="mx-6 my-4">
-          Item Description
+          <span className="font-bold">Item Description</span>
           <div className="mb-2 text-red-500 text-[14px]">
             {errors.description}
           </div>
@@ -178,7 +233,7 @@ const AddItem = forwardRef(
 
         <div className="flex items-center gap-x-8">
           <div className="w-1/3 mx-6">
-            <div className="my-2">Serving Info</div>
+            <div className="my-2 font-bold">Serving Info</div>
             <Dropdown
               label="Serves"
               options={[1, 2, 3, 4]}
@@ -191,7 +246,7 @@ const AddItem = forwardRef(
           </div>
 
           <div className="w-1/3 mx-6">
-            <div className="my-2">Portion Size</div>
+            <div className="my-2 font-bold">Portion Size</div>
             <Dropdown
               label="ml"
               options={[150, 300, 500, 1000]}
@@ -205,7 +260,7 @@ const AddItem = forwardRef(
         </div>
 
         <div className="mx-6 my-2">
-          Preparation Time (in min)
+          <span className="font-bold">Preparation Time (in min)</span>
           <Input
             className="h-[42px] rounded-[16px] shadow-none"
             value={formData.preparationTime}

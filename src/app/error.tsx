@@ -13,7 +13,7 @@ export default function GlobalError({
   return (
     <div className="flex items-center justify-center flex-col h-[100vh] font-poppins">
       <Image
-        src={`${S3_BASE_URL}/apple.png`}
+        src={`${S3_BASE_URL}/public/apple.png`}
         alt="Apple"
         width={300}
         height={300}
