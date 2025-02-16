@@ -27,13 +27,17 @@ interface Item {
 interface AvailableItemsProps {
   items: Item[];
   changeToggleEditor: (toggle: boolean) => void;
+  localItems:any
+  setLocalItems:any
 }
 
 const AvailableItems: React.FC<AvailableItemsProps> = ({
   items,
   changeToggleEditor,
+  localItems,
+        setLocalItems
 }) => {
-  const [localItems, setLocalItems] = useState<Item[]>(items);
+  // const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
   const { enqueueSnackbar } = useSnackbar();
@@ -66,8 +70,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
           className: "font-poppins",
         });
       }
-      setLocalItems((prevItems) =>
-        prevItems.map((item) =>
+      setLocalItems((prevItems: any[]) =>
+        prevItems.map((item: { id: number; }) =>
           item.id === id ? { ...item, isEnabled: updatedStatus } : item
         )
       );
@@ -77,12 +81,20 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   };
 
   const handleDeleteItem = async (itemId: number) => {
-    await deleteItem(itemId);
-    enqueueSnackbar("Item Deleted !", {
-      variant: "error",
-      className: "font-poppins",
-    });
+    try {
+      await deleteItem(itemId);
+      enqueueSnackbar("Item Deleted!", {
+        variant: "error",
+        className: "font-poppins",
+      });
+  
+      // Update local state to remove the deleted item
+      setLocalItems((prevItems: any[]) => prevItems.filter((item) => item.id !== itemId));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
+  
 
   return (
     <div className="flex w-[80%] flex-col">
@@ -90,8 +102,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
         ITEMS
       </div>
       <div className="border rounded-[30px] p-4 bg-white w-[90%] h-[80vh] px-8 mx-6  overflow-y-auto no-scrollbar">
-        {localItems.length > 0 ? (
-          localItems.map((item) => (
+        {localItems?.length > 0 ? (
+          localItems.map((item:any) => (
             <div
               key={item.id}
               className="flex items-center cursor-pointer text-[17px] font-poppins justify-between py-2 border-b last:border-b-0"

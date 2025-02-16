@@ -9,10 +9,9 @@ type Category = {
   name: string;
   items: { id: number; name: string; isEnabled: boolean }[];
 };
-
 type Item = {
   id: number;
-  title: string; // Transformed from `name`
+  title: string;
   isEnabled: boolean;
 };
 
@@ -30,12 +29,22 @@ interface AvailableMenuProps {
       isEnabled: boolean;
     }[];
   }[];
+  categories: any;
+  setCategories: any;
+  categoryCount: any;
+  localItems: any;
+  setLocalItems: any;
   changeToggleEditor?: (toggle: boolean) => void; // Adjusted type
 }
 
 const AvailableMenu: React.FC<AvailableMenuProps> = ({
   allCategories,
   changeToggleEditor,
+  categories,
+  setCategories,
+  categoryCount,
+  localItems,
+  setLocalItems,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     allCategories[0]?.name || ""
@@ -67,13 +76,6 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
     }, {});
   }, [JSON.stringify(allCategories)]);
 
-  // Trigger re-render when the number of categories changes
-  const categoryCount = useMemo(
-    () => Object.keys(categoryData).length,
-    [categoryData]
-  );
-  const [categories, setCategories] = useState(categoryData);
-
   const handleToggleEditor = changeToggleEditor || (() => {});
 
   return (
@@ -87,8 +89,10 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
         changeToggleEditor={handleToggleEditor}
       />
       <AvailableItems
-        items={categoryData[selectedCategory]?.items || []} // Pass only the items array
+        items={categoryData[selectedCategory]?.items || []} 
         changeToggleEditor={handleToggleEditor}
+        localItems={localItems}
+        setLocalItems={setLocalItems}
       />
     </div>
   );

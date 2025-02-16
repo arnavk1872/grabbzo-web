@@ -1,19 +1,19 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useRouter, usePathname } from "next/navigation";
 
 const SwapType = () => {
-  const [activeIndex, setActiveIndex] = useState<string>("availableItems"); 
   const router = useRouter();
+  const pathname = usePathname();
 
   const options = [
-    { label: 'Menu Overview', value: 'availableItems' },
-    { label: 'Menu Editor', value: 'editor' },
+    { label: "Menu Overview", value: "availableItems" },
+    { label: "Menu Editor", value: "editor" },
   ];
 
+  const activeIndex = pathname.split("/").pop() || "availableItems";
+
   const handleClick = (value: string) => {
-    setActiveIndex(value);
     router.push(`/dashboard/menus/${value}`);
   };
 
@@ -23,8 +23,8 @@ const SwapType = () => {
         <div
           key={value}
           onClick={() => handleClick(value)}
-          className={`cursor-pointer  rounded-full py-4 px-8 ${
-            activeIndex === value ? 'bg-blue-500 text-white' : ''
+          className={`cursor-pointer rounded-full py-4 px-8 ${
+            activeIndex === value ? "bg-blue-500 text-white" : ""
           }`}
         >
           {label}

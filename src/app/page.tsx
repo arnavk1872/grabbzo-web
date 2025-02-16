@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ComingSoon from "@/components/ComingSoon";
 import DownloadApp from "@/components/DownloadApp"; 
+import HomePage from "@/components/HomePage";
 
 const Home = () => {
   const [showDownloadApp, setShowDownloadApp] = useState(false);
@@ -21,7 +22,8 @@ const Home = () => {
     };
   }, []);
 
-  return showDownloadApp ? <DownloadApp /> : <ComingSoon />;
+  // return showDownloadApp ? <DownloadApp /> : <ComingSoon />;
+  return showDownloadApp ? <DownloadApp /> : <HomePage />;
 };
 
 export default Home;

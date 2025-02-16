@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-y-hidden">
       <div className="flex">
         <Orders />
         <div className="2xl:block hidden"><CustomerSatisfaction /></div>

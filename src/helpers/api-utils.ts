@@ -87,7 +87,7 @@ export const getStatus = async () => {
         },
       }
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error changing status:", error);
     throw error;
@@ -217,8 +217,8 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-
-    return response.data;
+   console.log(response.data)
+    return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;
@@ -245,7 +245,7 @@ export const addNewItem = async (formData: any) => {
       }
     );
 
-    return response.data;
+    return response.data.data[0];
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;

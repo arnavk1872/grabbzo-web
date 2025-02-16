@@ -134,13 +134,13 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       enqueueSnackbar("Failed to update category!", { variant: "error", className: "font-poppins" });
     }
   };
-
+ console.log(categories,"HI")
   return (
     <div >
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         CATEGORY
       </div>
-      <div className="h-[630px] overflow-y-auto no-scrollbar">
+      <div className="overflow-y-auto no-scrollbar min-w-[250px]">
       {Object.entries(categories).map(([categoryName, categoryData]) => (
         <div
           key={categoryName}
