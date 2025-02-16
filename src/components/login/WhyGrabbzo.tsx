@@ -9,7 +9,7 @@ const WhyGrabbzo = () => {
         <h2 className="text-3xl font-bold">Why Grabbzo</h2>
         <div className="h-[1px] w-16 bg-black"></div>
       </div>
-      <div className="flex justify-between items-center p-20">
+      <div className="flex justify-around items-center p-20">
         {Cards.map((item, key) => (
           <div key={key} className="flex flex-col items-center justify-center">
             <item.icon className="size-20" />
