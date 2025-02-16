@@ -98,7 +98,7 @@ const InputBox = () => {
         onChange={(e) => setPhoneNumber(e.target.value)}
         onKeyDown={(e) => handleKeyDown(e, handleClick)}
       />
-      <div className="mb-8 mt-1 -ml-36 text-red-500 text-[14px] h-4">
+      <div className="mb-2 mt-1 -ml-36 text-red-500 text-[14px] h-4">
         {error}
       </div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>

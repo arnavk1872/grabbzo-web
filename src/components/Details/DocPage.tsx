@@ -4,7 +4,7 @@ import { Button } from "@/components/UI/Button";
 import { Input } from "@/components/UI/Input";
 import useRestaurantDocStore from "@/store/restrauntDocStore";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DocFormSchema } from "./formSchema";
 import docs from "public/Restaurant-Documents.png";
@@ -18,11 +18,11 @@ const DocPage = () => {
   const pathname = usePathname();
   const { currentPage, setCurrentPage } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
-
-  if (currentPage.page != lastSegment) {
-    router.push(`/details/${currentPage}`);
-    return;
-  }
+  useEffect(() => {
+    if (currentPage.page != lastSegment) {
+      router.push(`/details/${currentPage.page}`);
+    }
+  }, []);
 
   const handleAccountValidation = (value: string) => {
     if (docDetailsData.BankAccountNumber !== value) {

@@ -7,7 +7,7 @@ import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import contract from "public/Partner-Contract.png";
 import { usePageStore } from "@/store/CurrentPage";
 
@@ -21,10 +21,12 @@ const ContractPage = () => {
   const { currentPage } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
-  if (currentPage.page != lastSegment) {
-    router.push(`/details/${currentPage}`);
-    return;
-  }
+  useEffect(() => {
+    if (currentPage.page != lastSegment) {
+      router.push(`/details/${currentPage.page}`);
+    }
+  }, []);
+
   const handleSubmit = async () => {
     // console.log("Button clicked");
     // Do the API call

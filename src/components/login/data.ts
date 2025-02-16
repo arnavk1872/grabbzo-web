@@ -96,7 +96,7 @@ export const Cards: CardProps[] = [
   {
     icon: Parcel,
     title: "Takeaway Convenience",
-    desc: "Easily get your orders delivered through our trained delivery partners",
+    desc: "Grab your food without waiting or standing in long queues",
   },
   {
     icon: Mic,
