@@ -18,18 +18,18 @@ interface MetricCardProps {
 }
 
 const data = [
-  { month: "Jan", income: 4000, expenses: 2400 },
-  { month: "Feb", income: 4500, expenses: 3000 },
-  { month: "Mar", income: 4700, expenses: 3100 },
-  { month: "Apr", income: 1000, expenses: 3200 },
-  { month: "May", income: 5300, expenses: 3500 },
-  { month: "Jun", income: 5500, expenses: 4000 },
-  { month: "Jul", income: 5800, expenses: 4200 },
-  { month: "Aug", income: 9000, expenses: 4300 },
-  { month: "Sep", income: 6200, expenses: 4500 },
-  { month: "Oct", income: 6400, expenses: 4700 },
-  { month: "Nov", income: 3700, expenses: 4900 },
-  { month: "Dec", income: 7000, expenses: 5200 },
+  { month: "Jan", income: 0, expenses: 2400 },
+  { month: "Feb", income: 0, expenses: 3000 },
+  { month: "Mar", income: 0, expenses: 3100 },
+  { month: "Apr", income: 0, expenses: 3200 },
+  { month: "May", income: 0, expenses: 3500 },
+  { month: "Jun", income: 0, expenses: 4000 },
+  { month: "Jul", income: 0, expenses: 4200 },
+  { month: "Aug", income: 0, expenses: 4300 },
+  { month: "Sep", income: 0, expenses: 4500 },
+  { month: "Oct", income: 0, expenses: 4700 },
+  { month: "Nov", income: 0, expenses: 4900 },
+  { month: "Dec", income: 0, expenses: 5200 },
 ];
 
 const MetricCard: React.FC<MetricCardProps> = ({

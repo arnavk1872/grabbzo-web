@@ -10,10 +10,10 @@ import {
 } from "recharts";
 
 const data = [
-  { year: 2020, income: 37, expenses: 14 },
-  { year: 2021, income: 45, expenses: 16 },
-  { year: 2022, income: 50, expenses: 30 },
-  { year: 2023, income: 70, expenses: 55 },
+  { year: 2020, income: 0, expenses: 0 },
+  { year: 2021, income: 0, expenses: 0 },
+  { year: 2022, income: 0, expenses: 0 },
+  { year: 2023, income: 0, expenses: 0 },
 ];
 
 const EarningGraph: React.FC = () => {

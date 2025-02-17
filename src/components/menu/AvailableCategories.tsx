@@ -134,7 +134,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       enqueueSnackbar("Failed to update category!", { variant: "error", className: "font-poppins" });
     }
   };
- console.log(categories,"HI")
+
   return (
     <div >
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">

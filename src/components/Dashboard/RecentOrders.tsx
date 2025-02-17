@@ -29,7 +29,7 @@ const statusColors: Record<string, string> = {
 
 const RecentlyPlacedOrders: React.FC = () => {
   return (
-    <div className="bg-white rounded-[30px] border font-poppins border-borderColor p-6  max-w-[750px] flex-[1]">
+    <div className="bg-white rounded-[30px] border font-poppins border-borderColor p-6 w-full flex-[1]">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Recently Placed Orders</h3>
         <select className="bg-borderColor text-[#666] font-[14px] border-borderColor rounded-[16px] p-1 text-[14px]">
