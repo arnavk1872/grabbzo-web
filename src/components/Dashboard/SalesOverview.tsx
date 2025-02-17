@@ -19,19 +19,19 @@ const SalesOverview = () => {
         <p className="flex flex-col  border-r-2 border-borderColor pr-4">
           <span className="text-[14px]">Revenue:</span>{" "}
           <span className="text-[24px] font-bold">
-            ₹24,523 <span className="text-LightGreen text-[16px]">↑ 12%</span>
+            ₹0 <span className="text-LightGreen text-[16px]">↑ 0%</span>
           </span>
         </p>
         <p className="flex flex-col border-r-2 border-borderColor pr-4">
         <span className="text-[14px]">Total Sales:</span>{" "}
           <span className="text-[24px] font-bold">
-            ₹73,635 <span className="text-Red text-[16px]"> ↓ 13%</span>
+            ₹0 <span className="text-Red text-[16px]"> ↓ 0%</span>
           </span>
         </p>
         <p className="flex flex-col ">
         <span className="text-[14px]"> Refunded:</span>{" "}
           <span className="text-[24px] font-bold">
-            ₹18,121 <span className="text-LightGreen text-[16px]">↑ 21%</span>
+            ₹0 <span className="text-LightGreen text-[16px]">↑ 0%</span>
           </span>
         </p>
       </div>

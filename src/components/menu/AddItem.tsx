@@ -62,6 +62,7 @@ const AddItem = forwardRef(
         onFormDataChange("foodType", savedItem.isVeg);
         onFormDataChange("id", savedItem.id);
         onFormDataChange("restaurantCategory", { id: 1 });
+        setImagePreview(`https://picsum.photos/400/300?random`);
       }
     }, [savedItem, categoryValue]);
 

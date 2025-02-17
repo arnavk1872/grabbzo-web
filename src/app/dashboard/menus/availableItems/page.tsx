@@ -6,7 +6,6 @@ import React from 'react';
 const Page = async () => {
   const allCategories = await getCategories();
   // const checkStock =  await inStock("1");
- console.log(allCategories,"WHY")
  
   return (
     <div>
