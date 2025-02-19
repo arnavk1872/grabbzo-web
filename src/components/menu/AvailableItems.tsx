@@ -35,7 +35,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   items,
   changeToggleEditor,
   localItems,
-        setLocalItems
+  setLocalItems
 }) => {
   // const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
@@ -43,8 +43,11 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    setLocalItems(items);
+    setLocalItems((prevItems: any) => {
+      return JSON.stringify(prevItems) !== JSON.stringify(items) ? items : prevItems;
+    });
   }, [items]);
+  
 
   const handleEditItem = async (itemId: number) => {
     try {

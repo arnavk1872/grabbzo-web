@@ -12,23 +12,23 @@ import {
 } from 'recharts';
 
 // const data = [
-//   { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
-//   { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
-//   { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 },
-//   { name: 'Page D', uv: 2780, pv: 3908, amt: 2000 },
-//   { name: 'Page E', uv: 1890, pv: 4800, amt: 2181 },
-//   { name: 'Page F', uv: 2390, pv: 3800, amt: 2500 },
-//   { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
+//   { name: 'Page A', Sales: 4000, Revenue: 2400, amt: 2400 },
+//   { name: 'Page B', Sales: 3000, Revenue: 1398, amt: 2210 },
+//   { name: 'Page C', Sales: 2000, Revenue: 9800, amt: 2290 },
+//   { name: 'Page D', Sales: 2780, Revenue: 3908, amt: 2000 },
+//   { name: 'Page E', Sales: 1890, Revenue: 4800, amt: 2181 },
+//   { name: 'Page F', Sales: 2390, Revenue: 3800, amt: 2500 },
+//   { name: 'Page G', Sales: 3490, Revenue: 4300, amt: 2100 },
 // ];
 
 const data = [
-  { name: 'Page A', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page B', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page C', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page D', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page E', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page F', uv: 0, pv: 0, amt: 0 },
-  { name: 'Page G', uv: 0, pv: 0, amt: 0 },
+  { name: 'January', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'February', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'March', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'April', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'May', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'June', Sales: 0, Revenue: 0, amt: 0 },
+  { name: 'July', Sales: 0, Revenue: 0, amt: 0 },
 ];
 
 
@@ -50,8 +50,8 @@ const SalesGraph = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="natural" dataKey="pv" stroke="#FFCC00" activeDot={{ r: 8 }} />
-          <Line type="natural" dataKey="uv" stroke="#FF6961" />
+          <Line type="natural" dataKey="Revenue" stroke="#FFCC00" activeDot={{ r: 8 }} />
+          <Line type="natural" dataKey="Sales" stroke="#FF6961" />
         </LineChart>
       </ResponsiveContainer>
     </div>
