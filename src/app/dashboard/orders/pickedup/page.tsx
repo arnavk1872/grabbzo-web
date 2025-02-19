@@ -7,7 +7,8 @@ const page = async () => {
   const orderDetails = await getOrders("COMPLETED");
   return (
     <div>
-      {orderDetails.length == 0 ? (
+      {/* {orderDetails.length == 0 ? ( ====== REMOVED TEMPORARILY ===== */} 
+      {true ? (
         <NoPickedOrders />
       ) : (
         <OrderTable orderDetails={orderDetails} />
