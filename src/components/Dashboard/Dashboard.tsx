@@ -35,7 +35,7 @@ const Dashboard = () => {
       </div>
       <EarningGraph />
     </div>
-    <div className="flex justify-between  pb-4 px-4 gap-x-4">
+    <div className="flex  pb-4 px-4 gap-x-4">
       {" "}
       <PeakHoursChart />
       <RecentOrders />

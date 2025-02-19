@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import homeImage from "public/home-main.png";
+import homeImage from "public/image.png";
 import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";

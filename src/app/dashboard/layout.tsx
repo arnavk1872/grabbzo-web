@@ -9,13 +9,13 @@ interface DashboardLayoutProps {
 
 export default async function DashboardLayout({ children }: DashboardLayoutProps) {
 
-  // const storeStatus = await getStatus();
+  const storeStatus = await getStatus();
 
   return (
     <>
       <Header />
       <div className="flex  sticky w-full  ">
-        <Sidebar/>
+        <Sidebar storeStatus={storeStatus}/>
         {children}
       </div>
     </>

@@ -20,12 +20,16 @@ type MenuItem = {
   icon: JSX.Element;
 };
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  storeStatus: any; 
+}
+
+const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
-  const [isOnline, setIsOnline] = useState(true);
+  const status = storeStatus === "offline" ? false : true ; 
+  const [isOnline, setIsOnline] = useState(status);
   const router = useRouter();
 
-  // const storeStatus = getStatus();
   const handleToggle = () => {
     setIsOnline(!isOnline);
     changeStatus(isOnline);
@@ -35,10 +39,16 @@ const Sidebar: React.FC = () => {
     setActiveItem(itemName);
   };
 
-  const handleLogout = () => {
-    document.cookie =
+  const handleLogout = async() => {
+    const response = await changeStatus(true);
+    console.log(response);
+    if(response){
+      document.cookie =
       "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     router.push("/login");
+    }
+   
+   
   };
 
   const menuItems: MenuItem[] = [
@@ -112,7 +122,7 @@ const Sidebar: React.FC = () => {
         <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
           <p className="mt-2 text-left text-[20px]">
-            Invest in the Best: Go Premium
+            Invest in the Best: Get Premium
           </p>
           <Button
             onClick={() => {
@@ -121,7 +131,7 @@ const Sidebar: React.FC = () => {
             }}
             className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
           >
-            Upgrade Now
+            Get Premium
           </Button>
         </div>
 

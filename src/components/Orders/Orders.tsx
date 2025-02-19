@@ -16,10 +16,10 @@ interface OrderStatus {
 }
 
 const orderStatuses: OrderStatus[] = [
-  { image: newOrder, count: 3, label: "New", color: "text-Red", route: "/dashboard/orders" },
-  { image: prep, count: 11, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
-  { image: ready, count: 4, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
-  { image: pickedUp, count: 2, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
+  { image: newOrder, count: 0, label: "New", color: "text-Red", route: "/dashboard/orders" },
+  { image: prep, count: 0, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
+  { image: ready, count: 0, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
+  { image: pickedUp, count: 0, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
 ];
 
 const OrderStatusCard: React.FC<

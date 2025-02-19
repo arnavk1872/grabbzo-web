@@ -16,7 +16,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../AlertDialog";
-import { changeCategoryStatus, deleteCategory, editCategory } from "@/helpers/api-utils";
+import {
+  changeCategoryStatus,
+  deleteCategory,
+  editCategory,
+} from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 
 interface Item {
@@ -33,11 +37,13 @@ interface CategoryData {
 
 interface CategorySelectorProps {
   categories: Record<string, CategoryData>;
-  setCategories: React.Dispatch<React.SetStateAction<Record<string, CategoryData>>>;
+  setCategories: React.Dispatch<
+    React.SetStateAction<Record<string, CategoryData>>
+  >;
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
   changeToggleEditor: (toggle: boolean) => void;
-  onCategoryIdChange:(category:number)=>void;
+  onCategoryIdChange: (category: number) => void;
 }
 
 const AvailableCategories: React.FC<CategorySelectorProps> = ({
@@ -48,7 +54,9 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   changeToggleEditor,
   onCategoryIdChange,
 }) => {
-  const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>({});
+  const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>(
+    {}
+  );
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [updatedCategoryName, setUpdatedCategoryName] = useState<string>("");
   const { enqueueSnackbar } = useSnackbar();
@@ -83,7 +91,10 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     }
   };
 
-  const handleDeleteCategory = async (categoryName: string, categoryId: number) => {
+  const handleDeleteCategory = async (
+    categoryName: string,
+    categoryId: number
+  ) => {
     try {
       await deleteCategory(categoryId);
       enqueueSnackbar("Category has been deleted!", {
@@ -110,20 +121,31 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     setUpdatedCategoryName(categoryName);
   };
 
-  const handleUpdateCategory = async (categoryId: number, oldCategoryName: string) => {
-    if (!updatedCategoryName.trim() || updatedCategoryName === oldCategoryName) {
+  const handleUpdateCategory = async (
+    categoryId: number,
+    oldCategoryName: string
+  ) => {
+    if (
+      !updatedCategoryName.trim() ||
+      updatedCategoryName === oldCategoryName
+    ) {
       setEditingCategory(null);
       return;
     }
 
     try {
-      await editCategory(categoryId,updatedCategoryName);
+      await editCategory(categoryId, updatedCategoryName);
 
-      enqueueSnackbar("Category updated successfully!", { variant: "success", className: "font-poppins" });
+      enqueueSnackbar("Category updated successfully!", {
+        variant: "success",
+        className: "font-poppins",
+      });
 
       setCategories((prevCategories) => {
         const updatedCategories = { ...prevCategories };
-        updatedCategories[updatedCategoryName] = { ...updatedCategories[oldCategoryName] };
+        updatedCategories[updatedCategoryName] = {
+          ...updatedCategories[oldCategoryName],
+        };
         delete updatedCategories[oldCategoryName];
         return updatedCategories;
       });
@@ -131,90 +153,110 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       setEditingCategory(null);
     } catch (error) {
       console.error("Failed to update category:", error);
-      enqueueSnackbar("Failed to update category!", { variant: "error", className: "font-poppins" });
+      enqueueSnackbar("Failed to update category!", {
+        variant: "error",
+        className: "font-poppins",
+      });
     }
   };
 
   return (
-    <div >
+    <div>
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         CATEGORY
       </div>
       <div className="overflow-y-auto no-scrollbar min-w-[250px]">
-      {Object.entries(categories).map(([categoryName, categoryData]) => (
-        <div
-          key={categoryName}
-          onClick={() => {
-            onCategoryChange(categoryName);
-            onCategoryIdChange(categoryData.categoryId);
-          }}
-          
-          className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
-            selectedCategory === categoryName && !isEditor
-              ? "bg-blue-500 text-white"
-              : "bg-white text-black"
-          }`}
-        >
-          {editingCategory === categoryName ? (
-            <input
-              className="border rounded p-1 w-40 text-black"
-              value={updatedCategoryName}
-              onChange={(e) => setUpdatedCategoryName(e.target.value)}
-              onBlur={() => handleUpdateCategory(categoryData.categoryId, categoryName)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleUpdateCategory(categoryData.categoryId, categoryName);
+        {Object.keys(categories).length === 0 && (
+          <div className="font-poppins">No Categories added yet!</div>
+        )}
+
+        {Object.entries(categories).map(([categoryName, categoryData]) => (
+          <div
+            key={categoryName}
+            onClick={() => {
+              onCategoryChange(categoryName);
+              onCategoryIdChange(categoryData.categoryId);
+            }}
+            className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
+              selectedCategory === categoryName && !isEditor
+                ? "bg-blue-500 text-white"
+                : "bg-white text-black"
+            }`}
+          >
+            {editingCategory === categoryName ? (
+              <input
+                className="border rounded p-1 w-40 text-black"
+                value={updatedCategoryName}
+                onChange={(e) => setUpdatedCategoryName(e.target.value)}
+                onBlur={() =>
+                  handleUpdateCategory(categoryData.categoryId, categoryName)
                 }
-              }}
-              autoFocus
-            />
-          ) : (
-            <span>{categoryName}</span>
-          )}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleUpdateCategory(categoryData.categoryId, categoryName);
+                  }
+                }}
+                autoFocus
+              />
+            ) : (
+              <span>{categoryName}</span>
+            )}
 
-          {!isEditor && (
-            <Switch
-              checked={!isDisabledMap[categoryName]}
-              onCheckedChange={() =>
-                toggleCategoryStatus(isDisabledMap[categoryName], categoryData.categoryId, categoryName)
-              }
-            />
-          )}
+            {!isEditor && (
+              <Switch
+                checked={!isDisabledMap[categoryName]}
+                onCheckedChange={() =>
+                  toggleCategoryStatus(
+                    isDisabledMap[categoryName],
+                    categoryData.categoryId,
+                    categoryName
+                  )
+                }
+              />
+            )}
 
-          {isEditor && (
-            <div className="flex gap-x-2">
-              <AlertDialog>
-                <AlertDialogTrigger>
-                  <Dustbin />
-                </AlertDialogTrigger>
-                <AlertDialogContent className="font-poppins">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Confirmation</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Are you sure you want to delete this category?
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="text-white"
-                      onClick={() => handleDeleteCategory(categoryName, categoryData.categoryId)}
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-              <button onClick={() => handleEditCategory(categoryName)}>
-                <Pencil />
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
+            {isEditor && (
+              <div className="flex gap-x-2">
+                <AlertDialog>
+                  <AlertDialogTrigger>
+                    <Dustbin />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="font-poppins">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Confirmation</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to delete this category?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="text-white"
+                        onClick={() =>
+                          handleDeleteCategory(
+                            categoryName,
+                            categoryData.categoryId
+                          )
+                        }
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <button onClick={() => handleEditCategory(categoryName)}>
+                  <Pencil />
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
       {isEditor && (
-        <div onClick={() => changeToggleEditor(false)} className="flex items-center cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700">
+        <div
+          onClick={() => changeToggleEditor(false)}
+          className="flex items-center cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700"
+        >
           <Plus /> Add Category
         </div>
       )}
