@@ -19,10 +19,10 @@ const Footer = () => {
         <div className="pt-8">
           <Image src={logo} alt="logo" />
           <Link
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=contactus@grabbzo.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@grabbzo.com"
             className="flex gap-3 text-blue-500 items-center underline underline-offset-4 hover:text-blue-700"
           >
-            <BlueMail /> contactus@grabbzo.com
+            <BlueMail /> contact@grabbzo.com
           </Link>
           <Link
             href="tel:+917889864398"
