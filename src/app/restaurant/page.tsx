@@ -36,7 +36,7 @@ const page = () => {
       </div>
       <WhyGrabbzo />
       <div className="px-16 mb-10">
-        <div className="w-full bg-gradient-to-r from-blue-50 via-blue-200 to-blue-50 p-8 mx-auto rounded-3xl">
+        <div className="w-full bg-gradient-to-r from-[#6793DA] via-blue-300 to-[#D4DFFF] p-8 mx-auto rounded-3xl">
           <Faq />
         </div>
       </div>

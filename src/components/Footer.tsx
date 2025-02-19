@@ -30,18 +30,25 @@ const Footer = () => {
           >
             <BlueMobile /> +91-7889864398
           </Link>
-          <h6 className="text-lg font-semibold uppercase">Social Links</h6>
+          <h6 className="text-lg font-semibold uppercase underline underline-offset-4">
+            Social Links
+          </h6>
           <div className="flex gap-4 mt-3">
-            <Link href={"https://www.linkedin.com/company/grabbzo/"}>
+            <Link
+              href={"https://www.linkedin.com/company/grabbzo/"}
+              className="hover:opacity-50"
+            >
               <Linkedin />
             </Link>
             <Link
               href={"https://www.instagram.com/grabbzo?igsh=YW5heDZtbDIxcTIz"}
+              className="hover:opacity-50"
             >
               <Instagram />
             </Link>
             <Link
               href={"https://x.com/Grabbzo125105?t=y8hXBAIiY2zzZ-JxaMBAEg&s=09"}
+              className="hover:opacity-50"
             >
               <Twitter />
             </Link>

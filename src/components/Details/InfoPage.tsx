@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/UI/Checkbox";
 import { Input } from "@/components/UI/Input";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BasicFormSchema } from "./formSchema";
 import { City, ICity, State } from "country-state-city";
@@ -26,10 +26,12 @@ const InfoPage = () => {
   const { currentPage, setCurrentPage } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
-  if (currentPage.page != lastSegment) {
-    router.push(`/details/${currentPage}`);
-    return;
-  }
+  useEffect(() => {
+    if (currentPage.page != lastSegment) {
+      router.push(`/details/${currentPage.page}`);
+    }
+  }, []);
+
   const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
