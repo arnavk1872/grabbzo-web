@@ -59,14 +59,9 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
     },
     { name: "Orders", icon: <MenuIcon />, href: "/dashboard/orders" },
     {
-      name: "Menus",
+      name: "Menu",
       icon: <FoodIcon />,
       href: "/dashboard/menus/availableItems",
-    },
-    {
-      name: "Customers Reviews",
-      icon: <CustomerRevIcon />,
-      href: "/dashboard/reviews",
     },
     {
       name: "Messages (0)",
@@ -84,7 +79,7 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
             key={item.name}
             href={item.href}
             onClick={() => handleItemClick(item.name)}
-            className={`flex items-center space-x-6 p-[5px] font-medium text-[16px] whitespace-nowrap ${
+            className={`flex items-center space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
               activeItem === item.name
                 ? "bg-blue-600 text-white !space-x-8"
                 : "text-gray-600 hover:bg-gray-100"
@@ -137,6 +132,23 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
 
         {/* Bottom Links */}
         <div className="flex flex-col ">
+          {/* {
+      name: "Customers Reviews",
+      icon: <CustomerRevIcon />,
+      href: "/dashboard/reviews",
+    }, */}
+          <Link
+            href="/dashboard/reviews"
+            onClick={() => handleItemClick("Customers Reviews")}
+            className={`flex items-center space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
+              activeItem === "Customers Reviews"
+                ? "bg-blue-600 text-white !space-x-8"
+                : "text-gray-600 hover:bg-gray-100"
+            } rounded-lg`}
+          >
+            <CustomerRevIcon />
+            <span>Customers Reviews</span>
+          </Link>
           {/* <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team,"
             target="_blank"
@@ -149,7 +161,7 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
           <a
             href="#"
             onClick={handleLogout}
-            className="flex items-center space-x-2 p-1 text-[18px] text-gray-600 hover:bg-gray-100 rounded-lg"
+            className="flex items-center space-x-6 p-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
           >
             <LogoutIcon />
             <span>Logout</span>

@@ -8,9 +8,9 @@ const LogoutIcon: React.FC<LogoutIconProps> = ({ className }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="56"
-      height="56"
-      viewBox="0 0 56 56"
+      width="46"
+      height="46"
+      viewBox="0 0 46 46"
       fill="none"
     >
       <path
