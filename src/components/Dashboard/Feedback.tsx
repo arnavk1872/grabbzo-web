@@ -33,20 +33,20 @@ const Feedback: React.FC = () => {
       <div className="font-poppins text-[18px] font-semibold py-6 px-4">
         Customer Feedback
       </div>
-      <div className="px-6">
+      {/* <div className="px-6">
         {dummyData.map((item) => (
-          <FeedbackItem
-            key={item.id}
-            name={item.name}
-            likes={item.likes}
-          />
+          <FeedbackItem key={item.id} name={item.name} likes={item.likes} />
         ))}
-      </div>
-      <div className="flex justify-center ">
-        {" "}
-        <div  className="cursor-pointer w-2"><LeftArrow /></div>
-        <div className="cursor-pointer w-2"><ArrowRight /></div>
-        
+      </div> */}
+
+      <div className="flex justify-center items-center h-[250px]">
+        <h2 className="font-semibold text-xl">No Feedback Yet!</h2>
+        {/* <div className="cursor-pointer w-2">
+          <LeftArrow />
+        </div>
+        <div className="cursor-pointer w-2">
+          <ArrowRight />
+        </div> */}
       </div>
     </div>
   );
