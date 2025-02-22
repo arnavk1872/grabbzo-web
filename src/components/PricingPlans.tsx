@@ -26,7 +26,7 @@ const plans: Plan[] = [
       "Customer feedback",
       "Order History",
     ],
-    buttonBg: "bg-white text-black border border-black font-semibold",
+    buttonBg: "bg-gray-400 hover:bg-gray-800 text-white border border-gray-400 font-semibold",
     btnText: "Enjoy 1 month FREE",
   },
   {
@@ -41,7 +41,7 @@ const plans: Plan[] = [
       "Enhanced promotional options",
       "Targeted campaigns",
     ],
-    buttonBg: "bg-black text-white font-semibold",
+    buttonBg: "bg-amber-600 hover:bg-amber-800 text-white font-semibold",
     btnText: "Join GOLD",
   },
   {
@@ -57,7 +57,7 @@ const plans: Plan[] = [
       "Predictive insights",
       "24-hour dedicated reply",
     ],
-    buttonBg: "bg-blue-500 text-white border border-gray-400 font-semibold",
+    buttonBg: "bg-blue-600 text-white border border-gray-400 font-semibold",
     btnText: "Join DIAMOND",
   },
   {
@@ -72,7 +72,7 @@ const plans: Plan[] = [
       "Personalized marketing stratergies",
       "Full-service support ",
     ],
-    buttonBg: "bg-green-700 text-white font-semibold",
+    buttonBg: "bg-green-700 hover:bg-green-900 text-white font-semibold",
     btnText: "Join PLATINUM",
   },
 ];

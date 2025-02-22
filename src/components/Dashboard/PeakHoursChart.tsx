@@ -14,7 +14,7 @@ const data = [
 
 const PeakHoursChart: React.FC = () => {
   return (
-    <div className="bg-white rounded-[30px] border border-borderColor p-6 max-w-[752px] flex-[2]">
+    <div className="bg-white rounded-[30px] border border-borderColor p-6 max-w-[702px] flex-[2]">
       <div className="flex  justify-between lg:px-4 items-center mb-4">
         {" "}
         <h3 className="text-xl font-semibold">Peak Hours</h3>
@@ -25,7 +25,7 @@ const PeakHoursChart: React.FC = () => {
         </select>
       </div>
 
-      <BarChart width={700} height={300} data={data}>
+      <BarChart width={650} height={300} data={data}>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="hour" />
         <YAxis />

@@ -3,9 +3,8 @@ import Header from "@/components/Dashboard/Header";
 import Center from "@/components/Icons/Center";
 import Four from "@/components/Icons/Four";
 import Image from "next/image";
-import Pizza from "@public/pizza.png";
-
 import BackToHome from "@/components/BackToHome";
+import { S3_BASE_URL } from "@/lib/constants";
 
 export default function Custom404() {
 
@@ -21,7 +20,7 @@ export default function Custom404() {
       <Center />
       {/* Pizza image centered in the middle of Center */}
       <Image 
-        src={Pizza} 
+        src={`${S3_BASE_URL}/public/pizza.png`}
         height={500} 
         width={500} 
         alt="not found image" 

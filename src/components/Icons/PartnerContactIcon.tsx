@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import partner from "public/Partner-Contract.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface PartnerContactIconProps {
   className?: string;
@@ -39,7 +39,7 @@ const PartnerContactIcon: React.FC<PartnerContactIconProps> = ({
       >
         <div className="w-full h-full flex justify-center items-center">
           <Image
-            src={partner}
+            src={`${S3_BASE_URL}/public/Partner-Contract.png`}
             width={143}
             height={70}
             alt="logo"
