@@ -7,8 +7,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DocFormSchema } from "./formSchema";
-import docs from "public/Restaurant-Documents.png";
 import { usePageStore } from "@/store/CurrentPage";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const DocPage = () => {
   const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
@@ -81,7 +81,7 @@ const DocPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Restaurant Document</h2>
         <Image
-          src={docs}
+          src={`${S3_BASE_URL}/public/Restaurant-Documents.png`}
           width={114}
           height={73}
           alt="document"
