@@ -15,10 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../UI/Select";
-import info from "public/Restaruant-Information.png";
 import MapComponent from "./MapComponent";
 import { usePageStore } from "@/store/CurrentPage";
 import { usePathname } from "next/navigation";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const InfoPage = () => {
   const router = useRouter();
@@ -97,7 +97,7 @@ const InfoPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Restaurant Information</h2>
         <Image
-          src={info}
+          src={`${S3_BASE_URL}/public/Restaruant-Information.png`}
           width={114}
           height={73}
           alt="information"

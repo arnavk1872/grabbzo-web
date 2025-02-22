@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import docs from "public//Restaurant-Documents.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface RestDocIconProps {
   className?: string;
@@ -39,7 +39,7 @@ const RestDocIcon: React.FC<RestDocIconProps> = ({
       >
         <div className="w-full h-full flex justify-center items-center">
           <Image
-            src={docs}
+            src={`${S3_BASE_URL}/public/Restaurant-Documents.png`}
             width={143}
             height={70}
             alt="logo"

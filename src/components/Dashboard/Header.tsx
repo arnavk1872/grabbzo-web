@@ -22,6 +22,9 @@ import { X } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import Settings from "../Icons/Settings";
 import Link from "next/link";
+import { S3_BASE_URL } from "@/lib/constants";
+
+
 const Header = () => {
   const Routes: any[] = [
     {
@@ -48,7 +51,7 @@ const Header = () => {
       <div className="flex items-center gap-x-24">
         <Link href={"/dashboard"}>
           <Image
-            src="/grabbzo.png"
+            src={`${S3_BASE_URL}/public/grabbzo.png`}
             width={170}
             height={140}
             alt="logo"
@@ -83,7 +86,9 @@ const Header = () => {
               <div className="w-[80px] h-[80px] overflow-hidden">
                 <Avatar className="w-full h-full rounded-md">
                   <AvatarImage
-                    src="/settings_sheet_image.jpg"
+                    src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
+                    width={1000}
+                    height={1000}
                     className="object-cover"
                   />
                   <AvatarFallback>TM</AvatarFallback>

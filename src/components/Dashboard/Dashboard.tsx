@@ -11,7 +11,7 @@ const MetricCard= dynamic(()=>import ("@/components/Dashboard/MetricCard"),{ssr:
 
 const Dashboard = () => {
   return (
-    <section className="lg:pr-10 overflow-y-hidden">
+    <section className="lg:pr-10 overflow-x-hidden">
     <div className="flex gap-x-4">
       {" "}
       <SalesOverview />
@@ -35,7 +35,7 @@ const Dashboard = () => {
       </div>
       <EarningGraph />
     </div>
-    <div className="flex  pb-4 px-4 gap-x-4">
+    <div className="flex justify-between  pb-4 px-4 gap-x-4">
       {" "}
       <PeakHoursChart />
       <RecentOrders />

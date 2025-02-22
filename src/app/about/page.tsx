@@ -1,13 +1,13 @@
 import Image from "next/image";
 import React from "react";
-import commas from "public/commas.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const page = () => {
   return (
     <div className="">
       <div className="bg-green-600 px-20 py-10">
         <Image
-          src={commas}
+          src={`${S3_BASE_URL}/public/commas.png`}
           width={128}
           height={128}
           alt={"commas"}

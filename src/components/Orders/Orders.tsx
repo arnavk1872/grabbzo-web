@@ -1,14 +1,11 @@
 "use client"
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image, { StaticImageData } from "next/image";
-import newOrder from "@public/New.png";
-import prep from "@public/Prep.png";
-import pickedUp from "@public/pickedup.png";
-import ready from "@public/ready.png";
+import Image from "next/image";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface OrderStatus {
-  image: StaticImageData;
+  image: string;
   count: number;
   label: string;
   color: string;
@@ -16,10 +13,10 @@ interface OrderStatus {
 }
 
 const orderStatuses: OrderStatus[] = [
-  { image: newOrder, count: 0, label: "New", color: "text-Red", route: "/dashboard/orders" },
-  { image: prep, count: 0, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
-  { image: ready, count: 0, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
-  { image: pickedUp, count: 0, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
+  { image: `${S3_BASE_URL}/public/New.png`, count: 0, label: "New", color: "text-Red", route: "/dashboard/orders" },
+  { image: `${S3_BASE_URL}/public/Prep.png`, count: 0, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
+  { image: `${S3_BASE_URL}/public/ready.png`, count: 0, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
+  { image: `${S3_BASE_URL}/public/pickedup.png`, count: 0, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
 ];
 
 const OrderStatusCard: React.FC<

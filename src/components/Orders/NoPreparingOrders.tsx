@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import preparing from "public/preparing.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const NoPreparingOrders = () => {
   return (
     <div className="flex flex-col items-center justify-center h-[500px]">
       <Image
-        src={preparing}
+        src={`${S3_BASE_URL}/public/preparing.png`}
         height={200}
         width={200}
         alt="No preparing Orders"

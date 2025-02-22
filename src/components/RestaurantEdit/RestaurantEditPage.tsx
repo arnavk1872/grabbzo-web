@@ -4,11 +4,11 @@ import EditPencil from "../Icons/EditPencil";
 import LeftArrow from "../Icons/LeftArrow";
 import Link from "next/link";
 import Image from "next/image";
-import restaurantImage from "public/settings_sheet_image.jpg";
 import { Input } from "../UI/Input";
 import { Button } from "../UI/Button";
 import { EditFormSchema } from "./formSchema";
 import { updateRestaurantDetails } from "@/helpers/api-utils";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface User {
   id: number;
@@ -145,7 +145,9 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
       </div>
       <div className="my-12 mx-24 flex gap-10">
         <Image
-          src={restaurantImage}
+          src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
+          width={1000}
+          height={1000}
           alt="Restaurant-Image"
           className="h-80 rounded-3xl w-fit"
         />

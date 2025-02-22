@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import info from "public/Restaruant-Information.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface RestInfoIconProps {
   className?: string;
@@ -39,7 +39,7 @@ const RestInfoIcon: React.FC<RestInfoIconProps> = ({
       >
         <div className="w-full h-full flex justify-center items-center">
           <Image
-            src={info}
+            src={`${S3_BASE_URL}/public/Restaruant-Information.png`}
             width={143}
             height={70}
             alt="logo"

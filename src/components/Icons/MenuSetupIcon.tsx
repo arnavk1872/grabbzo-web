@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import menu from "public/Menu-Setup.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 interface MenuSetupIconProps {
   className?: string;
@@ -39,7 +39,7 @@ const MenuSetupIcon: React.FC<MenuSetupIconProps> = ({
       >
         <div className="w-full h-full flex justify-center items-center">
           <Image
-            src={menu}
+            src={`${S3_BASE_URL}/public/Menu-Setup.png`}
             width={143}
             height={70}
             alt="logo"

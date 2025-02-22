@@ -114,9 +114,9 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
 
       {/* Premium Upgrade Section */}
       <div className=" space-y-1">
-        <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
+        <div className="mt-1 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
-          <p className="mt-2 text-left text-[20px]">
+          <p className="mt-1 text-left text-[20px]">
             Invest in the Best: Get Premium
           </p>
           <Button
@@ -124,7 +124,7 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
               // window.open("/pricing", "_blank"); Open Pricing plans on new page
               router.push("/pricing");
             }}
-            className="mt-4 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
+            className="mt-2 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"
           >
             Get Premium
           </Button>
@@ -161,7 +161,7 @@ const Sidebar: React.FC<SidebarProps>= ({storeStatus}) => {
           <a
             href="#"
             onClick={handleLogout}
-            className="flex items-center space-x-6 p-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
+            className="flex items-center space-x-6 px-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
           >
             <LogoutIcon />
             <span>Logout</span>

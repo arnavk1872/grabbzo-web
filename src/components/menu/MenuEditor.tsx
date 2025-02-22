@@ -59,7 +59,6 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
       }, [JSON.stringify(allCategories)]);
 
       const [categories, setCategories] = useState(categoryData);
-      console.log(categories,"JSJSJSJS")
     
         const categoryCount = useMemo(
           () => Object.keys(categoryData).length,

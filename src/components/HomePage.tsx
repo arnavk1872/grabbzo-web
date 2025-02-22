@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import homeImage from "public/image.png";
 import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
@@ -9,6 +8,8 @@ import logo from "public/logo-white.png";
 import ServiceOptions from "./HomePage/ServiceOptions";
 import Footer from "./Footer";
 import DownwardArrow from "./Icons/DownwardArrow";
+import { S3_BASE_URL } from "@/lib/constants";
+
 
 const HomePage = () => {
   const router = useRouter();
@@ -33,7 +34,9 @@ const HomePage = () => {
     <>
       <div className="relative w-full h-[80vh] font-poppins">
         <Image
-          src={homeImage}
+          // src={homeImage}
+            src={`${S3_BASE_URL}/public/image.png`}
+
           layout="fill"
           objectFit="cover"
           quality={100}
@@ -50,6 +53,7 @@ const HomePage = () => {
 
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center px-4">
           <Image
+            // src={`${S3_BASE_URL}/public/logo-white.png`} // SHOWS UP DISTORTED
             src={logo}
             width={400}
             height={400}

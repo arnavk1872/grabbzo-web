@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import logo from "public/grabbzo.png";
-import background from "public/Pancake.png";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const ComingSoon = () => {
   return (
     <div className="overflow-x-hidden">
       <div className="w-full bg-white">
         <Image
-          src={logo}
+          src={`${S3_BASE_URL}/public/grabbzo.png`}
           width={100}
           height={70}
           alt={"logo"}
@@ -19,7 +18,7 @@ const ComingSoon = () => {
 
       <div className="relative w-[100vw] h-[100vh]">
         <Image
-          src={background}
+          src={`${S3_BASE_URL}/public/Pancake.png`}
           fill
           style={{
             objectFit: "cover",

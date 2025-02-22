@@ -1,7 +1,7 @@
 import React from "react";
-import customerIcon from "@public/Customer.png";
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const CustomerSatisfaction = () => {
   const totalStars = 5;
@@ -9,7 +9,7 @@ const CustomerSatisfaction = () => {
 
   return (
     <div className="h-[160px] mr-8 bg-white rounded-[30px] max-w-[380px] mx-2 my-2 flex items-center space-x-12 px-8 gap-x-4 ">
-      {/* <Image src={customerIcon} height={52} width={51} alt="Customer Icon" /> */}
+      {/* <Image src={`${S3_BASE_URL}/public/Customer.png`} height={52} width={51} alt="Customer Icon" /> */}
 
       <div>
         {" "}

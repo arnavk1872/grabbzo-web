@@ -8,8 +8,8 @@ import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import contract from "public/Partner-Contract.png";
 import { usePageStore } from "@/store/CurrentPage";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");
@@ -96,7 +96,7 @@ const ContractPage = () => {
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Partner Contract</h2>
         <Image
-          src={contract}
+          src={`${S3_BASE_URL}/public/Partner-Contract.png`}
           width={114}
           height={73}
           alt="menu"
