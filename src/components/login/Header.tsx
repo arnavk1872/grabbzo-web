@@ -1,16 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/Logo.jpg";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const Header = () => {
   return (
     <div className="px-24 h-[68px] font-poppins bg-white flex-shrink-0 flex justify-between overflow-hidden">
       <Link href="/">
         <Image
-          src={logo}
-          width={143}
-          height={60}
+          src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
+          width={150}
+          style={{ objectFit: "cover", height: "60px" }} 
+          height={100}
           alt={"logo"}
           className="flex items-center justify-center cursor-pointer"
         />

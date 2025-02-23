@@ -11,13 +11,14 @@ import {
   LucideLinkedin,
   Twitter,
 } from "lucide-react";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const Footer = () => {
   return (
-    <div>
+    <div className="font-poppins">
       <div className="my-10 px-16 flex justify-between border-t-2">
         <div className="pt-8">
-          <Image src={logo} alt="logo" />
+          <Image  src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`} height={120} width={120} alt="logo" />
           <Link
             href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@grabbzo.com"
             className="flex gap-3 text-blue-500 items-center underline underline-offset-4 hover:text-blue-700"

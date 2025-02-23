@@ -10,7 +10,6 @@ import Footer from "./Footer";
 import DownwardArrow from "./Icons/DownwardArrow";
 import { S3_BASE_URL } from "@/lib/constants";
 
-
 const HomePage = () => {
   const router = useRouter();
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -22,7 +21,10 @@ const HomePage = () => {
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -32,11 +34,9 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="relative w-full h-[80vh] font-poppins">
+      <div className="relative w-full h-[75vh] font-poppins">
         <Image
-          // src={homeImage}
-            src={`${S3_BASE_URL}/public/image.png`}
-
+          src={`${S3_BASE_URL}/public/image.png`}
           layout="fill"
           objectFit="cover"
           quality={100}
@@ -51,13 +51,12 @@ const HomePage = () => {
           Manage Your Restaurant
         </button>
 
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center px-4">
+        <div className="absolute inset-0 bg-black bg-opacity-10 flex flex-col items-center justify-center text-center px-4">
           <Image
-            // src={`${S3_BASE_URL}/public/logo-white.png`} // SHOWS UP DISTORTED
-            src={logo}
-            width={400}
-            height={400}
-            objectFit="cover"
+            src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
+            width={500}
+            height={300}
+            style={{ objectFit: "cover", height: "120px" }}
             quality={100}
             alt="home-main"
           />
@@ -66,7 +65,10 @@ const HomePage = () => {
             Explore delicious food & drinks near you
           </p>
 
-          <div className="flex items-center justify-center mt-6 gap-x-2" ref={searchRef}>
+          <div
+            className="flex items-center justify-center mt-6 gap-x-2"
+            ref={searchRef}
+          >
             <div className="relative flex items-center bg-white rounded-md p-2 shadow-lg w-[600px] max-w-full">
               <FaSearch className="text-gray-500 mx-3" />
               <input
