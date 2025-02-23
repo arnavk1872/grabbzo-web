@@ -8,12 +8,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="">
+    <div className="min-h-screen">
       <Header />
-      <div className="flex-none">
+      <div className="flex w-full">
         <PoliciesSidebar />
+        {children}
       </div>
-      <div className="flex-1 ml-2">{children}</div>
     </div>
   );
 };
