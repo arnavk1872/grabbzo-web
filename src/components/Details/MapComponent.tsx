@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
+import Loader from "./Loader";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAP_API as string;
 
@@ -30,7 +31,7 @@ const MapComponent: React.FC = () => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={API_KEY}>
+    <LoadScript googleMapsApiKey={API_KEY} loadingElement={<Loader />}>
       <p className="font-medium -mb-3">
         Pin the point to the <span className="font-semibold">Location</span> of
         your Restaurant
