@@ -217,7 +217,7 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-   console.log(response.data)
+    console.log(response.data);
     return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -481,6 +481,30 @@ export const postSignup = async (data: any) => {
     return response.data;
   } catch (error) {
     console.error("Error while signup :", error);
+    throw error;
+  }
+};
+
+export const paymentRequest = async (data: any) => {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("AuthToken")?.value;
+  if (!token) {
+    return {
+      status: 401,
+      message: "Authentication token is missing or invalid.",
+    };
+  }
+  try {
+    const response = await axios.post(`${IP}/pg/createOrder`, data, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error while payment Request :", error);
     throw error;
   }
 };

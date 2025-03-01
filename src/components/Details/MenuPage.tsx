@@ -29,11 +29,6 @@ const MenuPage = () => {
 
   const handleFileChange = (file: File | null, field: string) => {
     setMenuDetailsData(field, file);
-    if (file) {
-      // console.log(`${field} file uploaded:`, file.name);
-    } else {
-      // console.log(`No file selected for ${field}`);
-    }
   };
 
   const isFormComplete =
