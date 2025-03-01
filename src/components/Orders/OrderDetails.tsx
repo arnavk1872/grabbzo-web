@@ -3,41 +3,65 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Button } from "../UI/Button";
 import { MoveLeftIcon } from "lucide-react";
+import { changeOrderStatus } from "@/helpers/api-utils";
+
 
 const OrderDetails = () => {
   const { slug } = useParams();
   const router = useRouter();
-  const [viewButton, setViewButton] = useState<"accept" | "preparing" | "ready">("accept");
+  const [viewButton, setViewButton] = useState<"accept" | "preparing" | "ready" | "completed">("accept");
 
   const buttonConfig = {
     accept: {
+      status: "NEW",
       buttons: [
         {
           text: "Cancel",
           className: "bg-red-600 hover:bg-red-700",
-          onClick: () => {},
+          onClick: () => changeOrderStatus("CANCELLED", slug),
         },
         {
           text: "Accept",
           className: "bg-green-600 hover:bg-green-800",
-          onClick: () => setViewButton("preparing"),
+          onClick: () => {
+            changeOrderStatus("PREPARING", slug);
+            setViewButton("preparing");
+          },
         },
       ],
     },
     preparing: {
+      status: "PREPARING",
       buttons: [
         {
           text: "Ready",
           className: "bg-green-600 hover:bg-green-800",
-          onClick: () => setViewButton("ready"),
+          onClick: () => {
+            changeOrderStatus("READY", slug);
+            setViewButton("ready");
+          },
         },
       ],
     },
     ready: {
+      status: "READY",
       buttons: [
         {
           text: "Picked Up",
           className: "bg-yellow-600 hover:bg-yellow-700",
+          onClick: () => {
+            changeOrderStatus("COMPLETED", slug);
+            setViewButton("completed");
+          },
+        },
+      ],
+    },
+    completed: {
+      status: "COMPLETED",
+      buttons: [
+        {
+          text: "Completed",
+          className: "bg-green-800 hover:bg-green-900",
           onClick: () => {},
         },
       ],

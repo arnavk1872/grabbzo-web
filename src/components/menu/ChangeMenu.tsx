@@ -49,14 +49,14 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
     }));
   };
   
-  const { selectedItem, categoryValue ,categoryId } = useItemStore();
+  const { selectedItem, categoryValue ,categoryId, setItemId } = useItemStore();
 
-  const savedItem = selectedItem ? JSON.stringify([
+  const savedItem = selectedItem ? JSON.stringify(
     {
       ...selectedItem,
       selectedCategory: categoryValue
     }
-  ]) : "";
+  ) : "";
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -67,16 +67,23 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         console.error("Item data is incomplete.");
         return;
       }
+
       try {
         if(savedItem  && Object.keys(savedItem).length > 1){
-          await updateItemDetails(categoryId,savedItem);
+          const response = await updateItemDetails(selectedItem.id,categoryId,savedItem);
           enqueueSnackbar("Item updated successfully !", {
             variant: "success",
             className: "font-poppins",
           });
+          setLocalItems((prevItems: any[]) =>
+            prevItems.map((item) =>
+              item.id === selectedItem.id ? { ...item, ...selectedItem } : item
+            )
+          );
+        
         }else{
           const response = await addNewItem(formData);
-          console.log(response,"HAHAHAHAHA")
+          setItemId(response.id);
           enqueueSnackbar("Item added successfully !", {
             variant: "success",
             className: "font-poppins",

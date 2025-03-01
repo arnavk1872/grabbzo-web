@@ -7,6 +7,8 @@ interface ItemState {
   setCategoryValue: (category: string) => void;
   categoryId:number;
   setCategoryId:(category:number)=>void;
+  itemId:number;
+  setItemId:(itemId:number)=>void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
@@ -16,4 +18,6 @@ export const useItemStore = create<ItemState>((set) => ({
   setCategoryValue: (category) => set({ categoryValue: category }),
   categoryId:0,
   setCategoryId:(category) => set({ categoryId: category }),
+  itemId:0,
+  setItemId:(item)=>set({itemId:item})
 }));

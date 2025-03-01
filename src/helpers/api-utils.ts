@@ -217,7 +217,7 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-   console.log(response.data)
+    console.log(response.data);
     return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -234,7 +234,7 @@ export const addNewItem = async (formData: any) => {
     // Wrap the formData in an array before sending
     const payload = Array.isArray(formData) ? formData : [formData];
 
-    const response = await axios.put(
+    const response = await axios.post(
       `${IP}/api/menu/restaurant/categories/${CategoryId}/add-items`,
       payload, // Use the array as the payload
       {
@@ -367,13 +367,13 @@ export const getItemDetails = async (ItemId: number) => {
   }
 };
 
-export const updateItemDetails = async (ItemId: number, updatedItem: any) => {
+export const updateItemDetails = async (ItemId: number,categoryId:number, updatedItem: any) => {
   const token = await getToken();
   if (!token) return;
-  console.log(updatedItem, "CONSOLEEE  E EE  EE", ItemId);
+
   try {
     const response = await axios.put(
-      `${IP}/api/menu/restaurant/categories/${ItemId}/add-items`,
+      `${IP}/api/menu/restaurant/categories/${categoryId}/update-item/${ItemId}`,
       updatedItem,
       {
         headers: {
@@ -382,7 +382,7 @@ export const updateItemDetails = async (ItemId: number, updatedItem: any) => {
         },
       }
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;
@@ -406,6 +406,29 @@ export const getOrderbyId = async (id: string) => {
     throw error;
   }
 };
+
+export const addItemImage = async (id: number,image:any) => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/api/menu/restaurant/item/${id}/upload-Menuimage`,
+      image, 
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          'Content-Type': 'multipart/form-data'
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
 
 // --------------------------------------------------- MENU API's END --------------------------------------------------
 
@@ -484,3 +507,38 @@ export const postSignup = async (data: any) => {
     throw error;
   }
 };
+
+//------------------------------------------------------- ORDERS API's ----------------------------------------------//
+
+export const changeOrderStatus = async (
+  orderStatus: string,
+  orderId: any,
+) => {
+  // const payload = {
+  //   restaurant: {
+  //     id: orderId,
+  //   },
+  //   status: orderStatus,
+  // };
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/orders/status?orderId=${orderId}&status=${orderStatus}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response,"CHECK")
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+//------------------------------------------------------- ORDERS API's END ----------------------------------------------//

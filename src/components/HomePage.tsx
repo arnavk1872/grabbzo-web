@@ -34,7 +34,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="relative w-full h-[75vh] font-poppins">
+      <div className="relative w-full h-[80vh] font-poppins">
         <Image
           src={`${S3_BASE_URL}/public/image.png`}
           layout="fill"

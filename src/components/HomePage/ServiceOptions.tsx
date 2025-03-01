@@ -12,25 +12,26 @@ interface ServiceOption {
 
 const serviceOptions: ServiceOption[] = [
   {
-    icon: <CarDelivery  />,
-    title: "Car Delivery",
-    description: "Food gets delivered directly to your car during takeaways",
-  },
-  {
-    icon: <Dining />,
-    title: "Dining",
-    description: "Dine at city's favourite dining venues",
-  },
-  {
     icon: <Pickup />,
     title: "Take Away",
     description: "Short on time? Order ahead and pick up your food without waiting.",
   },
+  {
+    icon: <Dining />,
+    title: "Dine in",
+    description: "Dine at city's favourite dining venues",
+  },
+  {
+    icon: <CarDelivery  />,
+    title: "Car Delivery",
+    description: "Food gets delivered directly to your car during takeaways",
+  },
+
 ];
 
 const ServiceOptions: React.FC = () => {
   return (
-    <div className="bg-[#FCEBC6] py-8 rounded-tr-full mr-20 my-12 rounded-br-full flex justify-center gap-16 font-poppins">
+    <div className="bg-[#FCEBC6] py-8 rounded-tr-full mr-20 my-24 rounded-br-full flex justify-center gap-16 font-poppins">
       {serviceOptions.map((option, index) => (
         <div
           key={index}
