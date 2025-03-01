@@ -30,8 +30,8 @@ const page = () => {
       </div>
       <div className="flex justify-center relative">
         <Image
-         width={100}
-         height={100}
+         width={10000}
+         height={1000}
          src={`${S3_BASE_URL}/public/home-footer.png`}
           alt={"home-footer"}
           className="h-[45vh] object-cover"

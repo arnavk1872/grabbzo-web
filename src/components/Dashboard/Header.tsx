@@ -51,7 +51,7 @@ const Header = () => {
       <div className="flex items-center gap-x-24">
         <Link href={"/dashboard"}>
           <Image
-            src={`${S3_BASE_URL}/public/grabbzo.png`}
+            src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
             width={170}
             height={140}
             alt="logo"

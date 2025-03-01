@@ -1,3 +1,4 @@
+import Header from "@/components/Details/Header";
 import Faq from "@/components/login/Faq";
 import PricingPlans from "@/components/PricingPlans";
 import React from "react";
@@ -5,6 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <div>
+      <Header/>
       <div className="flex flex-col items-center justify-center my-8 font-poppins ">
         <span className="text-[48px] font-poppins font-extrabold ">
           See Grabbzo Plans
