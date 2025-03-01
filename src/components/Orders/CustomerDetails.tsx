@@ -4,6 +4,7 @@ import ETATimer from "./ETATimer";
 import Clock from "../Icons/Clock";
 
 type OrderDetails = {
+  status: string;
   customerName: string;
   orderNote: string;
 };
@@ -13,6 +14,7 @@ type CustomerDetailsProps = {
 };
 
 const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
+  console.log(orderDetails, "DEETS");
   return (
     <div className="flex flex-col items-center justify-center w-1/2">
       <div className="bg-white border rounded-[40px] flex flex-col items-center w-full ">
@@ -45,18 +47,20 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
           </div>
         </div>
       </div>
-      <div className="border border-borderColor rounded-[24px] w-full my-4 bg-white flex gap-x-4 items-center justify-center py-4">
-        <div className="border border-borderColor rounded-full bg-[#1663DE] p-2 ">
-          <PhoneIcon />
+      {orderDetails.status === "PREPARING" && (
+        <div className="border border-borderColor rounded-[24px] w-full my-4 bg-white flex gap-x-4 items-center justify-center py-4">
+          <div className="border border-borderColor rounded-full bg-[#1663DE] p-2 ">
+            <PhoneIcon />
+          </div>
+          <div>
+            <span className="font-poppins text-[20px] font-semibold">
+              Phone Number
+            </span>
+            <div className="font-poppins text-[14px]">+91 9879385252</div>
+          </div>
         </div>
-        <div>
-          <span className="font-poppins text-[20px] font-semibold">
-            Phone Number
-          </span>
-          <div className="font-poppins text-[14px]">+91 9879385252</div>
-        </div>
-      </div>
-      <div className="border border-borderColor rounded-[24px] w-full bg-white flex gap-x-4 items-center justify-center py-4">
+      )}
+      <div className="border mt-2 border-borderColor rounded-[24px] w-full bg-white flex gap-x-4 items-center justify-center py-4">
         <Clock />
         <span className=" font-poppins font-bold">
           <ETATimer targetTime={new Date().getTime() + 1000000} />

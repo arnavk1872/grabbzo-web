@@ -28,6 +28,10 @@ import { S3_BASE_URL } from "@/lib/constants";
 const Header = () => {
   const Routes: any[] = [
     {
+      name: "Growth",
+      route: "/growth",
+    },
+    {
       name: "Order History",
       route: "/order-history",
     },
@@ -76,7 +80,7 @@ const Header = () => {
                 </button>
               </SheetClose>
               <SheetHeader>
-                <SheetTitle className="text-lg font-semibold">
+                <SheetTitle className="text-lg font-semibold font-poppins">
                   Settings
                 </SheetTitle>
               </SheetHeader>
@@ -94,7 +98,7 @@ const Header = () => {
                   <AvatarFallback>TM</AvatarFallback>
                 </Avatar>
               </div>
-              <div>
+              <div className="font-poppins">
                 <h2 className="text-lg font-semibold">Taj Mahal Hotel</h2>
                 <Link href={"/edit-details"} className="text-sm text-blue-500">
                   View Account Details
@@ -102,7 +106,7 @@ const Header = () => {
               </div>
             </div>
             {/* Settings Options */}
-            <div className="p-4 space-y-2">
+            <div className="p-4 space-y-2 font-poppins">
               {Routes.map((item, index) => (
                 <Link
                   href={item.route}

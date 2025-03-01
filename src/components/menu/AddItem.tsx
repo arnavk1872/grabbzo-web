@@ -11,6 +11,7 @@ import { Textarea } from "../UI/TextArea";
 import { formSchema } from "./formSchema";
 import { useItemStore } from "@/store/MenuStore";
 import { X } from "lucide-react";
+import { addItemImage } from "@/helpers/api-utils";
 
 interface AddItemProps {
   allCategories: { id: number; name: string }[];
@@ -22,27 +23,14 @@ const AddItem = forwardRef(
   ({ allCategories, formData, onFormDataChange }: AddItemProps, ref) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const { selectedItem, setSelectedItem } = useItemStore();
+    const { selectedItem, setSelectedItem,itemId } = useItemStore();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const savedItem = selectedItem?.data;
     const { categoryValue } = useItemStore();
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]; // Get the selected file
 
-      if (file) {
-        if (file.size > 500 * 1024) {
-          // Check if file size is over 500KB
-          alert("File size must be under 500KB.");
-          return;
-        }
-        console.log(file,URL.createObjectURL(file),"FILE");
-        setImageFile(file);
-        setImagePreview(URL.createObjectURL(file)); // Create a preview URL
-      }
-    };
 
     const handleRemoveImage = () => {
       setImagePreview(null);
@@ -62,10 +50,9 @@ const AddItem = forwardRef(
         onFormDataChange("foodType", savedItem.isVeg);
         onFormDataChange("id", savedItem.id);
         onFormDataChange("restaurantCategory", { id: 1 });
-        setImagePreview(`https://picsum.photos/400/300?random`);
+        setImagePreview(savedItem.imageUrl);
       }
     }, [savedItem, categoryValue]);
-
     useEffect(() => {
       if (selectedItem) {
         // Update the selectedItem object entirely
@@ -81,6 +68,41 @@ const AddItem = forwardRef(
         });
       }
     }, [formData, categoryValue]);
+
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files?.[0];
+
+  if (file) {
+    if (file.size > 500 * 1024) {
+      alert("File size must be under 500KB.");
+      return;
+    }
+    console.log(file, "FILE");
+    setSelectedFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+};
+
+useEffect(() => {
+  if (!itemId || !selectedFile) return; 
+
+  const uploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      await addItemImage(itemId, formData);
+      console.log("Image uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  uploadImage();
+}, [itemId, selectedFile]); 
+
 
     useImperativeHandle(ref, () => ({
       getItemData: () => {
@@ -195,7 +217,7 @@ const AddItem = forwardRef(
             type="file"
             accept="image/*"
             ref={fileInputRef}
-            onChange={handleImageChange}
+            onChange={handleFileSelect}
             className="my-2"
           />
 
