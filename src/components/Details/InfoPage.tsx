@@ -7,7 +7,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BasicFormSchema } from "./formSchema";
-import { City, ICity, State } from "country-state-city";
+// import { City, ICity, State } from "country-state-city";
 import {
   Select,
   SelectContent,
@@ -19,6 +19,7 @@ import MapComponent from "./MapComponent";
 import { usePageStore } from "@/store/CurrentPage";
 import { usePathname } from "next/navigation";
 import { S3_BASE_URL } from "@/lib/constants";
+import { cities, states } from "./data";
 
 const InfoPage = () => {
   const router = useRouter();
@@ -35,16 +36,7 @@ const InfoPage = () => {
   const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [city, setCity] = useState<ICity[]>(() => {
-    if (basicDetailsData.city.trim() !== "") {
-      return [
-        { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
-      ];
-    } else {
-      return [];
-    }
-  });
-  const states = State.getStatesOfCountry("IN");
+  const [city, setCity] = useState<string[]>([]);
 
   const validateForm = () => {
     const validationResult = BasicFormSchema.safeParse(basicDetailsData);
@@ -63,16 +55,21 @@ const InfoPage = () => {
 
   const handleStateChange = (value: string) => {
     setBasicDetailsData("state", value);
-    const state = states.find((state) => state.name == value);
-    var cityData: ICity[] = [];
-    if (state) cityData = City.getCitiesOfState("IN", state.isoCode);
-    else
-      cityData = [
-        { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
-      ];
-    setCity(cityData);
+    const state = states.find((state) => state.key == value);
+    if (state) {
+      setBasicDetailsData("state", state.name);
+    }
+    setCity(cities[value]);
+    // const cityData =
+    // var cityData: ICity[] = [];
+    // if (state) cityData = City.getCitiesOfState("IN", state.isoCode);
+    // else
+    //   cityData = [
+    //     { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
+    //   ];
+    // setCity(cityData);
   };
-
+  console.log(basicDetailsData);
   const handleClick = () => {
     const validationErrors = validateForm();
 
@@ -202,15 +199,17 @@ const InfoPage = () => {
             <div className="ml-2 text-red-500 text-[14px]">{errors.area}</div>
           </div>
           <Select
-            value={basicDetailsData.state || ""}
+            value={basicDetailsData.state || "Select State"}
             onValueChange={handleStateChange}
           >
             <SelectTrigger className="text-gray-800">
-              <SelectValue placeholder="State*" />
+              <SelectValue>
+                {basicDetailsData.state || "Select State"}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent>
               {states.map((option) => (
-                <SelectItem key={option.isoCode} value={option.name}>
+                <SelectItem key={option.key} value={option.key}>
                   {option.name}
                 </SelectItem>
               ))}
@@ -225,8 +224,8 @@ const InfoPage = () => {
             </SelectTrigger>
             <SelectContent>
               {city?.map((option) => (
-                <SelectItem key={option.name} value={option.name}>
-                  {option.name}
+                <SelectItem key={option} value={option}>
+                  {option}
                 </SelectItem>
               ))}
             </SelectContent>

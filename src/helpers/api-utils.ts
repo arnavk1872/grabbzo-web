@@ -508,6 +508,30 @@ export const postSignup = async (data: any) => {
   }
 };
 
+export const paymentRequest = async (data: any) => {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("AuthToken")?.value;
+  if (!token) {
+    return {
+      status: 401,
+      message: "Authentication token is missing or invalid.",
+    };
+  }
+  try {
+    const response = await axios.post(`${IP}/pg/createOrder`, data, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error while payment Request :", error);
+    throw error;
+  }
+};
+
 //------------------------------------------------------- ORDERS API's ----------------------------------------------//
 
 export const changeOrderStatus = async (
