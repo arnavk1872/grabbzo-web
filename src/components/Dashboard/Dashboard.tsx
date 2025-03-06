@@ -4,8 +4,8 @@ import Feedback from "@/components/Dashboard/Feedback";
 import dynamic from "next/dynamic";
 import RecentOrders from "@/components/Dashboard/RecentOrders";
 import SalesOverview from "@/components/Dashboard/SalesOverview";
+import Grow from "./Grow";
 
-const EarningGraph= dynamic(()=>import ("@/components/Dashboard/EarningGraph"),{ssr:false});
 const PeakHoursChart= dynamic(()=>import ("@/components/Dashboard/PeakHoursChart"),{ssr:false});
 const MetricCard= dynamic(()=>import ("@/components/Dashboard/MetricCard"),{ssr:false});
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
           stroke="#FC0"
         />
       </div>
-      <EarningGraph />
+      <Grow/>
     </div>
     <div className="flex justify-between  pb-4 px-4 gap-x-4">
       {" "}

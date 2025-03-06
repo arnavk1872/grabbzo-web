@@ -56,7 +56,11 @@ const page = () => {
                 <p className="text-sm mt-1">Get seen by more customers on Grabbzo app and get more orders</p>
               </div>
               <div className="flex justify-between">
+                <Link href="/growth/adCredits">
                 <Button className="bg-white text-pink-600 hover:bg-pink-100 px-6 mt-4">Create now</Button>
+                </Link>
+                
+                
                 <Image
                   src={`${S3_BASE_URL}/public/Illustration.png`}
                   height={110}

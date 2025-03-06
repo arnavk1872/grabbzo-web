@@ -566,3 +566,132 @@ export const changeOrderStatus = async (
 };
 
 //------------------------------------------------------- ORDERS API's END ----------------------------------------------//
+
+export const buyAdCredits = async (
+  amount:number
+) => {
+  const token = await getToken();
+   const restaurantId = await  getRestaurantId();
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/plan/adcredit/restaurant/${restaurantId}`,{
+        amount:amount
+      },
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response,"CHECK ADS")
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+// ---------------------------------------------------------- DISCOUNTS API's ----------------------------------------------------------
+
+export const getAllDiscounts = async (
+) => {
+  const token = await getToken();
+  const restaurantId = await getRestaurantId();
+  
+  if (!token) return;
+  try {
+    const response = await axios.get(
+      `${IP}/discounts/restaurant/${restaurantId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const deleteDiscount = async (
+  discountId:number
+) => {
+  const token = await getToken();
+  
+  if (!token) return;
+  try {
+    const response = await axios.delete(
+      `${IP}/discounts/${discountId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const updateDiscountStatus = async (
+  discountId:number
+) => {
+  const token = await getToken();
+  console.log("HI",token);
+  if (!token) return;
+  try {
+    const response = await axios.put(
+      `${IP}/discounts/${discountId}`,{},
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const addNewDiscount = async (
+  payload:any
+) => {
+  const token = await getToken();
+  const restaurantId = await getRestaurantId();
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/discounts/restaurant/${restaurantId}`,payload,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error:unknown) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.message || error.message || "Something went wrong!";
+      
+      throw new Error(errorMessage);
+    }
+
+    throw new Error("Something went wrong!");
+  }
+};
+
