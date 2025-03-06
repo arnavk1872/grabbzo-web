@@ -7,8 +7,12 @@ import GrossSales from "@/components/Icons/GrossSales";
 import OrdersDelivered from "@/components/Icons/OrdersDelivered";
 import EffectiveDiscount from "@/components/Icons/EffectiveDiscount";
 import DiscountGiven from "@/components/Icons/DiscountGiven";
+import { getAllDiscounts } from "@/helpers/api-utils";
 
-const Page = () => {
+const Page = async() => {
+
+  const allDiscounts = await getAllDiscounts();
+  
   const offerStats = [
     { id: 1, amount: "\u20B90", label: "Gross sales", icon: <GrossSales /> },
     {
@@ -31,24 +35,6 @@ const Page = () => {
     },
   ];
 
-  const activeOffers = [
-    {
-      id: "offer-1",
-      title: "30% off up to \u20B975",
-      startDate: "7 February, 2025",
-      expiry: "22 days",
-      applicable: "All users",
-      minOrderValue: "\u20B9150",
-    },
-    {
-      id: "offer-2",
-      title: "20% off up to \u20B950",
-      startDate: "15 February, 2025",
-      expiry: "30 days",
-      applicable: "New users",
-      minOrderValue: "\u20B9200",
-    },
-  ];
 
   return (
     <div className="px-2 font-poppins">
@@ -74,7 +60,7 @@ const Page = () => {
         <h2 className="text-xl font-semibold">Active Offers</h2>
 
         {/* Active Offers */}
-        <ActiveDiscounts activeOffers={activeOffers} />
+        <ActiveDiscounts  allDiscounts={allDiscounts} />
       </div>
     </div>
   );
