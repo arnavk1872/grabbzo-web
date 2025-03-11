@@ -20,11 +20,11 @@ const page = () => {
           className="h-[80vh] w-full object-cover"
         />
         <Image
-          src={logo}
+          src={`${S3_BASE_URL}/public/Grabbzo-white-logo.png`}
           alt={"logo"}
           width={1000}
           height={1000}
-          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[9rem]"
+          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[32rem]"
         />
         <InputBox />
       </div>

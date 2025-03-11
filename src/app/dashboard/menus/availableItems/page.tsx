@@ -9,8 +9,6 @@ const Page = async () => {
  
   return (
     <div>
-      {/* <AvailableMenu allCategories={allCategories} categories={undefined} setCategories={undefined} categoryCount={undefined} />
-       */}
       <MenuOverview allCategories={allCategories}/>
     </div>
   );

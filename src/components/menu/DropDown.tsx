@@ -27,7 +27,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           <DownwardArrow />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[150px]">
+      <DropdownMenuContent className="w-[150px] h-[150px] overflow-y-auto">
         {options.map((option) =>
           // Check if the option is an object (category) or a number
           typeof option === "object" && option !== null && "name" in option ? (
