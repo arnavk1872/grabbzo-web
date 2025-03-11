@@ -328,10 +328,13 @@ export const editCategory = async (
 ) => {
   const token = await getToken();
   if (!token) return;
+  const payload = {
+    name:categoryName
+  }
   try {
     const response = await axios.put(
       `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
-      categoryName,
+      payload,
       {
         headers: {
           Authorization: ` ${token}`,

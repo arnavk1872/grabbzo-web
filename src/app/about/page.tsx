@@ -1,86 +1,93 @@
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
 import { S3_BASE_URL } from "@/lib/constants";
+import Footer from "@/components/Footer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/aboutus/Carousel";
+import WorkWithUs from "@/components/aboutus/WorkWithUs";
+import Dining from "@/components/aboutus/Dining";
+import Pickup from "@/components/aboutus/Pickup";
+import CarDelivery from "@/components/aboutus/CarDelivery";
 
-const page = () => {
+const Page = () => {
   return (
-    <div className="">
-      <div className="bg-green-600 px-20 py-10">
+    <div>
+      <div className="relative w-full h-[80vh] font-poppins">
         <Image
-          src={`${S3_BASE_URL}/public/commas.png`}
-          width={128}
-          height={128}
-          alt={"commas"}
-          unoptimized
-          className="object-cover"
+          src={`${S3_BASE_URL}/public/about-us-header.png`}
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          alt="home-main"
+          className="absolute inset-0 w-full h-full pointer-events-none"
         />
-        <p className="text-3xl text-white font-medium">
-          Grabbzo is here to make your food journey easier, whether you're in
-          the mood for a quick takeout, would rather eat in with a preorder, or
-          would prefer the convenience of car delivery.
-        </p>
-      </div>
-      <div className="px-20 mt-16">
-        <h4 className="text-6xl font-semibold font-poppins">What We Do</h4>
-        <div className="h-[4px] bg-black w-44 mt-2"></div>
-        <p className="mt-10 text-3xl">
-          At Grabbzo, we think delicious cuisine ought to be accessible with
-          just a few clicks. To accommodate your dining preferences, we provide
-          three main services:
-        </p>
-        <ul className="mt-10 space-y-5 text-2xl">
-          <li>
-            <strong>Takeout:</strong> Place an order at your preferred
-            restaurant and have it delivered whenever it's convenient for you.
-          </li>
-          <li>
-            <strong>Pre-Dine In:</strong> For a hassle-free dining experience at
-            your preferred restaurant, order your meal in advance to avoid the
-            wait.
-          </li>
-          <li>
-            <strong>Car Delivery:</strong> Save time and worry while on the road
-            by having your food delivered right to your car.
-          </li>
-        </ul>
-      </div>
-      <div className="mt-16 bg-gray-200 py-10">
-        <h4 className="text-6xl font-semibold font-poppins text-center pb-10">
-          Our Vision
-        </h4>
+        <Image
+          src={`${S3_BASE_URL}/public/Grabbzo-white-logo.png`}
+          width={1000}
+          height={1000}
+          style={{ objectFit: "cover", height: "60px", padding: "10px",zIndex:100}}
+          quality={100}
+          className="absolute h-40 w-40 top-4 left-4 z-50 object-cover"
+          alt="home-main"
+        />
 
-        <p className="px-20 text-2xl text-justify">
-          In our ideal world, eating is not the only activity; it is also an
-          opportunity to savor the moment without any tension or delays. We want
-          to give more than simple meals with Grabbzo; we're providing a
-          quicker, easier, and more intelligent method to engage with the
-          cuisine you love.
-        </p>
-      </div>
-      <div className="my-16 px-20">
-        <h4 className="text-6xl font-semibold font-poppins">Why Grabbzo?</h4>
-        <div className="h-[4px] bg-black w-44 mt-5"></div>
-        <ul className="mt-10 space-y-5 text-2xl">
-          <li>
-            <strong>Convenience:</strong> We provide you with various options to
-            enjoy your meal on your terms, whether you're in a hurry or want to
-            unwind.
-          </li>
+        <Link
+          href="/"
+          className="absolute cursor-pointer text-lg top-4 right-44 text-white px-4 py-2 rounded-lg font-poppins z-[100]"
+        >
+          Home
+        </Link>
+        <a
+          href="#work-with-us"
+          className="absolute cursor-pointer text-lg top-4 right-4 text-white px-4 py-2 rounded-full font-poppins z-[100] border border-white"
+        >
+          Work with us
+        </a>
 
-          <li>
-            <strong>Quality:</strong> To guarantee that every meal is prepared
-            with the best ingredients and attention to detail, we collaborate
-            closely with nearby eateries and chefs.
-          </li>
-          <li>
-            <strong>Technology:</strong> From menu browsing to order placement,
-            our state-of-the-art technology guarantees a seamless, user-friendly
-            experience.
-          </li>
-        </ul>
+        <div className="absolute inset-0 bg-black bg-opacity-10 flex flex-col items-center justify-center text-center px-4">
+          <p className="text-white font-semibold text-6xl mt-3">
+            From an Idea to a Revolution
+          </p>
+        </div>
       </div>
+
+      <div className="text-center font-poppins text-[34px] font-semibold my-4">
+        About Us
+      </div>
+
+      <div className="px-[180px] py-10 mb-12">
+        <Carousel>
+          <CarouselContent>
+            <CarouselItem>
+              <Pickup />
+            </CarouselItem>
+            <CarouselItem>
+              <Dining />
+            </CarouselItem>
+            <CarouselItem>
+              <CarDelivery />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
+
+      <div id="work-with-us">
+        <WorkWithUs />
+      </div>
+
+      <Footer />
     </div>
   );
 };
 
-export default page;
+export default Page;
+
+
+

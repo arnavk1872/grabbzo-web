@@ -107,13 +107,13 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
       console.error("Error deleting item:", error);
     }
   };
-
+ console.log(localItems,"HIU")
   return (
     <div className="flex w-[80%] flex-col">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         ITEMS
       </div>
-      <div className="border rounded-[30px] p-4 bg-white w-[90%] h-[80vh] px-8 mx-6  overflow-y-auto no-scrollbar">
+      <div className="border rounded-[30px] p-4 bg-white w-[90%] min-w-[200px] h-[80vh] px-8 mx-6  overflow-y-auto no-scrollbar">
         {localItems?.length > 0 ? (
           localItems.map((item: any) => (
             <div
@@ -121,7 +121,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
               className="flex items-center cursor-pointer  font-poppins justify-between py-2 border-b last:border-b-0"
             >
               <Accordion type="single" collapsible>
-                <AccordionItem value={`item-${item.id}`}>
+                <AccordionItem key={item.id} value={`item-${item.id}`}>
                   <AccordionTrigger>
                     {" "}
                     <span className="text-[18px]">{item.title}</span>

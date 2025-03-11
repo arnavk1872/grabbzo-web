@@ -165,7 +165,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         CATEGORY
       </div>
-      <div className="overflow-y-auto no-scrollbar min-w-[250px]">
+      <div className="overflow-y-auto min-w-[250px] max-h-[450px]">
         {Object.keys(categories).length === 0 && (
           <div className="font-poppins">No Categories added yet!</div>
         )}
@@ -179,13 +179,13 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
             }}
             className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
               selectedCategory === categoryName && !isEditor
-                ? "bg-blue-500 text-white"
+                ? "bg-blue-500 text-white" : selectedCategory === categoryName && isEditor ? "bg-blue-100"
                 : "bg-white text-black"
             }`}
           >
             {editingCategory === categoryName ? (
               <input
-                className="border rounded p-1 w-40 text-black"
+                className="border rounded p-1 w-20 text-black"
                 value={updatedCategoryName}
                 onChange={(e) => setUpdatedCategoryName(e.target.value)}
                 onBlur={() =>
