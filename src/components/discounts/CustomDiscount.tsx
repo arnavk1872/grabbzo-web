@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Slider } from "@/components/discounts/Slider";
 import { Button } from "@/components/UI/Button";
 import { useSearchParams } from 'next/navigation';
@@ -205,4 +205,12 @@ const CustomDiscount = () => {
   );
 };
 
-export default CustomDiscount;
+const SetCustomDiscount = () => {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <CustomDiscount />
+    </Suspense>
+  );
+};
+
+export default SetCustomDiscount;
