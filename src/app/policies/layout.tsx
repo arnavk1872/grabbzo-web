@@ -10,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen">
       <Header />
-      <div className="flex w-full">
+      <div className="flex w-full font-poppins">
         <PoliciesSidebar />
         {children}
       </div>
