@@ -1,7 +1,6 @@
 import Header from "@/components/Dashboard/Header";
-import { useRouter } from "next/navigation";
 import OffersDiscounts from "@/components/discounts/OffersDiscounts";
-import CustomDiscount from "@/components/discounts/CustomDiscount";
+import SetCustomDiscount from "@/components/discounts/CustomDiscount";
 
 const Page = () => {
   return (
@@ -9,7 +8,7 @@ const Page = () => {
       <Header />
       <div className="font-poppins px-8 py-4">
         <OffersDiscounts />
-        <CustomDiscount />
+        <SetCustomDiscount/>
       </div>
     </div>
   );

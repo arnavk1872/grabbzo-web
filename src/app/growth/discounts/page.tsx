@@ -1,10 +1,10 @@
 import Header from "@/components/Dashboard/Header";
 import { Button } from "@/components/UI/Button";
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { S3_BASE_URL } from "@/lib/constants";
 import Link from "next/link";
 import SwapType from "@/components/discounts/SwapType";
+import OffersDiscounts from "@/components/discounts/OffersDiscounts";
 
 const subOffers = [
   { title: "20% off up to ₹150", tag: "NewCustomers", percentage: 20, maxCap: 150, coupon: "TRYNEW" },
@@ -16,14 +16,7 @@ const page = () => {
     <div className="font-poppins px-2">
       <Header />
       <section className="px-8 py-4">
-        <div className="flex items-center space-x-2">
-          <Link href="/growth/discounts">
-            <span className="text-xl font-bold cursor-pointer">
-              <ArrowLeft />
-            </span>
-          </Link>
-          <h1 className="text-2xl font-bold">Offers and Discounts</h1>
-        </div>
+        <OffersDiscounts/>
         <SwapType />
         <div className="mt-6">
           <h2 className="text-lg font-semibold">Recommended Offers</h2>
