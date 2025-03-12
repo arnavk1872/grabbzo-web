@@ -1,24 +1,26 @@
+"use client";
 import React from "react";
-import logo from "public/Logo.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import BlueMail from "./Icons/BlueMail";
 import BlueMobile from "./Icons/BlueMobile";
-import {
-  Instagram,
-  Linkedin,
-  LinkedinIcon,
-  LucideLinkedin,
-  Twitter,
-} from "lucide-react";
+import { Instagram, Linkedin, Twitter } from "lucide-react";
 import { S3_BASE_URL } from "@/lib/constants";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+  const hiddenPaths = ["/", "/about"];
   return (
     <div className="font-poppins">
       <div className="my-10 px-16 flex justify-between border-t-2">
         <div className="pt-8">
-          <Image  src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`} height={120} width={120} alt="logo" />
+          <Image
+            src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
+            height={120}
+            width={120}
+            alt="logo"
+          />
           <Link
             href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@grabbzo.com"
             className="flex gap-3 text-blue-500 items-center underline underline-offset-4 hover:text-blue-700"
@@ -67,12 +69,14 @@ const Footer = () => {
               >
                 About Us
               </Link>
-              <Link
-                className="hover:underline hover:underline-offset-4"
-                href="/pricing"
-              >
-                Pricing
-              </Link>
+              {!hiddenPaths.includes(pathname) && (
+                <Link
+                  className="hover:underline hover:underline-offset-4"
+                  href="/pricing"
+                >
+                  Pricing
+                </Link>
+              )}
             </div>
           </div>
           <div>
@@ -82,31 +86,31 @@ const Footer = () => {
             <div className="flex flex-col gap-2 text-gray-600">
               <Link
                 className="hover:underline hover:underline-offset-4"
-                href="/guidelines-and-policy"
+                href="policies/guidelines-and-policy"
               >
                 Guidelines and Policy
               </Link>
               <Link
                 className="hover:underline hover:underline-offset-4"
-                href="/privacy-policy"
+                href="policies/privacy"
               >
                 Privacy Policy
               </Link>
               <Link
                 className="hover:underline hover:underline-offset-4"
-                href="/channel-partner-agreement"
+                href="policies/channel-partner"
               >
                 Channel Partner Agreement
               </Link>
               <Link
                 className="hover:underline hover:underline-offset-4"
-                href="/terms-of-services"
+                href="policies/terms-of-service"
               >
                 Terms of Services
               </Link>
               <Link
                 className="hover:underline hover:underline-offset-4"
-                href="/cancellation-and-refund-policy"
+                href="policies/cancellation-and-refund"
               >
                 Cancellation and Refund Policy
               </Link>

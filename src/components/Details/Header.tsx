@@ -6,7 +6,7 @@ import { S3_BASE_URL } from "@/lib/constants";
 const Header = () => {
   return (
     <div className="px-24 h-[68px] font-poppins bg-white flex-shrink-0 blur-0 mb-24 overflow-hidden sticky top-0 z-20">
-      <Link href={"/login"}>
+      <Link href={"/restaurant"}>
         <Image
           src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
           width={150}
