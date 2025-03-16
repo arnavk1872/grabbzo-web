@@ -42,7 +42,7 @@ const RecentlyPlacedOrders: React.FC = () => {
         <thead>
           <tr className="bg-gray-100 border border-borderColor rounded-full overflow-hidden">
             <th className="py-2 px-4 font-medium text-gray-600 first:rounded-l-full last:rounded-r-full">
-              Order Name
+              Name
             </th>
             <th className="py-2 px-4 font-medium text-gray-600">Customer</th>
             <th className="py-2 px-4 font-medium text-gray-600">Price</th>
@@ -53,7 +53,7 @@ const RecentlyPlacedOrders: React.FC = () => {
         </thead>
         <tbody>
           {false ? (
-          // {orders.length > 0 ? (
+            // {orders.length > 0 ? (
             orders.map((order, index) => (
               <tr key={index} className="text-[15px]">
                 <td className="py-2 px-4 flex flex-col ">

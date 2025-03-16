@@ -36,6 +36,7 @@ interface AvailableItemsProps {
   changeToggleEditor: (toggle: boolean) => void;
   localItems: any;
   setLocalItems: any;
+  stockVisible: boolean;
 }
 
 const AvailableItems: React.FC<AvailableItemsProps> = ({
@@ -43,8 +44,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   changeToggleEditor,
   localItems,
   setLocalItems,
+  stockVisible,
 }) => {
-  // const [localItems, setLocalItems] = useState<Item[]>(items);
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
   const { enqueueSnackbar } = useSnackbar();
@@ -93,7 +94,10 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
 
   const handleDeleteItem = async (itemId: number) => {
     try {
-      await deleteItem(itemId);
+      console.log(itemId, "ITEMID");
+
+      const response = await deleteItem(itemId);
+      console.log(response, "DELETED");
       enqueueSnackbar("Item Deleted!", {
         variant: "error",
         className: "font-poppins",
@@ -107,7 +111,6 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
       console.error("Error deleting item:", error);
     }
   };
- console.log(localItems,"HIU")
   return (
     <div className="flex w-[80%] flex-col">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
@@ -118,7 +121,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
           localItems.map((item: any) => (
             <div
               key={item.id}
-              className="flex items-center cursor-pointer  font-poppins justify-between py-2 border-b last:border-b-0"
+              className="flex items-center cursor-pointer w-full  font-poppins justify-between py-2 border-b last:border-b-0"
             >
               <Accordion type="single" collapsible>
                 <AccordionItem key={item.id} value={`item-${item.id}`}>
@@ -126,10 +129,12 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                     {" "}
                     <span className="text-[18px]">{item.title}</span>
                   </AccordionTrigger>
-                  {!isEditor && <AccordionContent>
-                    <ViewItem itemId = {item.id} />
-                  </AccordionContent>}
-                </AccordionItem> 
+                  {!isEditor && (
+                    <AccordionContent>
+                      <ViewItem itemId={item.id} />
+                    </AccordionContent>
+                  )}
+                </AccordionItem>
               </Accordion>
 
               {isEditor && (
@@ -164,7 +169,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                   </div>
                 </>
               )}
-              {!isEditor && (
+              {!isEditor && stockVisible && (
                 <button
                   onClick={() => handleToggle(item.id, item.isEnabled)}
                   className={`w-10 h-6 flex items-center rounded-full p-1 ${

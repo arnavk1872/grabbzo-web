@@ -2,17 +2,21 @@ import React, { useRef } from "react";
 import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
 import AddCategory from "./AddCategory";
-import { addNewCategory, addNewItem, updateItemDetails } from "@/helpers/api-utils";
+import {
+  addNewCategory,
+  addNewItem,
+  updateItemDetails,
+} from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 import { useItemStore } from "@/store/MenuStore";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
   allCategories?: any;
-  categories:any
-  setCategories:any
-  localItems:any
-  setLocalItems:any
+  categories: any;
+  setCategories: any;
+  localItems: any;
+  setLocalItems: any;
 }
 
 const ChangeMenu: React.FC<ChangeMenuProps> = ({
@@ -21,7 +25,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   categories,
   setCategories,
   localItems,
-        setLocalItems,
+  setLocalItems,
 }) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
 
@@ -30,7 +34,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
     description: "",
     price: "",
     selectedCategory: null,
-    isVeg: true,
+    isVeg: "",
     servingInfo: null,
     portionSize: null,
     isStock: true,
@@ -48,29 +52,29 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       [field]: value,
     }));
   };
-  
-  const { selectedItem, categoryValue ,categoryId, setItemId } = useItemStore();
 
-  const savedItem = selectedItem ? JSON.stringify(
-    {
-      ...selectedItem,
-      selectedCategory: categoryValue
-    }
-  ) : "";
+  const { selectedItem, categoryValue, categoryId, setItemId } = useItemStore();
+
+  const savedItem = selectedItem
+    ? JSON.stringify({
+        ...selectedItem,
+        selectedCategory: categoryValue,
+      })
+    : "";
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (toggleEditor) {
-      const itemData = itemDataRef.current?.getItemData();
+      itemDataRef.current?.getItemData();
 
-      if (!itemData) {
-        console.error("Item data is incomplete.");
-        return;
-      }
-
+      console.log(savedItem, "SAVED ITEM");
       try {
-        if(savedItem  && Object.keys(savedItem).length > 1){
-          const response = await updateItemDetails(selectedItem.id,categoryId,savedItem);
+        if (savedItem && Object.keys(savedItem).length > 1) {
+          const response = await updateItemDetails(
+            selectedItem.id,
+            categoryId,
+            savedItem
+          );
           enqueueSnackbar("Item updated successfully !", {
             variant: "success",
             className: "font-poppins",
@@ -80,8 +84,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
               item.id === selectedItem.id ? { ...item, ...selectedItem } : item
             )
           );
-        
-        }else{
+        } else {
           const response = await addNewItem(formData);
           setItemId(response.id);
           enqueueSnackbar("Item added successfully !", {
@@ -89,17 +92,14 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
             className: "font-poppins",
           });
           setLocalItems((prevItems: any[]) => [
-            ...prevItems,  // Keep existing items
+            ...prevItems, // Keep existing items
             {
               isDisabled: false,
               categoryId: response.id,
-              title:response.title
-            }
+              title: response.title,
+            },
           ]);
-          
-          
         }
-       
       } catch (error) {
         console.error("Error adding item:", error);
       }
@@ -112,20 +112,20 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         const response = await addNewCategory(categoryName);
 
         setCategories((prevCategories: any) => ({
-          ...prevCategories,  // Keep existing categories
-          [categoryName]: {   // Add new category with dynamic key
+          ...prevCategories, // Keep existing categories
+          [categoryName]: {
+            // Add new category with dynamic key
             isDisabled: false,
             categoryId: response.id,
             items: [],
           },
         }));
-        
-        
+
         enqueueSnackbar("Category added successfully !", {
           variant: "success",
           className: "font-poppins",
         });
-        setCategoryName(""); 
+        setCategoryName("");
       } catch (error) {
         console.error("Error adding category:", error);
       }

@@ -44,6 +44,8 @@ interface CategorySelectorProps {
   onCategoryChange: (category: string) => void;
   changeToggleEditor: (toggle: boolean) => void;
   onCategoryIdChange: (category: number) => void;
+  setStockVisible: (toggle: boolean) => void;
+  stockVisible: any;
 }
 
 const AvailableCategories: React.FC<CategorySelectorProps> = ({
@@ -53,6 +55,8 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   onCategoryChange,
   changeToggleEditor,
   onCategoryIdChange,
+  setStockVisible,
+  stockVisible,
 }) => {
   const [isDisabledMap, setIsDisabledMap] = useState<Record<string, boolean>>(
     {}
@@ -64,6 +68,12 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   const isEditor = pathname.includes("editor");
 
   useEffect(() => {
+    if (selectedCategory && categories[selectedCategory]) {
+      setStockVisible(!categories[selectedCategory].isDisabled);
+    }
+  }, [selectedCategory, categories]);
+
+  useEffect(() => {
     const initialDisabledMap = Object.entries(categories).reduce(
       (acc, [categoryName, categoryData]) => ({
         ...acc,
@@ -71,6 +81,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       }),
       {}
     );
+    // stockVisible(!isDisabledMap[categoryName]);
     setIsDisabledMap(initialDisabledMap);
   }, [categories]);
 
@@ -81,6 +92,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   ) => {
     try {
       await changeCategoryStatus(!status, categoryId);
+      setStockVisible(!stockVisible);
       enqueueSnackbar(`Category ${status ? "Enabled" : "Disabled"}!`, {
         variant: status ? "success" : "warning",
         className: "font-poppins",
@@ -179,7 +191,9 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
             }}
             className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
               selectedCategory === categoryName && !isEditor
-                ? "bg-blue-500 text-white" : selectedCategory === categoryName && isEditor ? "bg-blue-100"
+                ? "bg-blue-500 text-white"
+                : selectedCategory === categoryName && isEditor
+                ? "bg-blue-100"
                 : "bg-white text-black"
             }`}
           >

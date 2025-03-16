@@ -31,39 +31,33 @@ type LocalItem = {
   items: Item[];
 };
 
-
-
-
-
 const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
   const [toggleEditor, changeToggleEditor] = useState(true);
   const [localItems, setLocalItems] = useState<LocalItem[]>([]);
 
-   
+  const categoryData = useMemo(() => {
+    return allCategories.reduce<
+      Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
+    >((acc, category) => {
+      acc[category.name] = {
+        isDisabled: category.isDisabled,
+        categoryId: category.id,
+        items: category.items.map((item) => ({
+          id: item.id,
+          title: item.title,
+          isEnabled: item.isStock,
+        })),
+      };
+      return acc;
+    }, {});
+  }, [JSON.stringify(allCategories)]);
 
-      const categoryData = useMemo(() => {
-        return allCategories.reduce<
-          Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
-        >((acc, category) => {
-          acc[category.name] = {
-            isDisabled: category.isDisabled,
-            categoryId: category.id,
-            items: category.items.map((item) => ({
-              id: item.id,
-              title: item.title, 
-              isEnabled: item.isStock,
-            })),
-          };
-          return acc;
-        }, {});
-      }, [JSON.stringify(allCategories)]);
+  const [categories, setCategories] = useState(categoryData);
 
-      const [categories, setCategories] = useState(categoryData);
-    
-        const categoryCount = useMemo(
-          () => Object.keys(categoryData).length,
-          [categoryData]
-        );
+  const categoryCount = useMemo(
+    () => Object.keys(categoryData).length,
+    [categoryData]
+  );
 
   return (
     <>

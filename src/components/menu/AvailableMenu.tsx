@@ -4,11 +4,6 @@ import AvailableCategories from "./AvailableCategories";
 import AvailableItems from "./AvailableItems";
 import { useItemStore } from "@/store/MenuStore";
 
-type Category = {
-  id: number;
-  name: string;
-  items: { id: number; name: string; isEnabled: boolean }[];
-};
 type Item = {
   id: number;
   title: string;
@@ -75,7 +70,7 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
       return acc;
     }, {});
   }, [JSON.stringify(allCategories)]);
-
+  const [stockVisible, setStockVisible] = useState(false);
   const handleToggleEditor = changeToggleEditor || (() => {});
 
   return (
@@ -87,12 +82,15 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
         onCategoryChange={setSelectedCategory}
         onCategoryIdChange={setSelectedCategoryId}
         changeToggleEditor={handleToggleEditor}
+        setStockVisible={setStockVisible}
+        stockVisible={stockVisible}
       />
       <AvailableItems
-        items={categoryData[selectedCategory]?.items || []} 
+        items={categoryData[selectedCategory]?.items || []}
         changeToggleEditor={handleToggleEditor}
         localItems={localItems}
         setLocalItems={setLocalItems}
+        stockVisible={stockVisible}
       />
     </div>
   );

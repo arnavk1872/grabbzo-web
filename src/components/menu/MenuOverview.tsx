@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
-import React, { useEffect, useMemo , useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AvailableMenu from "./AvailableMenu";
-
 
 interface MenuOverViewProps {
   allCategories: {
@@ -18,7 +17,6 @@ interface MenuOverViewProps {
       isEnabled: boolean;
     }[];
   }[];
-  
 }
 
 type Item = {
@@ -29,30 +27,34 @@ type Item = {
 
 const MenuOverview = ({ allCategories }: MenuOverViewProps) => {
   const [toggleEditor, changeToggleEditor] = useState(true);
-    const [localItems,setLocalItems] = useState(null);
-  const [categories, setCategories] = useState<Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>>({});
+  const [localItems, setLocalItems] = useState(null);
+  const [categories, setCategories] = useState<
+    Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
+  >({});
 
   useEffect(() => {
-    const categoryData = allCategories.reduce<Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>>(
-      (acc, category) => {
-        acc[category.name] = {
-          isDisabled: category.isDisabled,
-          categoryId: category.id,
-          items: category.items.map((item) => ({
-            id: item.id,
-            title: item.name, 
-            isEnabled: item.isStock,
-          })),
-        };
-        return acc;
-      },
-      {}
-    );
+    const categoryData = allCategories.reduce<
+      Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
+    >((acc, category) => {
+      acc[category.name] = {
+        isDisabled: category.isDisabled,
+        categoryId: category.id,
+        items: category.items.map((item) => ({
+          id: item.id,
+          title: item.name,
+          isEnabled: item.isStock,
+        })),
+      };
+      return acc;
+    }, {});
 
     setCategories(categoryData);
-  }, [allCategories]); 
+  }, [allCategories]);
 
-  const categoryCount = useMemo(() => Object.keys(categories).length, [categories]);
+  const categoryCount = useMemo(
+    () => Object.keys(categories).length,
+    [categories]
+  );
 
   return (
     <div>

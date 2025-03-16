@@ -22,37 +22,39 @@ interface AddItemProps {
 const AddItem = forwardRef(
   ({ allCategories, formData, onFormDataChange }: AddItemProps, ref) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
-
-    const { selectedItem, setSelectedItem,itemId } = useItemStore();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+    const { selectedItem, setSelectedItem, itemId, categoryValue } =
+      useItemStore();
+
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
+
     const savedItem = selectedItem?.data;
-    const { categoryValue } = useItemStore();
 
-
-
-    const handleRemoveImage = () => {
-      setImagePreview(null);
-      setImageFile(null);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Reset input field to allow selecting the same file again
-      }
-    };
-
+    //Loads up the current item details
     useEffect(() => {
-      if (savedItem) {
-        onFormDataChange("title", savedItem.title);
-        onFormDataChange("description", savedItem.description);
-        onFormDataChange("price", savedItem.price);
-        onFormDataChange("selectedCategory", categoryValue);
-        // onFormDataChange("selectedCategory", savedItem.name);
-        onFormDataChange("foodType", savedItem.isVeg);
-        onFormDataChange("id", savedItem.id);
-        onFormDataChange("restaurantCategory", { id: 1 });
-        setImagePreview(savedItem.imageUrl);
-      }
+      if (!savedItem) return;
+      const updatedFormData = {
+        title: savedItem.title,
+        description: savedItem.description,
+        price: savedItem.price,
+        selectedCategory: categoryValue,
+        isVeg: savedItem.isVeg,
+        id: savedItem.id,
+        preparationTime: savedItem.preparationTime,
+        servingInfo: savedItem.servingInfo,
+        portionSize: savedItem.portionSize,
+        restaurantCategory: { id: 1 },
+      };
+      Object.entries(updatedFormData).forEach(([key, value]) => {
+        onFormDataChange(key, value);
+      });
+
+      setImagePreview(savedItem.imageUrl);
     }, [savedItem, categoryValue]);
+
+    //update/add Item
     useEffect(() => {
       if (selectedItem) {
         // Update the selectedItem object entirely
@@ -62,48 +64,17 @@ const AddItem = forwardRef(
           description: formData.description,
           price: formData.price,
           selectedCategory: categoryValue,
-          isVeg: formData.foodType,
+          isVeg: formData.isVeg,
           isStock: true,
           restaurantCategory: { id: 1 },
+          portionSize: formData.portionSize,
+          servingInfo: formData.servingInfo,
+          preparationTime: formData.preparationTime,
         });
       }
     }, [formData, categoryValue]);
 
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files?.[0];
-
-  if (file) {
-    if (file.size > 500 * 1024) {
-      alert("File size must be under 500KB.");
-      return;
-    }
-    console.log(file, "FILE");
-    setSelectedFile(file);
-    setImagePreview(URL.createObjectURL(file));
-  }
-};
-
-useEffect(() => {
-  if (!itemId || !selectedFile) return; 
-
-  const uploadImage = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
-      await addItemImage(itemId, formData);
-      console.log("Image uploaded successfully");
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-
-  uploadImage();
-}, [itemId, selectedFile]); 
-
-
+    //For validations
     useImperativeHandle(ref, () => ({
       getItemData: () => {
         const validationResult = formSchema.safeParse(formData);
@@ -115,32 +86,51 @@ useEffect(() => {
             validationErrors[path] = err.message;
           });
           setErrors(validationErrors);
-          throw new Error("Validation failed");
         }
-
-        return {
-          name: formData.selectedCategory,
-          description: formData.description,
-          isDisabled: false,
-          items: [
-            {
-              title: formData.title,
-              description: formData.description,
-              price: parseFloat(formData.price),
-              imageUrl: "https://example.com/image.jpg",
-              isStock: true,
-              isVeg: formData.foodType === true,
-            },
-          ],
-          restaurantCategory: {
-            id: formData.restaurantCategory.id,
-          },
-        };
       },
     }));
 
+    //Image Handling Functions
+
+    const handleRemoveImage = () => {
+      setImagePreview(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+
+    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        if (file.size > 500 * 1024) {
+          alert("File size must be under 500KB.");
+          return;
+        }
+        setSelectedFile(file);
+        setImagePreview(URL.createObjectURL(file));
+      }
+    };
+
+    useEffect(() => {
+      if (!itemId || !selectedFile) return;
+
+      const uploadImage = async () => {
+        try {
+          const formData = new FormData();
+          formData.append("file", selectedFile);
+          await addItemImage(itemId, formData);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      };
+
+      uploadImage();
+    }, [itemId, selectedFile]);
+
     return (
       <div className="font-poppins">
+        {/* ITEM TITLE*/}
         <div className="m-6">
           <div className="text-red-500 text-[14px]">{errors.title}</div>
           <Input
@@ -153,7 +143,7 @@ useEffect(() => {
             }}
           />
         </div>
-
+        {/* ITEM CATEGORY*/}
         <div className="mx-6 text-[17px] font-bold">Category</div>
         <div className="mb-2 mx-6 text-red-500 text-[14px]">{errors.name}</div>
         <div className="w-fit whitespace-nowrap mx-6">
@@ -180,24 +170,25 @@ useEffect(() => {
             }}
           />
         </div>
+        {/* VEG OR NON VEG */}
         <div className="mx-6 mt-2 text-[17px] font-bold">Food Type</div>
         <div className="flex gap-x-6 px-4 py-1">
-          {[
-            { label: "Veg", value: true, color: "bg-green-500" },
-            { label: "Non-Veg", value: false, color: "bg-red-500" },
-          ].map(({ label, value, color }) => (
-            <div
-              key={label}
-              className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 ${
-                formData.isVeg === value ? `${color} text-white` : ""
-              }`}
-              onClick={() => onFormDataChange("isVeg", value)}
-            >
-              {label}
-            </div>
-          ))}
+          <div
+            className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 
+    ${formData.isVeg ? "bg-green-500 text-white" : "bg-gray-200"}`}
+            onClick={() => onFormDataChange("isVeg", true)}
+          >
+            Veg
+          </div>
+          <div
+            className={`border cursor-pointer flex justify-center border-borderColor py-2 px-6 rounded-[16px] min-w-32 
+    ${!formData.isVeg ? "bg-red-500 text-white" : "bg-gray-200"}`}
+            onClick={() => onFormDataChange("isVeg", false)}
+          >
+            Non-Veg
+          </div>
         </div>
-
+        {/* ITEM PRICING */}
         <div className="mx-6 my-2">
           <span className="font-bold">Pricing</span>
           <div className="mb-2 text-red-500 text-[14px]">{errors.price}</div>
@@ -211,16 +202,26 @@ useEffect(() => {
             }}
           />
         </div>
+        {/* ITEM IMAGE */}
         <div className="mx-6 my-2 flex flex-col py-2">
           <span className="font-bold">Item Image</span>
+
           <input
             type="file"
             accept="image/*"
             ref={fileInputRef}
             onChange={handleFileSelect}
-            className="my-2"
+            className="hidden"
+            id="file-upload"
           />
+          <label
+            htmlFor="file-upload"
+            className="my-2 cursor-pointer bg-gray-400 hover:bg-gray-500 text-white px-1 py-2  rounded-md text-center w-40 text-[15px]"
+          >
+            {imagePreview ? "Change Image" : "Choose Image"}
+          </label>
 
+          {/* Image Preview */}
           {imagePreview && (
             <div className="relative mt-2 w-32 h-32">
               <img
@@ -238,7 +239,7 @@ useEffect(() => {
             </div>
           )}
         </div>
-
+        {/* ITEM DESCRIPTION */}
         <div className="mx-6 my-4">
           <span className="font-bold">Item Description</span>
           <div className="mb-2 text-red-500 text-[14px]">
@@ -253,7 +254,7 @@ useEffect(() => {
             }}
           />
         </div>
-
+        {/*  ITEM SERVING INFO */}
         <div className="flex items-center gap-x-8">
           <div className="w-1/3 mx-6">
             <div className="my-2 font-bold">Serving Info</div>
@@ -267,7 +268,7 @@ useEffect(() => {
               }}
             />
           </div>
-
+          {/* ITEM PORTION SIZE */}
           <div className="w-1/3 mx-6">
             <div className="my-2 font-bold">Portion Size</div>
             <Dropdown
@@ -281,9 +282,12 @@ useEffect(() => {
             />
           </div>
         </div>
-
+        {/* ITEM PREPRATION TIME*/}
         <div className="mx-6 my-2">
           <span className="font-bold">Preparation Time (in min)</span>
+          <div className="mb-2 text-red-500 text-[14px]">
+            {errors.preparationTime}
+          </div>
           <Input
             className="h-[42px] rounded-[16px] shadow-none"
             value={formData.preparationTime}
