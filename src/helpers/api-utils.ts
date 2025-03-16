@@ -329,8 +329,8 @@ export const editCategory = async (
   const token = await getToken();
   if (!token) return;
   const payload = {
-    name:categoryName
-  }
+    name: categoryName,
+  };
   try {
     const response = await axios.put(
       `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
@@ -370,7 +370,11 @@ export const getItemDetails = async (ItemId: number) => {
   }
 };
 
-export const updateItemDetails = async (ItemId: number,categoryId:number, updatedItem: any) => {
+export const updateItemDetails = async (
+  ItemId: number,
+  categoryId: number,
+  updatedItem: any
+) => {
   const token = await getToken();
   if (!token) return;
 
@@ -410,18 +414,18 @@ export const getOrderbyId = async (id: string) => {
   }
 };
 
-export const addItemImage = async (id: number,image:any) => {
+export const addItemImage = async (id: number, image: any) => {
   const token = await getToken();
 
   if (!token) return;
   try {
     const response = await axios.post(
       `${IP}/api/menu/restaurant/item/${id}/upload-Menuimage`,
-      image, 
+      image,
       {
         headers: {
           Authorization: ` ${token}`,
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data",
         },
       }
     );
@@ -432,7 +436,6 @@ export const addItemImage = async (id: number,image:any) => {
   }
 };
 
-
 // --------------------------------------------------- MENU API's END --------------------------------------------------
 
 // ----------------------------------------------------RESTAURANT PROFILE GET ------------------------------------------
@@ -440,7 +443,7 @@ export const addItemImage = async (id: number,image:any) => {
 export const getRestaurantDetails = async () => {
   const token = await getToken();
   if (!token) return;
-
+  console.log(IP, token, "CHECK");
   try {
     const response = await axios.get(`${IP}/restaurant-admins/details`, {
       headers: {
@@ -537,10 +540,7 @@ export const paymentRequest = async (data: any) => {
 
 //------------------------------------------------------- ORDERS API's ----------------------------------------------//
 
-export const changeOrderStatus = async (
-  orderStatus: string,
-  orderId: any,
-) => {
+export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
   // const payload = {
   //   restaurant: {
   //     id: orderId,
@@ -560,7 +560,7 @@ export const changeOrderStatus = async (
         },
       }
     );
-    console.log(response,"CHECK")
+    console.log(response, "CHECK");
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -570,16 +570,15 @@ export const changeOrderStatus = async (
 
 //------------------------------------------------------- ORDERS API's END ----------------------------------------------//
 
-export const buyAdCredits = async (
-  amount:number
-) => {
+export const buyAdCredits = async (amount: number) => {
   const token = await getToken();
-   const restaurantId = await  getRestaurantId();
+  const restaurantId = await getRestaurantId();
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/plan/adcredit/restaurant/${restaurantId}`,{
-        amount:amount
+      `${IP}/plan/adcredit/restaurant/${restaurantId}`,
+      {
+        amount: amount,
       },
       {
         headers: {
@@ -588,7 +587,7 @@ export const buyAdCredits = async (
         },
       }
     );
-    console.log(response,"CHECK ADS")
+    console.log(response, "CHECK ADS");
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -598,11 +597,10 @@ export const buyAdCredits = async (
 
 // ---------------------------------------------------------- DISCOUNTS API's ----------------------------------------------------------
 
-export const getAllDiscounts = async (
-) => {
+export const getAllDiscounts = async () => {
   const token = await getToken();
   const restaurantId = await getRestaurantId();
-  
+
   if (!token) return;
   try {
     const response = await axios.get(
@@ -621,23 +619,18 @@ export const getAllDiscounts = async (
   }
 };
 
-export const deleteDiscount = async (
-  discountId:number
-) => {
+export const deleteDiscount = async (discountId: number) => {
   const token = await getToken();
-  
+
   if (!token) return;
   try {
-    const response = await axios.delete(
-      `${IP}/discounts/${discountId}`,
-      {
-        headers: {
-          Authorization: ` ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    
+    const response = await axios.delete(`${IP}/discounts/${discountId}`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -645,15 +638,14 @@ export const deleteDiscount = async (
   }
 };
 
-export const updateDiscountStatus = async (
-  discountId:number
-) => {
+export const updateDiscountStatus = async (discountId: number) => {
   const token = await getToken();
-  console.log("HI",token);
+  console.log("HI", token);
   if (!token) return;
   try {
     const response = await axios.put(
-      `${IP}/discounts/${discountId}`,{},
+      `${IP}/discounts/${discountId}`,
+      {},
       {
         headers: {
           Authorization: `${token}`,
@@ -661,7 +653,7 @@ export const updateDiscountStatus = async (
         },
       }
     );
-    
+
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -669,15 +661,14 @@ export const updateDiscountStatus = async (
   }
 };
 
-export const addNewDiscount = async (
-  payload:any
-) => {
+export const addNewDiscount = async (payload: any) => {
   const token = await getToken();
   const restaurantId = await getRestaurantId();
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/discounts/restaurant/${restaurantId}`,payload,
+      `${IP}/discounts/restaurant/${restaurantId}`,
+      payload,
       {
         headers: {
           Authorization: `${token}`,
@@ -686,15 +677,16 @@ export const addNewDiscount = async (
       }
     );
     return response.data;
-  } catch (error:unknown) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const errorMessage =
-        error.response?.data?.message || error.message || "Something went wrong!";
-      
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+
       throw new Error(errorMessage);
     }
 
     throw new Error("Something went wrong!");
   }
 };
-

@@ -37,8 +37,7 @@ const HomePage = () => {
       <div className="relative w-full h-[80vh] font-poppins">
         <Image
           src={`${S3_BASE_URL}/public/image.png`}
-          layout="fill"
-          objectFit="cover"
+          fill
           quality={100}
           alt="home-main"
           className="absolute inset-0 w-full h-full pointer-events-none"

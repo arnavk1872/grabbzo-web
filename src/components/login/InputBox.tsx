@@ -2,7 +2,6 @@
 import React, { KeyboardEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
-import Link from "next/link";
 import {
   Dialog,
   DialogContent,
@@ -103,7 +102,7 @@ const InputBox = () => {
       </div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <Button
-          className="mb-10 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white w-2/3 rounded-full"
+          className="mb-10 bg-blue-500  hover:bg-blue-600 text-white w-2/3 rounded-full"
           size="lg"
           onClick={handleClick}
         >
@@ -151,7 +150,7 @@ const InputBox = () => {
 
           <DialogFooter className="w-full flex justify-center">
             <Button
-              className="w-full py-3 bg-blue-600 hover:bg-opacity-50 hover:bg-blue-600 text-white text-lg font-semibold"
+              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold"
               onClick={handleOtpVerification}
             >
               Continue

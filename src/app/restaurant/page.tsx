@@ -12,7 +12,7 @@ const page = () => {
     <div className="font-poppins">
       <div className="relative">
         <Image
-         //Height and width in these specify how clear they look
+          //Height and width in these specify how clear they look
           src={`${S3_BASE_URL}/public/home-main.png`}
           width={1000}
           height={1000}
@@ -30,9 +30,9 @@ const page = () => {
       </div>
       <div className="flex justify-center relative">
         <Image
-         width={10000}
-         height={1000}
-         src={`${S3_BASE_URL}/public/home-footer.png`}
+          width={10000}
+          height={1000}
+          src={`${S3_BASE_URL}/public/home-footer.png`}
           alt={"home-footer"}
           className="h-[45vh] object-cover"
         />
@@ -42,9 +42,7 @@ const page = () => {
       </div>
       <WhyGrabbzo />
       <div className="px-16 mb-10">
-        <div className="w-full bg-gradient-to-r from-[#6793DA] via-blue-300 to-[#D4DFFF] p-8 mx-auto rounded-3xl">
-          <Faq />
-        </div>
+        <Faq />
       </div>
     </div>
   );

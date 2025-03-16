@@ -5,19 +5,19 @@ interface ItemState {
   setSelectedItem: (item: any) => void;
   categoryValue: string;
   setCategoryValue: (category: string) => void;
-  categoryId:number;
-  setCategoryId:(category:number)=>void;
-  itemId:number;
-  setItemId:(itemId:number)=>void;
+  categoryId: number;
+  setCategoryId: (category: number) => void;
+  itemId: number;
+  setItemId: (itemId: number) => void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
   selectedItem: null,
   setSelectedItem: (item) => set({ selectedItem: item }),
-  categoryValue: "",  
+  categoryValue: "",
   setCategoryValue: (category) => set({ categoryValue: category }),
-  categoryId:0,
-  setCategoryId:(category) => set({ categoryId: category }),
-  itemId:0,
-  setItemId:(item)=>set({itemId:item})
+  categoryId: 0,
+  setCategoryId: (category) => set({ categoryId: category }),
+  itemId: 0,
+  setItemId: (item) => set({ itemId: item }),
 }));

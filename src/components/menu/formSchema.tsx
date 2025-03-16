@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   title: z.string().min(1, "Item name is required"),
-  selectedCategory: z.string().min(1, "Please select a Category"), 
+  selectedCategory: z.string().min(1, "Please select a Category"),
   restaurantCategory: z.object({
-    id: z.number().positive("Please select a valid Category"), 
+    id: z.number().positive("Please select a valid Category"),
   }),
   isVeg: z.boolean(),
   price: z.preprocess(
@@ -20,7 +20,19 @@ export const formSchema = z.object({
       .refine((val) => val > 0, "Price must be greater than 0")
   ),
   description: z.string().min(1, "Description is required"),
-
+  preparationTime: z.preprocess(
+    (value) => {
+      if (typeof value === "string" && /^\d+(\.\d+)?$/.test(value)) {
+        return parseFloat(value);
+      }
+      return value;
+    },
+    z
+      .number()
+      .positive("Price must be greater than 0")
+      .refine((val) => val > 0, "Price must be greater than 0")
+      .optional()
+  ),
   // imageFile: z
   //   .instanceof(File, { message: "Please upload an image" })
   //   .refine((file) => file.size < 500 * 1024, "File size must be under 500KB"),
