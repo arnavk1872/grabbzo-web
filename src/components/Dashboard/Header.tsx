@@ -23,7 +23,7 @@ import { ChevronRight } from "lucide-react";
 import Settings from "../Icons/Settings";
 import Link from "next/link";
 import { S3_BASE_URL } from "@/lib/constants";
-
+import UserDetailsPopup from "./UserDetailsPopup";
 
 const Header = () => {
   const Routes: any[] = [
@@ -130,10 +130,17 @@ const Header = () => {
           </PopoverContent>
         </Popover>
 
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>You</AvatarFallback>
-        </Avatar>
+        <Popover>
+          <PopoverTrigger>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>You</AvatarFallback>
+            </Avatar>
+          </PopoverTrigger>
+          <PopoverContent className="mr-20">
+            <UserDetailsPopup />
+          </PopoverContent>
+        </Popover>
       </div>
     </section>
   );

@@ -69,13 +69,14 @@ const PricingPlans: React.FC = () => {
             className={`relative w-64 border-2 h-[600px] overflow-hidden p-4 flex flex-col  ${plan.border}`}
           >
             {plan.name && (
-              <div className="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 rounded-b-md text-sm font-bold">
-                {{
+              <div className="absolute top-0 -right-1 bg-red-600 text-white px-3 py-1 rounded-b-md text-sm font-bold">
+                {/* {{
                   SILVER: "20% Discount",
                   GOLD: "30% Discount",
                   DIAMOND: "40% Discount",
                   PLATINUM: "50% Discount",
-                }[plan.name] || ""}
+                }[plan.name] || ""} */}
+                50% Discount
               </div>
             )}
 

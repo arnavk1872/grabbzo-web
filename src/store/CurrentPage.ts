@@ -5,6 +5,8 @@ interface PageState {
     page: string;
   };
   setCurrentPage: (value: string) => void;
+  Franchise: string;
+  setFranchise: (Franchise: string) => void;
 }
 
 export const usePageStore = create<PageState>((set) => ({
@@ -20,4 +22,6 @@ export const usePageStore = create<PageState>((set) => ({
       },
     }));
   },
+  Franchise: "",
+  setFranchise: (value) => set({ Franchise: value }),
 }));

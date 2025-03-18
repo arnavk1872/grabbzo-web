@@ -13,7 +13,7 @@ export const plans: Plan[] = [
   {
     name: "SILVER",
     duration: "1 month",
-    originalCost: "₹360.00",
+    originalCost: "₹599.00",
     cost: "₹299.00",
     features: [
       "Join for ₹10/day",
@@ -31,7 +31,7 @@ export const plans: Plan[] = [
   {
     name: "GOLD",
     duration: "3 months",
-    originalCost: "₹1000.00",
+    originalCost: "₹1499.00",
     cost: "₹749.00",
     features: [
       "Join for ₹9/day",
@@ -40,14 +40,14 @@ export const plans: Plan[] = [
       "Enhanced promotional options",
     ],
     buttonBg:
-      "bg-amber-600 hover:bg-amber-800 text-white font-semibold rounded-full",
+      "bg-yellow-600 hover:bg-amber-800 text-white font-semibold rounded-full",
     btnText: "Join GOLD",
     border: "border-blue-600 rounded-b-[20px]",
   },
   {
     name: "DIAMOND",
     duration: "6 months",
-    originalCost: "₹2100.00",
+    originalCost: "₹2999.00",
     cost: "₹1499.00",
     features: [
       "Join for ₹8/day",
