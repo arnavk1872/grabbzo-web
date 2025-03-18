@@ -8,13 +8,13 @@ export function middleware(request: NextRequest) {
   const allowedPaths = [
     "/",
     "/pricing",
-    "/terms-of-services",
-    "/privacy-policy",
-    "/cancellation-and-refund-policy",
-    "/channel-partner-agreement",
-    "/guidelines-and-policy",
+    "/policies/terms-of-service",
+    "/policies/privacy",
+    "/policies/cancellation-and-refund",
+    "/policies/channel-partner",
+    "/policies/guidelines-and-policy",
     "/about",
-    "/restaurant"
+    "/restaurant",
   ];
 
   if (!accessToken && !allowedPaths.includes(url.pathname)) {

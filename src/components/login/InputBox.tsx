@@ -61,7 +61,7 @@ const InputBox = () => {
         if (signupData.status === "success") {
           const token = "Bearer " + signupData.data.accessToken;
           setCookie("AuthToken", token);
-          router.push("/details/information");
+          router.push("/franchise");
         } else {
           // Notistack Error
           alert("Number already registered, Login");

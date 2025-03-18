@@ -331,6 +331,7 @@ export const editCategory = async (
   const payload = {
     name: categoryName,
   };
+
   try {
     const response = await axios.put(
       `${IP}/api/menu/restaurant/categories/update-name?categoryId=${categoryId}`,
@@ -443,7 +444,6 @@ export const addItemImage = async (id: number, image: any) => {
 export const getRestaurantDetails = async () => {
   const token = await getToken();
   if (!token) return;
-  console.log(IP, token, "CHECK");
   try {
     const response = await axios.get(`${IP}/restaurant-admins/details`, {
       headers: {
@@ -452,6 +452,24 @@ export const getRestaurantDetails = async () => {
       },
     });
     return response;
+  } catch (error) {
+    console.error("Error fetching the Restaurant Details: ", error);
+    throw error;
+  }
+};
+
+export const getRestaurantPlans = async () => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(`${IP}/plan/restaurant`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
   } catch (error) {
     console.error("Error fetching the Restaurant Details: ", error);
     throw error;
@@ -688,5 +706,49 @@ export const addNewDiscount = async (payload: any) => {
     }
 
     throw new Error("Something went wrong!");
+  }
+};
+
+export const getFranchises = async (words: any) => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.get(`${IP}/franchise/search?words=${words}`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const LinkFranchise = async (franchiseName: string) => {
+  const token = await getToken();
+  if (!token) return;
+
+  const payload = {
+    "name": franchiseName, 
+  };
+
+  try {
+    const response = await axios.post(
+      `${IP}/franchise/add-restaurant`,
+      payload,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.error("Error :", error);
+    throw error;
   }
 };

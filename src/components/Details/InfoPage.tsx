@@ -24,7 +24,7 @@ import { cities, states } from "./data";
 const InfoPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
   useEffect(() => {
@@ -52,6 +52,8 @@ const InfoPage = () => {
     setErrors(validationErrors);
     return validationErrors;
   };
+
+  console.log(Franchise, "IS FRANCHISE");
 
   const handleStateChange = (value: string) => {
     setBasicDetailsData("state", value);
@@ -123,8 +125,10 @@ const InfoPage = () => {
               setBasicDetailsData("restaurantName", e.target.value);
               setErrors((prev) => ({ ...prev, restaurantName: "" }));
             }}
-            value={basicDetailsData.restaurantName}
+            value={Franchise || basicDetailsData.restaurantName}
+            disabled={!!Franchise}
           />
+
           <div className="ml-2 text-red-500 text-[14px]">
             {errors.restaurantName}
           </div>

@@ -94,10 +94,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
 
   const handleDeleteItem = async (itemId: number) => {
     try {
-      console.log(itemId, "ITEMID");
-
       const response = await deleteItem(itemId);
-      console.log(response, "DELETED");
       enqueueSnackbar("Item Deleted!", {
         variant: "error",
         className: "font-poppins",
@@ -127,7 +124,9 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                 <AccordionItem key={item.id} value={`item-${item.id}`}>
                   <AccordionTrigger>
                     {" "}
-                    <span className="text-[18px]">{item.title}</span>
+                    <span className="text-[18px] w-24 truncate overflow-hidden whitespace-nowrap">
+                      {item.title}
+                    </span>
                   </AccordionTrigger>
                   {!isEditor && (
                     <AccordionContent>

@@ -22,9 +22,7 @@ interface ChangeMenuProps {
 const ChangeMenu: React.FC<ChangeMenuProps> = ({
   toggleEditor,
   allCategories,
-  categories,
   setCategories,
-  localItems,
   setLocalItems,
 }) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
@@ -65,9 +63,11 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (toggleEditor) {
-      itemDataRef.current?.getItemData();
+      const validationErrors = itemDataRef.current?.getItemData();
 
-      console.log(savedItem, "SAVED ITEM");
+      if (validationErrors && Object.keys(validationErrors).length > 0) {
+        return;
+      }
       try {
         if (savedItem && Object.keys(savedItem).length > 1) {
           const response = await updateItemDetails(
@@ -133,7 +133,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-end pr-12">
+    <div className="flex flex-col items-end pr-2">
       <Button
         onClick={handleSaveChanges}
         className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 text-[16px]"

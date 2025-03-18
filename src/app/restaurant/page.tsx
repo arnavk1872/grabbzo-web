@@ -1,7 +1,6 @@
 import InputBox from "@/components/login/InputBox";
 import Image from "next/image";
 import React from "react";
-import logo from "public/logo-white.png";
 import PartnerBox from "@/components/login/PartnerBox";
 import WhyGrabbzo from "@/components/login/WhyGrabbzo";
 import Faq from "@/components/login/Faq";
@@ -24,7 +23,7 @@ const page = () => {
           alt={"logo"}
           width={1000}
           height={1000}
-          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[32rem]"
+          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[30rem]"
         />
         <InputBox />
       </div>
