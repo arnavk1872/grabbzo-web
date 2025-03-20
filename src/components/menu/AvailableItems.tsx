@@ -50,6 +50,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const isEditor = pathname.includes("editor");
   const { enqueueSnackbar } = useSnackbar();
 
+  
+
   useEffect(() => {
     setLocalItems((prevItems: any) => {
       return JSON.stringify(prevItems) !== JSON.stringify(items)
@@ -108,6 +110,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
       console.error("Error deleting item:", error);
     }
   };
+  
   return (
     <div className="flex w-[80%] flex-col">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
@@ -124,7 +127,11 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                 <AccordionItem key={item.id} value={`item-${item.id}`}>
                   <AccordionTrigger>
                     {" "}
-                    <span className="text-[18px] w-24 truncate overflow-hidden whitespace-nowrap">
+                    <span
+                      className={`text-[18px]  truncate overflow-hidden whitespace-nowrap ${
+                        isEditor ? "w-24" : ""
+                      }`}
+                    >
                       {item.title}
                     </span>
                   </AccordionTrigger>

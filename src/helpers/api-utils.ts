@@ -556,6 +556,28 @@ export const paymentRequest = async (data: any) => {
   }
 };
 
+export const uploadDocuments = async (image: any) => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/restaurant-admins/upload-document`,
+      image,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
 //------------------------------------------------------- ORDERS API's ----------------------------------------------//
 
 export const changeOrderStatus = async (orderStatus: string, orderId: any) => {

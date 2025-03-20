@@ -11,9 +11,9 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({
   onFileChange,
   acceptedFormats = "image/png,image/jpeg,application/pdf",
-  maxFileSize = 100,
+  maxFileSize = 300,
   label = "Click to upload",
-  description = "PNG, JPG or PDF (MAX. 100KB)",
+  description = "PNG, JPG or PDF (MAX. 300KB)",
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);
 

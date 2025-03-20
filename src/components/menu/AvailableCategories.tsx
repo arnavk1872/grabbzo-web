@@ -71,7 +71,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     if (selectedCategory && categories[selectedCategory]) {
       setStockVisible(!categories[selectedCategory].isDisabled);
     }
-  }, [selectedCategory, categories]);
+  }, [selectedCategory]);
 
   useEffect(() => {
     const initialDisabledMap = Object.entries(categories).reduce(
@@ -97,6 +97,13 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         variant: status ? "success" : "warning",
         className: "font-poppins",
       });
+      setCategories((prevCategories) => ({
+        ...prevCategories,
+        [categoryName]: {
+          ...prevCategories[categoryName],
+          isDisabled: !status, // Update isDisabled in state
+        },
+      }));
       setIsDisabledMap((prev) => ({ ...prev, [categoryName]: !status }));
     } catch (error) {
       console.error("Failed to update category status:", error);
