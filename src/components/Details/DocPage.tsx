@@ -9,10 +9,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { DocFormSchema } from "./formSchema";
 import { usePageStore } from "@/store/CurrentPage";
 import { S3_BASE_URL } from "@/lib/constants";
+import { uploadDocuments } from "@/helpers/api-utils";
+import { useSnackbar } from "notistack";
 
 const DocPage = () => {
   const { docDetailsData, setDocDetailsData } = useRestaurantDocStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const {enqueueSnackbar} = useSnackbar();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -36,9 +39,29 @@ const DocPage = () => {
     setDocDetailsData("ReBankAccountNumber", value);
   };
 
-  const handleFileChange = (file: File | null, field: string) => {
-    setDocDetailsData(field, file);
+  const handleFileChange = async (file: File | null, documentType: string) => {
+    if (!file) return;
+  
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("documentType", documentType);
+  
+      const response = await uploadDocuments(formData);
+
+      enqueueSnackbar("File successfully Added", {
+        variant: "success",
+        className: "font-poppins",
+      });
+      
+      if (response?.url) {
+        setDocDetailsData(documentType, response.url); 
+      }
+    } catch (error) {
+      console.error("File upload failed:", error);
+    }
   };
+  
 
   const validateForm = () => {
     const validationResult = DocFormSchema.safeParse(docDetailsData);
@@ -122,7 +145,7 @@ const DocPage = () => {
           <div className="ml-2 text-red-500 text-[14px]">{errors.panName}</div>
         </div>
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "panFile")}
+          onFileChange={(file) => handleFileChange(file, "pan")}
         />
       </div>
 
@@ -149,7 +172,7 @@ const DocPage = () => {
           </div>
         </div>
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "GstFile")}
+          onFileChange={(file) => handleFileChange(file, "gst")}
         />
       </div>
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12">
@@ -180,7 +203,7 @@ const DocPage = () => {
           value={docDetailsData.FssaiExpiry}
         /> */}
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "FssaiFile")}
+          onFileChange={(file) => handleFileChange(file, "fssai")}
         />
       </div>
 
