@@ -2,6 +2,7 @@ import React from "react";
 import FeedbackItem from "./FeedbackItem";
 import LeftArrow from "../Icons/LeftArrow";
 import ArrowRight from "../Icons/ArrowRight";
+import { useRouter } from "next/navigation";
 
 interface FeedbackData {
   id: number;
@@ -14,22 +15,24 @@ const Feedback: React.FC = () => {
     {
       id: 1,
       name: "Chicken & Mushroom",
-      likes: 734,
+      likes: 4.5,
     },
     {
       id: 2,
       name: "Roast Chicken Salad",
-      likes: 946,
+      likes: 1.4,
     },
     {
       id: 3,
       name: "Turkey Sweet Potatoes",
-      likes: 2845,
+      likes: 5,
     },
   ];
 
+  const router = useRouter();
+
   return (
-    <div className="rounded-[30px] bg-white border border-borderColor w-full lg:mr-3 max-h-[400px] flex-[1]">
+    <div className="rounded-[30px] bg-white border border-borderColor w-full lg:mr-3 max-h-[400px] flex-[1] cursor-pointer" onClick={()=>{router.push("/dashboard/reviews")}}>
       <div className="font-poppins text-[18px] font-semibold py-6 px-4">
         Customer Feedback
       </div>

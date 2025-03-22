@@ -96,12 +96,14 @@ const Footer = () => {
               >
                 Privacy Policy
               </Link>
+              {!hiddenPaths.includes(pathname) && (
               <Link
                 className="hover:underline hover:underline-offset-4"
                 href="policies/channel-partner"
               >
                 Channel Partner Agreement
               </Link>
+              )}
               <Link
                 className="hover:underline hover:underline-offset-4"
                 href="policies/terms-of-service"

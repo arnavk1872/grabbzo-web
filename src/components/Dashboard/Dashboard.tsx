@@ -15,7 +15,7 @@ const Dashboard = () => {
     <div className="flex gap-x-4">
       {" "}
       <SalesOverview />
-      <Feedback />
+      <Feedback/>
     </div>
     <div className="flex py-4 gap-x-4 ">
       {" "}

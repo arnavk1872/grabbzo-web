@@ -4,12 +4,6 @@ import AvailableCategories from "./AvailableCategories";
 import AvailableItems from "./AvailableItems";
 import { useItemStore } from "@/store/MenuStore";
 
-type Item = {
-  id: number;
-  title: string;
-  isEnabled: boolean;
-};
-
 interface AvailableMenuProps {
   allCategories: {
     isDisabled: boolean;
@@ -47,30 +41,41 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(
     allCategories[0]?.id
   );
+  const [stockVisible, setStockVisible] = useState(false);
+
   const { setCategoryValue, setCategoryId } = useItemStore();
+
+  const mergedItems = useMemo(() => {
+    // Find category name that matches selectedCategoryId
+    const selectedCategoryName = Object.keys(categories).find(
+      (key) => categories[key].categoryId === selectedCategoryId
+    );
+  
+    const categoryItems = categories[selectedCategoryName || ""]?.items || [];
+  
+    const localCategoryItems = localItems.filter(
+      (item: any) => item.categoryId === selectedCategoryId
+    );
+  
+    const merged = [
+      ...categoryItems,
+      ...localCategoryItems.filter(
+        (localItem: any) =>
+          !categoryItems.some((item: any) => item.id === localItem.id)
+      ),
+    ];
+  
+    return merged;
+  }, [categories, localItems, selectedCategoryId]);
+
+  
 
   useEffect(() => {
     setCategoryId(selectedCategoryId);
     setCategoryValue(selectedCategory);
   }, [selectedCategory]);
 
-  const categoryData = useMemo(() => {
-    return allCategories.reduce<
-      Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
-    >((acc, category) => {
-      acc[category.name] = {
-        isDisabled: category.isDisabled,
-        categoryId: category.id,
-        items: category.items.map((item) => ({
-          id: item.id,
-          title: item.title, // Map `name` to `title`
-          isEnabled: item.isStock,
-        })),
-      };
-      return acc;
-    }, {});
-  }, [JSON.stringify(allCategories)]);
-  const [stockVisible, setStockVisible] = useState(false);
+
   const handleToggleEditor = changeToggleEditor || (() => {});
 
   return (
@@ -86,7 +91,7 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
         stockVisible={stockVisible}
       />
       <AvailableItems
-        items={categoryData[selectedCategory]?.items || []}
+        items={mergedItems}
         changeToggleEditor={handleToggleEditor}
         localItems={localItems}
         setLocalItems={setLocalItems}

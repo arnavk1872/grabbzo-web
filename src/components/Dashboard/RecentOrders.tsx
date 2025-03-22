@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const orders = [
   {
@@ -28,11 +30,20 @@ const statusColors: Record<string, string> = {
 };
 
 const RecentlyPlacedOrders: React.FC = () => {
+  const router = useRouter();
   return (
-    <div className="bg-white rounded-[30px] border font-poppins border-borderColor p-6  flex-[1]">
+    <div
+      className="bg-white rounded-[30px] border font-poppins border-borderColor p-6  flex-[1] cursor-pointer"
+      onClick={() => {
+        router.push("/order-history");
+      }}
+    >
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold">Recently Placed Orders</h3>
-        <select className="bg-borderColor text-[#666] font-[14px] border-borderColor rounded-[16px] p-1 text-[14px]">
+        <select
+          className="bg-borderColor text-[#666] font-[14px] border-borderColor rounded-[16px] p-1 text-[14px]"
+          onClick={(e) => e.stopPropagation()}
+        >
           <option>Last 12h</option>
           <option>Last 24h</option>
           <option>Last 48h</option>

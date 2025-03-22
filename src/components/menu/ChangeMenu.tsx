@@ -94,11 +94,31 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
           setLocalItems((prevItems: any[]) => [
             ...prevItems, // Keep existing items
             {
-              isDisabled: false,
-              categoryId: response.id,
+              isEnabled: true,
+              id: response.id,
               title: response.title,
             },
           ]);
+          setCategories((prevCategories: any) => {
+            const existingItems = prevCategories[categoryValue]?.items || [];
+          
+            return {
+              ...prevCategories,
+              [categoryValue]: {
+                isDisabled: false,
+                categoryId: categoryId,
+                items: [
+                  ...existingItems,
+                  {
+                    isEnabled: true,
+                    id: response.id,
+                    title: response.title,
+                  },
+                ],
+              },
+            };
+          });
+          
         }
       } catch (error) {
         console.error("Error adding item:", error);

@@ -83,7 +83,7 @@ const UserDetailsPopup: React.FC = () => {
           <div className="flex justify-center">
             <AlertDialogFooter>
               <Link href="/growth/adCredits">
-                <AlertDialogAction>Get Credits</AlertDialogAction>
+                <AlertDialogAction className="text-white px-8 py-3 text-[16px]">Get Credits</AlertDialogAction>
               </Link>
             </AlertDialogFooter>
           </div>

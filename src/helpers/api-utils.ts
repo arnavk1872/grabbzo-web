@@ -61,10 +61,11 @@ export const getOrders = async (type: string) => {
     const response = await axios.get(`${IP}/orders?state=${type}`, {
       headers: {
         Authorization: `${token}`,
+        "Content-Type": "application/json",
       },
     });
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error("Error fetching orders:", error);
     throw error;
@@ -75,11 +76,10 @@ export const getStatus = async () => {
   const token = await getToken();
   if (!token) return;
 
-  const restaurantId = await getRestaurantId();
 
   try {
     const response = await axios.get(
-      `${IP}/restaurant-admins/status?restaurantId=${restaurantId}`,
+      `${IP}/restaurant-admins/status`,
       {
         headers: {
           Authorization: ` ${token}`,
@@ -98,10 +98,9 @@ export const changeStatus = async (status: boolean) => {
   const token = await getToken();
   if (!token) return;
 
-  const restaurantId = await getRestaurantId();
   const value = status ? "offline" : "online";
 
-  const payload = { status: value, restaurantId: restaurantId };
+  const payload = { status: value };
 
   try {
     const response = await axios.post(
@@ -408,7 +407,7 @@ export const getOrderbyId = async (id: string) => {
         "Content-Type": "application/json",
       },
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;
@@ -613,6 +612,28 @@ export const paymentRequest = async (data: any) => {
   }
 };
 
+export const uploadDocuments = async (image: any) => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.post(
+      `${IP}/restaurant-admins/upload-document`,
+      image,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
 //------------------------------------------------------- ORDERS API's ----------------------------------------------//
 
 export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
@@ -647,11 +668,11 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
 
 export const buyAdCredits = async (amount: number) => {
   const token = await getToken();
-  const restaurantId = await getRestaurantId();
+
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/plan/adcredit/restaurant/${restaurantId}`,
+      `${IP}/plan/adcredit`,
       {
         amount: amount,
       },
@@ -662,7 +683,7 @@ export const buyAdCredits = async (amount: number) => {
         },
       }
     );
-    console.log(response, "CHECK ADS");
+ 
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -674,12 +695,11 @@ export const buyAdCredits = async (amount: number) => {
 
 export const getAllDiscounts = async () => {
   const token = await getToken();
-  const restaurantId = await getRestaurantId();
 
   if (!token) return;
   try {
     const response = await axios.get(
-      `${IP}/discounts/restaurant/${restaurantId}`,
+      `${IP}/discounts/restaurant`,
       {
         headers: {
           Authorization: ` ${token}`,
@@ -715,7 +735,7 @@ export const deleteDiscount = async (discountId: number) => {
 
 export const updateDiscountStatus = async (discountId: number) => {
   const token = await getToken();
-  console.log("HI", token);
+
   if (!token) return;
   try {
     const response = await axios.put(
@@ -738,11 +758,11 @@ export const updateDiscountStatus = async (discountId: number) => {
 
 export const addNewDiscount = async (payload: any) => {
   const token = await getToken();
-  const restaurantId = await getRestaurantId();
+
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/discounts/restaurant/${restaurantId}`,
+      `${IP}/discounts/restaurant`,
       payload,
       {
         headers: {
@@ -765,6 +785,7 @@ export const addNewDiscount = async (payload: any) => {
     throw new Error("Something went wrong!");
   }
 };
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 export const getFranchises = async (words: any) => {
   const token = await getToken();
@@ -805,6 +826,25 @@ export const LinkFranchise = async (franchiseName: string) => {
     );
     return response.data;
   } catch (error: unknown) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const getReviews = async () => {
+  const token = await getToken();
+  const restaurantId = await getRestaurantId();
+
+  if (!token) return;
+  try {
+    const response = await axios.get(`${IP}/reviews/getRestaurantReviews?restaurantId=${restaurantId}`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
     console.error("Error :", error);
     throw error;
   }
