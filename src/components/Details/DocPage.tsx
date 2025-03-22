@@ -80,8 +80,11 @@ const DocPage = () => {
 
   const handleProceedClick = () => {
     const validationErrors = validateForm();
-
+    console.log("Clicked");
+    console.log(isFormComplete);
+    console.log(validationErrors);
     if (Object.keys(validationErrors).length === 0 && isFormComplete) {
+      console.log("clicked");
       setCurrentPage("menu");
       router.push("/details/menu");
     }
@@ -89,7 +92,6 @@ const DocPage = () => {
 
   const isFormComplete =
     docDetailsData.panNumber &&
-    docDetailsData.panName &&
     docDetailsData.panFile &&
     docDetailsData.FssaiNumber &&
     docDetailsData.FssaiFile &&
@@ -132,17 +134,6 @@ const DocPage = () => {
           <div className="ml-2 text-red-500 text-[14px]">
             {errors.panNumber}
           </div>
-        </div>
-        <div>
-          <Input
-            placeholder="Full Name As Per PAN*"
-            onChange={(e) => {
-              setDocDetailsData("panName", e.target.value);
-              setErrors((prev) => ({ ...prev, panName: "" }));
-            }}
-            value={docDetailsData.panName}
-          />
-          <div className="ml-2 text-red-500 text-[14px]">{errors.panName}</div>
         </div>
         <FileUpload
           onFileChange={(file) => handleFileChange(file, "pan")}

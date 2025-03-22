@@ -13,17 +13,24 @@ import { S3_BASE_URL } from "@/lib/constants";
 const MenuPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
+  const { menuDetailsData, setMenuDetailsData, initializeIsVeg } =
+    useRestaurantMenuStore();
+
+  const initialize = async () => {
+    await usePageStore.getState().initializeFranchise();
+  };
+
   useEffect(() => {
     if (currentPage.page != lastSegment) {
       router.push(`/details/${currentPage.page}`);
     }
+    initialize();
+    initializeIsVeg();
   }, []);
 
-  const { menuDetailsData, setMenuDetailsData } = useRestaurantMenuStore();
-
-  const handleRadioChange = (name: string, value: string) => {
+  const handleRadioChange = (name: string, value: boolean | string) => {
     setMenuDetailsData(name, value);
   };
 
@@ -32,18 +39,20 @@ const MenuPage = () => {
   };
 
   const isFormComplete =
-    menuDetailsData.foodType &&
     menuDetailsData.deliveryToCars &&
     menuDetailsData.serviceType &&
-    menuDetailsData.restaurantImage &&
-    menuDetailsData.menuImage;
+    (Franchise
+      ? true
+      : menuDetailsData.restaurantImage &&
+        menuDetailsData.menuImage &&
+        menuDetailsData.foodType);
 
   const handleProceed = () => {
     // console.log(menuDetailsData);
     setCurrentPage("contract");
     router.push("/details/contract");
   };
-
+  console.log(Franchise);
   return (
     <div className="font-poppins ml-10 min-w-[750px]">
       <div className="flex justify-between items-center mb-1">
@@ -61,21 +70,19 @@ const MenuPage = () => {
           Select the service you want to register
         </h4>
         <RadioGroup
-          value={menuDetailsData.foodType}
-          onValueChange={(value) => handleRadioChange("foodType", value)}
+          value={menuDetailsData.foodType === true ? "veg" : "nonveg"}
+          onValueChange={(value) =>
+            handleRadioChange("foodType", value == "veg" ? true : false)
+          }
           className="flex gap-20 mt-5"
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="veg" id="veg" />
+            <RadioGroupItem value="veg" id="veg" disabled={Franchise} />
             <Label htmlFor="veg">Veg</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="nonveg" id="nonveg" />
-            <Label htmlFor="nonveg">Non-Veg</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="both" id="both" />
-            <Label htmlFor="both">Both</Label>
+            <RadioGroupItem value="nonveg" id="nonveg" disabled={Franchise} />
+            <Label htmlFor="nonveg">Veg / Non-Veg</Label>
           </div>
         </RadioGroup>
       </div>
@@ -90,11 +97,11 @@ const MenuPage = () => {
           onValueChange={(value) => handleRadioChange("serviceType", value)}
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="pickup" id="pickup" />
+            <RadioGroupItem value="PICKUP" id="PICKUP" />
             <Label htmlFor="pickup">Pickup</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="dining" id="dining" />
+            <RadioGroupItem value="DINEIN" id="DINEIN" />
             <Label htmlFor="dining">Dining</Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -109,8 +116,10 @@ const MenuPage = () => {
         </h4>
         <RadioGroup
           className="flex gap-20 mt-5"
-          value={menuDetailsData.deliveryToCars}
-          onValueChange={(value) => handleRadioChange("deliveryToCars", value)}
+          value={menuDetailsData.deliveryToCars == true ? "yes" : "no"}
+          onValueChange={(value) =>
+            handleRadioChange("deliveryToCars", value == "yes" ? true : false)
+          }
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="yes" id="yes" />
@@ -122,7 +131,11 @@ const MenuPage = () => {
           </div>
         </RadioGroup>
       </div>
-      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12">
+      <div
+        className={`bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12 ${
+          Franchise ? "hidden" : "block"
+        }`}
+      >
         <div>
           <h3 className="text-zinc-800 text-xl font-extrabold">
             Add Restaurant Image
@@ -135,7 +148,11 @@ const MenuPage = () => {
           onFileChange={(file) => handleFileChange(file, "restaurantImage")}
         />
       </div>
-      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12">
+      <div
+        className={`bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12 ${
+          Franchise ? "hidden" : "block"
+        }`}
+      >
         <div>
           <h3 className="text-zinc-800 text-xl font-extrabold">
             Add delivery menu image

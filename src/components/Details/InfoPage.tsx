@@ -19,7 +19,9 @@ import MapComponent from "./MapComponent";
 import { usePageStore } from "@/store/CurrentPage";
 import { usePathname } from "next/navigation";
 import { S3_BASE_URL } from "@/lib/constants";
-import { cities, states } from "./data";
+import { cities, days, states } from "./data";
+import { TimePickerDemo } from "./TimePicker";
+import { Label } from "../UI/Label";
 
 const InfoPage = () => {
   const router = useRouter();
@@ -27,17 +29,23 @@ const InfoPage = () => {
   const { currentPage, setCurrentPage, Franchise } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
+  const initialize = async () => {
+    await usePageStore.getState().initializeFranchise();
+  };
+
+  const { basicDetailsData, setBasicDetailsData, initializeRestaurantName } =
+    useRestaurantInfoStore();
+
   useEffect(() => {
     if (currentPage.page != lastSegment) {
       router.push(`/details/${currentPage.page}`);
     }
+    initialize();
+    initializeRestaurantName();
   }, []);
-
-  const { basicDetailsData, setBasicDetailsData } = useRestaurantInfoStore();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [city, setCity] = useState<string[]>([]);
-
   const validateForm = () => {
     const validationResult = BasicFormSchema.safeParse(basicDetailsData);
     const validationErrors: Record<string, string> = {};
@@ -55,6 +63,10 @@ const InfoPage = () => {
 
   console.log(Franchise, "IS FRANCHISE");
 
+  const setDateWrapper = (date: Date | undefined) => {
+    setBasicDetailsData("closingTime", date);
+  };
+
   const handleStateChange = (value: string) => {
     setBasicDetailsData("state", value);
     const state = states.find((state) => state.key == value);
@@ -62,14 +74,6 @@ const InfoPage = () => {
       setBasicDetailsData("state", state.name);
     }
     setCity(cities[value]);
-    // const cityData =
-    // var cityData: ICity[] = [];
-    // if (state) cityData = City.getCitiesOfState("IN", state.isoCode);
-    // else
-    //   cityData = [
-    //     { name: basicDetailsData.city, countryCode: "IN", stateCode: "" },
-    //   ];
-    // setCity(cityData);
   };
   console.log(basicDetailsData);
   const handleClick = () => {
@@ -83,6 +87,7 @@ const InfoPage = () => {
   const isFormComplete =
     basicDetailsData.ownerName &&
     basicDetailsData.restaurantName &&
+    basicDetailsData.closedDay &&
     basicDetailsData.email &&
     basicDetailsData.shopNo &&
     basicDetailsData.floor &&
@@ -125,8 +130,8 @@ const InfoPage = () => {
               setBasicDetailsData("restaurantName", e.target.value);
               setErrors((prev) => ({ ...prev, restaurantName: "" }));
             }}
-            value={Franchise || basicDetailsData.restaurantName}
-            disabled={!!Franchise}
+            value={basicDetailsData.restaurantName}
+            disabled={Franchise}
           />
 
           <div className="ml-2 text-red-500 text-[14px]">
@@ -144,7 +149,7 @@ const InfoPage = () => {
           />
           <div className="ml-2 text-red-500 text-[14px]">{errors.email}</div>
         </div>
-        <div>
+        {/* <div>
           <h6 className="text-zinc-800 font-medium text-base">
             Restaurant's primary contact number
           </h6>
@@ -162,6 +167,32 @@ const InfoPage = () => {
               </label>
             </div>
           </div>
+        </div> */}
+        <Select
+          value={basicDetailsData.closedDay || "Select Closed Day"}
+          onValueChange={(value) => setBasicDetailsData("closedDay", value)}
+        >
+          <SelectTrigger className="text-gray-800">
+            <SelectValue>
+              {basicDetailsData.closedDay || "Select Closed Day"}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {days.map((option) => (
+              <SelectItem key={option.key} value={option.name}>
+                {option.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <div>
+          <Label className="pl-2 text-base font-medium">
+            Set Your Closing Time
+          </Label>
+          <TimePickerDemo
+            date={basicDetailsData.closingTime}
+            setDate={setDateWrapper}
+          />
         </div>
       </div>
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-6 shadow-xl mt-12">

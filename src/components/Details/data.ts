@@ -3,6 +3,17 @@ interface stateProp {
   key: string;
 }
 
+export const days = [
+  { name: "Sunday", key: 1 },
+  { name: "Monday", key: 2 },
+  { name: "Tuesday", key: 3 },
+  { name: "Wednesday", key: 4 },
+  { name: "Thrusday", key: 5 },
+  { name: "Friday", key: 6 },
+  { name: "Saturday", key: 7 },
+  { name: "None", key: 8 },
+];
+
 export const states: stateProp[] = [
   { name: "Andaman and Nicobar Islands", key: "AN" },
   { name: "Andhra Pradesh", key: "AP" },

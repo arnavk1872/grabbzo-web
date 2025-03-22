@@ -17,7 +17,7 @@ import {
 } from "@/components/UI/InputOtp";
 import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
-import { postLogin, postSignup } from "@/helpers/api-utils";
+import { getFlag, postLogin, postSignup } from "@/helpers/api-utils";
 
 const InputBox = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -50,7 +50,16 @@ const InputBox = () => {
         if (loginData.status === "success") {
           const token = "Bearer " + loginData.data.accessToken;
           setCookie("AuthToken", token);
-          router.push("/dashboard");
+          const routeData = await getFlag();
+          if (routeData.flag === false) {
+            if (routeData.franchise) {
+              router.push("/details/information");
+            } else {
+              router.push("/franchise");
+            }
+          } else {
+            router.push("/dashboard");
+          }
         } else {
           // Notistack Error
           alert("Number not registered, Signup First");
