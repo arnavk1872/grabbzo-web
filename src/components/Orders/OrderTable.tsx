@@ -7,7 +7,7 @@ interface Order {
   createdAt: string;
   customerName: string;
   customerArrivingTime: string;
-  amount: string;
+  total: string;
   status: string;
   type: string;
 }
@@ -18,6 +18,8 @@ interface OrderTableProps {
 
 const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
   const router = useRouter();
+  console.log(orderDetails,123);
+  
 
   const checkOrderDetails = (orderId: string) => {
     router.push(`/dashboard/${orderId}`);
@@ -70,7 +72,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
               <td className="flex-1 text-center xl:block hidden">
                 {formatDate(order.customerArrivingTime)}
               </td>
-              <td className="flex-1 text-center">{order.amount}</td>
+              <td className="flex-1 text-center">{order.total}</td>
               <td
                 className={`flex-1 font-semibold text-center ${
                   order.type === "DINEIN"

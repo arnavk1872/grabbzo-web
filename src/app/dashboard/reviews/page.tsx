@@ -1,5 +1,6 @@
 import Review from "@/components/CustomerRev/Review";
 import Sort from "@/components/CustomerRev/Sort";
+import { getReviews } from "@/helpers/api-utils";
 import React from "react";
 
 interface ReviewType {
@@ -12,7 +13,10 @@ interface ReviewType {
   price: string;
 }
 
-const page = () => {
+const page = async() => {
+
+  const restReviews = await getReviews();
+  console.log(restReviews,"REVIEWS");
   const reviews: ReviewType[] = [
     // {
     //   id: 1,

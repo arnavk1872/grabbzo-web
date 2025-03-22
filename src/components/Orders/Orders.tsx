@@ -13,10 +13,10 @@ interface OrderStatus {
 }
 
 const orderStatuses: OrderStatus[] = [
-  { image: `${S3_BASE_URL}/public/New.png`, count: 0, label: "New", color: "text-Red", route: "/dashboard/orders" },
-  { image: `${S3_BASE_URL}/public/Prep.png`, count: 0, label: "Preparing", color: "text-Purple", route: "/dashboard/orders/preparing" },
-  { image: `${S3_BASE_URL}/public/ready.png`, count: 0, label: "Ready", color: "text-LightGreen", route: "/dashboard/orders/ready" },
-  { image: `${S3_BASE_URL}/public/pickedup.png`, count: 0, label: "Picked Up", color: "text-Orange", route: "/dashboard/orders/pickedup" },
+  { image: `${S3_BASE_URL}/public/New.png`, count: 0, label: "NEW", color: "text-Red", route: "/dashboard/orders" },
+  { image: `${S3_BASE_URL}/public/Prep.png`, count: 0, label: "PREPARING", color: "text-Purple", route: "/dashboard/orders/preparing" },
+  { image: `${S3_BASE_URL}/public/ready.png`, count: 0, label: "READY", color: "text-LightGreen", route: "/dashboard/orders/ready" },
+  { image: `${S3_BASE_URL}/public/pickedup.png`, count: 0, label: "PICKED UP", color: "text-Orange", route: "/dashboard/orders/pickedup" },
 ];
 
 const OrderStatusCard: React.FC<
@@ -48,7 +48,7 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-8 my-2 flex h-[160px] gap-x-8 whitespace-nowrap pl-8 items-center">
+    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-2 my-2 flex h-[160px] gap-x-2 whitespace-nowrap pl-8 items-center">
       {orderStatuses.map((status, index) => (
         <OrderStatusCard
           key={index}
