@@ -1,3 +1,4 @@
+import { getFlag } from "@/helpers/api-utils";
 import { create } from "zustand";
 
 interface PageState {
@@ -5,9 +6,14 @@ interface PageState {
     page: string;
   };
   setCurrentPage: (value: string) => void;
-  Franchise: string;
-  setFranchise: (Franchise: string) => void;
+  Franchise: boolean;
+  initializeFranchise: () => Promise<void>;
 }
+
+const checkFranchise = async () => {
+  const RestaurantFlags = await getFlag();
+  return RestaurantFlags.franchise;
+};
 
 export const usePageStore = create<PageState>((set) => ({
   currentPage: {
@@ -22,6 +28,11 @@ export const usePageStore = create<PageState>((set) => ({
       },
     }));
   },
-  Franchise: "",
-  setFranchise: (value) => set({ Franchise: value }),
+
+  Franchise: false,
+
+  initializeFranchise: async () => {
+    const franchiseStatus = await checkFranchise();
+    set({ Franchise: franchiseStatus });
+  },
 }));

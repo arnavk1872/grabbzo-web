@@ -3,7 +3,6 @@ import { create } from "zustand";
 interface RestaurantDocState {
   docDetailsData: {
     panNumber: string;
-    panName: string;
     panFile: File | null;
     IsGst: boolean;
     GstNumber: string;
@@ -24,7 +23,6 @@ interface RestaurantDocState {
 const useRestaurantDocStore = create<RestaurantDocState>((set) => ({
   docDetailsData: {
     panNumber: "",
-    panName: "",
     panFile: null,
     IsGst: false,
     GstNumber: "",

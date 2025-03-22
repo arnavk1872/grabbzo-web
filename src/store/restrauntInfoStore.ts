@@ -1,12 +1,13 @@
 import { create } from "zustand";
+import { getFlag, getFranchiseDetails } from "@/helpers/api-utils";
 
 interface RestaurantInfoState {
   basicDetailsData: {
     ownerName: string;
     restaurantName: string;
     email: string;
-    mobileNumber: string;
-    primaryContactNumber: string;
+    closedDay: string;
+    closingTime: Date | undefined;
     shopNo: string;
     floor: string;
     area: string;
@@ -17,16 +18,20 @@ interface RestaurantInfoState {
     latitude: string;
     longitude: string;
   };
-  setBasicDetailsData: (field: string, value: string) => void;
+  setBasicDetailsData: (
+    field: string,
+    value: string | Date | undefined
+  ) => void;
+  initializeRestaurantName: () => Promise<void>;
 }
 
-const useRestaurantInfoStore = create<RestaurantInfoState>((set) => ({
+const useRestaurantInfoStore = create<RestaurantInfoState>((set, get) => ({
   basicDetailsData: {
     ownerName: "",
     restaurantName: "",
     email: "",
-    mobileNumber: "",
-    primaryContactNumber: "",
+    closedDay: "",
+    closingTime: undefined,
     shopNo: "",
     floor: "",
     area: "",
@@ -44,6 +49,23 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set) => ({
         [field]: value,
       },
     }));
+  },
+
+  initializeRestaurantName: async () => {
+    try {
+      const { franchise } = await getFlag();
+      if (franchise) {
+        const franchiseDetails = await getFranchiseDetails();
+        set({
+          basicDetailsData: {
+            ...get().basicDetailsData,
+            restaurantName: franchiseDetails.restaurantName,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error initializing restaurant name:", error);
+    }
   },
 }));
 

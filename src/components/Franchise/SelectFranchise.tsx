@@ -15,8 +15,6 @@ const SelectFranchise = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const suggestionsRef = useRef(null);
 
-  const { setFranchise } = usePageStore(); //IF RESTAURANT IS FRANCHISE SETS THE NAME IN A STATE
-
   const router = useRouter();
 
   useEffect(() => {
@@ -48,7 +46,6 @@ const SelectFranchise = () => {
   const handleProceed = async () => {
     if (selectedItem || customFranchise) {
       const franchiseName = selectedItem || customFranchise;
-      setFranchise(franchiseName);
       try {
         await LinkFranchise(franchiseName);
         router.push("/details/information");

@@ -10,6 +10,36 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { usePageStore } from "@/store/CurrentPage";
 import { S3_BASE_URL } from "@/lib/constants";
+import { postRestaurantDetails } from "@/helpers/api-utils";
+
+interface Payload {
+  ownerName: string;
+  emailAddress: string;
+  franchise: boolean;
+  flag: boolean;
+  closedDay: string;
+  closeTiming: string;
+  serviceType: string;
+  deliveryToCars: boolean;
+  latitude: string;
+  longitude: string;
+  shopNumber: string;
+  floorOrTower: string;
+  areaOrSectorOrLocality: string;
+  landmark: string;
+  pincode: string;
+  state: string;
+  city: string;
+  panNumber: string;
+  fssaiNumber: string;
+  gstinNumber: string;
+  restaurantBankDetails: {
+    accountNumber: string;
+    ifsc: string;
+  };
+  restaurantName?: string; // Optional property
+  isVeg?: boolean; // Optional property
+}
 
 const ContractPage = () => {
   const [agreement, setAgreement] = useState<string>("");
@@ -18,26 +48,39 @@ const ContractPage = () => {
   const { menuDetailsData } = useRestaurantMenuStore();
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage } = usePageStore();
+  const { currentPage, Franchise } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
+
+  const initialize = async () => {
+    await usePageStore.getState().initializeFranchise();
+  };
 
   useEffect(() => {
     if (currentPage.page != lastSegment) {
       router.push(`/details/${currentPage.page}`);
     }
+    initialize();
   }, []);
 
+  const formatDateToTimeString = (date: Date | undefined) => {
+    const hours = date?.getHours().toString().padStart(2, "0");
+    const minutes = date?.getMinutes().toString().padStart(2, "0");
+    const seconds = date?.getSeconds().toString().padStart(2, "0");
+
+    return `${hours}:${minutes}:${seconds}`;
+  };
   const handleSubmit = async () => {
-    // console.log("Button clicked");
-    // Do the API call
-    const payload = {
+    const payload: Payload = {
       ownerName: basicDetailsData.ownerName,
-      restaurantName: basicDetailsData.restaurantName,
-      restaurantImage: "baaase64_encoded_image_here",
       emailAddress: basicDetailsData.email,
-      mobileNumber: basicDetailsData.mobileNumber,
-      latitude: "40.7128",
-      longitude: "-74.0060",
+      franchise: Franchise,
+      flag: true,
+      closedDay: basicDetailsData.closedDay,
+      closeTiming: formatDateToTimeString(basicDetailsData.closingTime),
+      serviceType: menuDetailsData.serviceType,
+      deliveryToCars: menuDetailsData.deliveryToCars,
+      latitude: basicDetailsData.latitude,
+      longitude: basicDetailsData.longitude,
       shopNumber: basicDetailsData.shopNo,
       floorOrTower: basicDetailsData.floor,
       areaOrSectorOrLocality: basicDetailsData.area,
@@ -45,51 +88,24 @@ const ContractPage = () => {
       pincode: basicDetailsData.pinCode,
       state: basicDetailsData.state,
       city: basicDetailsData.city,
-      isVeg: false,
-      rating: 4.5,
       panNumber: docDetailsData.panNumber,
       fssaiNumber: docDetailsData.FssaiNumber,
-      gstinNumber: "qwerty",
+      gstinNumber: docDetailsData.GstNumber,
       restaurantBankDetails: {
-        accountHolderName: basicDetailsData.restaurantName,
         accountNumber: docDetailsData.BankAccountNumber,
         ifsc: docDetailsData.BankIfscCode,
-        bankName: "HDFC Bank",
       },
     };
-    const signupPayload = {
-      mobileNumber: basicDetailsData.mobileNumber,
-      otp: "123456",
-    };
-    // console.log(signupPayload, payload);
-    // try {
-    //   const signupResponse = await axios.post(
-    //     "https://api.grabbzo.com/restaurant/auth/signup",
-    //     signupPayload
-    //   );
-    //   console.log(signupResponse);
 
-    //   await axios.post(
-    //     "https://api.grabbzo.com/restaurant-admins/update",
-    //     payload,
-    //     {
-    //       headers: {
-    //         Authorization: `${token}`,
-    //       },
-    //     }
-    //   );
-    const message = "SignUp is Successful";
-    // enqueueSnackbar(message, {
-    //   preventDuplicate: true,
-    //   variant: "success",
-    //   autoHideDuration: 5000,
-    // });
-    router.push("/dashboard");
-    // } catch (error) {
-    //   // Handle errors
-    //   console.error("Error updating data:", error);
-    //   alert("Failed to update data, please try again.");
-    // }
+    if (Franchise) {
+      payload.restaurantName = basicDetailsData.restaurantName;
+      payload.isVeg = menuDetailsData.foodType;
+    }
+    const uploadData = await postRestaurantDetails(payload);
+    console.log(uploadData);
+    if (uploadData.status == "success") {
+      router.push("/restaurant");
+    }
   };
   return (
     <div className="font-poppins ml-10 min-w-[750px]">

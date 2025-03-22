@@ -1,20 +1,25 @@
+import { getFlag, getFranchiseDetails } from "@/helpers/api-utils";
 import { create } from "zustand";
 
 interface RestaurantMenuState {
   menuDetailsData: {
-    foodType: string;
-    deliveryToCars: string;
+    foodType: boolean;
+    deliveryToCars: boolean;
     serviceType: string;
     restaurantImage: File | null;
     menuImage: File | null;
   };
-  setMenuDetailsData: (field: string, value: string | File | null) => void;
+  setMenuDetailsData: (
+    field: string,
+    value: string | File | null | boolean
+  ) => void;
+  initializeIsVeg: () => Promise<void>;
 }
 
-const useRestaurantMenuStore = create<RestaurantMenuState>((set) => ({
+const useRestaurantMenuStore = create<RestaurantMenuState>((set, get) => ({
   menuDetailsData: {
-    foodType: "",
-    deliveryToCars: "",
+    foodType: false,
+    deliveryToCars: false,
     serviceType: "",
     restaurantImage: null,
     menuImage: null,
@@ -26,6 +31,22 @@ const useRestaurantMenuStore = create<RestaurantMenuState>((set) => ({
         [field]: value,
       },
     }));
+  },
+  initializeIsVeg: async () => {
+    try {
+      const { franchise } = await getFlag();
+      if (franchise) {
+        const franchiseDetails = await getFranchiseDetails();
+        set({
+          menuDetailsData: {
+            ...get().menuDetailsData,
+            foodType: franchiseDetails.isVeg,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error initializing restaurant name:", error);
+    }
   },
 }));
 

@@ -532,6 +532,63 @@ export const postSignup = async (data: any) => {
   }
 };
 
+export const getFlag = async () => {
+  try {
+    const token = await getToken();
+    if (!token) return;
+    const response = await axios.get(`${IP}/restaurant-admins/flag`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error while retriving flag :", error);
+    throw error;
+  }
+};
+
+export const getFranchiseDetails = async () => {
+  try {
+    const token = await getToken();
+    if (!token) return;
+    const response = await axios.get(`${IP}/franchise/details`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error while retriving Franchise Details :", error);
+    throw error;
+  }
+};
+
+export const postRestaurantDetails = async (payload: any) => {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("AuthToken")?.value;
+  if (!token) return;
+
+  try {
+    const response = await axios.post(
+      `${IP}/restaurant-admins/update`,
+      payload,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while payment Request :", error);
+    throw error;
+  }
+};
+
 export const paymentRequest = async (data: any) => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("AuthToken")?.value;
@@ -732,7 +789,7 @@ export const LinkFranchise = async (franchiseName: string) => {
   if (!token) return;
 
   const payload = {
-    "name": franchiseName, 
+    name: franchiseName,
   };
 
   try {

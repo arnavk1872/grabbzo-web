@@ -8,19 +8,6 @@ export const DocFormSchema = z.object({
       message: "PAN Number is invalid!",
     }),
 
-  panName: z
-    .string()
-    .min(1, {
-      message: "Name is required!",
-    })
-    .max(50, {
-      message: "Name must not exceed 50 characters",
-    })
-    .regex(/^[A-Za-z\s]+$/, {
-      message: "Name can only contain Letters",
-    })
-    .trim(),
-
   GstNumber: z
     .string()
     .min(1, { message: "GST Number is required!" })
@@ -48,7 +35,7 @@ export const DocFormSchema = z.object({
   BankIfscCode: z
     .string()
     .min(1, { message: "Bank IFSC Code is required!" })
-    .regex(/^[A-Za-z]{4}\d{7}$/, {
+    .regex(/^[A-Za-z]{4}0[A-Z0-9a-z]{6}$/, {
       message: "Bank IFSC Code is invalid!",
     }),
 });
