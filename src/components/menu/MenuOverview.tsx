@@ -25,15 +25,18 @@ type Item = {
   isEnabled: boolean;
 };
 
+type LocalItem = {
+  isDisabled: boolean;
+  categoryId: number;
+  items: Item[];
+};
+
 const MenuOverview = ({ allCategories }: MenuOverViewProps) => {
   const [toggleEditor, changeToggleEditor] = useState(true);
-  const [localItems, setLocalItems] = useState(null);
-  const [categories, setCategories] = useState<
-    Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
-  >({});
+    const [localItems, setLocalItems] = useState<LocalItem[]>([]);
 
-  useEffect(() => {
-    const categoryData = allCategories.reduce<
+ const categoryData = useMemo(() => {
+    return allCategories.reduce<
       Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
     >((acc, category) => {
       acc[category.name] = {
@@ -41,15 +44,15 @@ const MenuOverview = ({ allCategories }: MenuOverViewProps) => {
         categoryId: category.id,
         items: category.items.map((item) => ({
           id: item.id,
-          title: item.name,
+          title: item.title,
           isEnabled: item.isStock,
         })),
       };
       return acc;
     }, {});
+  }, [JSON.stringify(allCategories)]);
 
-    setCategories(categoryData);
-  }, [allCategories]);
+  const [categories, setCategories] = useState(categoryData);
 
   const categoryCount = useMemo(
     () => Object.keys(categories).length,

@@ -5,6 +5,8 @@ import React from "react";
 
 const page = async () => {
   const orderDetails = await getOrders("NEW");
+  console.log(orderDetails,"DERTA");
+  
 
   return (
     <div className="w-full">

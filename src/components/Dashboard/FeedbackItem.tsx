@@ -1,5 +1,7 @@
 import React from "react";
 import Heart from "../Icons/Heart";
+import { Avatar, AvatarFallback, AvatarImage } from "../Dashboard/Avatar";
+import { Star } from "lucide-react";
 
 interface FeedbackItemProps {
   name: string;
@@ -14,7 +16,10 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
   return (
     <div className="flex items-center bg-white py-4  ">
       {/* Placeholder for Image */}
-      <div className="w-[72px] h-[62px] bg-gray-300 rounded-md"></div>
+      <Avatar className="h-12 w-12 !bg-yellow-500 ">
+          <AvatarImage  src="" />
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
 
       {/* Content */}
       <div className="ml-4 w-full">
@@ -24,8 +29,8 @@ const FeedbackItem: React.FC<FeedbackItemProps> = ({
             <h3 className="text-[18px] font-medium text-yellow-500">{name}</h3>
             
           </div>
-          <p className="text-sm text-red-500 flex items-center">
-              <span className="mr-1 cursor-pointer"><Heart/></span>
+          <p className="text-sm text-yellow-700 flex items-center">
+              <span className="mr-1 cursor-pointer"><Star size={16}/></span>
               {likes}
             </p>
           {/* <p className="mt-2 text-sm text-gray-600 flex gap-x-[2px]">

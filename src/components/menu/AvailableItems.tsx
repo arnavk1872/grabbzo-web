@@ -49,16 +49,18 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
   const { enqueueSnackbar } = useSnackbar();
+  const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-  
 
   useEffect(() => {
+    const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
     setLocalItems((prevItems: any) => {
-      return JSON.stringify(prevItems) !== JSON.stringify(items)
-        ? items
+      return JSON.stringify(prevItems) !== JSON.stringify(filteredItems)
+        ? filteredItems
         : prevItems;
     });
-  }, [items]);
+  }, [items, deletedIds]);
+  
 
   const handleEditItem = async (itemId: number) => {
     try {
@@ -96,13 +98,13 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
 
   const handleDeleteItem = async (itemId: number) => {
     try {
-      const response = await deleteItem(itemId);
+      await deleteItem(itemId);
       enqueueSnackbar("Item Deleted!", {
         variant: "error",
         className: "font-poppins",
       });
-
-      // Update local state to remove the deleted item
+  
+      setDeletedIds((prev) => [...prev, itemId]); // Track deleted ID
       setLocalItems((prevItems: any[]) =>
         prevItems.filter((item) => item.id !== itemId)
       );
@@ -110,6 +112,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
       console.error("Error deleting item:", error);
     }
   };
+  
   
   return (
     <div className="flex w-[80%] flex-col">
