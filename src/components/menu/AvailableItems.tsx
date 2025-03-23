@@ -24,6 +24,7 @@ import {
   AccordionTrigger,
 } from "./MenuAccordian";
 import ViewItem from "./ViewItem";
+import { ChevronDown } from "lucide-react";
 
 interface Item {
   id: number;
@@ -54,11 +55,13 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
 
   useEffect(() => {
     const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
-    setLocalItems((prevItems: any) => {
-      return JSON.stringify(prevItems) !== JSON.stringify(filteredItems)
-        ? filteredItems
-        : prevItems;
-    });
+  
+    const prevIds = localItems.map((item: any) => item.id).sort().join(",");
+    const nextIds = filteredItems.map((item) => item.id).sort().join(",");
+  
+    if (prevIds !== nextIds) {
+      setLocalItems(filteredItems);
+    }
   }, [items, deletedIds]);
   
 
@@ -124,19 +127,23 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
           localItems.map((item: any) => (
             <div
               key={item.id}
-              className="flex items-center cursor-pointer w-full  font-poppins justify-between py-2 border-b last:border-b-0"
+               className="flex items-center cursor-pointer w-full font-poppins justify-between py-2 border-b last:border-b-0"
             >
+              <div className="w-11/12">
               <Accordion type="single" collapsible>
                 <AccordionItem key={item.id} value={`item-${item.id}`}>
-                  <AccordionTrigger>
+                  <AccordionTrigger className="w-full">
                     {" "}
-                    <span
-                      className={`text-[18px]  truncate overflow-hidden whitespace-nowrap ${
+                    <div className="flex justify-between items-center w-full">
+                    <div
+                      className={`text-[18px] text-left truncate overflow-hidden whitespace-nowrap ${
                         isEditor ? "w-24" : ""
                       }`}
                     >
                       {item.title}
-                    </span>
+                    </div>
+                    {!isEditor && <ChevronDown />}
+                    </div>
                   </AccordionTrigger>
                   {!isEditor && (
                     <AccordionContent>
@@ -145,6 +152,8 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
                   )}
                 </AccordionItem>
               </Accordion>
+             
+             </div>
 
               {isEditor && (
                 <>
