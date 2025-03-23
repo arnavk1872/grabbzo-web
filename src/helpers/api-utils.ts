@@ -76,17 +76,13 @@ export const getStatus = async () => {
   const token = await getToken();
   if (!token) return;
 
-
   try {
-    const response = await axios.get(
-      `${IP}/restaurant-admins/status`,
-      {
-        headers: {
-          Authorization: ` ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.get(`${IP}/restaurant-admins/status`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data.data;
   } catch (error) {
     console.error("Error changing status:", error);
@@ -501,6 +497,19 @@ export const updateRestaurantDetails = async (RestaurantData: any) => {
 
 // ---------------------------------------------- LOGIN / SIGNUP API ---------------------------------------------------
 
+export const sendOtp = async (mobileNumber: string) => {
+  try {
+    const response = await axios.get(
+      `${IP}/restaurant/auth/send-otp?mobile=${mobileNumber}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error while trying to send otp :", error);
+    throw error;
+  }
+};
+
 export const postLogin = async (data: any) => {
   try {
     const response = await axios.post(`${IP}/restaurant/auth/login`, data, {
@@ -683,7 +692,7 @@ export const buyAdCredits = async (amount: number) => {
         },
       }
     );
- 
+
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -698,15 +707,12 @@ export const getAllDiscounts = async () => {
 
   if (!token) return;
   try {
-    const response = await axios.get(
-      `${IP}/discounts/restaurant`,
-      {
-        headers: {
-          Authorization: ` ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.get(`${IP}/discounts/restaurant`, {
+      headers: {
+        Authorization: ` ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -761,16 +767,12 @@ export const addNewDiscount = async (payload: any) => {
 
   if (!token) return;
   try {
-    const response = await axios.post(
-      `${IP}/discounts/restaurant`,
-      payload,
-      {
-        headers: {
-          Authorization: `${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${IP}/discounts/restaurant`, payload, {
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -837,12 +839,15 @@ export const getReviews = async () => {
 
   if (!token) return;
   try {
-    const response = await axios.get(`${IP}/reviews/getRestaurantReviews?restaurantId=${restaurantId}`, {
-      headers: {
-        Authorization: ` ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get(
+      `${IP}/reviews/getRestaurantReviews?restaurantId=${restaurantId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error :", error);
