@@ -153,14 +153,14 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-end pr-2">
+    <div className="flex flex-col items-end pr-6">
       <Button
         onClick={handleSaveChanges}
-        className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 text-[16px]"
+        className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 mr-6 text-[16px]"
       >
         Save Changes
       </Button>
-      <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[385px] 2xl:w-[600px] rounded-[24px] my-4">
+      <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[375px] 2xl:w-[600px] rounded-[24px] my-4 mr-4">
         {toggleEditor ? (
           <AddItem
             ref={itemDataRef}

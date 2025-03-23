@@ -101,7 +101,7 @@ const InputBox = () => {
       </h4>
       <Input
         className="w-2/3 mt-8 outline outline-1"
-        placeholder="Enter Phone number / Restaurant ID"
+        placeholder="Enter Phone number"
         minLength={10}
         onChange={(e) => setPhoneNumber(e.target.value)}
         onKeyDown={(e) => handleKeyDown(e, handleClick)}
@@ -167,7 +167,7 @@ const InputBox = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <p className="pb-2">
+      <p className="pb-4">
         {login ? "Don't have an account ?" : "Already have an account ?"}
         <button
           className="text-blue-600 hover:underline pl-2"

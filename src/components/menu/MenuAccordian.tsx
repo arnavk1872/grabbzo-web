@@ -4,7 +4,6 @@ import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const Accordion = AccordionPrimitive.Root;
@@ -29,17 +28,13 @@ const AccordionTrigger = React.forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          `flex flex-1 items-center justify-between py-1 ${
-            !isEditor ? "w-[660px]" : ""
-          }  text-sm transition-all text-left [&[data-state=open]>svg]:rotate-180`,
+          `flex  py-1
+          text-sm transition-all [&[data-state=open]>svg]:rotate-180`,
           className
         )}
         {...props}
       >
         {children}
-        {!isEditor && (
-          <ChevronDown className="h-8 w-8 shrink-0  text-muted-foreground transition-transform duration-200" />
-        )}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
