@@ -69,7 +69,8 @@ export const BasicFormSchema = z.object({
     .max(100, { message: "Area must not exceed 100 characters." }),
 
   pinCode: z
-    .number()
+    .string()
     .min(1, { message: "PinCode is required! " })
-    .max(6, { message: "PinCode does not exceed 6 digits!" }),
+    .max(6, { message: "PinCode does not exceed 6 digits!" })
+    .regex(/^\d+$/, { message: "PinCode must contain only numbers!" }),
 });
