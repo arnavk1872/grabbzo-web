@@ -104,3 +104,11 @@ export const Cards: CardProps[] = [
     desc: "On-call support for any issues or growth consultations",
   },
 ];
+
+export const numbers = [
+  "1122334455",
+  "1112223339",
+  "9595959595",
+  "8585858585",
+  "7575757575",
+];

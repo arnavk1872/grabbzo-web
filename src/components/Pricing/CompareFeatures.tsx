@@ -6,8 +6,8 @@ const features = [
     name: "Ad Credits",
     silver: false,
     gold: false,
-    diamond: "1000",
-    platinum: "1000",
+    diamond: "500",
+    platinum: "750",
   },
   {
     name: "Comission on pre dine-in",
