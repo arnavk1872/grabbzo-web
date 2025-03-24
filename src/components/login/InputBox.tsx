@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
 import { getFlag, postLogin, postSignup, sendOtp } from "@/helpers/api-utils";
+import { numbers } from "./data";
 
 const InputBox = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -32,8 +33,10 @@ const InputBox = () => {
       setError("Please enter a valid Mobile Number!");
       return;
     } else {
-      const sendOtpResponse = await sendOtp(phoneNumber);
-      console.log(sendOtpResponse);
+      if (!numbers.includes(phoneNumber)) {
+        const sendOtpResponse = await sendOtp(phoneNumber);
+        console.log(sendOtpResponse);
+      }
       setError("");
       setShowOtpDialog(true);
     }
