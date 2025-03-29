@@ -48,11 +48,9 @@ const MenuPage = () => {
         menuDetailsData.foodType);
 
   const handleProceed = () => {
-    // console.log(menuDetailsData);
     setCurrentPage("contract");
     router.push("/details/contract");
   };
-  console.log(Franchise);
   return (
     <div className="font-poppins ml-10 min-w-[750px]">
       <div className="flex justify-between items-center mb-1">

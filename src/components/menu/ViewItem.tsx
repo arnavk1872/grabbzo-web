@@ -37,8 +37,6 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
   }, [itemId]);
 
   if (!itemData) return <p className="text-center py-4">Loading...</p>;
-  console.log(itemData, "HI");
-
   return (
     <div className="flex flex-col justify-between w-ful md:flex-row items-center md:items-start bg-white p-6 rounded-lg shadow-lg gap-6 max-w-2xl mx-auto ">
       {/* Image Section */}

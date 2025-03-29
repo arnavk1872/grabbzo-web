@@ -212,7 +212,6 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-    console.log(response.data);
     return response.data.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -611,9 +610,9 @@ export const paymentRequest = async (data: any) => {
       headers: {
         Authorization: ` ${token}`,
         "Content-Type": "application/json",
+        'access-control-expose-headers': 'Content-Encoding, X-Parse-Job-Status-Id, X-Parse-Push-Status-Id',
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error while payment Request :", error);
@@ -665,7 +664,6 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
         },
       }
     );
-    console.log(response, "CHECK");
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -841,6 +839,27 @@ export const getReviews = async () => {
   try {
     const response = await axios.get(
       `${IP}/reviews/getRestaurantReviews?restaurantId=${restaurantId}`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const getBasicDetails = async () => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.get(
+      `${IP}/restaurant-admins/basic-details`,
       {
         headers: {
           Authorization: ` ${token}`,

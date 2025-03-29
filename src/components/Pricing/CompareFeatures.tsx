@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 
 const features = [
-  { name: "Cost/Day", silver: "10", gold: "9", diamond: "8", platinum: "6.5" },
+  { name: "Cost/Day", silver: " ₹10", gold: " ₹9", diamond: " ₹8", platinum: " ₹6.5" },
   {
     name: "Ad Credits",
     silver: false,

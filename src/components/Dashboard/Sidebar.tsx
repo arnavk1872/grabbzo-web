@@ -37,7 +37,6 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
 
   const handleLogout = async () => {
     const response = await changeStatus(true);
-    console.log(response);
     if (response) {
       document.cookie =
         "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";

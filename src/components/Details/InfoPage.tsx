@@ -61,7 +61,6 @@ const InfoPage = () => {
     return validationErrors;
   };
 
-  console.log(Franchise, "IS FRANCHISE");
 
   const setDateWrapper = (date: Date | undefined) => {
     setBasicDetailsData("closingTime", date);
@@ -75,7 +74,7 @@ const InfoPage = () => {
     }
     setCity(cities[value]);
   };
-  console.log(basicDetailsData);
+
   const handleClick = () => {
     const validationErrors = validateForm();
 

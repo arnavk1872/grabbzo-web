@@ -29,7 +29,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
       }
 
       if (!acceptedFormats.split(",").includes(file.type)) {
-        console.log(file.type);
         alert("Invalid file type. Please upload a valid file.");
         setFileName(null);
         onFileChange(null);

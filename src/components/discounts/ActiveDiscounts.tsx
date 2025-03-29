@@ -67,7 +67,6 @@ const ActiveDiscounts: React.FC<ActiveDiscountsProps> = ({ allDiscounts }) => {
   const toggleStatus = async (discountId: number) => {
     try {
       const response = await updateDiscountStatus(discountId);
-      console.log(response, "Updated Status Response");
 
       if (response) {
         setDiscountStatuses((prevStatuses) => ({

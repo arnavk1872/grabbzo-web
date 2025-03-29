@@ -102,7 +102,7 @@ const ContractPage = () => {
       payload.isVeg = menuDetailsData.foodType;
     }
     const uploadData = await postRestaurantDetails(payload);
-    console.log(uploadData);
+  
     if (uploadData.status == "success") {
       router.push("/restaurant");
     }
