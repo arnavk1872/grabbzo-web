@@ -80,11 +80,8 @@ const DocPage = () => {
 
   const handleProceedClick = () => {
     const validationErrors = validateForm();
-    console.log("Clicked");
-    console.log(isFormComplete);
-    console.log(validationErrors);
+
     if (Object.keys(validationErrors).length === 0 && isFormComplete) {
-      console.log("clicked");
       setCurrentPage("menu");
       router.push("/details/menu");
     }

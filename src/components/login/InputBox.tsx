@@ -35,7 +35,6 @@ const InputBox = () => {
     } else {
       if (!numbers.includes(phoneNumber)) {
         const sendOtpResponse = await sendOtp(phoneNumber);
-        console.log(sendOtpResponse);
       }
       setError("");
       setShowOtpDialog(true);
@@ -51,7 +50,6 @@ const InputBox = () => {
     try {
       if (login) {
         const loginData = await postLogin(data);
-        console.log(loginData);
         if (loginData.status === "success") {
           const token = "Bearer " + loginData.data.accessToken;
           setCookie("AuthToken", token);
@@ -71,7 +69,6 @@ const InputBox = () => {
         }
       } else {
         const signupData = await postSignup(data);
-        console.log(signupData);
         if (signupData.status === "success") {
           const token = "Bearer " + signupData.data.accessToken;
           setCookie("AuthToken", token);

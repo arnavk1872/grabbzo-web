@@ -1,3 +1,4 @@
+import Laptop from "../Icons/Laptop";
 import Mic from "../Icons/Mic";
 import Parcel from "../Icons/Parcel";
 import People from "../Icons/People";
@@ -90,18 +91,23 @@ export const Documents: DocumentsProps[] = [
 export const Cards: CardProps[] = [
   {
     icon: People,
-    title: "Attract New Customers",
-    desc: "Reach the millions of people ordering on Grabbzo",
+    title: "Pre-dine in, Takeaway & Car Delivery",
+    desc: "Smart ordering for Smart Restaurants",
   },
   {
     icon: Parcel,
-    title: "Takeaway Convenience",
-    desc: "Grab your food without waiting or standing in long queues",
+    title: "Zero Commission charges Per Order",
+    desc: "Boost Orders, Cut Cost-Join Grabbzo!",
   },
   {
     icon: Mic,
-    title: "Hotline support",
-    desc: "On-call support for any issues or growth consultations",
+    title: "Increased Table Rotation",
+    desc: "Boost your revenue by minimal waiting period",
+  },
+  {
+    icon: Laptop,
+    title: "Easy Restaurant Dasboard",
+    desc: "Smoother Operations and Happier Customers!",
   },
 ];
 

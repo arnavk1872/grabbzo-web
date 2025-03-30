@@ -1,4 +1,4 @@
-type Plan = {
+export type Plan = {
   name: string;
   duration: string;
   originalCost: string;

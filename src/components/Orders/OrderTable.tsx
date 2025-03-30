@@ -18,9 +18,7 @@ interface OrderTableProps {
 
 const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
   const router = useRouter();
-  console.log(orderDetails,123);
   
-
   const checkOrderDetails = (orderId: string) => {
     router.push(`/dashboard/${orderId}`);
   };

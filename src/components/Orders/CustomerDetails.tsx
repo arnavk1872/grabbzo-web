@@ -14,7 +14,6 @@ type CustomerDetailsProps = {
 };
 
 const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
-  console.log(orderDetails, "DEETS");
   return (
     <div className="flex flex-col items-center justify-center w-1/2">
       <div className="bg-white border rounded-[40px] flex flex-col items-center w-full ">

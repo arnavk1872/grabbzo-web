@@ -41,7 +41,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="min-w-[350px] ml-12 bg-white rounded-3xl min-h-[75vh]">
+    <div className="min-w-[350px] ml-12 bg-white rounded-3xl min-h-[75vh] font-poppins">
       <h3 className="text-center font-medium text-xl border-b-2 py-5 mb-8 ">
         Order History
       </h3>

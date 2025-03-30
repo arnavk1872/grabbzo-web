@@ -3,24 +3,29 @@ import React from "react";
 import { Button } from "../UI/Button";
 import Tick from "../Icons/Tick";
 import { ArrowLeft } from "lucide-react";
-import { paymentRequest } from "@/helpers/api-utils";
+import { getBasicDetails, paymentRequest } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 import { plans } from "@/helpers/paymentPlans";
+import type { Plan } from "@/helpers/paymentPlans";
 
 const PricingPlans: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const handlePayment = async (e: any) => {
+  const handlePayment = async (e: any, plan: Plan) => {
     e.preventDefault();
+    const buyerDetails = await getBasicDetails();
+
     try {
+      const costWithoutSymbol = plan.cost.replace(/[^0-9.]/g, "");
+      const amountInPaise = parseFloat(costWithoutSymbol) * 100;
       const data: any = {
-        customerName: "Ashish Kumar",
-        email: "ashishak063@gmail.com",
-        phoneNumber: "8871357166",
-        amount: "299",
+        customerName: buyerDetails.restaurantName,
+        email: buyerDetails.emailAddress,
+        phoneNumber: buyerDetails.mobileNumber,
+        amount: plan.cost.replace(".00", "").replace("₹", "").trim(),
       };
       const response = await paymentRequest(data);
-      console.log(response);
+
       if (response.status == 401) {
         enqueueSnackbar("Login First to Buy a Plan !", {
           variant: "warning",
@@ -31,15 +36,15 @@ const PricingPlans: React.FC = () => {
 
       const options = {
         key: response.secretId,
-        amount: parseFloat("299") * 100,
+        amount: amountInPaise,
         currency: "INR",
         name: "Grabbzo Pvt. Ltd.",
-        description: "Test Transaction",
+        description: `Transaction-${response.razorpayOrderId}`,
         order_id: response.razorpayOrderId,
         prefill: {
-          name: "Ashish Kumar",
-          email: "ashishak063@gmail.com",
-          contact: "8871357166",
+          name: buyerDetails.restaurantName,
+          email: buyerDetails.emailAddress,
+          contact: buyerDetails.mobileNumber,
         },
         theme: {
           color: "#1DBF73",
@@ -55,6 +60,7 @@ const PricingPlans: React.FC = () => {
       });
     }
   };
+
   return (
     <div className="flex flex-wrap justify-center gap-12 font-poppins">
       {plans.map((plan, index) => (
@@ -92,7 +98,7 @@ const PricingPlans: React.FC = () => {
 
             <Button
               className={`mt-4 py-2 px-4 rounded-[12px] hover:opacity-90  ${plan.buttonBg}`}
-              onClick={handlePayment}
+              onClick={(e) => handlePayment(e, plan)}
             >
               {plan.btnText}
             </Button>
