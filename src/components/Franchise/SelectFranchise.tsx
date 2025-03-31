@@ -4,7 +4,6 @@ import { Input } from "../UI/Input";
 import { LinkFranchise, getFranchises } from "@/helpers/api-utils";
 import { Button } from "../UI/Button";
 import { useRouter } from "next/navigation";
-import { usePageStore } from "@/store/CurrentPage";
 
 const SelectFranchise = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -56,7 +55,7 @@ const SelectFranchise = () => {
   };
 
   return (
-    <div className="my-4 relative w-[300px]" ref={suggestionsRef}>
+    <div className="my-4 relative w-[400px] mx-8" ref={suggestionsRef}>
       <Input
         type="text"
         value={searchTerm}
@@ -100,7 +99,7 @@ const SelectFranchise = () => {
         </div>
       )}
       <Button
-        className="flex justify-end text-white mt-24 px-12 py-4"
+        className="flex justify-center items-center text-white mt-24 w-full text-[20px] py-4"
         onClick={handleProceed}
       >
         Proceed

@@ -48,7 +48,7 @@ const ContractPage = () => {
   const { menuDetailsData } = useRestaurantMenuStore();
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, Franchise } = usePageStore();
+  const { currentPage, Franchise,canNavigateTo,setCurrentPage } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
   const initialize = async () => {
@@ -56,7 +56,10 @@ const ContractPage = () => {
   };
 
   useEffect(() => {
-    if (currentPage.page != lastSegment) {
+    if (canNavigateTo(lastSegment)) {
+      setCurrentPage(lastSegment);
+    } else {
+      // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);
     }
     initialize();
@@ -104,7 +107,7 @@ const ContractPage = () => {
     const uploadData = await postRestaurantDetails(payload);
   
     if (uploadData.status == "success") {
-      router.push("/restaurant");
+      router.push("/profile-completion");
     }
   };
   return (

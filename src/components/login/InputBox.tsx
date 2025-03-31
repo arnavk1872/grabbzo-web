@@ -19,13 +19,17 @@ import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
 import { getFlag, postLogin, postSignup, sendOtp } from "@/helpers/api-utils";
 import { numbers } from "./data";
+import { useSnackbar } from "notistack";
 
 const InputBox = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
   const [login, setLogin] = useState<boolean>(true);
   const [showOtpDialog, setShowOtpDialog] = useState(false);
+  const [isContinueDisabled, setIsContinueDisabled] = useState(false);
+
   const router = useRouter();
 
   const handleClick = async () => {
@@ -47,6 +51,14 @@ const InputBox = () => {
       otp: otp,
     });
     //9829699382
+    if (!otp) {
+      enqueueSnackbar("Please enter the OTP to continue", {
+        variant: "warning",
+        className: "font-poppins",
+      });
+      return;
+    }
+
     try {
       if (login) {
         const loginData = await postLogin(data);
@@ -65,7 +77,10 @@ const InputBox = () => {
           }
         } else {
           // Notistack Error
-          alert("Number not registered, Signup First");
+          enqueueSnackbar("Number not registered, Signup First", {
+            variant: "error",
+            className: "font-poppins",
+          });
         }
       } else {
         const signupData = await postSignup(data);
@@ -74,13 +89,18 @@ const InputBox = () => {
           setCookie("AuthToken", token);
           router.push("/franchise");
         } else {
-          // Notistack Error
-          alert("Number already registered, Login");
+          enqueueSnackbar("Number already registered, Login", {
+            variant: "error",
+            className: "font-poppins",
+          });
         }
       }
     } catch (error) {
       console.error("Error during OTP verification", error);
-      alert("An error occurred. Please try again later.");
+      enqueueSnackbar("An Error Occoured! Please try again later.", {
+        variant: "error",
+        className: "font-poppins",
+      });
     }
   };
 
@@ -113,9 +133,15 @@ const InputBox = () => {
       </div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <Button
-          className="mb-10 bg-blue-500  hover:bg-blue-600 text-white w-2/3 rounded-full"
-          size="lg"
-          onClick={handleClick}
+          className="mb-10 bg-blue-500  hover:bg-blue-600 text-white w-2/3 font-semibold rounded-full"
+          onClick={() => {
+            handleClick();
+            setIsContinueDisabled(true);
+            setTimeout(() => {
+              setIsContinueDisabled(false);
+            }, 5000);
+          }}
+          disabled={isContinueDisabled}
         >
           Continue
         </Button>
@@ -153,7 +179,12 @@ const InputBox = () => {
             </span>
             <button
               className="text-blue-600 font-semibold ml-9 text-m"
-              onClick={() => alert("A new OTP has been sent!")}
+              onClick={() =>
+                enqueueSnackbar("A new OTP has been sent!", {
+                  variant: "success",
+                  className: "font-poppins",
+                })
+              }
             >
               Resend Code
             </button>
