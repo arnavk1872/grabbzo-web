@@ -21,6 +21,7 @@ import { IoClose } from "react-icons/io5";
 interface PlanDetails {
   adCredit?: number;
   Plan?: string;
+  Expiry?: any;
 }
 
 const UserDetailsPopup: React.FC = () => {
@@ -30,6 +31,7 @@ const UserDetailsPopup: React.FC = () => {
     const getPlanDetails = async () => {
       try {
         const response = await getRestaurantPlans();
+
         setPlanDetails(response);
       } catch (err) {
         console.error("Error in Fetching Plans", err);
@@ -38,6 +40,21 @@ const UserDetailsPopup: React.FC = () => {
 
     getPlanDetails();
   }, []);
+
+  function getDaysLeft(expiryDateStr: string): string {
+    const expiryDate = new Date(expiryDateStr);
+    const now = new Date();
+
+    const timeDiff = expiryDate.getTime() - now.getTime();
+    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    if (daysLeft < 0) return "Expired";
+    if (daysLeft === 0) return "Expires today";
+    if (daysLeft === 1) return "1 day left";
+    return `${daysLeft}`;
+  }
+
+  const daysLeft = getDaysLeft(planDetails.Expiry);
 
   return (
     <div className="bg-[#d9dada] rounded-md font-poppins px-4 py-2 min-w-80">
@@ -83,21 +100,29 @@ const UserDetailsPopup: React.FC = () => {
           <div className="flex justify-center">
             <AlertDialogFooter>
               <Link href="/growth/adCredits">
-                <AlertDialogAction className="text-white px-8 py-3 text-[16px]">Get Credits</AlertDialogAction>
+                <AlertDialogAction className="text-white px-8 py-3 text-[16px]">
+                  Get Credits
+                </AlertDialogAction>
               </Link>
             </AlertDialogFooter>
           </div>
         </AlertDialogContent>
       </AlertDialog>
       <div>
-        <div className="mt-2">Current Plan</div>
+        <div className="mt-2">Current Plan </div>
+        <div className="font-bold text-center text-[30px]">{planDetails.Plan}</div>
+        <div className=" text-center text-[15px]">{daysLeft} days Left!</div>
         <div className="font-semibold my-2">
-          Your {planDetails?.Plan ?? "SILVER"} Plan is expiring soon!
+          {Number(daysLeft) < 15
+            ? `Your ${planDetails?.Plan ?? "SILVER"} Plan is expiring soon!`
+            : ""}
         </div>
-        <div>
-          Renew your {planDetails?.Plan ?? "SILVER"} premium plan now to
-          continue enjoying all the benefits!
-        </div>
+        {Number(daysLeft) < 15 && (
+          <div>
+            Renew your {planDetails?.Plan ?? "SILVER"} premium plan now to
+            continue enjoying all the benefits!
+          </div>
+        )}
 
         <AlertDialog>
           <AlertDialogTrigger asChild>

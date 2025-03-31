@@ -26,7 +26,7 @@ import { Label } from "../UI/Label";
 const InfoPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage, Franchise } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise,canNavigateTo } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
   const initialize = async () => {
@@ -37,7 +37,10 @@ const InfoPage = () => {
     useRestaurantInfoStore();
 
   useEffect(() => {
-    if (currentPage.page != lastSegment) {
+    if (canNavigateTo(lastSegment)) {
+      setCurrentPage(lastSegment);
+    } else {
+      // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);
     }
     initialize();

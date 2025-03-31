@@ -13,7 +13,7 @@ import { S3_BASE_URL } from "@/lib/constants";
 const MenuPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage, Franchise } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise,canNavigateTo } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
   const { menuDetailsData, setMenuDetailsData, initializeIsVeg } =
     useRestaurantMenuStore();
@@ -23,7 +23,10 @@ const MenuPage = () => {
   };
 
   useEffect(() => {
-    if (currentPage.page != lastSegment) {
+    if (canNavigateTo(lastSegment)) {
+      setCurrentPage(lastSegment);
+    } else {
+      // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);
     }
     initialize();
@@ -39,13 +42,13 @@ const MenuPage = () => {
   };
 
   const isFormComplete =
-    menuDetailsData.deliveryToCars &&
-    menuDetailsData.serviceType &&
-    (Franchise
-      ? true
-      : menuDetailsData.restaurantImage &&
-        menuDetailsData.menuImage &&
-        menuDetailsData.foodType);
+  menuDetailsData.deliveryToCars !== null && 
+  menuDetailsData.serviceType &&
+  (Franchise
+    ? true
+    : menuDetailsData.restaurantImage &&
+      menuDetailsData.menuImage &&
+      menuDetailsData.foodType);
 
   const handleProceed = () => {
     setCurrentPage("contract");

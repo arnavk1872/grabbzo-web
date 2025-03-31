@@ -19,10 +19,13 @@ const DocPage = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage } = usePageStore();
+  const { currentPage, setCurrentPage,canNavigateTo } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
   useEffect(() => {
-    if (currentPage.page != lastSegment) {
+    if (canNavigateTo(lastSegment)) {
+      setCurrentPage(lastSegment);
+    } else {
+      // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);
     }
   }, []);
@@ -53,9 +56,9 @@ const DocPage = () => {
         variant: "success",
         className: "font-poppins",
       });
-      
-      if (response?.url) {
-        setDocDetailsData(documentType, response.url); 
+
+      if (response?.documentUrl) {
+        setDocDetailsData(documentType, response.documentUrl); 
       }
     } catch (error) {
       console.error("File upload failed:", error);
@@ -88,15 +91,15 @@ const DocPage = () => {
   };
 
   const isFormComplete =
-    docDetailsData.panNumber &&
-    docDetailsData.panFile &&
-    docDetailsData.FssaiNumber &&
-    docDetailsData.FssaiFile &&
-    docDetailsData.BankAccountNumber &&
-    docDetailsData.ReBankAccountNumber &&
-    docDetailsData.BankIfscCode &&
-    docDetailsData.GstNumber &&
-    docDetailsData.GstFile;
+  docDetailsData.panNumber &&
+  docDetailsData.FssaiNumber &&
+  docDetailsData.BankAccountNumber &&
+  docDetailsData.ReBankAccountNumber &&
+  docDetailsData.BankIfscCode &&
+  docDetailsData.GstNumber &&
+  docDetailsData.pan &&
+  docDetailsData.gst &&
+  docDetailsData.fssai;
 
   return (
     <div className="font-poppins ml-10 min-w-[750px]">

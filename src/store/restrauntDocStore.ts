@@ -2,14 +2,14 @@ import { create } from "zustand";
 
 interface RestaurantDocState {
   docDetailsData: {
+    pan: File | null;
     panNumber: string;
-    panFile: File | null;
     IsGst: boolean;
     GstNumber: string;
-    GstFile: File | null;
+    gst: File | null;
     FssaiNumber: string;
     FssaiExpiry: string;
-    FssaiFile: File | null;
+    fssai: File | null;
     BankAccountNumber: string;
     ReBankAccountNumber: string;
     BankIfscCode: string;
@@ -23,13 +23,13 @@ interface RestaurantDocState {
 const useRestaurantDocStore = create<RestaurantDocState>((set) => ({
   docDetailsData: {
     panNumber: "",
-    panFile: null,
+    pan: null,
     IsGst: false,
     GstNumber: "",
-    GstFile: null,
+    gst: null,
     FssaiNumber: "",
     FssaiExpiry: "",
-    FssaiFile: null,
+    fssai: null,
     BankAccountNumber: "",
     ReBankAccountNumber: "",
     BankIfscCode: "",
