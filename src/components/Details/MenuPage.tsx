@@ -186,7 +186,7 @@ const MenuPage = () => {
           </span>
         </div>
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "menu")}
+          onFileChange={(file) => handleFileChange(file, "image")}
         />
       </div>
       <Button
