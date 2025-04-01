@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "../UI/Button";
 import SelectFranchise from "./SelectFranchise";
 import { useState } from "react";
+import { LinkFranchise } from "@/helpers/api-utils";
 
 const Franchise = () => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -17,7 +18,7 @@ const Franchise = () => {
         <div className="flex items-center justify-center gap-x-6 my-4">
           <Link href="details/information">
             {!isEnabled && (
-              <Button className="px-12 py-4" variant={"outline"}>
+              <Button className="px-12 py-4" variant={"outline"} onClick={()=>{LinkFranchise(null,false)}}>
                 No
               </Button>
             )}

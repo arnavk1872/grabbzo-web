@@ -9,6 +9,8 @@ import React, { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { usePageStore } from "@/store/CurrentPage";
 import { S3_BASE_URL } from "@/lib/constants";
+import { uploadDocuments } from "@/helpers/api-utils";
+import { useSnackbar } from "notistack";
 
 const MenuPage = () => {
   const router = useRouter();
@@ -33,21 +35,42 @@ const MenuPage = () => {
     initializeIsVeg();
   }, []);
 
+  const {enqueueSnackbar} = useSnackbar();
+
   const handleRadioChange = (name: string, value: boolean | string) => {
     setMenuDetailsData(name, value);
   };
 
-  const handleFileChange = (file: File | null, field: string) => {
-    setMenuDetailsData(field, file);
-  };
+
+    const handleFileChange = async (file: File | null, documentType: string) => {
+      if (!file) return;
+    
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("documentType", documentType);
+       
+        const response = await uploadDocuments(formData);
+  
+        enqueueSnackbar("File successfully Added", {
+          variant: "success",
+          className: "font-poppins",
+        });
+  
+        if (response?.documentUrl) {
+          setMenuDetailsData(documentType, file);
+        }
+      } catch (error) {
+        console.error("File upload failed:", error);
+      }
+    };
 
   const isFormComplete =
   menuDetailsData.deliveryToCars !== null && 
   menuDetailsData.serviceType &&
   (Franchise
     ? true
-    : menuDetailsData.restaurantImage &&
-      menuDetailsData.menuImage &&
+    : menuDetailsData.image &&
       menuDetailsData.foodType);
 
   const handleProceed = () => {
@@ -146,7 +169,7 @@ const MenuPage = () => {
           </span>
         </div>
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "restaurantImage")}
+          onFileChange={(file) => handleFileChange(file, "image")}
         />
       </div>
       <div
@@ -163,7 +186,7 @@ const MenuPage = () => {
           </span>
         </div>
         <FileUpload
-          onFileChange={(file) => handleFileChange(file, "menuImage")}
+          onFileChange={(file) => handleFileChange(file, "menu")}
         />
       </div>
       <Button

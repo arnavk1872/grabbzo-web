@@ -46,7 +46,7 @@ const SelectFranchise = () => {
     if (selectedItem || customFranchise) {
       const franchiseName = selectedItem || customFranchise;
       try {
-        await LinkFranchise(franchiseName);
+        await LinkFranchise(franchiseName,true);
         router.push("/details/information");
       } catch (error) {
         console.error("Error linking franchise", error);
