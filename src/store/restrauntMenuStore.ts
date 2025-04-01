@@ -3,11 +3,10 @@ import { create } from "zustand";
 
 interface RestaurantMenuState {
   menuDetailsData: {
+    image: string;
     foodType: boolean;
     deliveryToCars: boolean;
     serviceType: string;
-    restaurantImage: File | null;
-    menuImage: File | null;
   };
   setMenuDetailsData: (
     field: string,
@@ -21,8 +20,7 @@ const useRestaurantMenuStore = create<RestaurantMenuState>((set, get) => ({
     foodType: false,
     deliveryToCars: false,
     serviceType: "",
-    restaurantImage: null,
-    menuImage: null,
+    image: "",
   },
   setMenuDetailsData: (field, value) => {
     set((state) => ({

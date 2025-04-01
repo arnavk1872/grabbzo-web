@@ -805,12 +805,13 @@ export const getFranchises = async (words: any) => {
   }
 };
 
-export const LinkFranchise = async (franchiseName: string) => {
+export const LinkFranchise = async (franchiseName: string | null,isFranchise:boolean) => {
   const token = await getToken();
   if (!token) return;
 
   const payload = {
     name: franchiseName,
+    franchise:isFranchise
   };
 
   try {
