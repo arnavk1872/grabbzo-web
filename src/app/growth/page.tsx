@@ -42,7 +42,7 @@ const page = () => {
 
               <p className="text-sm mt-4 flex items-center gap-2">
                 <span className="bg-white text-blue-600 px-2 py-1 rounded text-xs">📈</span>
-                No offers active !
+                Active offers are shown here !
               </p>
             </div>
 

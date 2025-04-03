@@ -8,7 +8,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div>
+    <div className=" pb-10">
       {/* <Header /> */}
       <div className="flex flex-col items-center justify-center my-8 font-poppins text-center relative pt-24">
         <div className="relative">

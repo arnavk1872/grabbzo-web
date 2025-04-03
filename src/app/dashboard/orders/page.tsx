@@ -6,9 +6,11 @@ import React from "react";
 const page = async () => {
   const orderDetails = await getOrders("NEW");
 
+  console.log(orderDetails,"AKAKAK")
+
   return (
     <div className="w-full">
-      {orderDetails.length == 0 ? (
+      {true ? (
         <NoNewOrders />
       ) : (
         <OrderTable orderDetails={orderDetails} />

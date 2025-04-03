@@ -133,8 +133,8 @@ const Header = () => {
         <Popover>
           <PopoverTrigger>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>You</AvatarFallback>
+              <AvatarImage  />
+              <AvatarFallback className="text-[10px]">Profile</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
           <PopoverContent className="mr-20">
