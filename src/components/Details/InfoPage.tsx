@@ -26,8 +26,10 @@ import { Label } from "../UI/Label";
 const InfoPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage, Franchise,canNavigateTo } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise, canNavigateTo } =
+    usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
+  const [loading, setLoading] = useState(false);
 
   const initialize = async () => {
     await usePageStore.getState().initializeFranchise();
@@ -37,14 +39,22 @@ const InfoPage = () => {
     useRestaurantInfoStore();
 
   useEffect(() => {
+    const loadRestaurantName = async () => {
+      if (Franchise) {
+        setLoading(true);
+        await initializeRestaurantName();
+        setLoading(false);
+      }
+    };
+
     if (canNavigateTo(lastSegment)) {
       setCurrentPage(lastSegment);
     } else {
-      // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);
     }
+
     initialize();
-    initializeRestaurantName();
+    loadRestaurantName();
   }, []);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -63,7 +73,6 @@ const InfoPage = () => {
     setErrors(validationErrors);
     return validationErrors;
   };
-
 
   const setDateWrapper = (date: Date | undefined) => {
     setBasicDetailsData("closingTime", date);
@@ -125,7 +134,7 @@ const InfoPage = () => {
             {errors.ownerName}
           </div>
         </div>
-        <div>
+        <div className="relative">
           <Input
             placeholder="Restaurant Name*"
             onChange={(e) => {
@@ -135,11 +144,16 @@ const InfoPage = () => {
             value={basicDetailsData.restaurantName}
             disabled={Franchise}
           />
-
+          {loading && (
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              ⏳ 
+            </span>
+          )}
           <div className="ml-2 text-red-500 text-[14px]">
             {errors.restaurantName}
           </div>
         </div>
+
         <div>
           <Input
             placeholder="Email Address"

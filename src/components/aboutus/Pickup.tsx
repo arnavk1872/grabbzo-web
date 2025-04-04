@@ -6,9 +6,9 @@ const Pickup = () => {
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-6">
-        <div className="w-full ">
+        <div className="w-2/3 ">
           <Image
-            src={`${S3_BASE_URL}/public/Dining.png`}
+            src={`${S3_BASE_URL}/public/takeaway_aboutus.png`}
             height={1000}
             width={1000}
             alt="home-main"
