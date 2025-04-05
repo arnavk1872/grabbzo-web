@@ -10,10 +10,13 @@ const PeakHoursChart= dynamic(()=>import ("@/components/Dashboard/PeakHoursChart
 const MetricCard= dynamic(()=>import ("@/components/Dashboard/MetricCard"),{ssr:false});
 
 const Dashboard = () => {
+
+  const shouldBlur = false;
+
   return (
     <section className="lg:pr-10 overflow-x-hidden">
     <div className="flex gap-x-4">
-      {" "}
+    {" "}
       <SalesOverview />
       <Feedback/>
     </div>
@@ -37,7 +40,12 @@ const Dashboard = () => {
     </div>
     <div className="flex justify-between  pb-4 px-4 gap-x-4">
       {" "}
-      <PeakHoursChart />
+      <div
+          className={`transition-all duration-300 ${
+            shouldBlur ? "backdrop-blur-3xl opacity-50 pointer-events-none" : ""
+          }`}
+        ><PeakHoursChart /></div>
+      
       <RecentOrders />
     </div>
   </section>

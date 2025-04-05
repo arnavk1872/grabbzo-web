@@ -23,7 +23,7 @@ const page = () => {
           alt={"logo"}
           width={1000}
           height={1000}
-          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[30rem]"
+          className="absolute left-1/2 top-[20%] transform -translate-x-1/2 -translate-y-1/2 w-[26rem] h-[400px]"
         />
         <InputBox />
       </div>

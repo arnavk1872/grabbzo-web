@@ -58,6 +58,7 @@ const HomePage = () => {
             style={{ objectFit: "cover", height: "120px" }}
             quality={100}
             alt="home-main"
+            unoptimized
           />
 
           <p className="text-white text-3xl mt-3">

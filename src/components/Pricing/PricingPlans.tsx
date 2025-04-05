@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../UI/Button";
 import Tick from "../Icons/Tick";
 import { ArrowLeft } from "lucide-react";
@@ -10,9 +10,27 @@ import type { Plan } from "@/helpers/paymentPlans";
 
 const PricingPlans: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const [authToken, setAuthToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cookies = document.cookie.split("; ").reduce((acc, curr) => {
+      const [name, value] = curr.split("=");
+      acc[name] = value;
+      return acc;
+    }, {} as Record<string, string>);
+    setAuthToken(cookies["AuthToken"] || null);
+  }, []);
 
   const handlePayment = async (e: any, plan: Plan) => {
     e.preventDefault();
+
+    if(!authToken){
+      enqueueSnackbar("Please log in to purchase a plan!", {
+        variant: "warning",
+        className: "font-poppins",
+      });
+      return;
+    }
     const buyerDetails = await getBasicDetails();
 
     try {
@@ -25,14 +43,6 @@ const PricingPlans: React.FC = () => {
         amount: plan.cost.replace(".00", "").replace("₹", "").trim(),
       };
       const response = await paymentRequest(data);
-
-      if (response.status == 401) {
-        enqueueSnackbar("Login First to Buy a Plan !", {
-          variant: "warning",
-          className: "font-poppins",
-        });
-        return;
-      }
 
       const options = {
         key: response.secretId,
@@ -76,12 +86,6 @@ const PricingPlans: React.FC = () => {
           >
             {plan.name && (
               <div className="absolute top-0 -right-1 bg-red-600 text-white px-3 py-1 rounded-b-md text-sm font-bold">
-                {/* {{
-                  SILVER: "20% Discount",
-                  GOLD: "30% Discount",
-                  DIAMOND: "40% Discount",
-                  PLATINUM: "50% Discount",
-                }[plan.name] || ""} */}
                 50% Discount
               </div>
             )}
@@ -91,17 +95,18 @@ const PricingPlans: React.FC = () => {
               <h3 className="text-[22px] font-extrabold">{plan.name}</h3>
               <div className="text-gray-500 line-through text-center text-[16px]">
                 {plan.originalCost}
-              </div>{" "}
+              </div>
               <p className="text-center text-[46px] font-bold">{plan.cost}</p>
               <p className="text-center text-[18px]">{plan.duration}</p>
             </div>
 
-            <Button
-              className={`mt-4 py-2 px-4 rounded-[12px] hover:opacity-90  ${plan.buttonBg}`}
-              onClick={(e) => handlePayment(e, plan)}
-            >
-              {plan.btnText}
-            </Button>
+            {/* Hide button if AuthToken is missing */}
+              <Button
+                className={`mt-4 py-2 px-4 rounded-[12px] hover:opacity-90  ${plan.buttonBg}`}
+                onClick={(e) => handlePayment(e, plan)}
+              >
+                {plan.btnText}
+              </Button>
 
             {plan.name !== "SILVER" && (
               <div className="flex mt-5 gap-x-1">

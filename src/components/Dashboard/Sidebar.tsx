@@ -15,7 +15,7 @@ import { changeStatus } from "@/helpers/api-utils";
 import { useRouter } from "next/navigation";
 
 type MenuItem = {
-  href: string;
+  href: string | string[];
   name: string;
   icon: JSX.Element;
 };
@@ -46,8 +46,8 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
 
   const menuItems: MenuItem[] = [
     { name: "Dashboard", icon: <DashboardIcon />, href: "/dashboard" },
-    { name: "Orders", icon: <MenuIcon />, href: "/dashboard/orders" },
-    { name: "Menu", icon: <FoodIcon />, href: "/dashboard/menus/availableItems" },
+    { name: "Orders", icon: <MenuIcon />, href: ["/dashboard/orders","/dashboard/orders/preparing","/dashboard/orders/ready","/dashboard/orders/pickedup"] },
+    { name: "Menu", icon: <FoodIcon />, href: ["/dashboard/menus/availableItems","/dashboard/menus/editor"] },
     { name: "Messages (0)", icon: <MessagesIcon />, href: "/dashboard/messages" },
     { name: "Customers Reviews", icon: <CustomerRevIcon />, href: "/dashboard/reviews" },
   ];
@@ -57,17 +57,18 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
       <div className="space-y-1">
         {menuItems.map((item) => (
           <Link
-            key={item.name}
-            href={item.href}
-            className={`flex items-center space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
-              pathname === item.href
-                ? "bg-blue-600 text-white !space-x-8"
-                : "text-gray-600 hover:bg-gray-100"
-            } rounded-lg`}
-          >
-            {item.icon}
-            <span>{item.name}</span>
-          </Link>
+          key={item.name}
+          href={Array.isArray(item.href) ? item.href[0] : item.href} 
+          className={`flex items-center space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
+            (Array.isArray(item.href) ? item.href.includes(pathname) : pathname === item.href)
+              ? "bg-blue-600 text-white !space-x-8"
+              : "text-gray-600 hover:bg-gray-100"
+          } rounded-lg`}
+        >
+          {item.icon}
+          <span>{item.name}</span>
+        </Link>
+        
         ))}
       </div>
 
@@ -106,14 +107,14 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
         </div>
 
         {/* Bottom Links */}
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <a
             href="#"
             onClick={handleLogout}
             className="flex items-center space-x-6 px-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
           >
             <LogoutIcon />
-            <span>Logout</span>
+            <span className="inline-block mt-3">Logout</span>
           </a>
         </div>
       </div>

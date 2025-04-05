@@ -88,19 +88,22 @@ const InputBox = () => {
           const token = "Bearer " + signupData.data.accessToken;
           setCookie("AuthToken", token);
           router.push("/franchise");
-        } else {
-          enqueueSnackbar("Number already registered, Login", {
-            variant: "error",
-            className: "font-poppins",
-          });
-        }
+        } 
       }
     } catch (error) {
       console.error("Error during OTP verification", error);
-      enqueueSnackbar("An Error Occoured! Please try again later.", {
-        variant: "error",
-        className: "font-poppins",
-      });
+      if(login){
+        enqueueSnackbar("Something went wrong. Please try again later.", {
+          variant: "error",
+          className: "font-poppins",
+        })
+      }else{
+        enqueueSnackbar("Number already registered, Login.", {
+          variant: "error",
+          className: "font-poppins",
+        });
+      }
+     
     }
   };
 

@@ -9,7 +9,7 @@ const page = async() => {
   const orderDetails = await getOrders("READY");
   return (
     <div>
-      {orderDetails.length == 0 ? (
+      {true ? (
         <NoReadyOrders />
       ) : (
         <OrderTable orderDetails={orderDetails} />

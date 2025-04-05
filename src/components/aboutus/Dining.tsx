@@ -8,7 +8,7 @@ const Dining = () => {
       <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6 p-6">
         <div className="w-2/3 ">
           <Image
-            src={`${S3_BASE_URL}/public/Dining.png`}
+            src={`${S3_BASE_URL}/public/dinein_aboutus.jpeg`}
             height={1000}
             width={1000}
             alt="home-main"

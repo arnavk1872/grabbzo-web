@@ -43,7 +43,7 @@ const Feedback: React.FC = () => {
       </div> */}
 
       <div className="flex justify-center items-center h-[250px]">
-        <h2 className="font-semibold text-xl">No Feedback Yet!</h2>
+        <h2 className="font-semibold text-xl font-poppins">No Feedback Yet!</h2>
         {/* <div className="cursor-pointer w-2">
           <LeftArrow />
         </div>
