@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
@@ -24,8 +23,12 @@ import Settings from "../Icons/Settings";
 import Link from "next/link";
 import { S3_BASE_URL } from "@/lib/constants";
 import UserDetailsPopup from "./UserDetailsPopup";
+import { usePageStore } from "@/store/CurrentPage";
 
 const Header = () => {
+  const { planDetails } = usePageStore();
+  const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
+
   const Routes: any[] = [
     {
       name: "Growth",
@@ -133,8 +136,10 @@ const Header = () => {
         <Popover>
           <PopoverTrigger>
             <Avatar>
-              <AvatarImage  />
-              <AvatarFallback className="text-[10px]">Profile</AvatarFallback>
+              <AvatarImage />
+              <AvatarFallback className="text-[18px] bg-green-100">
+                {ownerName}
+              </AvatarFallback>
             </Avatar>
           </PopoverTrigger>
           <PopoverContent className="mr-20">

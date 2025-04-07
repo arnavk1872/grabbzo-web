@@ -13,9 +13,17 @@ const data = [
   { hour: "16:00", current: 0, lastDay: 0 },
 ];
 
-const PeakHoursChart: React.FC = () => {
-  const shouldBlur = true; 
+interface PeakHoursChartProps {
+  planDetails: {
+    Plan: string;
+    [key: string]: any; 
+  };
+}
+
+const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
   const router = useRouter();
+  const unlockedPlans = ["GOLD","PLATINUM", "DIAMOND"];
+  const shouldBlur = !unlockedPlans.includes(planDetails?.Plan?.toUpperCase());
 
   return (
     <div className="relative bg-white rounded-[30px] font-poppins border border-borderColor p-6 max-w-[702px] flex-[2]">
@@ -49,7 +57,7 @@ const PeakHoursChart: React.FC = () => {
         {shouldBlur && (
           <div className="absolute font-poppins inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 rounded-[30px]">
             <p className="text-lg font-semibold text-gray-800 mb-2">
-              Upgrade to unlock full insights
+              Upgrade to <span className="text-yellow-500">GOLD</span> to unlock detailed insights
             </p>
             <button className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer font-medium hover:bg-blue-700 transition" onClick={()=>{router.push('/pricing')}}>
               Upgrade Plan

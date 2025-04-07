@@ -5,8 +5,17 @@ import { useRouter } from "next/navigation";
 
 const SalesGraph = dynamic(() => import("../Icons/SalesGraph"), { ssr: false });
 
-const SalesOverview = () => {
-  const shouldBlur = true; 
+interface SalesOverviewProps {
+  planDetails: {
+    Plan: string;
+    [key: string]: any; 
+  };
+}
+
+const SalesOverview: React.FC<SalesOverviewProps> = ({ planDetails }) => {
+
+  const unlockedPlans = ["PLATINUM", "DIAMOND"];
+  const shouldBlur = !unlockedPlans.includes(planDetails?.Plan?.toUpperCase());
   const router = useRouter();
 
   return (
@@ -40,7 +49,6 @@ const SalesOverview = () => {
         </p>
       </div>
 
-      {/* Sales Graph with Blur Effect */}
       <div className="relative">
         <div
           className={`transition-all duration-300 ${
@@ -50,13 +58,15 @@ const SalesOverview = () => {
           <SalesGraph />
         </div>
 
-        {/* Upgrade Plan Overlay */}
         {shouldBlur && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 rounded-[30px]">
             <p className="text-lg font-semibold text-gray-800 mb-2">
-              Upgrade to unlock detailed sales insights
+              Upgrade to <span className="text-gray-400">DIAMOND </span> to unlock detailed insights
             </p>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition" onClick={()=>{router.push("/pricing")}}>
+            <button
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+              onClick={() => router.push("/pricing")}
+            >
               Upgrade Plan
             </button>
           </div>
