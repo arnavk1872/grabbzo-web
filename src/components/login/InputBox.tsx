@@ -17,9 +17,17 @@ import {
 } from "@/components/UI/InputOtp";
 import { Input } from "@/components/UI/Input";
 import { Button } from "@/components/UI/Button";
-import { getFlag, postLogin, postSignup, sendOtp } from "@/helpers/api-utils";
+import {
+  getFlag,
+  getRestaurantPlans,
+  postLogin,
+  postSignup,
+  sendOtp,
+} from "@/helpers/api-utils";
 import { numbers } from "./data";
 import { useSnackbar } from "notistack";
+import { getDaysLeft } from "@/lib/utils";
+import { usePageStore } from "@/store/CurrentPage";
 
 const InputBox = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -30,6 +38,7 @@ const InputBox = () => {
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [isContinueDisabled, setIsContinueDisabled] = useState(false);
 
+  const { setPlanDetails } = usePageStore();
   const router = useRouter();
 
   const handleClick = async () => {
@@ -50,7 +59,7 @@ const InputBox = () => {
       mobileNumber: phoneNumber,
       otp: otp,
     });
-    //9829699382
+
     if (!otp) {
       enqueueSnackbar("Please enter the OTP to continue", {
         variant: "warning",
@@ -65,7 +74,20 @@ const InputBox = () => {
         if (loginData.status === "success") {
           const token = "Bearer " + loginData.data.accessToken;
           setCookie("AuthToken", token);
+          try {
+            const planDetails = await getRestaurantPlans();
+            setPlanDetails(planDetails);
+            const daysLeft = getDaysLeft(planDetails?.Expiry);
+            if (daysLeft === "Plan Expired") {
+              setCookie("planExpired", true);
+              return router.push("plan-expired");
+            }
+          } catch (err) {
+            console.log("Error fetching plan details", err);
+          }
+
           const routeData = await getFlag();
+
           if (routeData.flag === false) {
             if (routeData.franchise) {
               router.push("/details/information");
@@ -88,22 +110,21 @@ const InputBox = () => {
           const token = "Bearer " + signupData.data.accessToken;
           setCookie("AuthToken", token);
           router.push("/franchise");
-        } 
+        }
       }
     } catch (error) {
       console.error("Error during OTP verification", error);
-      if(login){
+      if (login) {
         enqueueSnackbar("Something went wrong. Please try again later.", {
           variant: "error",
           className: "font-poppins",
-        })
-      }else{
+        });
+      } else {
         enqueueSnackbar("Number already registered, Login.", {
           variant: "error",
           className: "font-poppins",
         });
       }
-     
     }
   };
 
@@ -129,7 +150,6 @@ const InputBox = () => {
         placeholder="Enter Phone number"
         minLength={10}
         onChange={(e) => setPhoneNumber(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, handleClick)}
       />
       <div className="mb-2 mt-1 -ml-36 text-red-500 text-[14px] h-4">
         {error}

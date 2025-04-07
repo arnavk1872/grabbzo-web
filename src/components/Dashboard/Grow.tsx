@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "../UI/Button";
 import Link from "next/link";
+import Image from "next/image";
+import { S3_BASE_URL } from "@/lib/constants";
 
 const Grow = () => {
   return (
@@ -19,12 +21,19 @@ const Grow = () => {
             Enable discounts, promote with ads, and expand your business.
           </p>
         </div>
+
         <div className="flex justify-between">
           <Link href="/growth">
-            <Button className="bg-white text-blue-600 hover:bg-blue-100 mt-4 px-6">
+            <Button className="bg-white text-blue-600 hover:bg-blue-100 mt-20 px-6">
               Explore now
             </Button>
           </Link>
+          <Image
+            src={`${S3_BASE_URL}/public/growth_dashboard.png`}
+            height={180}
+            width={132}
+            alt="Growth Illustration"
+          />
         </div>
       </div>
     </div>

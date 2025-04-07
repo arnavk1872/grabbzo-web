@@ -10,6 +10,8 @@ interface PageState {
   canNavigateTo: (value: string) => boolean;
   Franchise: boolean;
   initializeFranchise: () => Promise<void>;
+  planDetails: any;
+  setPlanDetails: (data: any) => void;
 }
 
 const checkFranchise = async () => {
@@ -49,5 +51,11 @@ export const usePageStore = create<PageState>((set, get) => ({
   initializeFranchise: async () => {
     const franchiseStatus = await checkFranchise();
     set({ Franchise: franchiseStatus });
+  },
+
+  planDetails: {},
+
+  setPlanDetails: (data: any) => {
+    set({ planDetails: data });
   },
 }));

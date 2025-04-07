@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/AlertDialog";
 import { IoClose } from "react-icons/io5";
+import { getDaysLeft } from "@/lib/utils";
 
 interface PlanDetails {
   adCredit?: number;
@@ -40,20 +41,7 @@ const UserDetailsPopup: React.FC = () => {
 
     getPlanDetails();
   }, []);
-
-  function getDaysLeft(expiryDateStr: string): string {
-    const expiryDate = new Date(expiryDateStr);
-    const now = new Date();
-
-    const timeDiff = expiryDate.getTime() - now.getTime();
-    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    if (daysLeft < 0) return "Expired";
-    if (daysLeft === 0) return "Expires today";
-    if (daysLeft === 1) return "1 day left";
-    return `${daysLeft}`;
-  }
-
+  
   const daysLeft = getDaysLeft(planDetails.Expiry);
 
   return (
