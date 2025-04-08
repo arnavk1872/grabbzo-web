@@ -366,7 +366,7 @@ export const getItemDetails = async (ItemId: number) => {
 };
 
 export const updateItemDetails = async (
-  ItemId: number,
+  ItemId: number | string | undefined,
   categoryId: number,
   updatedItem: any
 ) => {

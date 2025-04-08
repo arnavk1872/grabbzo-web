@@ -276,7 +276,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       {isEditor && (
         <div
           onClick={() => changeToggleEditor(false)}
-          className="flex items-center cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700"
+          className="flex items-center font-poppins cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700"
         >
           <Plus /> Add Category
         </div>
