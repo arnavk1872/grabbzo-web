@@ -9,6 +9,8 @@ import { Button } from "../UI/Button";
 import { EditFormSchema } from "./formSchema";
 import { updateRestaurantDetails } from "@/helpers/api-utils";
 import { S3_BASE_URL } from "@/lib/constants";
+import { usePageStore } from "@/store/CurrentPage";
+import { useSnackbar } from "notistack";
 
 interface User {
   id: number;
@@ -35,6 +37,7 @@ interface RestaurantBankDetails {
 }
 
 interface RestaurantDetails {
+  franchise:boolean
   id?: number;
   user?: User;
   ownerName: string;
@@ -66,8 +69,11 @@ interface ResEditProps {
 
 const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
   const [edit, setEdit] = useState<boolean>(false);
+
+  const {Franchise} = usePageStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails>({
+    franchise:Franchise,
     ownerName: data.ownerName,
     restaurantName: data.restaurantName,
     restaurantImageUrl: data.restaurantImageUrl,
@@ -100,6 +106,8 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     }));
   };
 
+  const {enqueueSnackbar} = useSnackbar();
+
   const validateForm = () => {
     const validationResult = EditFormSchema.safeParse(restaurantData);
     const validationErrors: Record<string, string> = {};
@@ -117,11 +125,15 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       setEdit(false);
-      const res = await updateRestaurantDetails(restaurantData);
+      const response = await updateRestaurantDetails(restaurantData);
+      enqueueSnackbar(response.message, {
+        variant: "success",
+        className: "font-poppins",
+      });
     }
   };
   return (
-    <div className="mx-24">
+    <div className="mx-24 font-poppins">
       <div className="flex items-center justify-between  mt-16">
         <div className="flex items-center">
           <Link href={"/dashboard"}>
@@ -152,7 +164,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
           className="h-80 rounded-3xl w-fit"
         />
         <div className="w-full">
-          <h3 className="text-xl font-medium mb-5"> Basic Details</h3>
+          <h3 className="text-xl mb-5 font-semibold"> Basic Details</h3>
           <div className="flex justify-between">
             <div>
               <p className="mb-3">Owner Name</p>
@@ -204,7 +216,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
             </div>
           </div>
           <div className="mt-10">
-            <h3 className="text-xl font-medium"> Location Details</h3>
+            <h3 className="text-xl font-semibold"> Location Details</h3>
             <div className="flex justify-between mt-5">
               <div>
                 <p>Shop No. / Building No.</p>
@@ -300,7 +312,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
           </div>
 
           <div className="mt-10">
-            <h3 className="text-xl font-medium"> Bank Details</h3>
+            <h3 className="text-xl font-semibold"> Bank Details</h3>
             <div className="flex justify-between mt-5">
               <div>
                 <p>Bank Account Number</p>
@@ -321,7 +333,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
             </div>
           </div>
           <div className="mt-10">
-            <h3 className="text-xl font-medium"> Document Details</h3>
+            <h3 className="text-xl font-semibold"> Document Details</h3>
             <div className="flex justify-between mt-5">
               <div>
                 <p>GST Number</p>

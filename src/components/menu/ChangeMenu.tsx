@@ -32,7 +32,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
     description: "",
     price: "",
     selectedCategory: null,
-    isVeg: "",
+    isVeg: true,
     servingInfo: null,
     portionSize: null,
     isStock: true,
@@ -117,6 +117,19 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
                 ],
               },
             };
+          });
+          setFormData({
+            title: '',
+            description: '',
+            price: '',
+            selectedCategory: null,
+            isVeg: true,
+            servingInfo: null,
+            portionSize: null,
+            isStock: false,
+            restaurantCategory: {
+              id: null,
+            },
           });
           
         }
