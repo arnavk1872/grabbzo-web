@@ -5,7 +5,7 @@ import Image from "next/image";
 const Pickup = () => {
   return (
     <div>
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-6">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 p-6 font-poppins">
         <div className="w-2/3 ">
           <Image
             src={`${S3_BASE_URL}/public/takeaway_aboutus.png`}

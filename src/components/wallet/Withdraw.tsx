@@ -13,7 +13,7 @@ const Withdraw = () => {
     </div>
       <div className="flex flex-col text-white font-poppins justify-center  px-12">
         <div className="text-[18px] font-semibold">Taj Mahal Hotel</div>
-        <div className="text-[10px] pt-4">Total Balance</div>
+        <div className="text-[12px] pt-4">Total Balance</div>
         <div className="text-[28px]">₹0</div>
       </div>
     </div>

@@ -204,7 +204,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
             </div>
           ))
         ) : (
-          <span className="font-poppins w-fit text-[16px]">No Items added yet!</span>
+          <div className="min-w-[154px] font-poppins w-fit text-[16px]">No Items added yet!</div>
         )}
         {isEditor && (
           <div
