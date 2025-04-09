@@ -5,7 +5,7 @@ import Image from "next/image";
 const CarDelivery = () => {
   return (
     <div>
-      <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6 p-6">
+      <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6 p-6 font-poppins">
       <div className="w-2/3 ">
       <Image
         src={`${S3_BASE_URL}/public/Cardelivery_aboutus.jpeg`}

@@ -111,7 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
           <a
             href="#"
             onClick={handleLogout}
-            className="flex items-center space-x-6 px-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
+            className="flex items-center space-x-6 p-[5px] text-[16px] font-semibold text-gray-600 hover:bg-gray-100 rounded-lg whitespace-nowrap"
           >
             <LogoutIcon />
             <span className="inline-block mt-3">Logout</span>

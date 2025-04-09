@@ -25,7 +25,7 @@ const OrderStatusCard: React.FC<
   return (
     <div
       className={`flex  cursor-pointer border-2  p-4 md:p-8 ${
-        isSelected ? "border-blue-500 rounded-[29px] h-[120px] items-center bg-blue-50" : "border-transparent rounded-lg "
+        isSelected ? "border-blue-300 rounded-full h-[120px] items-center bg-blue-50" : "border-transparent rounded-lg "
       }`}
       onClick={onClick}
     >
@@ -39,10 +39,11 @@ const OrderStatusCard: React.FC<
 };
 
 const Orders: React.FC = () => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
   const router = useRouter();
 
   const handleCardClick = (index: number, route: string) => {
+    console.log(index,"123")
     setSelectedIndex(index);
     router.push(route); 
   };
