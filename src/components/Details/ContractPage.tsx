@@ -48,7 +48,8 @@ const ContractPage = () => {
   const { menuDetailsData } = useRestaurantMenuStore();
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, Franchise,canNavigateTo,setCurrentPage } = usePageStore();
+  const { currentPage, Franchise, canNavigateTo, setCurrentPage } =
+    usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
 
   const initialize = async () => {
@@ -100,12 +101,11 @@ const ContractPage = () => {
       },
     };
 
-    if (Franchise) {
+    if (!Franchise) {
       payload.restaurantName = basicDetailsData.restaurantName;
       payload.isVeg = menuDetailsData.foodType;
     }
     const uploadData = await postRestaurantDetails(payload);
-  
     if (uploadData.status == "success") {
       router.push("/profile-completion");
     }

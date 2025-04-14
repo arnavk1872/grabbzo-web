@@ -15,7 +15,8 @@ import { useSnackbar } from "notistack";
 const MenuPage = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { currentPage, setCurrentPage, Franchise,canNavigateTo } = usePageStore();
+  const { currentPage, setCurrentPage, Franchise, canNavigateTo } =
+    usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
   const { menuDetailsData, setMenuDetailsData, initializeIsVeg } =
     useRestaurantMenuStore();
@@ -35,43 +36,39 @@ const MenuPage = () => {
     initializeIsVeg();
   }, []);
 
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleRadioChange = (name: string, value: boolean | string) => {
     setMenuDetailsData(name, value);
   };
 
+  const handleFileChange = async (file: File | null, documentType: string) => {
+    if (!file) return;
 
-    const handleFileChange = async (file: File | null, documentType: string) => {
-      if (!file) return;
-    
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("documentType", documentType);
-       
-        const response = await uploadDocuments(formData);
-  
-        enqueueSnackbar("File successfully Added", {
-          variant: "success",
-          className: "font-poppins",
-        });
-  
-        if (response?.documentUrl) {
-          setMenuDetailsData(documentType, file);
-        }
-      } catch (error) {
-        console.error("File upload failed:", error);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("documentType", documentType);
+
+      const response = await uploadDocuments(formData);
+
+      enqueueSnackbar("File successfully Added", {
+        variant: "success",
+        className: "font-poppins",
+      });
+
+      if (response?.documentUrl) {
+        setMenuDetailsData(documentType, file);
       }
-    };
+    } catch (error) {
+      console.error("File upload failed:", error);
+    }
+  };
 
   const isFormComplete =
-  menuDetailsData.deliveryToCars !== null && 
-  menuDetailsData.serviceType &&
-  (Franchise
-    ? true
-    : menuDetailsData.image &&
-      menuDetailsData.foodType);
+    menuDetailsData.deliveryToCars !== null &&
+    menuDetailsData.serviceType &&
+    (Franchise ? true : menuDetailsData.image && menuDetailsData.foodType);
 
   const handleProceed = () => {
     setCurrentPage("contract");
@@ -121,7 +118,7 @@ const MenuPage = () => {
           onValueChange={(value) => handleRadioChange("serviceType", value)}
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="PICKUP" id="PICKUP" />
+            <RadioGroupItem value="TAKEAWAY" id="TAKEAWAY" />
             <Label htmlFor="pickup">Pickup</Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -129,7 +126,7 @@ const MenuPage = () => {
             <Label htmlFor="dining">Dining</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="both" id="both" />
+            <RadioGroupItem value="BOTH" id="BOTH" />
             <Label htmlFor="both">Both</Label>
           </div>
         </RadioGroup>
@@ -168,9 +165,7 @@ const MenuPage = () => {
             Upload at least one entrance image of your restaurant.
           </span>
         </div>
-        <FileUpload
-          onFileChange={(file) => handleFileChange(file, "image")}
-        />
+        <FileUpload onFileChange={(file) => handleFileChange(file, "image")} />
       </div>
       <div
         className={`bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl mt-12 ${
@@ -185,9 +180,7 @@ const MenuPage = () => {
             These will be used verify the item prices.
           </span>
         </div>
-        <FileUpload
-          onFileChange={(file) => handleFileChange(file, "image")}
-        />
+        <FileUpload onFileChange={(file) => handleFileChange(file, "image")} />
       </div>
       <Button
         className="my-6 w-full text-white font-medium text-lg"
