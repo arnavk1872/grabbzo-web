@@ -7,10 +7,10 @@ import { S3_BASE_URL } from "@/lib/constants";
 const Grow = () => {
   return (
     <div className="bg-white rounded-[30px] p-6 shadow-md h-[350px] w-[48%] font-poppins">
-      <div className="font-semibold">Grow</div>
+        <div className="font-semibold text-[18px]">Grow</div>
       <span className="text-[12px]">CHOOSE HOW TO GROW YOUR BUSINESS</span>
       <div
-        className="bg-blue-600 text-white rounded-lg shadow-md p-6 flex flex-col justify-between min-h-[240px] my-4"
+        className="bg-blue-600 text-white rounded-3xl pb-2 shadow-md p-6 flex flex-col justify-between min-h-[240px] my-4"
         style={{
           background: "linear-gradient(282deg, #1AA1C7 0%, #0033A2 100%)",
         }}

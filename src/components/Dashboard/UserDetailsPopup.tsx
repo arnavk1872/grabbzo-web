@@ -41,7 +41,7 @@ const UserDetailsPopup: React.FC = () => {
 
     getPlanDetails();
   }, []);
-  
+
   const daysLeft = getDaysLeft(planDetails.Expiry);
 
   return (
@@ -98,25 +98,23 @@ const UserDetailsPopup: React.FC = () => {
       </AlertDialog>
       <div>
         <div className="mt-2">Current Plan </div>
-        <div className="font-bold text-center text-[30px]">{planDetails.Plan}</div>
+        <div className="font-bold text-center text-[30px]">
+          {planDetails.Plan}
+        </div>
         <div className=" text-center text-[15px]">{daysLeft} days Left!</div>
         <div className="font-semibold my-2">
           {Number(daysLeft) < 15
             ? `Your ${planDetails?.Plan ?? "SILVER"} Plan is expiring soon!`
             : ""}
         </div>
-        {Number(daysLeft) < 15 && (
-          <div>
-            Renew your {planDetails?.Plan ?? "SILVER"} premium plan now to
-            continue enjoying all the benefits!
-          </div>
-        )}
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button className="text-white w-full my-1 cursor-pointer">
-              Renew Plan
-            </Button>
+            {Number(daysLeft) < 15 && (
+              <Button className="text-white w-full my-1 cursor-pointer">
+                Renew Plan
+              </Button>
+            )}
           </AlertDialogTrigger>
           <AlertDialogContent className="font-poppins">
             <AlertDialogHeader>
@@ -138,8 +136,9 @@ const UserDetailsPopup: React.FC = () => {
                 />
                 <div className="-mt-12 text-[15px]">
                   Stay ahead with uninterrupted access to exclusive features.
-                  Renew your diamond premium plan now to continue enjoying all
-                  the benefits!
+                  Renew or upgrade your{" "}
+                  <span className="font-semibold">{planDetails?.Plan}</span>{" "}
+                  plan now to continue enjoying all the benefits!
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>

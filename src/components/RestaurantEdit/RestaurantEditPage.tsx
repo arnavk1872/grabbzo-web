@@ -11,6 +11,13 @@ import { updateRestaurantDetails } from "@/helpers/api-utils";
 import { S3_BASE_URL } from "@/lib/constants";
 import { usePageStore } from "@/store/CurrentPage";
 import { useSnackbar } from "notistack";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../UI/Select";
 
 interface User {
   id: number;
@@ -37,7 +44,10 @@ interface RestaurantBankDetails {
 }
 
 interface RestaurantDetails {
-  franchise:boolean
+  closedDay: string | undefined;
+  deliveryToCars: string | number | readonly string[] | undefined;
+  serviceType: string | undefined;
+  franchise: boolean;
   id?: number;
   user?: User;
   ownerName: string;
@@ -70,10 +80,12 @@ interface ResEditProps {
 const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
   const [edit, setEdit] = useState<boolean>(false);
 
-  const {Franchise} = usePageStore();
+  console.log(data, "DATA");
+
+  const { Franchise } = usePageStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails>({
-    franchise:Franchise,
+    franchise: Franchise,
     ownerName: data.ownerName,
     restaurantName: data.restaurantName,
     restaurantImageUrl: data.restaurantImageUrl,
@@ -93,6 +105,9 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     panNumber: data.panNumber,
     fssaiNumber: data.fssaiNumber,
     gstinNumber: data.gstinNumber,
+    serviceType: data.serviceType,
+    deliveryToCars: data.deliveryToCars,
+    closedDay: data.closedDay,
     restaurantBankDetails: {
       accountNumber: data.restaurantBankDetails.accountNumber,
       ifsc: data.restaurantBankDetails.ifsc,
@@ -106,7 +121,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     }));
   };
 
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const validateForm = () => {
     const validationResult = EditFormSchema.safeParse(restaurantData);
@@ -156,13 +171,16 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
         </Button>
       </div>
       <div className="my-12 mx-24 flex gap-10">
-        <Image
-          src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
-          width={1000}
-          height={1000}
-          alt="Restaurant-Image"
-          className="h-80 rounded-3xl w-fit"
-        />
+        <div className="h-[450px] w-[650px]">
+          <Image
+            src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
+            width={1000}
+            height={1000}
+            alt="Restaurant-Image"
+            className=" rounded-3xl "
+          />
+        </div>
+
         <div className="w-full">
           <h3 className="text-xl mb-5 font-semibold"> Basic Details</h3>
           <div className="flex justify-between">
@@ -175,7 +193,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                   setEditDetailsData("ownerName", e.target.value);
                   setErrors((prev) => ({ ...prev, ownerName: "" }));
                 }}
-                className="pr-10"
+                className="pr-10 pl-0 border-none shadow-none"
               />
               <div className="ml-2 text-red-500 text-[14px]">
                 {errors.ownerName}
@@ -186,7 +204,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
               <Input
                 value={restaurantData.restaurantName}
                 disabled
-                className="pr-10"
+                className="pr-10 pl-0 border-none shadow-none"
               />
             </div>
           </div>
@@ -195,8 +213,8 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
               <p className="mb-3">Email Address</p>
               <Input
                 value={restaurantData.emailAddress}
-                disabled={!edit}
-                className="pr-10"
+                disabled
+                className="pr-10 border-none shadow-none pl-0"
                 onChange={(e) => {
                   setEditDetailsData("emailAddress", e.target.value);
                   setErrors((prev) => ({ ...prev, emailAddress: "" }));
@@ -211,8 +229,85 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
               <Input
                 value={restaurantData.mobileNumber}
                 disabled
-                className="pr-10"
+                className="pr-10 pl-0 border-none shadow-none"
               />
+            </div>
+          </div>
+          <div className="flex justify-between mt-5">
+            <div>
+              <p className="mb-3">Deliver to Cars</p>
+              <Select
+                value={restaurantData.deliveryToCars ? "yes" : "no"}
+                onValueChange={(value) => {
+                  setEditDetailsData("deliveryToCars", value === "yes");
+                  setErrors((prev) => ({ ...prev, deliveryToCars: "" }));
+                }}
+                disabled={!edit}
+              >
+                <SelectTrigger className="pr-10 w-[180px] border-none shadow-none pl-0">
+                  <SelectValue placeholder="Select an option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="yes">Yes</SelectItem>
+                  <SelectItem value="no">No</SelectItem>
+                </SelectContent>
+              </Select>
+              <div className="ml-2 text-red-500 text-[14px]">
+                {errors.deliveryToCars}
+              </div>
+            </div>
+
+            <div>
+              <p>Closed Day</p>
+              <Select
+                value={restaurantData.closedDay}
+                disabled={!edit}
+                onValueChange={(value) =>
+                  setRestaurantData({ ...restaurantData, closedDay: value })
+                }
+              >
+                <SelectTrigger className="w-[210px] pl-[1px] border-none shadow-none">
+                  <SelectValue placeholder="Select a day" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                  ].map((day) => (
+                    <SelectItem key={day} value={day}>
+                      {day}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="flex justify-between mt-5">
+            <div>
+              <p className="mb-3">Service Type</p>
+              <Select
+                value={restaurantData.serviceType}
+                disabled={!edit}
+                onValueChange={(value) =>
+                  setEditDetailsData("serviceType", value)
+                }
+              >
+                <SelectTrigger className="w-[152px] border-none shadow-none pl-[2px]">
+                  <SelectValue placeholder="Select service type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {["BOTH", "DINEIN", "TAKEAWAY"].map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="mt-10">
@@ -222,12 +317,12 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Shop No. / Building No.</p>
                 <Input
                   value={restaurantData.shopNumber}
-                  disabled={!edit}
+                  disabled
                   onChange={(e) => {
                     setEditDetailsData("shopNumber", e.target.value);
                     setErrors((prev) => ({ ...prev, shopNumber: "" }));
                   }}
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
                 <div className="ml-2 text-red-500 text-[14px]">
                   {errors.shopNumber}
@@ -237,12 +332,12 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Floor / Tower</p>
                 <Input
                   value={restaurantData.floorOrTower}
-                  disabled={!edit}
+                  disabled
                   onChange={(e) => {
                     setEditDetailsData("floorOrTower", e.target.value);
                     setErrors((prev) => ({ ...prev, floorOrTower: "" }));
                   }}
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
                 <div className="ml-2 text-red-500 text-[14px]">
                   {errors.floorOrTower}
@@ -254,7 +349,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Area / Sector / Locality</p>
                 <Input
                   value={restaurantData.areaOrSectorOrLocality}
-                  disabled={!edit}
+                  disabled
                   onChange={(e) => {
                     setEditDetailsData(
                       "areaOrSectorOrLocality",
@@ -265,7 +360,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                       areaOrSectorOrLocality: "",
                     }));
                   }}
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
                 <div className="ml-2 text-red-500 text-[14px]">
                   {errors.areaOrSectorOrLocality}
@@ -274,9 +369,9 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
               <div>
                 <p>Pincode</p>
                 <Input
-                  value={restaurantData.pincode}
                   disabled
-                  className="pr-10"
+                  value={restaurantData.pincode}
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
             </div>
@@ -286,12 +381,16 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <Input
                   value={restaurantData.state}
                   disabled
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
               <div>
                 <p>City</p>
-                <Input value={restaurantData.city} disabled className="pr-10" />
+                <Input
+                  value={restaurantData.city}
+                  disabled
+                  className="pr-10 pl-0 border-none shadow-none"
+                />
               </div>
             </div>
             <div className="mt-5">
@@ -303,7 +402,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                   setEditDetailsData("landmark", e.target.value);
                   setErrors((prev) => ({ ...prev, landmark: "" }));
                 }}
-                className="w-fit pr-10"
+                className="w-fit pr-10 pl-0 border-none shadow-none"
               />
               <div className="ml-2 text-red-500 text-[14px]">
                 {errors.landmark}
@@ -318,16 +417,14 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Bank Account Number</p>
                 <Input
                   value={restaurantData.restaurantBankDetails.accountNumber}
-                  disabled
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
               <div>
                 <p>Bank IFSC Code</p>
                 <Input
                   value={restaurantData.restaurantBankDetails.ifsc}
-                  disabled
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
             </div>
@@ -340,7 +437,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <Input
                   value={restaurantData.gstinNumber}
                   disabled
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
               <div>
@@ -348,7 +445,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <Input
                   value={restaurantData.fssaiNumber}
                   disabled
-                  className="pr-10"
+                  className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
             </div>
@@ -357,7 +454,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
               <Input
                 value={restaurantData.panNumber}
                 disabled
-                className="w-fit pr-10"
+                className="w-fit pr-10 pl-0 border-none shadow-none"
               />
             </div>
           </div>

@@ -17,11 +17,11 @@ const UserBtn: React.FC<UserBtnProps> = ({
   return (
     <div className="flex justify-evenly cursor-pointer hover:bg-gray-200 p-3 rounded-3xl">
       <Avatar className="size-14">
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>You</AvatarFallback>
+        <AvatarImage  />
+        <AvatarFallback>X</AvatarFallback>
       </Avatar>
       <div>
-        <span className="text-lg font-medium">{name}</span>
+        <span className="text-lg font-semibold">{name}</span>
         <p className="text-sm text-gray-500">{lastMessage}</p>
       </div>
       <p className="text-start text-gray-500">{time}</p>

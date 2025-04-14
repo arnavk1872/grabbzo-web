@@ -17,7 +17,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/UI/Sheet";
-import { X } from "lucide-react";
+import { Wallet, X } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import Settings from "../Icons/Settings";
 import Link from "next/link";
@@ -49,7 +49,8 @@ const Header = () => {
     {
       name: "Support",
       route:
-        "https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team",
+        // "https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team",
+        "/support"
     },
   ];
 
@@ -68,6 +69,12 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex gap-x-4 items-center">
+        <Link href="/wallet">
+          <div className="border rounded-full border-borderColor p-2 flex items-center mt-1 justify-center gap-x-2 pr-3 cursor-pointer ">
+            <Wallet className="text-[#8a8a8f]" />
+           <span className="font-poppins font-medium">₹0 </span> 
+          </div>
+        </Link>
         <Sheet>
           <SheetTrigger asChild>
             <button className="cursor-pointer flex items-center justify-center w-12 h-12">

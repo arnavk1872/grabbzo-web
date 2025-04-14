@@ -19,9 +19,25 @@ export function middleware(request: NextRequest) {
     "/plan-expired",
   ];
 
+  const blockedPaths = [
+    "/",
+    "/restaurant",
+    "/policies/terms-of-service",
+    "/policies/privacy",
+    "/policies/cancellation-and-refund",
+    "/policies/channel-partner",
+    "/policies/guidelines-and-policy",
+    "/about",
+  ];
+
   if (!accessToken && !allowedPaths.includes(url.pathname)) {
     const loginUrl = new URL("/restaurant", request.url);
     return NextResponse.redirect(loginUrl);
+  }
+  
+  if (accessToken && blockedPaths.includes(url.pathname)) {
+    const dashboardUrl = new URL("/dashboard", request.url);
+    return NextResponse.redirect(dashboardUrl);
   }
 
   if (expiryToken && !allowedPaths.includes(url.pathname)) {
@@ -33,7 +49,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next|static|favicon.ico|api|src).*)", 
-  ],
+  matcher: ["/((?!_next|static|favicon.ico|api|src).*)"],
 };

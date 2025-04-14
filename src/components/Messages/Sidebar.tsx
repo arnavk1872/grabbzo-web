@@ -48,7 +48,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="min-w-[350px] ml- bg-white rounded-t-3xl pr-2 min-h-[50vh]">
+    <div className="min-w-[350px] ml- bg-white rounded-t-3xl pr-2 min-h-[50vh] font-poppins">
       <h3 className="text-center font-medium text-xl border-b-2 pb-5 mb-8 pt-2">
         Messages
       </h3>
