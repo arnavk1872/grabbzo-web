@@ -10,21 +10,21 @@ import {
 } from '../UI/Dropdown'
 
 const Sort: React.FC = () => {
+  const [sortBy, setSortBy] = useState<string>("")
+  const [filterBy, setFilterBy] = useState<string>("")
 
-  const [selectedItem, setSelectedItem] = useState<string>("");
-  const menuOptions: string[] = ["All reviews", "Last 30 days", "Last 60 days", "Last 90 days"];
-  const sortOptions: string[] = ["Newest","Oldest"];
-  const handleSelect = (item: string): void => setSelectedItem(item);
+  const menuOptions: string[] = ["All reviews", "Last 30 days", "Last 60 days", "Last 90 days"]
+  const sortOptions: string[] = ["Newest", "Oldest"]
 
   return (
-    <div className='bg-white w-full  font-poppins rounded-[30px] h-[120px] border-borderColor  border flex items-center justify-around mb-4'>
-      {/*SORT */}
+    <div className='bg-white w-full font-poppins rounded-[30px] h-[120px] border-borderColor border flex items-center justify-around mb-4'>
+      {/* SORT */}
       <div className='flex font-poppins whitespace-nowrap items-center gap-x-2'>Sort By:
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger>
             <Input
               type="text"
-              value={selectedItem}
+              value={sortBy}
               readOnly
               placeholder="Select an option"
               className='cursor-pointer'
@@ -34,7 +34,7 @@ const Sort: React.FC = () => {
             {sortOptions.map((option) => (
               <DropdownMenuItem
                 key={option}
-                onSelect={() => handleSelect(option)}
+                onSelect={() => setSortBy(option)}
               >
                 {option}
               </DropdownMenuItem>
@@ -42,13 +42,14 @@ const Sort: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {/*FILTER */}
+
+      {/* FILTER */}
       <div className='flex whitespace-nowrap font-poppins items-center gap-x-2'>Filter By:
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Input
               type="text"
-              value={selectedItem}
+              value={filterBy}
               readOnly
               placeholder="Select an option"
               className='cursor-pointer'
@@ -58,7 +59,7 @@ const Sort: React.FC = () => {
             {menuOptions.map((option) => (
               <DropdownMenuItem
                 key={option}
-                onSelect={() => handleSelect(option)}
+                onSelect={() => setFilterBy(option)}
               >
                 {option}
               </DropdownMenuItem>
@@ -66,9 +67,12 @@ const Sort: React.FC = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Button variant={'destructive'} className='text-[14px] font-bold text-white rounded-3xl px-12'>Search</Button>
+
+      <Button variant={'destructive'} className='text-[14px] font-bold text-white rounded-3xl px-12'>
+        Search
+      </Button>
     </div>
-  );
+  )
 }
 
-export default Sort;
+export default Sort

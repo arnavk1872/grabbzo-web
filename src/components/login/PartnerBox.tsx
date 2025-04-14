@@ -23,6 +23,7 @@ const PartnerBox = () => {
                 <a
                   href="https://reg.gst.gov.in/registration/"
                   className="text-blue-600 hover:underline pl-1"
+                  target="_blank"
                 >
                   Apply Here
                 </a>
@@ -34,6 +35,7 @@ const PartnerBox = () => {
                 <a
                   href="https://foscos.fssai.gov.in/apply-for-lic-and-reg"
                   className="text-blue-600 hover:underline pl-1"
+                  target="_blank"
                 >
                   Apply Here
                 </a>

@@ -139,7 +139,7 @@ const InputBox = () => {
   };
   return (
     <div className="bg-white w-[40%] absolute flex flex-col justify-center items-center rounded-3xl left-1/2 transform -translate-x-1/2 bottom-[5%]">
-      <h4 className="text-xl font-poppins font-bold text-neutral-600 pt-8">
+      <h4 className="text-xl font-bold text-neutral-600 pt-8">
         <span className="text-blue-600 font-extrabold pr-2">
           {login ? "Login" : "Sign Up"}
         </span>
@@ -169,7 +169,7 @@ const InputBox = () => {
           Continue
         </Button>
 
-        <DialogContent className="flex flex-col">
+        <DialogContent className="flex flex-col font-poppins">
           <DialogHeader>
             <DialogTitle className="pb-2 text-xl">Enter OTP</DialogTitle>
             <DialogDescription className="pb-2">
