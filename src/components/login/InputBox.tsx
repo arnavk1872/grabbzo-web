@@ -74,6 +74,14 @@ const InputBox = () => {
         if (loginData.status === "success") {
           const token = "Bearer " + loginData.data.accessToken;
           setCookie("AuthToken", token);
+          const routeData = await getFlag();
+          if (routeData.flag === false) {
+            if (routeData.franchise) {
+              router.push("/details/information");
+            } else {
+              router.push("/franchise");
+            }
+          }
           try {
             const planDetails = await getRestaurantPlans();
             setPlanDetails(planDetails);
@@ -81,21 +89,11 @@ const InputBox = () => {
             if (daysLeft === "Plan Expired") {
               setCookie("planExpired", true);
               return router.push("plan-expired");
+            } else {
+              router.push("/dashboard");
             }
           } catch (err) {
             console.log("Error fetching plan details", err);
-          }
-
-          const routeData = await getFlag();
-
-          if (routeData.flag === false) {
-            if (routeData.franchise) {
-              router.push("/details/information");
-            } else {
-              router.push("/franchise");
-            }
-          } else {
-            router.push("/dashboard");
           }
         } else {
           // Notistack Error
