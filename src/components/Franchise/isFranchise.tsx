@@ -17,11 +17,9 @@ const Franchise = () => {
         <div className="my-4">Grow your business with Grabbzo!</div>
         <div className="flex items-center justify-center gap-x-6 my-4">
           <Link href="details/information">
-            {!isEnabled && (
               <Button className="px-12 py-4" variant={"outline"} onClick={()=>{LinkFranchise(null,false)}}>
                 No
               </Button>
-            )}
           </Link>
           <Button
             className="text-white px-12 py-4"

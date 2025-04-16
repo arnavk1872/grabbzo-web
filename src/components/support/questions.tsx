@@ -19,7 +19,7 @@ export const questions = [
     {
       question: "What is the commission structure on orders?",
       answer:
-        "Our commission is flexible and varies based on the plan you choose. We aim to keep it transparent and sustainable for you.",
+        "Our commission is flexible and varies based on the plan you choose. We aim to keep it transparent and sustainable for you.You can find the commision for each plan in the pricing page",
     },
     {
       question: "How do I update my menu or restaurant details?",

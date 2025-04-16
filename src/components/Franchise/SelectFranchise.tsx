@@ -17,23 +17,25 @@ const SelectFranchise = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (searchTerm.length >= 2) {
-      setShowSuggestions(true);
-      const fetchFranchises = async () => {
-        try {
-          const response = await getFranchises(searchTerm);
-          setFranchises(response || []);
-          setShowCustomInput(response.length === 0);
-        } catch (error) {
-          console.error("Failed to fetch franchises", error);
-        }
-      };
-      fetchFranchises();
-    } else {
-      setFranchises([]);
-      setShowCustomInput(false);
-      setShowSuggestions(false);
-    }
+    const delayDebounce = setTimeout(() => {
+      if (searchTerm.length >= 2) {
+        setShowSuggestions(true);
+        const fetchFranchises = async () => {
+          try {
+            const response = await getFranchises(searchTerm);
+            setFranchises(response || []);
+          } catch (error) {
+            console.error("Failed to fetch franchises", error);
+          }
+        };
+        fetchFranchises();
+      } else {
+        setFranchises([]);
+        setShowSuggestions(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(delayDebounce);
   }, [searchTerm]);
 
   const handleSelectFranchise = (franchise: string) => {
@@ -43,15 +45,21 @@ const SelectFranchise = () => {
   };
 
   const handleProceed = async () => {
-    if (selectedItem || customFranchise) {
-      const franchiseName = selectedItem || customFranchise;
-      try {
-        await LinkFranchise(franchiseName,true);
-        router.push("/details/information");
-      } catch (error) {
-        console.error("Error linking franchise", error);
-      }
+    const franchiseName = selectedItem || customFranchise;
+    const isFranchise = !!selectedItem;
+
+    try {
+      await LinkFranchise(franchiseName, isFranchise);
+      router.push("/details/information");
+    } catch (error) {
+      console.error("Error linking franchise", error);
     }
+  };
+
+  const handleCustomFranchiseClick = () => {
+    setShowCustomInput(true);
+    setCustomFranchise(searchTerm);
+    setShowSuggestions(false);
   };
 
   return (
@@ -79,28 +87,23 @@ const SelectFranchise = () => {
           ) : (
             <div className="p-2 text-gray-500">No results found</div>
           )}
-          {showCustomInput && (
+          {!showCustomInput && franchises.length === 0 && (
             <div className="p-2 border-t border-gray-200">
               <button
                 className="w-full text-left p-2 text-blue-500 hover:bg-gray-100"
-                onClick={() => setShowCustomInput(false)}
+                onClick={() => handleCustomFranchiseClick()}
               >
-                + Add "{searchTerm}" as a custom franchise
+                + Cant Find "{searchTerm}"? Create a custom franchise
               </button>
-              <Input
-                type="text"
-                value={customFranchise}
-                onChange={(e) => setCustomFranchise(e.target.value)}
-                placeholder="Enter custom franchise"
-                className="mt-2"
-              />
             </div>
           )}
         </div>
       )}
+
       <Button
         className="flex justify-center items-center text-white mt-24 w-full text-[20px] py-4"
         onClick={handleProceed}
+        disabled={!selectedItem && !customFranchise} 
       >
         Proceed
       </Button>
