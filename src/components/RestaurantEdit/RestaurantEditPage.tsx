@@ -80,8 +80,6 @@ interface ResEditProps {
 const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
   const [edit, setEdit] = useState<boolean>(false);
 
-  console.log(data, "DATA");
-
   const { Franchise } = usePageStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [restaurantData, setRestaurantData] = useState<RestaurantDetails>({
@@ -164,7 +162,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
           </div>
         </div>
         <Button
-          className={`${edit ? "block" : "hidden"} text-white`}
+          className={`${edit ? "block" : "hidden"} text-white text-[16px]`}
           onClick={handleBtnClick}
         >
           Save Changes
@@ -417,6 +415,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Bank Account Number</p>
                 <Input
                   value={restaurantData.restaurantBankDetails.accountNumber}
+                  disabled={!edit}
                   className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
@@ -424,6 +423,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                 <p>Bank IFSC Code</p>
                 <Input
                   value={restaurantData.restaurantBankDetails.ifsc}
+                  disabled={!edit}
                   className="pr-10 pl-0 border-none shadow-none"
                 />
               </div>
