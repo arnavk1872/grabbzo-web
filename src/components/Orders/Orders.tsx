@@ -43,7 +43,6 @@ const Orders: React.FC = () => {
   const router = useRouter();
 
   const handleCardClick = (index: number, route: string) => {
-    console.log(index,"123")
     setSelectedIndex(index);
     router.push(route); 
   };
