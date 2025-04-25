@@ -4,11 +4,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
-import logo from "public/logo-white.png";
-import ServiceOptions from "./HomePage/ServiceOptions";
 import Footer from "./Footer";
 import DownwardArrow from "./Icons/DownwardArrow";
 import { S3_BASE_URL } from "@/lib/constants";
+import AppFeatures from "./HomePage/AppFeatures";
+import AppExperience from "./HomePage/AppExperience";
 
 const HomePage = () => {
   const router = useRouter();
@@ -60,12 +60,14 @@ const HomePage = () => {
             alt="home-main"
             unoptimized
           />
-
-          <p className="text-white text-3xl mt-3">
+          <p className="text-white font-bold text-4xl mt-3 max-w-[1200px]">
+          India’s smartest dining companion for takeout, pre-dine-in, and car delivery.
+          </p>
+          <p className="text-white text-3xl mt-8">
             Explore delicious food & drinks near you
           </p>
 
-          <div
+          {/* <div
             className="flex items-center justify-center mt-6 gap-x-2"
             ref={searchRef}
           >
@@ -90,11 +92,12 @@ const HomePage = () => {
               </div>
               <DownwardArrow />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
-      <ServiceOptions />
-      <Footer />
+      <AppFeatures/>
+      <AppExperience/>
+      <Footer isHome={true} />
     </>
   );
 };

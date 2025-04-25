@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 
 interface FileUploadProps {
@@ -17,19 +18,30 @@ const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
 
     if (file) {
       if (file.size / 1024 > maxFileSize) {
-        alert(`File size exceeds the maximum limit of ${maxFileSize}KB.`);
+        enqueueSnackbar(
+          `File size exceeds the maximum limit of ${maxFileSize}KB.`,
+          {
+            variant: "warning",
+            className: "font-poppins",
+          }
+        );
         setFileName(null);
         onFileChange(null);
         return;
       }
 
       if (!acceptedFormats.split(",").includes(file.type)) {
-        alert("Invalid file type. Please upload a valid file.");
+        enqueueSnackbar("Invalid file type. Please upload a valid file.", {
+          variant: "warning",
+          className: "font-poppins",
+        });
         setFileName(null);
         onFileChange(null);
         return;
