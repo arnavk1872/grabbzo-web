@@ -12,6 +12,7 @@ import { formSchema } from "./formSchema";
 import { useItemStore } from "@/store/MenuStore";
 import { X } from "lucide-react";
 import { addItemImage } from "@/helpers/api-utils";
+import { useSnackbar } from "notistack";
 
 interface AddItemProps {
   allCategories: { id: number; name: string }[];
@@ -99,12 +100,17 @@ const AddItem = forwardRef(
       }
     };
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
 
       if (file) {
         if (file.size > 500 * 1024) {
-          alert("File size must be under 500KB.");
+          enqueueSnackbar("File size must be under 500KB.", {
+            variant: "warning",
+            className: "font-poppins",
+          });
           return;
         }
         setSelectedFile(file);

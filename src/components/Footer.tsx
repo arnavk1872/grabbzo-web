@@ -8,12 +8,17 @@ import { Instagram, Linkedin, Twitter } from "lucide-react";
 import { S3_BASE_URL } from "@/lib/constants";
 import { usePathname } from "next/navigation";
 
-const Footer = () => {
+interface FooterProps {
+  isHome?: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ isHome }) => {
   const pathname = usePathname();
+
   const hiddenPaths = ["/", "/about"];
   return (
-    <div className="font-poppins">
-      <div className="my-10 px-16 flex justify-between border-t-2">
+    <div className={`font-poppins ${isHome ? "bg-[#FCEBC6]" : ""}`}>
+      <div className=" px-16 flex justify-between border-t-2">
         <div className="pt-8">
           <Image
             src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
@@ -97,12 +102,12 @@ const Footer = () => {
                 Privacy Policy
               </Link>
               {!hiddenPaths.includes(pathname) && (
-              <Link
-                className="hover:underline hover:underline-offset-4"
-                href="policies/channel-partner"
-              >
-                Channel Partner Agreement
-              </Link>
+                <Link
+                  className="hover:underline hover:underline-offset-4"
+                  href="policies/channel-partner"
+                >
+                  Channel Partner Agreement
+                </Link>
               )}
               <Link
                 className="hover:underline hover:underline-offset-4"
@@ -120,7 +125,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p className="text-sm text-center mb-10 text-gray-600">
+      <p className="text-sm text-center pb-10 pt-4 text-gray-600 px-6">
         By continuing past this page, you agree to our Terms of Service,
         Cancellation and Refund Policy and Privacy Policy. All trademarks are
         properties of their respective owners. 2024-2026 © Grabbzo™ Ltd. All

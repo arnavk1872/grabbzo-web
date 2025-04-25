@@ -3,8 +3,8 @@
 import React, { Suspense, useState } from "react";
 import { Slider } from "@/components/discounts/Slider";
 import { Button } from "@/components/UI/Button";
-import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import {
   AlertDialog,
@@ -56,20 +56,26 @@ const CustomDiscount = () => {
     const applicableFor = searchParams.get("appfor");
 
     if (percentage) setDiscount(Number(percentage));
-    if (maxCapParam) setMaxCap(maxCapParam === "null" ? "No max cap" : Number(maxCapParam));
+    if (maxCapParam)
+      setMaxCap(maxCapParam === "null" ? "No max cap" : Number(maxCapParam));
     if (coupon) {
       setSelectedItem(coupon);
       setIsPreFilled(true); // Lock the field if pre-filled
     }
     if (applicableFor) {
-      const formattedCustomerType = applicableFor.replace(/([a-z])([A-Z])/g, "$1 $2");
+      const formattedCustomerType = applicableFor.replace(
+        /([a-z])([A-Z])/g,
+        "$1 $2"
+      );
       setCustomerType(formattedCustomerType);
     }
-    
   }, [searchParams]);
   const handleConfirm = async () => {
     if (!selectedItem) {
-      alert("Please select a coupon code.");
+      enqueueSnackbar("Please select a coupon code.", {
+        variant: "warning",
+        className: "font-poppins",
+      });
       return;
     }
 
@@ -106,27 +112,36 @@ const CustomDiscount = () => {
       <div className="mt-6">
         <h2 className="text-lg font-semibold">Select your discount</h2>
         {isPreFilled ? (
-        <Input type="text" value={selectedItem || ""} disabled className="mt-2 w-1/" />
-      ) : (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Input
-              type="text"
-              value={selectedItem || ""}
-              readOnly
-              placeholder="Select coupon code"
-              className="cursor-pointer mt-2"
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {couponOptions.map((option) => (
-              <DropdownMenuItem key={option} onSelect={() => handleSelect(option)} className="cursor-pointer">
-                {option}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
+          <Input
+            type="text"
+            value={selectedItem || ""}
+            disabled
+            className="mt-2 w-1/"
+          />
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Input
+                type="text"
+                value={selectedItem || ""}
+                readOnly
+                placeholder="Select coupon code"
+                className="cursor-pointer mt-2"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {couponOptions.map((option) => (
+                <DropdownMenuItem
+                  key={option}
+                  onSelect={() => handleSelect(option)}
+                  className="cursor-pointer"
+                >
+                  {option}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
         <Slider
           value={[discount]}
           onValueChange={(value) => setDiscount(value[0])}
