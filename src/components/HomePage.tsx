@@ -1,50 +1,31 @@
-"use client";
-import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
-import { IoLocationSharp } from "react-icons/io5";
 import Footer from "./Footer";
-import DownwardArrow from "./Icons/DownwardArrow";
 import { S3_BASE_URL } from "@/lib/constants";
 import AppFeatures from "./HomePage/AppFeatures";
 import AppExperience from "./HomePage/AppExperience";
+import image from "@public/image.png"
 
 const HomePage = () => {
   const router = useRouter();
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
 
   const gotoLogin = () => {
     router.push("/restaurant");
   };
 
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
     <>
-      <div className="relative w-full h-[80vh] font-poppins">
+      <div className="relative w-full h-[90vh] font-poppins">
         <Image
-          src={`${S3_BASE_URL}/public/image.png`}
-          fill
-          quality={100}
+          src={image}
+          height={1000}
+          width={1000}
           alt="home-main"
           className="absolute inset-0 w-full h-full pointer-events-none"
         />
 
         <button
-          className="absolute cursor-pointer top-4 right-4 text-white px-4 py-2 rounded-lg font-poppins z-[100]"
+          className="absolute cursor-pointer top-4 right-4 text-white text-[22px] px-4 py-2 rounded-lg font-poppins z-[100]"
           onClick={gotoLogin}
         >
           Manage Your Restaurant
@@ -61,7 +42,7 @@ const HomePage = () => {
             unoptimized
           />
           <p className="text-white font-bold text-4xl mt-3 max-w-[1200px]">
-          India’s smartest dining companion for takeout, pre-dine-in, and car delivery.
+          India’s smartest dining companion for takeout, pre-dine-in, and  delivery in car.
           </p>
           <p className="text-white text-3xl mt-8">
             Explore delicious food & drinks near you
