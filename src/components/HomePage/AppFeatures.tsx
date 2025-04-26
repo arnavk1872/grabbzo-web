@@ -25,10 +25,10 @@ const AppFeatures: React.FC = () => {
             alt="No of restaurants image"
           />
 
-          <p className="text-xl font-semibold mt-4">
+          <div className="text-xl font-semibold mt-4">
             <div className="font-bold text-black">100+</div>{" "}
             <span className="text-gray-500">Restaurants</span>
-          </p>
+          </div>
         </div>
 
         <div className="flex flex-col items-center">
@@ -39,10 +39,10 @@ const AppFeatures: React.FC = () => {
             alt="No of restaurants image"
           />
 
-          <p className="text-xl font-semibold mt-4">
+          <div className="text-xl font-semibold mt-4">
             <div className="font-bold text-black">10,000+</div>{" "}
             <span className="text-gray-500">Happy customers</span>
-          </p>
+          </div>
         </div>
 
         <div className="flex flex-col items-center">
@@ -53,10 +53,10 @@ const AppFeatures: React.FC = () => {
             alt="No of restaurants image"
           />
 
-          <p className="text-xl font-semibold mt-4">
+          <div className="text-xl font-semibold mt-4">
             <div className="font-bold text-black">5,000+</div>{" "}
             <span className="text-gray-500">Orders</span>
-          </p>
+          </div>
         </div>
       </div>
     </section>
