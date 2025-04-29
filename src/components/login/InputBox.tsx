@@ -154,7 +154,7 @@ const InputBox = () => {
       </div>
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <Button
-          className="mb-10 bg-blue-500  hover:bg-blue-600 text-white w-2/3 font-semibold rounded-full"
+          className="mb-6 bg-blue-500   hover:bg-blue-600 text-white w-2/3 font-semibold rounded-full"
           onClick={() => {
             handleClick();
             setIsContinueDisabled(true);

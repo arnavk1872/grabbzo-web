@@ -13,6 +13,7 @@ import WorkWithUs from "@/components/aboutus/WorkWithUs";
 import Dining from "@/components/aboutus/Dining";
 import Pickup from "@/components/aboutus/Pickup";
 import CarDelivery from "@/components/aboutus/CarDelivery";
+import BlogSection from "@/components/aboutus/BlogSection";
 
 const Page = () => {
   return (
@@ -30,7 +31,12 @@ const Page = () => {
           src={`${S3_BASE_URL}/public/Grabbzo-white-logo.png`}
           width={1000}
           height={1000}
-          style={{ objectFit: "cover", height: "60px", padding: "10px",zIndex:100}}
+          style={{
+            objectFit: "cover",
+            height: "60px",
+            padding: "10px",
+            zIndex: 100,
+          }}
           quality={100}
           className="absolute h-40 w-40 top-4 left-4 z-50 object-cover"
           alt="home-main"
@@ -56,7 +62,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="text-center font-poppins text-[34px] font-semibold my-4">
+      <div className="text-center font-poppins text-[34px] font-semibold mb-2 mt-6">
         About Us
       </div>
 
@@ -78,6 +84,8 @@ const Page = () => {
         </Carousel>
       </div>
 
+      <BlogSection />
+
       <div id="work-with-us">
         <WorkWithUs />
       </div>
@@ -88,6 +96,3 @@ const Page = () => {
 };
 
 export default Page;
-
-
-
