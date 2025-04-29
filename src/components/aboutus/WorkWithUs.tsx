@@ -2,7 +2,7 @@ import { S3_BASE_URL } from "@/lib/constants";
 import Image from "next/image";
 const WorkWithUs = () => {
   return (
-    <div className="font-poppins px-16 w-full flex justify-between">
+    <div className="font-poppins px-16 w-full flex justify-between mb-12">
       <div>
         <div className="text-[30px] font-semibold">Work With Us</div>
         <div className="max-w-[800px] text-[18px]">

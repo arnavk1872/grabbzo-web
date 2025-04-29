@@ -20,8 +20,8 @@ import { usePageStore } from "@/store/CurrentPage";
 import { usePathname } from "next/navigation";
 import { S3_BASE_URL } from "@/lib/constants";
 import { cities, days, states } from "./data";
-import { TimePickerDemo } from "./TimePicker";
 import { Label } from "../UI/Label";
+import TimePicker from "./TimePicker";
 
 const InfoPage = () => {
   const router = useRouter();
@@ -74,7 +74,7 @@ const InfoPage = () => {
     return validationErrors;
   };
 
-  const setDateWrapper = (date: Date | undefined) => {
+  const setDateWrapper = (date: string | undefined) => {
     setBasicDetailsData("closingTime", date);
   };
 
@@ -142,11 +142,11 @@ const InfoPage = () => {
               setErrors((prev) => ({ ...prev, restaurantName: "" }));
             }}
             value={basicDetailsData.restaurantName}
-            disabled={Franchise}
+            // disabled={Franchise}
           />
           {loading && (
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2">
-              ⏳ 
+              ⏳
             </span>
           )}
           <div className="ml-2 text-red-500 text-[14px]">
@@ -202,10 +202,11 @@ const InfoPage = () => {
           </SelectContent>
         </Select>
         <div>
-          <Label className="pl-2 text-base font-medium">
-            Set Your Closing Time
+          <Label className="text-sm font-medium">
+            Set Closing Time <span className="text-[12px]">(24hr format)</span>
           </Label>
-          <TimePickerDemo
+
+          <TimePicker
             date={basicDetailsData.closingTime}
             setDate={setDateWrapper}
           />
@@ -215,6 +216,7 @@ const InfoPage = () => {
         <h3 className="text-zinc-800 text-xl font-extrabold">
           Restaurant Location
         </h3>
+        <MapComponent />
         <div className="grid gap-8 py-4">
           <div>
             <Input
@@ -270,8 +272,8 @@ const InfoPage = () => {
             value={basicDetailsData.city || ""}
             onValueChange={(value) => setBasicDetailsData("city", value)}
           >
-            <SelectTrigger className="text-gray-800">
-              <SelectValue placeholder="City*" />
+            <SelectTrigger className="text-gray-800" disabled={!basicDetailsData.state}    >
+              <SelectValue >{basicDetailsData.city || "City"}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               {city?.map((option) => (
@@ -302,7 +304,7 @@ const InfoPage = () => {
             value={basicDetailsData.landmark}
           />
 
-          <MapComponent />
+          
         </div>
       </div>
       <Button
