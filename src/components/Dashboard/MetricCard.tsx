@@ -66,8 +66,8 @@ const MetricCard: React.FC<MetricCardProps> = ({
               }}
               formatter={(value: any, name: string) =>
                 name === "income"
-                  ? [`$${value.toLocaleString()}`, "Income"]
-                  : [`$${value.toLocaleString()}`, "Expenses"]
+                  ? [`${value.toLocaleString()}`, "Income"]
+                  : [`${value.toLocaleString()}`, "Expenses"]
               }
               labelFormatter={(label: string) => `Month: ${label}`}
             />

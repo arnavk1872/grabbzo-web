@@ -9,7 +9,7 @@ type MessageProps = {
 
 const Message: React.FC<MessageProps> = ({ message, time, sender }) => {
   return (
-    <div className="mb-7">
+    <div>
       <div className={`flex ${sender ? "justify-end" : "items-end"}`}>
         {!sender && (
           <Avatar className="size-14 mr-3">

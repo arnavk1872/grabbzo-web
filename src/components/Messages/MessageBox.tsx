@@ -2,9 +2,19 @@ import React from "react";
 import Message from "./Message";
 import { Input } from "../UI/Input";
 
-const MessageBox = () => {
+interface MessageBoxProps {
+  selectedUser: {
+    name: string;
+    lastMessage: string;
+    time: string;
+    newMessageCount: number;
+  };
+}
+
+
+const MessageBox: React.FC<MessageBoxProps> = ({ selectedUser }) => {
   const Messages = {
-    reciever: "Harsh",
+    reciever: selectedUser.name,
     messages: [
       {
         message: "Hi, How much time to complete my order.",
@@ -12,29 +22,31 @@ const MessageBox = () => {
         sender: false,
       },
       {
-        message: "It will take about 30 minutes. Please reach on time",
+        message: "It will take about 15 minutes. Please reach on time",
         time: "9:45 PM",
         sender: true,
       },
+      
     ],
   };
+
   return (
-    <div className="min-w-full bg-white rounded-3xl">
-      <h4 className="text-2xl font-medium text-center pt-2 mb-14 border-b-2 pb-4">
+    <div className="flex flex-col justify-between bg-white rounded-3xl w-full font-poppins h-screen">
+      <h4 className="text-2xl font-medium text-center mb-14 border-b-2 py-4">
         {Messages.reciever}
       </h4>
-      <div className="w-full ml-3">
+      <div className="flex-1 w-full px-4 overflow-y-auto">
         {Messages.messages.map((message, key) => (
           <Message
             key={key}
             message={message.message}
             time={message.time}
-            sender={message.sender}
+            sender={message.sender} 
           />
         ))}
       </div>
-      <div className="fixed bottom-4 w-full mr-12">
-        <Input className="" placeholder="Message" />
+      <div className="p-4 border-t">
+        <Input placeholder="Message" className="h-12" />
       </div>
     </div>
   );

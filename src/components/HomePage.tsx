@@ -45,9 +45,9 @@ const HomePage = () => {
             India’s smartest dining companion for Takeout, Pre dine-in and
             Delivery in car.
           </p>
-          <p className="text-white text-3xl mt-8">
+          <h1 className="text-white text-3xl mt-8">
             Explore delicious food & drinks near you
-          </p>
+          </h1>
         </div>
       </div>
       <AppFeatures />

@@ -7,10 +7,11 @@ interface RestaurantMenuState {
     foodType: boolean;
     deliveryToCars: boolean;
     serviceType: string;
+    cuisineIds:string[];
   };
   setMenuDetailsData: (
     field: string,
-    value: string | File | null | boolean
+    value: string | File | null | boolean | string[]
   ) => void;
   initializeIsVeg: () => Promise<void>;
 }
@@ -21,6 +22,7 @@ const useRestaurantMenuStore = create<RestaurantMenuState>((set, get) => ({
     deliveryToCars: false,
     serviceType: "",
     image: "",
+    cuisineIds:[],
   },
   setMenuDetailsData: (field, value) => {
     set((state) => ({

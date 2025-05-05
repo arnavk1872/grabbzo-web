@@ -5,21 +5,61 @@ import { Label } from "@/components/UI/Label";
 import { RadioGroup, RadioGroupItem } from "@/components/UI/Radio";
 import useRestaurantMenuStore from "@/store/restrauntMenuStore";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { usePageStore } from "@/store/CurrentPage";
 import { S3_BASE_URL } from "@/lib/constants";
-import { uploadDocuments } from "@/helpers/api-utils";
+import { getCuisines, uploadDocuments } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
+import { Badge } from "../UI/Badge";
+import { X } from "lucide-react";
+
+type Cuisine = {
+  id: string;
+  name: string;
+};
 
 const MenuPage = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [cuisineList, setCuisineList] = useState<Cuisine[]>([]);
+  const [selectedCuisine, setSelectedCuisine] = useState<string>("");
+  const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
   const { currentPage, setCurrentPage, Franchise, canNavigateTo } =
     usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
   const { menuDetailsData, setMenuDetailsData, initializeIsVeg } =
     useRestaurantMenuStore();
+
+  useEffect(() => {
+    const getCuisineList = async () => {
+      const data = await getCuisines();
+      setCuisineList(data);
+    };
+    getCuisineList();
+  }, []);
+
+  useEffect(
+    () => setMenuDetailsData("cuisineId", selectedCuisines),
+    [selectedCuisines]
+  );
+
+  const handleAddCuisine = () => {
+    if (
+      selectedCuisine &&
+      !selectedCuisines.includes(selectedCuisine) &&
+      selectedCuisines.length < 4
+    ) {
+      const updated = [...selectedCuisines, selectedCuisine];
+      setSelectedCuisines(updated);
+      setSelectedCuisine("");
+    }
+  };
+
+  const handleRemoveCuisine = (cuisineId: string) => {
+    const updated = selectedCuisines.filter((id) => id !== cuisineId);
+    setSelectedCuisines(updated);
+  };
 
   const initialize = async () => {
     await usePageStore.getState().initializeFranchise();
@@ -74,6 +114,7 @@ const MenuPage = () => {
     setCurrentPage("contract");
     router.push("/details/contract");
   };
+
   return (
     <div className="font-poppins ml-10 min-w-[750px]">
       <div className="flex justify-between items-center mb-1">
@@ -106,6 +147,55 @@ const MenuPage = () => {
             <Label htmlFor="nonveg">Veg / Non-Veg</Label>
           </div>
         </RadioGroup>
+
+        <div className="mt-4">
+          <label className="font-medium mb-1 mt-6 block">
+            Select up to 4 cuisines that you serve
+          </label>
+          <div className="flex items-center gap-2">
+            <select
+              value={selectedCuisine}
+              onChange={(e) => setSelectedCuisine(e.target.value)}
+              className="border w-full h-[40px] rounded-xl px-2"
+            >
+              <option value="">Select Cuisine</option>
+              {cuisineList.map((cuisine) => (
+                <option
+                  key={cuisine.id}
+                  value={cuisine.id}
+                  disabled={selectedCuisines.includes(cuisine.id)}
+                >
+                  {cuisine.name}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={handleAddCuisine}
+              className="bg-blue-500 text-white px-3 py-1 rounded text-sm disabled:opacity-50 h-[40px]"
+              disabled={!selectedCuisine || selectedCuisines.length >= 4}
+            >
+              Add
+            </button>
+          </div>
+
+          <div className="flex gap-2 flex-wrap mt-2">
+            {selectedCuisines.map((cuisineId) => {
+              const cuisine = cuisineList.find((c) => c.id == cuisineId);
+              return (
+                <Badge
+                  key={cuisineId}
+                  className="flex items-center gap-1 bg-gray-200 text-gray-800 px-2 py-1"
+                >
+                  {cuisine?.name}
+                  <X
+                    className="w-3 h-3 cursor-pointer"
+                    onClick={() => handleRemoveCuisine(cuisineId)}
+                  />
+                </Badge>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6 mt-12">

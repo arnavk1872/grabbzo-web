@@ -6,6 +6,7 @@ const page = () => {
   return (
     <div>
       <Header/>
+      <h1 className="hidden">Support Page</h1>
       <GrabbzoChatBot/>
     </div>
   )

@@ -6,6 +6,7 @@ const page = () => {
   return (
     <div>
       <Header />
+      <h1 className="hidden">Franchise Page</h1>
       <Franchise />
     </div>
   );

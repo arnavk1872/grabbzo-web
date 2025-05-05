@@ -1,17 +1,13 @@
-import MessageBox from "@/components/Messages/MessageBox";
-import Sidebar from "@/components/Messages/Sidebar";
-import React from "react";
+import MessagesClient from "@/components/Messages/MessagesClient";
 
-const page = () => {
-  return (
-    <div className="flex justify-center w-full mt-80 font-poppins text-[24px]">
-      No messages yet!
+const Page = () => {
+  return false ? (
+    <div className="font-poppins flex items-center justify-center w-full h-screen text-[28px]">
+      No Messages Yet!
     </div>
-    // <div className="flex">
-    //   <Sidebar />
-    //   <MessageBox />
-    // </div>
+  ) : (
+    <MessagesClient />
   );
 };
 
-export default page;
+export default Page;

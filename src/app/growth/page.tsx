@@ -10,6 +10,7 @@ const page = () => {
   return (
     <div>
       <Header />
+      <h1 className="hidden">Growth Page</h1>
       <div className="font-poppins px-12">
         <div className="p-6">
           <h1 className="text-2xl font-bold">Grow</h1>

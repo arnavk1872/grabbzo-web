@@ -5,9 +5,15 @@ import Image from "next/image";
 const page = () => {
   return (
     <>
+      <h1 className="hidden">Dashboard Page</h1>
       {false ? (
         <div className="w-[100vw]  text-[30px] flex flex-col justify-center items-center font-poppins h-[100vh]">
-          <Image src={`${S3_BASE_URL}/public/Dashboard.png`} width={220} height={220} alt="Temporary Illustration"/>
+          <Image
+            src={`${S3_BASE_URL}/public/Dashboard.png`}
+            width={220}
+            height={220}
+            alt="Temporary Illustration"
+          />
           No data to display at the moment!
         </div>
       ) : (

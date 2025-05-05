@@ -9,6 +9,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen">
+      <h1 className="hidden">Policies Page</h1>
       <Header />
       <div className="flex w-full font-poppins">
         <PoliciesSidebar />

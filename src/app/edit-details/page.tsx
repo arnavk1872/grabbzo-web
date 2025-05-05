@@ -10,6 +10,7 @@ const page = async () => {
   }
   return (
     <div>
+      <h1 className="hidden">Edit Restaurant Details Page</h1>
       <RestaurantEditPage data={RestaurantDetails.data.data} />
     </div>
   );

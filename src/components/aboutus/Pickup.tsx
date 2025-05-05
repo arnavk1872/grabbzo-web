@@ -22,7 +22,6 @@ const Pickup = () => {
             {" "}
             Save money and Enjoy food at your convenience.
           </h2>
-          {/* <p className="text-green-600 font-medium mt-1">Ipsum ipsum</p> */}
           <p className="text-gray-600 mt-2">
             Simply order, grab, and go—no more waiting in long queues in hot
             summers or for your food to be ready. Order food through grabbzo and

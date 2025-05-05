@@ -16,8 +16,7 @@ const AppFeatures: React.FC = () => {
           Bringing taste to every table
         </h2>
         <p className="text-gray-500 text-lg">
-          Grabbzo brings your favorite meals to your doorstep, making food
-          ordering quick, easy, and hassle-free.
+        Grabbzo lets you skip the wait—order ahead for quick takeaway or a seamless dine-in experience at your favorite restaurants
         </p>
       </div>
 

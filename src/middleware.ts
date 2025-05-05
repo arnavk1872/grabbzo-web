@@ -17,6 +17,8 @@ export function middleware(request: NextRequest) {
     "/about",
     "/restaurant",
     "/plan-expired",
+    "/about/smart-diners-preorder-2025",
+    "/about/preorder-meals-smartest-move",
   ];
 
   const blockedPaths = [
@@ -28,6 +30,7 @@ export function middleware(request: NextRequest) {
     "/policies/channel-partner",
     "/policies/guidelines-and-policy",
     "/about",
+
   ];
 
   if (!accessToken && !allowedPaths.includes(url.pathname)) {

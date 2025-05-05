@@ -8,6 +8,7 @@ const page = () => {
   return (
     <>
       <Header />
+      <h1 className="hidden">Wallet Page</h1>
       <div className="px-8 flex justify-between">
         <div className="w-3/4 px-4">
           <Withdraw />

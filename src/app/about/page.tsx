@@ -18,6 +18,7 @@ import BlogSection from "@/components/aboutus/BlogSection";
 const Page = () => {
   return (
     <div>
+      <h1 className="hidden">About us Page</h1>
       <div className="relative w-full h-[80vh] font-poppins">
         <Image
           src={`${S3_BASE_URL}/public/about-us-header.png`}

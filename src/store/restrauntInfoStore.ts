@@ -7,7 +7,7 @@ interface RestaurantInfoState {
     restaurantName: string;
     email: string;
     closedDay: string;
-    closingTime: Date | undefined;
+    closingTime: string;
     shopNo: string;
     floor: string;
     area: string;
@@ -17,6 +17,7 @@ interface RestaurantInfoState {
     landmark: string;
     latitude: string;
     longitude: string;
+    primaryMobileNo:string;
   };
   setBasicDetailsData: (
     field: string,
@@ -31,7 +32,7 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set, get) => ({
     restaurantName: "",
     email: "",
     closedDay: "",
-    closingTime: undefined,
+    closingTime: "",
     shopNo: "",
     floor: "",
     area: "",
@@ -41,6 +42,7 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set, get) => ({
     landmark: "",
     latitude: "28.632136674970926",
     longitude: "77.21846936089494",
+    primaryMobileNo:"",
   },
   setBasicDetailsData: (field, value) => {
     set((state) => ({
