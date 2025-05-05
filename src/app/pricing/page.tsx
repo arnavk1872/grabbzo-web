@@ -9,6 +9,7 @@ import React from "react";
 const Page = () => {
   return (
     <div className=" pb-10">
+      <h1 className="hidden">Pricing Page</h1>
       {/* <Header /> */}
       <div className="flex flex-col items-center justify-center my-8 font-poppins text-center relative pt-24">
         <div className="relative">

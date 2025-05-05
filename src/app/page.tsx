@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import ComingSoon from "@/components/ComingSoon";
 import DownloadApp from "@/components/DownloadApp"; 
 import HomePage from "@/components/HomePage";
 
@@ -22,7 +21,6 @@ const Home = () => {
     };
   }, []);
 
-  // return showDownloadApp ? <DownloadApp /> : <ComingSoon />;
   return showDownloadApp ? <DownloadApp /> : <HomePage />;
 };
 

@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/UI/Button";
-import { Checkbox } from "@/components/UI/Checkbox";
 import { Input } from "@/components/UI/Input";
 import useRestaurantInfoStore from "@/store/restrauntInfoStore";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BasicFormSchema } from "./formSchema";
-// import { City, ICity, State } from "country-state-city";
 import {
   Select,
   SelectContent,
@@ -59,6 +57,8 @@ const InfoPage = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [city, setCity] = useState<string[]>([]);
+  const [sameAsOwner, setSameAsOwner] = useState(true);
+
   const validateForm = () => {
     const validationResult = BasicFormSchema.safeParse(basicDetailsData);
     const validationErrors: Record<string, string> = {};
@@ -87,6 +87,11 @@ const InfoPage = () => {
     setCity(cities[value]);
   };
 
+  const handleCheckboxChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+    setSameAsOwner(e.target.checked);
+   
+  };
+
   const handleClick = () => {
     const validationErrors = validateForm();
 
@@ -95,6 +100,7 @@ const InfoPage = () => {
       router.push("/details/document");
     }
   };
+  
   const isFormComplete =
     basicDetailsData.ownerName &&
     basicDetailsData.restaurantName &&
@@ -165,15 +171,21 @@ const InfoPage = () => {
           />
           <div className="ml-2 text-red-500 text-[14px]">{errors.email}</div>
         </div>
-        {/* <div>
+        <div>
           <h6 className="text-zinc-800 font-medium text-base">
             Restaurant's primary contact number
           </h6>
           <span className="text-neutral-400 text-sm font-light">
             Customers and Grabbzo may call on this number for order support
           </span>
-          <div className="flex space-x-2 border border-neutral-300 w-fit p-4 rounded shadow-lg mt-3">
-            <Checkbox id="same" />
+          <div className="flex space-x-2  w-fit mt-3">
+            <input
+              type="checkbox"
+              id="sameAsOwner"
+              checked={sameAsOwner}
+              onChange={handleCheckboxChange}
+              className="p-2 cursor-pointer"
+            />
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="same"
@@ -183,7 +195,16 @@ const InfoPage = () => {
               </label>
             </div>
           </div>
-        </div> */}
+          {!sameAsOwner && (
+            <input
+              type="tel"
+              value={basicDetailsData.primaryMobileNo}
+              onChange={(e) => setBasicDetailsData("primaryMobileNo",e.target.value)}
+              placeholder="Enter primary contact number"
+              className="w-full p-2 mt-4 border rounded-md"
+            />
+          )}
+        </div>
         <Select
           value={basicDetailsData.closedDay || "Select Closed Day"}
           onValueChange={(value) => setBasicDetailsData("closedDay", value)}
@@ -212,6 +233,7 @@ const InfoPage = () => {
           />
         </div>
       </div>
+      {/*LOCATION SECTION*/}
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-6 shadow-xl mt-12">
         <h3 className="text-zinc-800 text-xl font-extrabold">
           Restaurant Location
@@ -272,8 +294,11 @@ const InfoPage = () => {
             value={basicDetailsData.city || ""}
             onValueChange={(value) => setBasicDetailsData("city", value)}
           >
-            <SelectTrigger className="text-gray-800" disabled={!basicDetailsData.state}    >
-              <SelectValue >{basicDetailsData.city || "City"}</SelectValue>
+            <SelectTrigger
+              className="text-gray-800"
+              disabled={!basicDetailsData.state}
+            >
+              <SelectValue>{basicDetailsData.city || "City"}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               {city?.map((option) => (
@@ -303,8 +328,6 @@ const InfoPage = () => {
             }}
             value={basicDetailsData.landmark}
           />
-
-          
         </div>
       </div>
       <Button

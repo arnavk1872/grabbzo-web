@@ -39,6 +39,8 @@ interface Payload {
   };
   restaurantName?: string; // Optional property
   isVeg?: boolean; // Optional property
+  primaryMobileNo:string;
+  cuisineIds:string[];
 }
 
 const ContractPage = () => {
@@ -66,13 +68,13 @@ const ContractPage = () => {
     initialize();
   }, []);
 
-  const formatDateToTimeString = (date: Date | undefined) => {
-    const hours = date?.getHours().toString().padStart(2, "0");
-    const minutes = date?.getMinutes().toString().padStart(2, "0");
-    const seconds = date?.getSeconds().toString().padStart(2, "0");
+  // const formatDateToTimeString = (date: Date | undefined) => {
+  //   const hours = date?.getHours().toString().padStart(2, "0");
+  //   const minutes = date?.getMinutes().toString().padStart(2, "0");
+  //   const seconds = date?.getSeconds().toString().padStart(2, "0");
 
-    return `${hours}:${minutes}:${seconds}`;
-  };
+  //   return `${hours}:${minutes}:${seconds}`;
+  // };
   const handleSubmit = async () => {
     const payload: Payload = {
       ownerName: basicDetailsData.ownerName,
@@ -80,7 +82,7 @@ const ContractPage = () => {
       franchise: Franchise,
       flag: true,
       closedDay: basicDetailsData.closedDay,
-      closeTiming: formatDateToTimeString(basicDetailsData.closingTime),
+      closeTiming: basicDetailsData.closingTime,
       serviceType: menuDetailsData.serviceType,
       deliveryToCars: menuDetailsData.deliveryToCars,
       latitude: basicDetailsData.latitude,
@@ -99,6 +101,8 @@ const ContractPage = () => {
         accountNumber: docDetailsData.BankAccountNumber,
         ifsc: docDetailsData.BankIfscCode,
       },
+      primaryMobileNo:basicDetailsData.primaryMobileNo,
+      cuisineIds:menuDetailsData.cuisineIds,
     };
 
     if (!Franchise) {

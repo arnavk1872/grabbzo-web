@@ -11,6 +11,7 @@ const page = () => {
   return (
     <div className="bg-white h-screen">
       <Header />
+      <h1 className="hidden">Account Suspended Page</h1>
       <div className="flex items-center flex-col justify-center font-poppins -mt-6 ">
         {" "}
         <Image

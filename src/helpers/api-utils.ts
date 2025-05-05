@@ -874,3 +874,25 @@ export const getBasicDetails = async () => {
     throw error;
   }
 };
+
+export const getCuisines = async () => {
+  const token = await getToken();
+
+  if (!token) return;
+  try {
+    const response = await axios.get(
+      `${IP}/restaurant-admins/cuisine`,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.data;
+    
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};

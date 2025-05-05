@@ -9,6 +9,7 @@ import { S3_BASE_URL } from "@/lib/constants";
 const page = () => {
   return (
     <div className="font-poppins">
+      <h1 className="hidden">Restaurant Landing Page</h1>
       <div className="relative">
         <Image
           //Height and width in these specify how clear they look

@@ -38,15 +38,24 @@ const MapComponent: React.FC = () => {
     const lng = parseFloat(basicDetailsData.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
     setCenter({ lat, lng });
+  }, [
+    basicDetailsData.latitude,
+    basicDetailsData.longitude,
+    setBasicDetailsData,
+  ]);
 
-    const win = window as any;
-    if (!win.google || !win.google.maps) {
-      console.error("Google Maps API is not loaded yet");
-      return;
-    }
+  const onMapClick = (e: google.maps.MapMouseEvent) => {
+    if (!e.latLng) return;
+    writeLocation(e.latLng.lat(), e.latLng.lng());
+  };
 
-    const geocoder = new google.maps.Geocoder();
-    
+  const handleMapLoad = () => {
+    const lat = parseFloat(basicDetailsData.latitude);
+    const lng = parseFloat(basicDetailsData.longitude);
+    if (isNaN(lat) || isNaN(lng)) return;
+
+    const geocoder = new window.google.maps.Geocoder();
+
     geocoder.geocode({ location: { lat, lng } }, (results, status) => {
       if (status === "OK" && results && results[0]) {
         const comps = results[0].address_components;
@@ -57,25 +66,15 @@ const MapComponent: React.FC = () => {
           administrative_area_level_1: "state",
           postal_code: "pinCode",
         };
-        
+
         comps.forEach((c) =>
           c.types.forEach((t) => {
             const key = mapping[t];
-
             if (key) setBasicDetailsData(key, c.long_name);
           })
         );
       }
     });
-  }, [
-    basicDetailsData.latitude,
-    basicDetailsData.longitude,
-    setBasicDetailsData,
-  ]);
-
-  const onMapClick = (e: google.maps.MapMouseEvent) => {
-    if (!e.latLng) return;
-    writeLocation(e.latLng.lat(), e.latLng.lng());
   };
 
   return (
@@ -91,6 +90,7 @@ const MapComponent: React.FC = () => {
           center={center}
           zoom={15}
           onClick={onMapClick}
+          onLoad={handleMapLoad}
         >
           <Marker position={center} />
         </GoogleMap>

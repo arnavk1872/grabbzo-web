@@ -29,9 +29,9 @@ const PartnerBox = () => {
                 </a>
               </p>
             )}
-            {item.name === "FSSAI Licence" && (
+            {item.name === "FSSAI License" && (
               <p className="text-xs text-gray-500">
-                Don't have a FSSAI licence?
+                Don't have a FSSAI license?
                 <a
                   href="https://foscos.fssai.gov.in/apply-for-lic-and-reg"
                   className="text-blue-600 hover:underline pl-1"

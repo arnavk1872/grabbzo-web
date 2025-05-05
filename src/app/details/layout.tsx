@@ -1,6 +1,5 @@
 import Header from "@/components/Details/Header";
 import Sidebar from "@/components/Details/Sidebar";
-import { SnackbarProvider } from "notistack";
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
@@ -10,13 +9,12 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="bg-neutral-200 min-h-screen">
-      {/* <SnackbarProvider maxSnack={1} preventDuplicate autoHideDuration={5000}> */}
+      <h1 className="hidden">Signup Page</h1>
       <Header />
       <div className="flex w-full">
         <Sidebar />
         {children}
       </div>
-      {/* </SnackbarProvider> */}
     </div>
   );
 };

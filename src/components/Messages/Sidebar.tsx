@@ -1,9 +1,17 @@
-import React from "react";
-// import SearchBar from "./SearchBar";
 import UserBtn from "./UserBtn";
+interface SidebarProps {
+  setSelectedUser: (user: UserType) => void;
+}
 
-const Sidebar = () => {
-  const OrderHistory: any[] = [
+interface UserType {
+  name: string;
+  lastMessage: string;
+  time: string;
+  newMessageCount: number;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ setSelectedUser }) => {
+  const OrderHistory = [
     {
       name: "Harsh",
       lastMessage: "Hi, how much time it ...",
@@ -15,58 +23,30 @@ const Sidebar = () => {
       lastMessage: "Hi, how much time it ...",
       time: "15 min",
       newMessageCount: 1,
-    },
-    {
-      name: "Shreesh",
-      lastMessage: "Hi, how much time it ...",
-      time: "25 min",
-      newMessageCount: 1,
-    },
-    {
-      name: "Arnav",
-      lastMessage: "Hi, how much time it ...",
-      time: "35 min",
-      newMessageCount: 1,
-    },
-    {
-      name: "Mankaran",
-      lastMessage: "Hi, how much time it ...",
-      time: "1 hour",
-      newMessageCount: 1,
-    },
-    {
-      name: "Ahmad",
-      lastMessage: "Hi, how much time it ...",
-      time: "1 hour",
-      newMessageCount: 1,
-    },
-    {
-      name: "Faizal",
-      lastMessage: "Hi, how much time it ...",
-      time: "4 hour",
-      newMessageCount: 1,
-    },
+    }
+  
   ];
+
   return (
-    <div className="min-w-[350px] ml- bg-white rounded-t-3xl pr-2 min-h-[50vh] font-poppins">
-      <h3 className="text-center font-medium text-xl border-b-2 pb-5 mb-8 pt-2">
+    <div className="min-w-[350px] bg-white border border-borderColor rounded-3xl pr-2 min-h-[50vh] font-poppins mr-4 h-screen overflow-y-auto no-scrollbar">
+      <h3 className="text-center font-medium text-xl border-b-2 py-4 ">
         Messages
       </h3>
-      {/* <SearchBar /> */}
-      {/* <div className="min-h-full">
-        <h2 className="text-xl font-semibold text-center mt-20">
-          No Orders Fulfiled Yet
-        </h2>
-      </div> */}
+
       <div className="my-5">
         {OrderHistory.map((item, key) => (
-          <UserBtn
+          <div
             key={key}
-            name={item.name}
-            lastMessage={item.lastMessage}
-            time={item.time}
-            newMessageCount={item.newMessageCount}
-          />
+            onClick={() => setSelectedUser(item)}
+            className="cursor-pointer"
+          >
+            <UserBtn
+              name={item.name}
+              lastMessage={item.lastMessage}
+              time={item.time}
+              newMessageCount={item.newMessageCount}
+            />
+          </div>
         ))}
       </div>
     </div>
