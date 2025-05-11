@@ -41,7 +41,6 @@ const getBgColorFromString = (str: string) => {
   ];
   // Use the first character's char code to deterministically select a color
   const charCode = str.charCodeAt(0);
-  console.log(charCode,"CHAR CODE");
   
   return colors[charCode % colors.length];
 };
