@@ -1,5 +1,4 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../Dashboard/Avatar";
 
 type MessageProps = {
   message: string;
@@ -11,12 +10,7 @@ const Message: React.FC<MessageProps> = ({ message, time, sender }) => {
   return (
     <div>
       <div className={`flex ${sender ? "justify-end" : "items-end"}`}>
-        {!sender && (
-          <Avatar className="size-14 mr-3">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>You</AvatarFallback>
-          </Avatar>
-        )}
+
         {/* <div className="flex flex-col"> */}
         <div
           className={`${
@@ -30,7 +24,7 @@ const Message: React.FC<MessageProps> = ({ message, time, sender }) => {
       </div>
       <p
         className={`text-gray-400 text-sm mt-3 ${
-          sender ? "text-end" : "pl-16"
+          sender ? "text-end" : "pl-2"
         }`}
       >
         {time}

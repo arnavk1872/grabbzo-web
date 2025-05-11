@@ -27,7 +27,7 @@ const BlogSection = () => {
                 blog.isFeatured ? "md:col-span-1 md:row-span-2 md:scale-105" : ""
               }`}
             >
-              <img src={blog.img} alt={blog.title} className="h-fit w-fit" />
+              <img src={blog.img} alt={blog.title} className="h-fit w-fit" rel="preload"/>
               <div className="p-4">
                 <h3 className="font-semibold text-[18px] break-words">
                   {blog.title}

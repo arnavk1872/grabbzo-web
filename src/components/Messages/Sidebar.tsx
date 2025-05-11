@@ -13,7 +13,7 @@ interface UserType {
 const Sidebar: React.FC<SidebarProps> = ({ setSelectedUser }) => {
   const OrderHistory = [
     {
-      name: "Harsh",
+      name: "Shreesh",
       lastMessage: "Hi, how much time it ...",
       time: "5 min",
       newMessageCount: 1,
@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setSelectedUser }) => {
       lastMessage: "Hi, how much time it ...",
       time: "15 min",
       newMessageCount: 1,
-    }
+    },
   
   ];
 

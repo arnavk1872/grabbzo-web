@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 
   const blockedPaths = [
     "/",
-    "/restaurant",
+    // "/restaurant",
     "/policies/terms-of-service",
     "/policies/privacy",
     "/policies/cancellation-and-refund",

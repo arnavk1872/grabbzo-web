@@ -22,6 +22,7 @@ interface ChangeMenuProps {
 const ChangeMenu: React.FC<ChangeMenuProps> = ({
   toggleEditor,
   allCategories,
+  categories,
   setCategories,
   setLocalItems,
 }) => {
@@ -177,7 +178,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         {toggleEditor ? (
           <AddItem
             ref={itemDataRef}
-            allCategories={allCategories}
+            categories={categories}
             formData={formData}
             onFormDataChange={handleFormDataChange}
           />

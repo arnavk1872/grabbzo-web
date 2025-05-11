@@ -1,7 +1,7 @@
 import MessagesClient from "@/components/Messages/MessagesClient";
 
 const Page = () => {
-  return false ? (
+  return true ? (
     <div className="font-poppins flex items-center justify-center w-full h-screen text-[28px]">
       No Messages Yet!
     </div>

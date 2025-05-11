@@ -26,7 +26,7 @@ export const blogs = [
   {
     id: 3,
     slug: "preorder-meals-smartest-move",
-    title: "Why pre-ordering your meal is the smartest move this year",
+    title: "Why pre-ordering your meal is the smartest move this year ?",
     description:
       "In a world where time is the real currency, waiting hours at a restaurant just to enjoy a meal feels ancient. Thanks to Grabbzo, smart foodies across India are skipping the chaos by pre-ordering their meals.",
     img: `${S3_BASE_URL}/public/blog3.jpeg`,

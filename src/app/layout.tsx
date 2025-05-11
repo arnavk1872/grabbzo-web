@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       {/*SEO TAGS START*/}
       <head>
-      <link rel="canonical" href="https://www.grabbzo.com/" />
+      {/* <link rel="canonical" href="https://www.grabbzo.com/" /> */}
 
       <meta property="og:title" content="Grabbzo" />
       <meta
