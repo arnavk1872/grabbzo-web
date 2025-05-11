@@ -29,6 +29,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ selectedUser }) => {
       
     ],
   };
+console.log(selectedUser.name);
 
   return (
     <div className="flex flex-col justify-between bg-white rounded-3xl w-full font-poppins h-screen">

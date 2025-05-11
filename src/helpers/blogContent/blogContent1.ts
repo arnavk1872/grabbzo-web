@@ -2,7 +2,7 @@ const blogContent1 = `
 <div class="font-poppins ">
 <div class="px-6 py-10 max-w-4xl mx-auto space-y-10 text-gray-800">
   <section>
-    <h1 class="text-4xl font-bold mb-4 text-blue-600">Why Smart Diners Are Switching to Pre-Order Takeaway in 2025</h1>
+    <h1 class="text-4xl font-bold mb-4 text-blue-600">Why Smart Diners Are Switching to Pre-Order Takeaway in 2025 ?</h1>
     <div class="py-6">
       The pandemic has reshaped our dining preferences. Studies reveal that 30.9% of consumers order more food online now. People searching for "takeaway near me" or "takeaway food near me" want more than just convenience. They look for efficient service, sustainable practices and better value. Mobile applications are the preferred ordering method for 58.8% of customers. Additionally, 41.2% of customers actively seek eco-friendly packaging options. Smart planning creates better dining experiences - this is the key lesson for customers who frequently search "takeaway restaurants open now near me."
     </div>

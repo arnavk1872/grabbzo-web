@@ -18,7 +18,7 @@ const UserBtn: React.FC<UserBtnProps> = ({
     <div className="flex justify-evenly cursor-pointer hover:bg-gray-200 p-3 rounded-3xl">
       <Avatar className="size-14">
         <AvatarImage  />
-        <AvatarFallback>X</AvatarFallback>
+        <AvatarFallback>{name?.charAt(0)}</AvatarFallback>
       </Avatar>
       <div>
         <span className="text-lg font-semibold">{name}</span>

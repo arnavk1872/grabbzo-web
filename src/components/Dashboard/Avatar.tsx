@@ -32,19 +32,48 @@ const AvatarImage = React.forwardRef<
 ))
 AvatarImage.displayName = AvatarPrimitive.Image.displayName
 
+const getBgColorFromString = (str: string) => {
+  const colors = [
+    'bg-blue-300',
+    'bg-red-300',
+    'bg-green-300',
+    'bg-yellow-300'
+  ];
+  // Use the first character's char code to deterministically select a color
+  const charCode = str.charCodeAt(0);
+  console.log(charCode,"CHAR CODE");
+  
+  return colors[charCode % colors.length];
+};
+
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, children, ...props }, ref) => {
+  // Get the text content from children
+  let text = '';
+  if (typeof children === 'string') {
+    text = children;
+  } else if (React.isValidElement(children) && typeof children.props.children === 'string') {
+    text = children.props.children;
+  }
+  
+  const bgColor = text ? getBgColorFromString(text) : 'bg-blue-300';
+
+  return (
+    <AvatarPrimitive.Fallback
+      ref={ref}
+      className={cn(
+        "flex h-full w-full items-center justify-center rounded-full",
+        bgColor,
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </AvatarPrimitive.Fallback>
+  );
+})
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
 export { Avatar, AvatarImage, AvatarFallback }

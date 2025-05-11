@@ -1,7 +1,7 @@
 const blogContent2 = `
   <div class="space-y-6 text-gray-800 leading-relaxed font-poppins mb-12">
 
-    <h1 class="text-4xl font-semibold mt-12 text-blue-500">Why Pre-ordering your meal is the smartest move this year</h1>
+    <h1 class="text-4xl font-semibold mt-12 text-blue-500">Why Pre-ordering your meal is the smartest move this year ?</h1>
     <p>
       In a world where time is the real currency, waiting hours at a restaurant just to enjoy a meal feels ancient.
       Thanks to <span class="font-bold text-indigo-600">Grabbzo</span>, smart foodies across India are skipping the chaos by pre-ordering their meals.

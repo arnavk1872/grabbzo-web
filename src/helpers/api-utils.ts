@@ -158,7 +158,7 @@ export const getCategories = async () => {
 
   try {
     const response = await axios.get(
-      `${IP}/api/menu/restaurant/categories/?restaurantId=1`,
+      `${IP}/api/menu/restaurant/categories`,
       {
         headers: {
           Authorization: `${token}`,
@@ -203,8 +203,8 @@ export const addNewCategory = async (value: string) => {
 
   try {
     const response = await axios.post(
-      `${IP}/api/menu/category-with-items?restaurantId=1`,
-      { name: value }, // Dynamically set key-value pair
+      `${IP}/api/menu/category-with-items`,
+      { name: value }, 
       {
         headers: {
           Authorization: ` ${token}`,
@@ -225,12 +225,11 @@ export const addNewItem = async (formData: any) => {
   if (!token) return;
   const CategoryId = formData?.restaurantCategory.id;
   try {
-    // Wrap the formData in an array before sending
     const payload = Array.isArray(formData) ? formData : [formData];
 
     const response = await axios.post(
       `${IP}/api/menu/restaurant/categories/${CategoryId}/add-items`,
-      payload, // Use the array as the payload
+      payload, 
       {
         headers: {
           Authorization: ` ${token}`,

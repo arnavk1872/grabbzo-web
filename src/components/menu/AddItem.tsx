@@ -15,13 +15,13 @@ import { addItemImage } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 
 interface AddItemProps {
-  allCategories: { id: number; name: string }[];
+  categories: Record<string, { isDisabled: boolean; categoryId: number; items: any[] }>;
   formData: any;
   onFormDataChange: (field: string, value: any) => void;
 }
 
 const AddItem = forwardRef(
-  ({ allCategories, formData, onFormDataChange }: AddItemProps, ref) => {
+  ({ categories, formData, onFormDataChange }: AddItemProps, ref) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -155,18 +155,23 @@ const AddItem = forwardRef(
         <div className="w-fit whitespace-nowrap mx-6">
           <Dropdown
             label="Select Category"
-            options={allCategories}
-            selected={formData.selectedCategory || "Select Category"}
+            options={Object.entries(categories).map(([name, data]) => ({
+              id: data.categoryId,
+              name: name
+            }))}
+            selected={formData.selectedCategory}
             onSelect={(selectedId) => {
-              const selectedCategory = allCategories.find(
-                (category) => category.id === selectedId
+              // Find the category entry that matches the selected ID
+              const selectedCategory = Object.entries(categories).find(
+                ([_, data]) => data.categoryId === selectedId
               );
 
               if (selectedCategory) {
+                const [categoryName, categoryData] = selectedCategory;
                 onFormDataChange("restaurantCategory", {
-                  id: selectedCategory.id,
+                  id: categoryData.categoryId,
                 });
-                onFormDataChange("selectedCategory", selectedCategory.name);
+                onFormDataChange("selectedCategory", categoryName);
                 setErrors((prev) => ({
                   ...prev,
                   selectedCategory: "",
