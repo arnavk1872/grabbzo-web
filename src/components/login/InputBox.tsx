@@ -147,6 +147,7 @@ const InputBox = () => {
         className="w-2/3 mt-8 outline outline-1"
         placeholder="Enter Phone number"
         minLength={10}
+        value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       <div className="mb-2 mt-1 -ml-36 text-red-500 text-[14px] h-4">
