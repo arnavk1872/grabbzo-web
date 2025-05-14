@@ -41,7 +41,7 @@ const page = () => {
         </div>
       </div>
       <WhyGrabbzo />
-      <div className="px-16 mb-10">
+      <div className="sm:px-16 mb-10">
         <Faq />
       </div>
     </div>

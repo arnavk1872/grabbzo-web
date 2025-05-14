@@ -3,19 +3,30 @@ import { Cards } from "./data";
 
 const WhyGrabbzo = () => {
   return (
-    <div>
-      <div className="flex items-center justify-center -mt-5 gap-7">
-        <div className="h-[1px] w-16 bg-black"></div>
-        <h2 className="text-3xl font-bold">Why You Should Partner With Grabbzo</h2>
-        <div className="h-[1px] w-16 bg-black"></div>
+    <div className="px-4 sm:px-8 md:px-16 py-12">
+      {/* Heading */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-7 mb-10 text-center">
+        <div className="h-[1px] w-12 sm:w-16 bg-black"></div>
+        <h2 className="text-2xl sm:text-3xl font-bold max-sm:mt-10 mt-2">
+          Why You Should Partner With Grabbzo
+        </h2>
+        <div className="h-[1px] w-12 sm:w-16 bg-black"></div>
       </div>
-      <div className="flex justify-evenly items-center p-12 gap-x-14">
+
+      {/* Cards */}
+      <div className="flex flex-col md:flex-row justify-center items-center gap-y-12 md:gap-x-14">
         {Cards.map((item, key) => (
-          <div key={key} className="flex flex-col items-center  justify-center w-1/4">
-            <item.icon />
-            {/* <div className="border-l-2 w-[1px] h-16 border-dotted border-blue-600 my-3"></div> */}
-            <h6 className="font-semibold text-[21px] text-center  mt-8 max-w-[250px]">{item.title}</h6>
-            <p className="text-center w-[90%] mt-2 text-lg">{item.desc}</p>
+          <div
+            key={key}
+            className="flex flex-col items-center justify-center w-full max-w-xs text-center"
+          >
+            <item.icon className="w-16 h-16" />
+            <h6 className="font-semibold text-lg sm:text-xl mt-6">
+              {item.title}
+            </h6>
+            <p className="text-sm sm:text-base mt-2 text-gray-700 px-2">
+              {item.desc}
+            </p>
           </div>
         ))}
       </div>

@@ -20,14 +20,14 @@ const features = [
 
 const FeatureSection = () => {
   return (
-    <div className="flex justify-center gap-32 my-24 font-poppins">
+    <div className="flex flex-col items-center gap-12 my-16 px-4 font-poppins md:flex-row md:justify-center md:gap-32 md:my-24">
       {features.map((feature, index) => (
         <div
           key={index}
           className="flex flex-col items-center text-center max-w-xs"
         >
           {feature.icon}
-          <p className="mt-2 text-gray-700">{feature.text}</p>
+          <p className="mt-4 text-gray-700">{feature.text}</p>
         </div>
       ))}
     </div>

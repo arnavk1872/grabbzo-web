@@ -8,9 +8,8 @@ const page = () => {
   return (
     <div>
       <div className="relative w-full h-[40vh] font-poppins">
-        <Image
+        <img
           src={`${S3_BASE_URL}/public/image.png`}
-          fill
           alt="home-main"
           className="absolute inset-0 w-full h-full pointer-events-none"
         />

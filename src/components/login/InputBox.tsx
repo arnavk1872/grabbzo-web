@@ -136,7 +136,7 @@ const InputBox = () => {
     }
   };
   return (
-    <div className="bg-white w-[40%] absolute flex flex-col justify-center items-center rounded-3xl left-1/2 transform -translate-x-1/2 bottom-[5%]">
+    <div className="bg-white w-[80%] sm:w-[40%] absolute flex flex-col justify-center items-center rounded-3xl left-1/2 transform -translate-x-1/2 bottom-[5%]">
       <h4 className="text-xl font-bold text-neutral-600 pt-8">
         <span className="text-blue-600 font-extrabold pr-2">
           {login ? "Login" : "Sign Up"}
@@ -144,7 +144,7 @@ const InputBox = () => {
         into your Account
       </h4>
       <Input
-        className="w-2/3 mt-8 outline outline-1"
+        className="w-2/3 mt-8 border-2 "
         placeholder="Enter Phone number"
         minLength={10}
         value={phoneNumber}

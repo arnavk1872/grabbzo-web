@@ -9,7 +9,7 @@ import { faqData } from "./data";
 const Faq = () => {
   return (
     <div
-      className="w-3/4 m-4 font-poppins p-6 mx-auto rounded-3xl"
+      className="w-3/4 m-4 font-poppins sm:p-6 max-sm:pt-4 mx-auto rounded-3xl"
       style={{
         background: "linear-gradient(282deg, #1AA1C7 0%, #0033A2 100%)",
       }}

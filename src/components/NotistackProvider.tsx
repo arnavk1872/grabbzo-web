@@ -1,5 +1,6 @@
 "use client";
 
+import useIsMobile from "@/helpers/useIsMobile";
 import { SnackbarProvider } from "notistack";
 
 export default function CustomSnackbarProvider({
@@ -7,12 +8,12 @@ export default function CustomSnackbarProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const isMobile = useIsMobile();
   return (
     <SnackbarProvider
-      maxSnack={1}
       anchorOrigin={{
-        vertical: "bottom", 
-        horizontal: "left", 
+        vertical: "bottom",
+        horizontal: isMobile ? "center" : "left",
       }}
     >
       {children}
