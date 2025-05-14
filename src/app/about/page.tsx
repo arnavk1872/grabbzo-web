@@ -45,19 +45,19 @@ const Page = () => {
 
         <Link
           href="/"
-          className="absolute cursor-pointer text-lg top-4 right-44 text-white px-4 py-2 rounded-lg font-poppins z-[100]"
+          className="absolute cursor-pointer sm:block hidden text-lg top-4 right-44 text-white px-4 py-2 rounded-lg font-poppins z-[100]"
         >
           Home
         </Link>
         <a
           href="#work-with-us"
-          className="absolute cursor-pointer text-lg top-4 right-4 text-white px-4 py-2 rounded-full font-poppins z-[100] border border-white"
+          className="absolute cursor-pointer text-lg top-4 sm:block hidden right-4 text-white px-4 py-2 rounded-full font-poppins z-[100] border border-white"
         >
           Work with us
         </a>
 
         <div className="absolute inset-0 bg-black bg-opacity-10 flex flex-col items-center justify-center text-center px-4">
-          <p className="text-white font-semibold text-6xl mt-3">
+          <p className="text-white font-semibold text-4xl sm:text-6xl mt-3">
             From an Idea to a Revolution
           </p>
         </div>
@@ -67,7 +67,7 @@ const Page = () => {
         About Us
       </div>
 
-      <div className="px-[180px] py-10 mb-12">
+      <div className="sm:px-[180px] px-[50px] py-10 mb-12">
         <Carousel>
           <CarouselContent>
             <CarouselItem>

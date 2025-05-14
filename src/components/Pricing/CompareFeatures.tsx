@@ -48,10 +48,10 @@ const features = [
 
 const CompareFeatures = () => {
   return (
-    <div className="max-w-6xl mx-auto my-10 p-5 font-poppins">
+    <div className="max-w-6xl mx-auto my-10 px-4 font-poppins">
       <h2 className="text-2xl font-bold text-center mb-6">Compare Features</h2>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse border rounded-lg shadow-md">
+        <table className="min-w-[700px] w-full border-collapse border rounded-lg shadow-md">
           <thead>
             <tr className="bg-gray-100 text-left">
               <th className="p-4 w-1/4"> </th>
@@ -64,13 +64,13 @@ const CompareFeatures = () => {
           <tbody>
             {features.map((feature, index) => (
               <tr key={index} className="border-t">
-                <td className="p-4 flex items-center">{feature.name}</td>
+                <td className="p-4">{feature.name}</td>
                 <td className="p-4 text-center">
                   {typeof feature.silver === "boolean" ? (
                     feature.silver ? (
                       <Check className="text-blue-500 mx-auto" />
                     ) : (
-                      "✗"
+                      <span className="text-gray-400">✗</span>
                     )
                   ) : (
                     feature.silver
@@ -81,7 +81,7 @@ const CompareFeatures = () => {
                     feature.gold ? (
                       <Check className="text-blue-500 mx-auto" />
                     ) : (
-                      "✗"
+                      <span className="text-gray-400">✗</span>
                     )
                   ) : (
                     feature.gold
@@ -92,7 +92,7 @@ const CompareFeatures = () => {
                     feature.diamond ? (
                       <Check className="text-blue-500 mx-auto" />
                     ) : (
-                      "✗"
+                      <span className="text-gray-400">✗</span>
                     )
                   ) : (
                     feature.diamond
@@ -103,7 +103,7 @@ const CompareFeatures = () => {
                     feature.platinum ? (
                       <Check className="text-blue-500 mx-auto" />
                     ) : (
-                      "✗"
+                      <span className="text-gray-400">✗</span>
                     )
                   ) : (
                     feature.platinum
