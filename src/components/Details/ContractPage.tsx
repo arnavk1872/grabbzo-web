@@ -115,8 +115,8 @@ const ContractPage = () => {
     }
   };
   return (
-    <div className="font-poppins ml-10 min-w-[750px]">
-      <div className="flex justify-between items-center mb-1">
+    <div className="font-poppins md:ml-10 max-md:mx-6 md:min-w-[750px]">
+      <div className="flex md:justify-between max-md:gap-x-4 items-center mb-1">
         <h2 className="font-semibold text-4xl">Partner Contract</h2>
         <Image
           src={`${S3_BASE_URL}/public/Partner-Contract.png`}
@@ -126,17 +126,27 @@ const ContractPage = () => {
           className="object-contain max-w-full max-h-full"
         />
       </div>
-      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6">
+      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 shadow-xl py-6">
         <iframe
           src={"/GRABBZO CHANNEL PARTNER AGREEMENT.pdf#toolbar=0"}
           width="720"
           height="460"
           loading="lazy"
           allowFullScreen
+          className="md:block hidden"
+          frameBorder="0"
+        />
+        <iframe
+          src={"/GRABBZO CHANNEL PARTNER AGREEMENT.pdf#toolbar=0"}
+          width="200"
+          height="200"
+          loading="lazy"
+          className="md:hidden block"
+          allowFullScreen
           frameBorder="0"
         />
         <RadioGroup
-          className="flex gap-20 mt-5"
+          className="flex md:gap-20 gap-4 mt-5"
           value={agreement}
           onValueChange={(value) => setAgreement(value)}
         >

@@ -114,9 +114,9 @@ const InfoPage = () => {
     basicDetailsData.pinCode;
 
   return (
-    <div className="font-poppins ml-10 min-w-[750px]">
+    <div className="font-poppins max-md:mx-6 sm:ml-32 md:ml-10  md:min-w-[750px] max-md:-mt-10">
       <div className="flex justify-between items-center mb-1">
-        <h2 className="font-semibold text-4xl">Restaurant Information</h2>
+        <h2 className="font-semibold text-2xl sm:text-4xl">Restaurant Information</h2>
         <Image
           src={`${S3_BASE_URL}/public/Restaruant-Information.png`}
           width={114}

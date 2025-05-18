@@ -116,7 +116,7 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="font-poppins ml-10 min-w-[750px]">
+    <div className="font-poppins sm:ml-32 md:ml-10 md:min-w-[750px] max-md:-mt-10">
       <div className="flex justify-between items-center mb-1">
         <h2 className="font-semibold text-4xl">Menu Setup</h2>
         <Image
@@ -127,7 +127,7 @@ const MenuPage = () => {
           className="object-contain max-w-full max-h-full"
         />
       </div>
-      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6">
+      <section className="bg-white rounded-3xl border border-black border-opacity-25 px-4 max-sm:mx-4 shadow-xl py-6">
         <h4 className="text-zinc-800 font-bold text-xl">
           Select the service you want to register
         </h4>
@@ -196,9 +196,9 @@ const MenuPage = () => {
             })}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8shadow-xl py-6 mt-12">
+      <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 shadow-xl py-6 mt-12">
         <h4 className="text-zinc-800 font-bold text-xl">
           Select the options you are providing
         </h4>

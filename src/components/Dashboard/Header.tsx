@@ -130,7 +130,7 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
-
+       <div className="md:block hidden">
         <Popover>
           <PopoverTrigger>
             <Bell className="cursor-pointer" />
@@ -139,7 +139,7 @@ const Header = () => {
             <Notifications />
           </PopoverContent>
         </Popover>
-
+       </div>
         <Popover>
           <PopoverTrigger>
             <Avatar>

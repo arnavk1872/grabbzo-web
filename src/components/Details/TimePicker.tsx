@@ -19,7 +19,7 @@ export default function TimePicker({ date, setDate }: TimePickerProps) {
             type="time"
             id="time"
             aria-label="Choose time"
-            className="w-1/6 cursor-pointer"
+            className="w-1/2 sm:w-1/6 cursor-pointer"
             value={date ? date.toString().slice(0, 5) : ''}
             onChange={handleChange} 
           />

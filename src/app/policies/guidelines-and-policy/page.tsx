@@ -25,7 +25,7 @@ const GuidelinesAndPolicies = () => {
         deleted.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">Guidelines for Customers</h3>
+      <h3 className="text-xl sm:text-2xl font-semibold mb-4">Guidelines for Customers</h3>
       <ol type="1" className="list-disc pl-8 space-y-4 mb-6">
         <li>
           <p>
@@ -114,7 +114,7 @@ const GuidelinesAndPolicies = () => {
         </li>
       </ol>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl sm:text-2xl font-semibold mb-4">
         Guidelines for Restaurants
       </h3>
       <ol type="1" className="list-disc pl-8 space-y-4 mb-6">
@@ -167,7 +167,7 @@ const GuidelinesAndPolicies = () => {
         </li>
       </ol>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl sm:text-2xl font-semibold mb-4">
         Code of Conduct for Grabbzo Employees
       </h3>
       <p className="mb-6">
@@ -176,7 +176,7 @@ const GuidelinesAndPolicies = () => {
         from restaurants.
       </p>
 
-      <h3 className="text-2xl font-semibold mb-4">
+      <h3 className="text-xl sm:text-2xl font-semibold mb-4">
         Moderation and Enforcement
       </h3>
       <p className="mb-6">

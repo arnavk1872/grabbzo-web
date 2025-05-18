@@ -11,7 +11,7 @@ const page = () => {
     <div>
       <Header />
       <h1 className="hidden">Growth Page</h1>
-      <div className="font-poppins px-12">
+      <div className="font-poppins sm:px-12">
         <div className="p-6">
           <h1 className="text-2xl font-bold">Grow</h1>
           <p className="text-gray-500 mt-2">CHOOSE HOW TO GROW YOUR BUSINESS</p>

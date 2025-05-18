@@ -30,7 +30,7 @@ const PoliciesSidebar = () => {
     },
   ];
   return (
-    <div className="min-w-fit -mt-20 sticky top-24 min-h-screen max-h-screen bg-white">
+    <div className="min-w-fit -mt-20 sticky top-24 min-h-screen max-h-screen bg-white sm:block hidden">
       {policies.map((policy, key) => (
         <Link className="text-[18px] w-full" href={policy.url} key={key}>
           <div
