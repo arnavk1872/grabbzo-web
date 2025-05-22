@@ -10,48 +10,48 @@ type Transaction = {
 };
 
 const transactions: Transaction[] = [
-  // {
-  //   id: 1,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 2,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 3,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 4,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 5,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 6,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
+  {
+    id: 1,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 2,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 3,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 4,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 5,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
+  {
+    id: 6,
+    bankName: "SBI",
+    transactionType: "Bank Account Debit",
+    amount: "₹1,000",
+    logo: "/sbi-logo.png",
+  },
 ];
 
 const WithdrawlHistory: React.FC = () => {
@@ -59,7 +59,7 @@ const WithdrawlHistory: React.FC = () => {
     <div className=" p-4 bg-white rounded-lg shadow w-full font-poppins">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Recent Withdrawals</h2>
-        <select className="bg-blue-200 border-borderColor rounded-[16px] p-1 text-[14px]">
+        <select className=" border-borderColor rounded-[16px] p-1 text-[14px]">
           <option> 3 months</option>
           <option> 6 months</option>
           <option> 12 months</option>
@@ -80,7 +80,7 @@ const WithdrawlHistory: React.FC = () => {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>TM</AvatarFallback>
                 </Avatar>
-                <span className="text-gray-800 font-medium">
+                <span className="text-gray-800 font-medium max-sm:w-[125px] text-ellipsis overflow-hidden whitespace-nowrap">
                   {transaction.transactionType}
                 </span>
               </div>

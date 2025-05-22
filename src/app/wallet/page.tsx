@@ -9,8 +9,8 @@ const page = () => {
     <>
       <Header />
       <h1 className="hidden">Wallet Page</h1>
-      <div className="px-8 flex justify-between">
-        <div className="w-3/4 px-4">
+      <div className="px-8 sm:flex justify-between">
+        <div className="sm:w-3/4 px-4 max-sm:py-6">
           <Withdraw />
           <WithdrawlHistory />
         </div>

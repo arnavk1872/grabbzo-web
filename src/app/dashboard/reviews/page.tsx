@@ -89,7 +89,7 @@ const page = async() => {
         ))
       ) : (
         <div className="text-center mt-4 font-poppins text-gray-600">
-          No reviews available.
+          No reviews available yet.
         </div>
       )}
     </div>

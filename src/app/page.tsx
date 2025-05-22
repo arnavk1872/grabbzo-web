@@ -17,6 +17,7 @@ const page = () => {
           height={1000}
           width={1000}
           alt="home-main"
+          style={{opacity: 0.9, objectFit: "cover"}}
           className="absolute inset-0 w-full h-full pointer-events-none"
         />
         <Link href={'/restaurant'}>
@@ -32,7 +33,7 @@ const page = () => {
             src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
             width={500}
             height={300}
-            style={{ objectFit: "cover", height: "120px" }}
+            style={{ objectFit: "cover", height: "120px"}}
             quality={100}
             alt="home-main"
             unoptimized

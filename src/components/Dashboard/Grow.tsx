@@ -6,7 +6,7 @@ import { S3_BASE_URL } from "@/lib/constants";
 
 const Grow = () => {
   return (
-    <div className="bg-white rounded-[30px] p-6 shadow-md h-[350px] w-[48%] font-poppins">
+    <div className="bg-white rounded-[30px] p-6 shadow-md h-[350px] md:w-[48%] font-poppins">
         <div className="font-semibold text-[18px]">Grow</div>
       <span className="text-[12px]">CHOOSE HOW TO GROW YOUR BUSINESS</span>
       <div

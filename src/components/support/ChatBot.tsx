@@ -39,7 +39,7 @@ const GrabbzoChatBot: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 border rounded-2xl shadow-lg p-6 bg-white font-poppins">
+    <div className="max-w-2xl mx-auto mt-10 border rounded-2xl shadow-lg p-3 sm:p-6 bg-white font-poppins max-sm:mx-2 ">
       <div className="flex items-center justify-between">
         <div className="w-fit">
           <Button

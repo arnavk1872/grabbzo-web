@@ -26,7 +26,7 @@ const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
   const shouldBlur = !unlockedPlans.includes(planDetails?.Plan?.toUpperCase());
 
   return (
-    <div className="relative bg-white rounded-[30px] font-poppins border border-borderColor p-6 max-w-[702px] flex-[2]">
+    <div className="relative bg-white rounded-[30px] font-poppins border border-borderColor p-6 md:max-w-[702px] flex-[2]">
       <div className="flex justify-between lg:px-4 items-center mb-4">
         <h3 className="text-xl font-semibold">Peak Hours</h3>
         <select className="bg-borderColor font-poppins text-[#666] font-[14px] border-borderColor rounded-[16px] p-1 text-[14px]">

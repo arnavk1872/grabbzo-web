@@ -17,17 +17,18 @@ const Sort: React.FC = () => {
   const sortOptions: string[] = ["Newest", "Oldest"]
 
   return (
-    <div className='bg-white w-full font-poppins rounded-[30px] h-[120px] border-borderColor border flex items-center justify-around mb-4'>
+    <div className='bg-white w-full font-poppins rounded-[30px] h-auto sm:h-[120px] border-borderColor border flex flex-col sm:flex-row sm:items-center sm:justify-around gap-4 sm:gap-0 p-4 sm:p-0 mb-4'>
       {/* SORT */}
-      <div className='flex font-poppins whitespace-nowrap items-center gap-x-2'>Sort By:
+      <div className='flex font-poppins whitespace-nowrap items-center gap-x-2 flex-col sm:flex-row w-full sm:w-auto'>
+      <div className='max-md:my-2'>Sort By:</div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className='w-full sm:w-auto'>
             <Input
               type="text"
               value={sortBy}
               readOnly
               placeholder="Select an option"
-              className='cursor-pointer'
+              className='cursor-pointer w-3/4 md:w-auto'
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -44,15 +45,16 @@ const Sort: React.FC = () => {
       </div>
 
       {/* FILTER */}
-      <div className='flex whitespace-nowrap font-poppins items-center gap-x-2'>Filter By:
+      <div className='flex font-poppins whitespace-nowrap items-center gap-x-2 flex-col sm:flex-row w-full sm:w-auto'>
+        <div className='max-md:my-2'>Filter By:</div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className='w-full sm:w-auto'>
             <Input
               type="text"
               value={filterBy}
               readOnly
               placeholder="Select an option"
-              className='cursor-pointer'
+              className='cursor-pointer w-3/4 md:w-auto'
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -68,7 +70,10 @@ const Sort: React.FC = () => {
         </DropdownMenu>
       </div>
 
-      <Button variant={'destructive'} className='text-[14px] font-bold text-white rounded-3xl px-12'>
+      <Button
+        variant={'destructive'}
+        className='text-[14px] font-bold text-white rounded-3xl px-12 w-full sm:w-auto'
+      >
         Search
       </Button>
     </div>

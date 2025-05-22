@@ -146,7 +146,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     }
   };
   return (
-    <div className="mx-24 font-poppins">
+    <div className="sm:mx-24 font-poppins">
       <div className="flex items-center justify-between  mt-16">
         <div className="flex items-center">
           <Link href={"/dashboard"}>
@@ -168,8 +168,8 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
           Save Changes
         </Button>
       </div>
-      <div className="my-12 mx-24 flex gap-10">
-        <div className="h-[450px] w-[650px]">
+      <div className="my-12 md:mx-24 flex gap-10">
+        <div className="h-[450px] w-[650px] md:block hidden">
           <Image
             src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
             width={1000}

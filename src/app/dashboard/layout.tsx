@@ -13,7 +13,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   return (
     <div className="h-screen flex flex-col overflow-y-hidden">
       <div className="fixed top-0 left-0 w-full z-50">
-        <Header />
+        <Header storeStatus={storeStatus}/>
       </div>
 
       <div className="flex flex-1 pt-[64px]">

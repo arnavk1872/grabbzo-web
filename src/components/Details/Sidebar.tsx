@@ -8,14 +8,10 @@ import RestDocIcon from "../Icons/RestDocIcon";
 import MenuSetupIcon from "../Icons/MenuSetupIcon";
 import PartnerContactIcon from "../Icons/PartnerContactIcon";
 import { Button } from "@/components/UI/Button";
-import { Input } from "@/components/UI/Input";
-import { Label } from "@/components/UI/Label";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
