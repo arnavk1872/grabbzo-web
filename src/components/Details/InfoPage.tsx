@@ -74,8 +74,12 @@ const InfoPage = () => {
     return validationErrors;
   };
 
-  const setDateWrapper = (date: string | undefined) => {
-    setBasicDetailsData("closingTime", date);
+  const setDateWrapper = (date: string | undefined, value: string) => {
+    if (value === "openingTime") {
+      setBasicDetailsData("openingTime", date);
+    } else {
+      setBasicDetailsData("closingTime", date);
+    }
   };
 
   const handleStateChange = (value: string) => {
@@ -87,9 +91,10 @@ const InfoPage = () => {
     setCity(cities[value]);
   };
 
-  const handleCheckboxChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+  const handleCheckboxChange = (e: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
     setSameAsOwner(e.target.checked);
-   
   };
 
   const handleClick = () => {
@@ -114,9 +119,11 @@ const InfoPage = () => {
     basicDetailsData.pinCode;
 
   return (
-    <div className="font-poppins ml-10 min-w-[750px]">
+    <div className="font-poppins max-md:mx-6 sm:ml-32 md:ml-10  md:min-w-[750px] max-md:-mt-10">
       <div className="flex justify-between items-center mb-1">
-        <h2 className="font-semibold text-4xl">Restaurant Information</h2>
+        <h2 className="font-semibold text-2xl sm:text-4xl">
+          Restaurant Information
+        </h2>
         <Image
           src={`${S3_BASE_URL}/public/Restaruant-Information.png`}
           width={114}
@@ -199,7 +206,9 @@ const InfoPage = () => {
             <input
               type="tel"
               value={basicDetailsData.primaryMobileNo}
-              onChange={(e) => setBasicDetailsData("primaryMobileNo",e.target.value)}
+              onChange={(e) =>
+                setBasicDetailsData("primaryMobileNo", e.target.value)
+              }
               placeholder="Enter primary contact number"
               className="w-full p-2 mt-4 border rounded-md"
             />
@@ -222,15 +231,32 @@ const InfoPage = () => {
             ))}
           </SelectContent>
         </Select>
-        <div>
-          <Label className="text-sm font-medium">
-            Set Closing Time <span className="text-[12px]">(24hr format)</span>
-          </Label>
+        <div className="flex justify-around">
+          {" "}
+          <div>
+            <Label className="text-sm font-medium">
+              Set Opening Time{" "}
+              <span className="text-[12px]">(24hr format)</span>
+            </Label>
 
-          <TimePicker
-            date={basicDetailsData.closingTime}
-            setDate={setDateWrapper}
-          />
+            <TimePicker
+              date={basicDetailsData.openingTime}
+              setDate={(date) => setDateWrapper(date, "openingTime")}
+              value={"openingTime"}
+            />
+          </div>
+          <div>
+            <Label className="text-sm font-medium">
+              Set Closing Time{" "}
+              <span className="text-[12px]">(24hr format)</span>
+            </Label>
+
+            <TimePicker
+              date={basicDetailsData.closingTime}
+              setDate={(date) => setDateWrapper(date, "closingTime")}
+              value={"closingTime"}
+            />
+          </div>
         </div>
       </div>
       {/*LOCATION SECTION*/}

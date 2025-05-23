@@ -32,9 +32,9 @@ const adStats = [
 const page = () => {
   return (
     <div>
-      <Header />
+      <Header storeStatus={false} />
       <AdCreditTop />
-      <div className="grid grid-cols-4 gap-4 mb-6 w-4/6 mx-12 mt-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 w-4/6 mx-12 mt-4">
         {adStats.map((ad) => (
           <AdStats
             key={ad.id}

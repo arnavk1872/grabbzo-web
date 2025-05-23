@@ -38,15 +38,15 @@ const Page = async() => {
 
   return (
     <div className="px-2 font-poppins">
-      <Header />
+      <Header storeStatus={false} />
       <div className="px-8 py-4">
         <OffersDiscounts />
         <SwapType />
       </div>
 
-      <div className="mt-2 mx-12">
+      <div className="mt-2 sm:mx-12">
         {/* Offer Stats */}
-        <div className="grid grid-cols-4 gap-4 mb-6 w-4/6">
+        <div className="grid grid-cols-2 sm:grid-cols-4   gap-2 sm:gap-4 mb-6 sm:w-4/6">
           {offerStats.map((stat) => (
             <OfferStat
               key={stat.id}

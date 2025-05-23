@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../Dashboard/Avatar";
 
 const Withdraw = () => {
   return (
-    <div className=" h-[150px] bg-blue-300 rounded-md flex items-center px-6 my-2 w-full">
+    <div className=" sm:h-[150px] max-sm:py-4 bg-blue-300 rounded-md flex items-center px-6 my-2 w-full ">
     <div className="flex items-center pl-8">
 
         <Avatar className="h-28 w-28">

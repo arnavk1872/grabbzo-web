@@ -33,7 +33,7 @@ const RecentlyPlacedOrders: React.FC = () => {
   const router = useRouter();
   return (
     <div
-      className="bg-white rounded-[30px] border font-poppins border-borderColor p-6  flex-[1] cursor-pointer"
+      className="bg-white rounded-[30px] border font-poppins border-borderColor sm:p-6  flex-[1] cursor-pointer"
       onClick={() => {
         router.push("/order-history");
       }}

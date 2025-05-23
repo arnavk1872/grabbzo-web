@@ -24,8 +24,10 @@ import Link from "next/link";
 import { S3_BASE_URL } from "@/lib/constants";
 import UserDetailsPopup from "./UserDetailsPopup";
 import { usePageStore } from "@/store/CurrentPage";
+import { Button } from "../UI/Button";
+import Sidebar from "./Sidebar";
 
-const Header = () => {
+const Header = ({ storeStatus }: { storeStatus: boolean }) => {
   const { planDetails } = usePageStore();
   const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
 
@@ -50,14 +52,14 @@ const Header = () => {
       name: "Support",
       route:
         // "https://mail.google.com/mail/?view=cm&fs=1&to=support@grabbzo.com&su=Support%20Request&body=Hello%20Grabbzo%20Support%20Team",
-        "/support"
+        "/support",
     },
   ];
 
   return (
     <section className="mx-6 my-3 px-4 h-[82px] font-poppins rounded-[30px] border bg-white border-borderColor flex-shrink-0 flex items-center justify-between">
-      <div className="flex items-center gap-x-24">
-        <Link href={"/dashboard"}>
+      <div className=" items-center ">
+        <Link href={"/dashboard"} className="md:block hidden">
           <Image
             src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
             width={170}
@@ -67,12 +69,29 @@ const Header = () => {
             quality={100}
           />
         </Link>
+        {/* Mobile Menu Button */}
+        <div className=" items-center justify-center  cursor-pointer md:hidden block">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="font-poppins">
+                Menu
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-3/4">
+              <SheetHeader>
+                <div className="hidden">Toggle menu</div>
+              </SheetHeader>
+              <Sidebar storeStatus={storeStatus} />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
+
       <div className="flex gap-x-4 items-center">
         <Link href="/wallet">
           <div className="border rounded-full border-borderColor p-2 flex items-center mt-1 justify-center gap-x-2 pr-3 cursor-pointer ">
             <Wallet className="text-[#8a8a8f]" />
-           <span className="font-poppins font-medium">₹0 </span> 
+            <span className="font-poppins font-medium">₹0 </span>
           </div>
         </Link>
         <Sheet>
@@ -81,7 +100,7 @@ const Header = () => {
               <Settings className="w-12 h-12" />{" "}
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[400px] p-0">
+          <SheetContent side="right" className="w-[300px] md:w-[400px] p-0">
             {/* Top bar with Close button and Settings title */}
             <div className="relative p-4 border-b flex justify-center">
               <SheetClose asChild>
@@ -121,7 +140,7 @@ const Header = () => {
                 <Link
                   href={item.route}
                   key={index}
-                  className="flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100"
+                  className={`flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100 ${item.name === "Order History" ? "hidden md:flex" : ""}`}
                 >
                   <span className="text-md">{item.name}</span>
                   <ChevronRight size={20} />
@@ -130,16 +149,16 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
-
-        <Popover>
-          <PopoverTrigger>
-            <Bell className="cursor-pointer" />
-          </PopoverTrigger>
-          <PopoverContent className="mr-72">
-            <Notifications />
-          </PopoverContent>
-        </Popover>
-
+        <div className="md:block hidden">
+          <Popover>
+            <PopoverTrigger>
+              <Bell className="cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent className="mr-72">
+              <Notifications />
+            </PopoverContent>
+          </Popover>
+        </div>
         <Popover>
           <PopoverTrigger>
             <Avatar>

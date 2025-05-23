@@ -63,6 +63,24 @@ const Footer: React.FC<FooterProps> = ({ isHome }) => {
                 <Twitter />
               </Link>
             </div>
+            <div className={`flex gap-3 -ml-2 mb-2 mt-6 ${isHome ? "hidden":"block"}`}>
+              <Link className="cursor-pointer" href={"https://play.google.com/store/apps/datasafety?id=com.grabbzo"}>
+            <Image
+              src={`${S3_BASE_URL}/public/play_store.png`}
+              height={170}
+              width={142}
+              alt="Grabbzo logo"
+            />
+            </Link>
+            <Link className="cursor-pointer mt-[7px]" href={"https://apps.apple.com/in/app/grabbzo-restaurant-partner/id6745562089"}>
+            <Image
+              src={`${S3_BASE_URL}/public/app_store.png`}
+              height={120}
+              width={120}
+              alt="Grabbzo logo"
+            />
+            </Link>
+            </div>
           </div>
         </div>
 

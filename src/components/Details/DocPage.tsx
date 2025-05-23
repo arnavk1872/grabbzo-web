@@ -102,9 +102,9 @@ const DocPage = () => {
   docDetailsData.fssai;
 
   return (
-    <div className="font-poppins ml-10 min-w-[750px]">
+    <div className="font-poppins max-md:mx-6 sm:ml-32 md:ml-10 md:min-w-[750px] max-md:-mt-10">
       <div className="flex justify-between items-center mb-1">
-        <h2 className="font-semibold text-4xl">Restaurant Document</h2>
+        <h2 className="font-semibold text-4xl">Restaurant Documents</h2>
         <Image
           src={`${S3_BASE_URL}/public/Restaurant-Documents.png`}
           width={114}

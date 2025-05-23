@@ -7,7 +7,7 @@ const WhyGrabbzo = () => {
       {/* Heading */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-7 mb-10 text-center">
         <div className="h-[1px] w-12 sm:w-16 bg-black"></div>
-        <h2 className="text-2xl sm:text-3xl font-bold max-sm:mt-10 mt-2">
+        <h2 className="text-2xl sm:text-3xl font-bold max-sm:mt-10 mt-3">
           Why You Should Partner With Grabbzo
         </h2>
         <div className="h-[1px] w-12 sm:w-16 bg-black"></div>

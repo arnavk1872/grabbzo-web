@@ -3,6 +3,7 @@ import { getFlag, getFranchiseDetails } from "@/helpers/api-utils";
 
 interface RestaurantInfoState {
   basicDetailsData: {
+    openingTime: string | undefined;
     ownerName: string;
     restaurantName: string;
     email: string;
@@ -33,6 +34,7 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set, get) => ({
     email: "",
     closedDay: "",
     closingTime: "",
+    openingTime:"",
     shopNo: "",
     floor: "",
     area: "",

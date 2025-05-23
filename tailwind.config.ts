@@ -8,6 +8,10 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+	screens:{
+		sm:'640px',
+		md:'821px',
+	},
   	extend: {
   		colors: {
 			bgGray:"#F9F9F9",

@@ -46,29 +46,64 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
 
   const menuItems: MenuItem[] = [
     { name: "Dashboard", icon: <DashboardIcon />, href: "/dashboard" },
-    { name: "Orders", icon: <MenuIcon />, href: ["/dashboard/orders","/dashboard/orders/preparing","/dashboard/orders/ready","/dashboard/orders/pickedup"] },
-    { name: "Menu", icon: <FoodIcon />, href: ["/dashboard/menus/availableItems","/dashboard/menus/editor"] },
-    { name: "Messages (0)", icon: <MessagesIcon />, href: "/dashboard/messages" },
-    { name: "Customers Reviews", icon: <CustomerRevIcon />, href: "/dashboard/reviews" },
+    {
+      name: "Orders",
+      icon: <MenuIcon />,
+      href: [
+        "/dashboard/orders",
+        "/dashboard/orders/preparing",
+        "/dashboard/orders/ready",
+        "/dashboard/orders/pickedup",
+      ],
+    },
+    {
+      name: "Menu",
+      icon: <FoodIcon />,
+      href: ["/dashboard/menus/availableItems", "/dashboard/menus/editor"],
+    },
+    {
+      name: "Messages (0)",
+      icon: <MessagesIcon />,
+      href: "/dashboard/messages",
+    },
+    {
+      name: "Customer Reviews",
+      icon: <CustomerRevIcon />,
+      href: "/dashboard/reviews",
+    },
   ];
 
   return (
-    <div className="flex flex-col h-fit sticky top-0 max-w-[320px] bg-white border border-borderColor p-4 mx-4 rounded-3xl font-poppins">
+    <div className="flex flex-col h-fit sticky top-0 md:max-w-[320px] bg-white border border-borderColor p-4 md:mx-4 rounded-3xl font-poppins">
       <div className="space-y-1">
         {menuItems.map((item) => (
           <Link
-          key={item.name}
-          href={Array.isArray(item.href) ? item.href[0] : item.href} 
-          className={`flex items-center space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
-            (Array.isArray(item.href) ? item.href.includes(pathname) : pathname === item.href)
-              ? "bg-blue-600 text-white !space-x-8"
-              : "text-gray-600 hover:bg-gray-100"
-          } rounded-lg`}
-        >
-          {item.icon}
-          <span>{item.name}</span>
-        </Link>
-        
+            key={item.name}
+            href={Array.isArray(item.href) ? item.href[0] : item.href}
+            className={`flex items-center ${
+              item.name === "Menu" ? " max-sm:hidden" : ""
+            } space-x-6 p-[5px] font-semibold text-[16px] whitespace-nowrap ${
+              (
+                Array.isArray(item.href)
+                  ? item.href.includes(pathname)
+                  : pathname === item.href
+              )
+                ? "bg-blue-600 text-white !space-x-8"
+                : "text-gray-600 hover:bg-gray-100"
+            } rounded-lg`}
+          >
+            {item.icon}
+            <span>
+              {item.name === "Customer Reviews" ? (
+                <>
+                  <span className="hidden sm:inline">Customer Reviews</span>
+                  <span className="sm:hidden">Reviews</span>
+                </>
+              ) : (
+                item.name
+              )}
+            </span>
+          </Link>
         ))}
       </div>
 
@@ -97,7 +132,9 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
       <div className="space-y-1">
         <div className="mt-1 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
-          <p className="mt-1 text-left text-[20px]">Invest in the Best: Get Premium</p>
+          <p className="mt-1 text-left text-[20px]">
+            Invest in the Best: Get Premium
+          </p>
           <Button
             onClick={() => router.push("/pricing")}
             className="mt-2 xl:px-16 px-10 font-semibold whitespace-nowrap py-2 hover:bg-yellow-600 bg-yellow-500 text-black rounded-full"

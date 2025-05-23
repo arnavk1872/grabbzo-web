@@ -2,7 +2,7 @@ import React from "react";
 
 const TermsOfServices = () => {
   return (
-    <div className="mx-auto px-12 text-justify -mt-14 mb-10">
+    <div className="mx-auto sm:px-12 text-justify -mt-14 mb-10">
       <h2 className="text-4xl font-semibold text-center">Terms Of Services</h2>
       <div className="text-justify px-12 flex flex-col gap-3">
         <h3 className="text-xl font-bold">1. Introduction</h3>

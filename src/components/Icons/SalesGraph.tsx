@@ -34,7 +34,7 @@ const data = [
 
 const SalesGraph = () => {
   return (
-    <div style={{ width: "full", height: 300 }} className='max-w-[800px] px-4 py-4 border border-borderColor bg-borderColor rounded-[30px]  '>
+    <div style={{ width: "full", height: 300 }} className='md:max-w-[800px] md:px-4 md:py-4 border border-borderColor bg-borderColor rounded-[30px]  '>
       <ResponsiveContainer>
         <LineChart
           data={data}

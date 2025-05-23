@@ -79,7 +79,7 @@ const Privacy = () => {
           acceptance of those changes, so please check the policy periodically
           for updates.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-4">
           The Information We Collect and How We Use It
         </h3>
         <p className="text-justify mb-4">
@@ -222,7 +222,7 @@ const Privacy = () => {
           and connect with you on the Services, we will only use your friend's
           contact information to process your request.
         </p>
-        <h4 className="text-xl font-semibold mb-4">
+        <h4 className="sm:text-xl font-semibold mb-4">
           Information About Your Messages
         </h4>
         <p className="text-justify mb-6">
@@ -235,7 +235,7 @@ const Privacy = () => {
           message was processed. Carriers may charge recipients for texts that
           they receive.
         </p>
-        <h4 className="text-xl font-semibold mb-4">
+        <h4 className="text-lg sm:text-xl font-semibold mb-4">
           Information We Collect Through Automatic Data Collection Technologies
         </h4>
         <p className="text-justify mb-4">
@@ -449,7 +449,7 @@ const Privacy = () => {
           combine that information with information which we collect from or
           about you.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-4">
           Anonymous or De-Identified Data
         </h3>
         <p className="text-justify">
@@ -460,7 +460,7 @@ const Privacy = () => {
           not restricted by this Privacy Policy, and it may be used and
           disclosed to others without limitation.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-4">
           How we use the information we collect
         </h3>
         <ul className="list-disc pl-8 space-y-4 mb-6">
@@ -527,7 +527,7 @@ const Privacy = () => {
           interact with an advertisement, the advertiser may assume that you
           meet its target criteria.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-lg sm:text-2xl font-semibold mb-4">
           How We Share the Information We Collect
         </h3>
         <p className="text-justify">
@@ -653,7 +653,7 @@ const Privacy = () => {
           practices of restaurants. Please contact the restaurant directly if
           you want to learn about its privacy practices.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-4">
           Payment Card Information
         </h3>
         <p className="text-justify">
@@ -779,7 +779,7 @@ const Privacy = () => {
           copies, as they may remain viewable in cached and archived pages or
           have been copied by other users.
         </p>
-        <h3 className="text-2xl font-semibold mb-4">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-4">
           Accessing & Correcting Your Personal Information
         </h3>
         <p className="text-justify mb-4">

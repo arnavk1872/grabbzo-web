@@ -24,15 +24,15 @@ const OrderStatusCard: React.FC<
 > = ({ image, count, label, color, route, isSelected, onClick }) => {
   return (
     <div
-      className={`flex  cursor-pointer border-2  p-4 md:p-8 ${
+      className={`flex  cursor-pointer border-2  px-4 py-2 sm:p-8 ${
         isSelected ? "border-blue-300 rounded-full h-[120px] items-center bg-blue-50" : "border-transparent rounded-lg "
       }`}
       onClick={onClick}
     >
-      <span className="md:block hidden"><Image src={image} height={95} width={85} alt={label} /></span>
-      <div className="flex flex-col justify-center text-left">
-        <span className={`${color} text-[32px] font-bold font-sans`}>{count}</span>
-        <div className="text-[16px] font-semibold">{label}</div>
+      <span className="sm:block hidden"><Image src={image} height={95} width={85} alt={label} /></span>
+      <div className="flex flex-col justify-center text-center md:text-left">
+        <span className={`${color}  text-[16px]   sm:text-[32px] font-bold font-sans`}>{count}</span>
+        <div className="text-[10px] sm:text-[16px] font-semibold">{label}</div>
       </div>
     </div>
   );
@@ -48,7 +48,7 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-2 my-2 flex h-[160px] gap-x-2 whitespace-nowrap pl-8 items-center">
+    <div className="bg-white rounded-[30px] max-w-[1108px] w-full mx-2 my-2 flex sm:h-[160px] gap-x-2 whitespace-nowrap sm:pl-8 items-center">
       {orderStatuses.map((status, index) => (
         <OrderStatusCard
           key={index}

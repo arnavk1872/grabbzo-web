@@ -70,6 +70,7 @@ interface RestaurantDetails {
   fssaiNumber: string;
   gstinNumber: string;
   isOnline?: boolean;
+  cuisines: string[];
   restaurantBankDetails: RestaurantBankDetails;
 }
 
@@ -98,6 +99,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     pincode: data.pincode,
     state: data.state,
     city: data.city,
+    cuisines: data.cuisines,
     isVeg: data.isVeg,
     rating: data.rating,
     panNumber: data.panNumber,
@@ -146,13 +148,13 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     }
   };
   return (
-    <div className="mx-24 font-poppins">
+    <div className="mx-12 md:mx-24 font-poppins">
       <div className="flex items-center justify-between  mt-16">
         <div className="flex items-center">
-          <Link href={"/dashboard"}>
+          <Link href={"/dashboard"} className="sm:block hidden">
             <LeftArrow className="h-12 w-fit cursor-pointer hover:opacity-50" />
           </Link>
-          <h2 className="text-3xl font-semibold pr-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold pr-4">
             Restaurant Information
           </h2>
           <div onClick={() => setEdit(true)}>
@@ -168,8 +170,8 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
           Save Changes
         </Button>
       </div>
-      <div className="my-12 mx-24 flex gap-10">
-        <div className="h-[450px] w-[650px]">
+      <div className="my-12 md:mx-24 flex gap-10">
+        <div className="h-[450px] w-[650px] md:block hidden">
           <Image
             src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
             width={1000}
@@ -264,7 +266,7 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
                   setRestaurantData({ ...restaurantData, closedDay: value })
                 }
               >
-                <SelectTrigger className="w-[210px] pl-[1px] border-none shadow-none">
+                <SelectTrigger className="sm:w-[210px] pl-[1px] border-none shadow-none">
                   <SelectValue placeholder="Select a day" />
                 </SelectTrigger>
                 <SelectContent>

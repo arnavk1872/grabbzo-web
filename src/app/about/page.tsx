@@ -85,8 +85,6 @@ const Page = () => {
         </Carousel>
       </div>
 
-      <BlogSection />
-
       <div id="work-with-us">
         <WorkWithUs />
       </div>
