@@ -1,30 +1,27 @@
 import { Input } from "@/components/UI/Input";
 
 interface TimePickerProps {
-  date: Date | string | undefined; 
-  setDate: (time: string | undefined) => void; 
+  date: Date | string | undefined;
+  setDate: (time: string | undefined, field: string | undefined) => void;
+  value: string | undefined;
 }
 
-export default function TimePicker({ date, setDate }: TimePickerProps) {
+export default function TimePicker({ date, setDate,value }: TimePickerProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const timeValue = e.target.value; 
-    setDate(timeValue); 
+    const timeValue = e.target.value;
+    setDate(timeValue,value);
   };
 
   return (
     <>
-      <div className="flex items-center space-x-2">
-        <div className="grid w-full items-center my-4">
-          <Input
-            type="time"
-            id="time"
-            aria-label="Choose time"
-            className="w-1/2 sm:w-1/6 cursor-pointer"
-            value={date ? date.toString().slice(0, 5) : ''}
-            onChange={handleChange} 
-          />
-        </div>
-      </div>
+      <Input
+        type="time"
+        id="time"
+        aria-label="Choose time"
+        className="w-3/4 sm:w-3/4 mt-2 cursor-pointer"
+        value={date ? date.toString().slice(0, 5) : ""}
+        onChange={handleChange}
+      />
     </>
   );
 }

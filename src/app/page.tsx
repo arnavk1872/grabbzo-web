@@ -6,6 +6,7 @@ import AppExperience from "@/components/HomePage/AppExperience";
 import AppFeatures from "@/components/HomePage/AppFeatures";
 import image from "@public/image.png";
 import Link from "next/link";
+import BlogSection from "@/components/aboutus/BlogSection";
 
 const page = () => {
 
@@ -49,6 +50,7 @@ const page = () => {
       </div>
       <AppFeatures />
       <AppExperience />
+      <BlogSection/>
       <Footer isHome={true} />
     </>
   );

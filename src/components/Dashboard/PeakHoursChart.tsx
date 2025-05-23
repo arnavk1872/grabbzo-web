@@ -26,7 +26,7 @@ const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
   const shouldBlur = !unlockedPlans.includes(planDetails?.Plan?.toUpperCase());
 
   return (
-    <div className="relative bg-white rounded-[30px] font-poppins border border-borderColor p-6 md:max-w-[702px] flex-[2]">
+    <div className="relative bg-white rounded-[30px] font-poppins border border-borderColor p-6 md:max-w-[602px] flex-[2]">
       <div className="flex justify-between lg:px-4 items-center mb-4">
         <h3 className="text-xl font-semibold">Peak Hours</h3>
         <select className="bg-borderColor font-poppins text-[#666] font-[14px] border-borderColor rounded-[16px] p-1 text-[14px]">
@@ -39,11 +39,11 @@ const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
       {/* Chart Wrapper */}
       <div className="relative">
         <div
-          className={`transition-all duration-300 ${
+          className={`transition-all duration-300  md:hidden ${
             shouldBlur ? "backdrop-blur-md opacity-50 pointer-events-none" : ""
           }`}
         >
-          <BarChart width={650} height={300} data={data}>
+          <BarChart className="" width={550} height={300} data={data}>
             <CartesianGrid stroke="#f5f5f5" />
             <XAxis dataKey="hour" />
             <YAxis />
@@ -56,7 +56,7 @@ const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
         {/* Upgrade Plan Overlay */}
         {shouldBlur && (
           <div className="absolute font-poppins inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 rounded-[30px]">
-            <p className="text-lg font-semibold text-gray-800 mb-2">
+            <p className="text-lg font-semibold text-gray-800 mb-2 max-md:text-center">
               Upgrade to <span className="text-yellow-500">GOLD</span> to unlock detailed insights
             </p>
             <button className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer font-medium hover:bg-blue-700 transition" onClick={()=>{router.push('/pricing')}}>

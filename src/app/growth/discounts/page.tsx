@@ -14,7 +14,7 @@ const subOffers = [
 const page = () => {
   return (
     <div className="font-poppins px-2">
-      <Header />
+      <Header storeStatus={false} />
       <section className="px-8 py-4">
         <OffersDiscounts/>
         <SwapType />

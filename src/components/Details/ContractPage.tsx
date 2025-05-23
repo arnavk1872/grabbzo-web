@@ -19,6 +19,7 @@ interface Payload {
   flag: boolean;
   closedDay: string;
   closeTiming: string;
+  openingTiming: string;
   serviceType: string;
   deliveryToCars: boolean;
   latitude: string;
@@ -82,6 +83,7 @@ const ContractPage = () => {
       franchise: Franchise,
       flag: true,
       closedDay: basicDetailsData.closedDay,
+      openingTiming: basicDetailsData.openingTime ?? "",
       closeTiming: basicDetailsData.closingTime,
       serviceType: menuDetailsData.serviceType,
       deliveryToCars: menuDetailsData.deliveryToCars,

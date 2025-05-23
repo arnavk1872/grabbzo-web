@@ -21,7 +21,7 @@ const Page = () => {
           width={1000}
           height={1000}
           alt="home-main"
-          className="h-[80vh] w-full object-cover"
+          className=" h-[65vh] sm:h-[80vh] w-full object-cover"
         />
 
         <GetApp/>

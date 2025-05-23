@@ -8,7 +8,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
-      <Header />
+      <Header storeStatus={false} />
       <div className="">{children}</div>
     </>
   );

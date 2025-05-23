@@ -5,7 +5,7 @@ import SetCustomDiscount from "@/components/discounts/CustomDiscount";
 const Page = () => {
   return (
     <div className="px-2">
-      <Header />
+      <Header storeStatus={false} />
       <div className="font-poppins px-8 py-4">
         <OffersDiscounts />
         <SetCustomDiscount/>

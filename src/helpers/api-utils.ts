@@ -895,3 +895,19 @@ export const getCuisines = async () => {
     throw error;
   }
 };
+
+export const numberCheck = async (number:string) => {
+ 
+  try {
+    const response = await axios.get(
+      `${IP}/restaurant/auth/check?mobile=${number}`,
+     
+    );
+    return response;
+    
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+

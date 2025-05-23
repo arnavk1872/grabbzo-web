@@ -9,7 +9,7 @@ import { S3_BASE_URL } from '@/lib/constants';
 const page = () => {
   return (
     <div>
-      <Header />
+      <Header storeStatus={false} />
       <h1 className="hidden">Growth Page</h1>
       <div className="font-poppins sm:px-12">
         <div className="p-6">

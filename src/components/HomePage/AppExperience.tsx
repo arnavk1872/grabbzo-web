@@ -2,11 +2,11 @@ import React from "react";
 import { S3_BASE_URL } from "@/lib/constants";
 
 const features = [
-  { image: `${S3_BASE_URL}/public/veg-mode-home.png`, description: "Veg mode" },
   { image: `${S3_BASE_URL}/public/car-delivery-home.png`, description: "Delivery in car" },
   { image: `${S3_BASE_URL}/public/pre-dinein-home.png`, description: "Dine in" },
   { image: `${S3_BASE_URL}/public/takeaway-home.png`, description: "Takeaway" },
-  { image: `${S3_BASE_URL}/public/healthy-home.png`, description: "Healthy" },
+  { image: `${S3_BASE_URL}/public/rotation-home.png`, description: "Table Rotation" },
+   { image: `${S3_BASE_URL}/public/offers-home.png`, description: "Offers" },
 ];
 
 const AppExperience: React.FC = () => {
@@ -29,9 +29,9 @@ const AppExperience: React.FC = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 sm:gap-6 max-w-6xl mx-auto px-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 sm:gap-6 max-w-6xl mx-auto px-8 sm:px-4">
         {features.map((feature, index) => (
-          <div key={index} className="flex flex-col items-center text-center">
+          <div key={index} className={`flex flex-col items-center text-center ${feature.description === "Offers" ? "sm:block hidden" : ""}`}>
             <img
               src={feature.image}
               alt={feature.description}

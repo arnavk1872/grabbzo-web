@@ -5,7 +5,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-      <Header/>
+      <Header storeStatus={false}/>
       <h1 className="hidden">Support Page</h1>
       <GrabbzoChatBot/>
     </div>

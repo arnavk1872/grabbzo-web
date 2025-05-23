@@ -38,7 +38,7 @@ const Page = async() => {
 
   return (
     <div className="px-2 font-poppins">
-      <Header />
+      <Header storeStatus={false} />
       <div className="px-8 py-4">
         <OffersDiscounts />
         <SwapType />
