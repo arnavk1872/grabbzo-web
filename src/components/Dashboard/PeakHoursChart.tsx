@@ -37,9 +37,9 @@ const PeakHoursChart: React.FC<PeakHoursChartProps> = ({planDetails}) => {
       </div>
 
       {/* Chart Wrapper */}
-      <div className="relative">
+      <div className="relative max-md:hidden">
         <div
-          className={`transition-all duration-300  md:hidden ${
+          className={`transition-all duration-300   ${
             shouldBlur ? "backdrop-blur-md opacity-50 pointer-events-none" : ""
           }`}
         >

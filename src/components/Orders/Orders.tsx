@@ -24,7 +24,7 @@ const OrderStatusCard: React.FC<
 > = ({ image, count, label, color, route, isSelected, onClick }) => {
   return (
     <div
-      className={`flex  cursor-pointer border-2  px-4 py-2 sm:p-8 ${
+      className={`flex max-sm:px-5  cursor-pointer border-2  px-4 py-2 sm:p-8 ${
         isSelected ? "border-blue-300 rounded-full h-[120px] items-center bg-blue-50" : "border-transparent rounded-lg "
       }`}
       onClick={onClick}
