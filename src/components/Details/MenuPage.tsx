@@ -106,9 +106,8 @@ const MenuPage = () => {
   };
 
   const isFormComplete =
-    menuDetailsData.deliveryToCars !== null &&
-    menuDetailsData.serviceType &&
-    (Franchise ? true : menuDetailsData.image && menuDetailsData.foodType);
+    menuDetailsData.deliveryToCars !== null && menuDetailsData.serviceType; //&&
+  // (Franchise ? true : menuDetailsData.image && menuDetailsData.foodType);
 
   const handleProceed = () => {
     setCurrentPage("contract");
