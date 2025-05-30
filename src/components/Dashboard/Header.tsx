@@ -44,7 +44,6 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
   const { planDetails } = usePageStore();
   const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
   const restaurantName = planDetails["Restaurant Name"] || "Restaurant";
-  console.log(restaurantName, planDetails, "planDetails");
 
   const router = useRouter();
 
