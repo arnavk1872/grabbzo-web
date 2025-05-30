@@ -8,6 +8,17 @@ import {
   PopoverTrigger,
 } from "@/components/UI/Popover";
 import Notifications from "../Messages/Notifications";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/AlertDialog";
 import Bell from "../Icons/Bell";
 import {
   Sheet,
@@ -26,10 +37,24 @@ import UserDetailsPopup from "./UserDetailsPopup";
 import { usePageStore } from "@/store/CurrentPage";
 import { Button } from "../UI/Button";
 import Sidebar from "./Sidebar";
+import { changeStatus } from "@/helpers/api-utils";
+import { useRouter } from "next/navigation";
 
 const Header = ({ storeStatus }: { storeStatus: boolean }) => {
   const { planDetails } = usePageStore();
   const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
+  const restaurantName = planDetails["Restaurant Name"] || "Restaurant";
+
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const response = await changeStatus(true);
+    if (response) {
+      document.cookie =
+        "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      router.push("/restaurant");
+    }
+  };
 
   const Routes: any[] = [
     {
@@ -128,7 +153,7 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
                 </Avatar>
               </div>
               <div className="font-poppins">
-                <h2 className="text-lg font-semibold">Taj Mahal Hotel</h2>
+                <h2 className="text-lg font-semibold">{restaurantName}</h2>
                 <Link href={"/edit-details"} className="text-sm text-blue-500">
                   View Account Details
                 </Link>
@@ -140,16 +165,43 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
                 <Link
                   href={item.route}
                   key={index}
-                  className={`flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100 ${item.name === "Order History" ? "hidden md:flex" : ""}`}
+                  className={`flex items-center justify-between p-3 border-b cursor-pointer hover:bg-gray-100 ${
+                    item.name === "Order History" ? "hidden md:flex" : ""
+                  }`}
                 >
                   <span className="text-md">{item.name}</span>
                   <ChevronRight size={20} />
                 </Link>
               ))}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button className="w-full text-left flex items-center justify-between p-3 cursor-pointer text-red-500 hover:bg-red-100  font-poppins">
+                    <span className="text-md">Logout</span>
+                    <ChevronRight size={20} />
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="font-poppins">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Confirmation</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to Logout ?
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="text-white bg-red-500 hover:bg-red-600"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </SheetContent>
         </Sheet>
-        <div className="md:block hidden">
+        <div className="md:block hidden mt-2">
           <Popover>
             <PopoverTrigger>
               <Bell className="cursor-pointer" />
