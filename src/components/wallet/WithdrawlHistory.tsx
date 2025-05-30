@@ -10,48 +10,48 @@ type Transaction = {
 };
 
 const transactions: Transaction[] = [
-  {
-    id: 1,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
-  {
-    id: 2,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
-  {
-    id: 3,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
-  {
-    id: 4,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
-  {
-    id: 5,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
-  {
-    id: 6,
-    bankName: "SBI",
-    transactionType: "Bank Account Debit",
-    amount: "₹1,000",
-    logo: "/sbi-logo.png",
-  },
+  // {
+  //   id: 1,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
+  // {
+  //   id: 2,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
+  // {
+  //   id: 3,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
+  // {
+  //   id: 4,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
+  // {
+  //   id: 5,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
+  // {
+  //   id: 6,
+  //   bankName: "SBI",
+  //   transactionType: "Bank Account Debit",
+  //   amount: "₹1,000",
+  //   logo: "/sbi-logo.png",
+  // },
 ];
 
 const WithdrawlHistory: React.FC = () => {

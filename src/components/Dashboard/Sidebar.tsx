@@ -35,14 +35,6 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
     changeStatus(isOnline);
   };
 
-  const handleLogout = async () => {
-    const response = await changeStatus(true);
-    if (response) {
-      document.cookie =
-        "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      router.push("/restaurant");
-    }
-  };
 
   const menuItems: MenuItem[] = [
     { name: "Dashboard", icon: <DashboardIcon />, href: "/dashboard" },
@@ -130,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
 
       {/* Premium Upgrade Section */}
       <div className="space-y-1">
-        <div className="mt-1 p-3 bg-black text-white rounded-3xl text-center">
+        <div className="mt-2 p-3 bg-black text-white rounded-3xl text-center">
           <RocketIcon />
           <p className="mt-1 text-left text-[20px]">
             Invest in the Best: Get Premium
@@ -144,7 +136,7 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
         </div>
 
         {/* Bottom Links */}
-        <div className="flex flex-col justify-center">
+        {/* <div className="flex flex-col justify-center">
           <a
             href="#"
             onClick={handleLogout}
@@ -153,7 +145,7 @@ const Sidebar: React.FC<SidebarProps> = ({ storeStatus }) => {
             <LogoutIcon />
             <span className="inline-block mt-3">Logout</span>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

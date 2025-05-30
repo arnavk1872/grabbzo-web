@@ -46,6 +46,7 @@ const Footer: React.FC<FooterProps> = ({ isHome }) => {
             <div className="flex gap-4 mt-3">
               <Link
                 href="https://www.linkedin.com/company/grabbzo/"
+                target="_blank"
                 className="hover:opacity-50"
               >
                 <Linkedin />
@@ -53,12 +54,14 @@ const Footer: React.FC<FooterProps> = ({ isHome }) => {
               <Link
                 href="https://www.instagram.com/grabbzo?igsh=YW5heDZtbDIxcTIz"
                 className="hover:opacity-50"
+                target="_blank"
               >
                 <Instagram />
               </Link>
               <Link
-                href="https://x.com/Grabbzo125105?t=y8hXBAIiY2zzZ-JxaMBAEg&s=09"
+                href="https://x.com/grabbzo"
                 className="hover:opacity-50"
+                target="_blank"
               >
                 <Twitter />
               </Link>

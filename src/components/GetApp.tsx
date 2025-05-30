@@ -8,7 +8,7 @@ const GetApp = () => {
   return (
     <button
       onClick={scrollToFooter}
-      className="absolute top-6 right-6  text-white  px-4 py-2 rounded-full border shadow-md transition"
+      className="absolute top-6 right-6 md:block hidden  text-white  px-4 py-2 rounded-full border shadow-md transition"
     >
       Get the App
     </button>
