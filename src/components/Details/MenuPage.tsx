@@ -270,7 +270,7 @@ const MenuPage = () => {
             These will be used verify the item prices.
           </span>
         </div>
-        <FileUpload onFileChange={(file) => handleFileChange(file, "image")} />
+        <FileUpload onFileChange={(file) => handleFileChange(file, "menu")} />
       </div>
       <Button
         className="my-6 w-full text-white font-medium text-lg"
