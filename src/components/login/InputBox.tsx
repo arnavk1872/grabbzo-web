@@ -28,6 +28,7 @@ import { numbers } from "./data";
 import { useSnackbar } from "notistack";
 import { getDaysLeft } from "@/lib/utils";
 import { usePageStore } from "@/store/CurrentPage";
+import { Loader2 } from "lucide-react";
 
 const InputBox = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -37,6 +38,7 @@ const InputBox = () => {
   const [login, setLogin] = useState<boolean>(true);
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [isContinueDisabled, setIsContinueDisabled] = useState(false);
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
 
   const { setPlanDetails } = usePageStore();
   const router = useRouter();
@@ -73,6 +75,7 @@ const InputBox = () => {
       document.cookie = "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 
+    setIsOtpLoading(true);
     try {
       if (login) {
         const loginData = await postLogin(data);
@@ -128,6 +131,8 @@ const InputBox = () => {
           className: "font-poppins",
         });
       }
+    } finally {
+      setIsOtpLoading(false);
     }
   };
 
@@ -219,10 +224,18 @@ const InputBox = () => {
 
           <DialogFooter className="w-full flex justify-center">
             <Button
-              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold"
+              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold disabled:opacity-50"
               onClick={handleOtpVerification}
+              disabled={isOtpLoading}
             >
-              Continue
+              {isOtpLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Continue"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
