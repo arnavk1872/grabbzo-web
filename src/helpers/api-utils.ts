@@ -809,7 +809,7 @@ export const LinkFranchise = async (franchiseName: string | null,isFranchise:boo
   if (!token) return;
 
   const payload = {
-    name: franchiseName,
+    NEW: franchiseName,
     franchise:isFranchise
   };
 

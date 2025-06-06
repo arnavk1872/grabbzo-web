@@ -68,6 +68,11 @@ const InputBox = () => {
       return;
     }
 
+    // Clear existing auth token for new signups to prevent conflicts
+    if (!login) {
+      document.cookie = "AuthToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+
     try {
       if (login) {
         const loginData = await postLogin(data);
