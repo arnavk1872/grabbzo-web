@@ -7,6 +7,7 @@ import WhyGrabbzo from "@/components/login/WhyGrabbzo";
 import Faq from "@/components/login/Faq";
 import { S3_BASE_URL } from "@/lib/constants";
 import GetApp from "@/components/GetApp";
+import OurPartners from "@/components/login/OurPartners";
 
 const Page = () => {
 
@@ -24,7 +25,7 @@ const Page = () => {
           className=" h-[65vh] sm:h-[80vh] w-full object-cover"
         />
 
-        <GetApp/>
+        <GetApp />
 
         <Image
           src={`${S3_BASE_URL}/public/Grabbzo-white-logo.png`}
@@ -50,10 +51,11 @@ const Page = () => {
       </div>
 
       <WhyGrabbzo />
-
+      <OurPartners />
       <div className="sm:px-16 mb-10">
         <Faq />
       </div>
+
     </div>
   );
 };

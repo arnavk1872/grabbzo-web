@@ -30,14 +30,12 @@ const page = () => {
         </Link>
 
         <div className="absolute inset-0 bg-black bg-opacity-10 flex flex-col items-center justify-center text-center px-4">
-          <Image
+          <img
             src={`${S3_BASE_URL}/public/Grabbzo-main-logo.png`}
             width={500}
             height={300}
             style={{ objectFit: "cover", height: "120px"}}
-            quality={100}
             alt="home-main"
-            unoptimized
           />
           <p className="text-white max-md:mx-4 font-bold text-xl md:text-4xl mt-3 max-w-[1200px]">
             India’s smartest dining companion for Takeout, Pre dine-in and
