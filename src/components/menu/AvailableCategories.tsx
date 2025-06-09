@@ -22,6 +22,9 @@ import {
   editCategory,
 } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
+import { Button } from "../UI/Button";
+import AddCategory from "./AddCategory";
+import Cross from "../Icons/Cross";
 
 interface Item {
   id: number;
@@ -182,7 +185,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   return (
     <div>
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
-        CATEGORY
+        CATEGORY | {Object.keys(categories).length}
       </div>
       <div className="overflow-y-auto min-w-[250px] max-h-[450px]">
         {Object.keys(categories).length === 0 && (
@@ -275,10 +278,29 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       </div>
       {isEditor && (
         <div
-          onClick={() => changeToggleEditor(false)}
+          // onClick={() => changeToggleEditor(false)}
           className="flex items-center font-poppins cursor-pointer gap-x-1 text-[14px] font-bold text-blue-700"
         >
-          <Plus /> Add Category
+          
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+            <div className="flex"><Plus /> Add Category</div>
+            </AlertDialogTrigger>
+           
+            <AlertDialogContent className="font-poppins">
+        
+              <AddCategory/>
+              <AlertDialogHeader>
+               
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction className="text-white">
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       )}
     </div>

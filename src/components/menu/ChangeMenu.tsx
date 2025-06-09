@@ -9,6 +9,7 @@ import {
 } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 import { useItemStore } from "@/store/MenuStore";
+import MenuItemForm from "./MenuItemForm";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
@@ -176,17 +177,19 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       </Button>
       <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[375px] 2xl:w-[600px] rounded-[24px] my-4 mr-4">
         {toggleEditor ? (
-          <AddItem
-            ref={itemDataRef}
-            categories={categories}
-            formData={formData}
-            onFormDataChange={handleFormDataChange}
-          />
+          // <AddItem
+          //   ref={itemDataRef}
+          //   categories={categories}
+          //   formData={formData}
+          //   onFormDataChange={handleFormDataChange}
+          // />
+          <MenuItemForm/>
         ) : (
-          <AddCategory
-            categoryName={categoryName}
-            setCategoryName={setCategoryName}
-          />
+          // <AddCategory
+          //   categoryName={categoryName}
+          //   setCategoryName={setCategoryName}
+          // />
+          <MenuItemForm/>
         )}
       </div>
     </div>
