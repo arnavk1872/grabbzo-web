@@ -18,13 +18,17 @@ import {
 } from "../AlertDialog";
 import {
   changeCategoryStatus,
-  deleteCategory,
-  editCategory,
 } from "@/helpers/api-utils";
+import { deleteCategory,editCategory } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
-import { Button } from "../UI/Button";
-import AddCategory from "./AddCategory";
-import Cross from "../Icons/Cross";
+import { Input } from "../UI/Input";
+import { addNewCategory } from "@/helpers/menu-utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../UI/Accordion";
 
 interface Item {
   id: number;
@@ -66,6 +70,8 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   );
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [updatedCategoryName, setUpdatedCategoryName] = useState<string>("");
+  const [newCategoryName, setNewCategoryName] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
@@ -182,6 +188,35 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     }
   };
 
+  const handleAddCategory = async () => {
+    if (!newCategoryName.trim()) {
+      enqueueSnackbar("Category name is required", { variant: "error" });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const newCategory = await addNewCategory(newCategoryName.trim());
+      enqueueSnackbar("Category added successfully!", { variant: "success" });
+      setNewCategoryName("");
+      
+      // Add the new category to the local state
+      setCategories((prevCategories) => ({
+        ...prevCategories,
+        [newCategoryName.trim()]: {
+          isDisabled: false,
+          categoryId: newCategory?.id || Date.now(),
+          items: []
+        }
+      }));
+    } catch (error) {
+      console.error("Error adding category:", error);
+      enqueueSnackbar("Failed to add category. Please try again.", { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
@@ -193,84 +228,94 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         )}
 
         {Object.entries(categories).map(([categoryName, categoryData]) => (
-          <div
-            key={categoryName}
-            onClick={() => {
-              onCategoryChange(categoryName);
-              onCategoryIdChange(categoryData.categoryId);
-            }}
-            className={`px-6 py-4 my-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
-              selectedCategory === categoryName && !isEditor
-                ? "bg-blue-500 text-white"
-                : selectedCategory === categoryName && isEditor
-                ? "bg-blue-100"
-                : "bg-white text-black"
-            }`}
-          >
-            {editingCategory === categoryName ? (
-              <input
-                className="border rounded p-1 w-20 text-black"
-                value={updatedCategoryName}
-                onChange={(e) => setUpdatedCategoryName(e.target.value)}
-                onBlur={() =>
-                  handleUpdateCategory(categoryData.categoryId, categoryName)
-                }
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleUpdateCategory(categoryData.categoryId, categoryName);
+          <div key={categoryName} className="mb-4">
+            <div
+              onClick={() => {
+                onCategoryChange(categoryName);
+                onCategoryIdChange(categoryData.categoryId);
+              }}
+              className={`px-6 py-4 rounded-full flex gap-x-4 cursor-pointer justify-between items-center font-poppins text-[16px] ${
+                selectedCategory === categoryName && !isEditor
+                  ? "bg-blue-500 text-white"
+                  : selectedCategory === categoryName && isEditor
+                  ? "bg-blue-100"
+                  : "bg-white text-black"
+              }`}
+            >
+              {editingCategory === categoryName ? (
+                <input
+                  className="border rounded p-1 w-20 text-black"
+                  value={updatedCategoryName}
+                  onChange={(e) => setUpdatedCategoryName(e.target.value)}
+                  onBlur={() =>
+                    handleUpdateCategory(categoryData.categoryId, categoryName)
                   }
-                }}
-                autoFocus
-              />
-            ) : (
-              <span>{categoryName}</span>
-            )}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleUpdateCategory(categoryData.categoryId, categoryName);
+                    }
+                  }}
+                  autoFocus
+                />
+              ) : (
+                <span>{categoryName}</span>
+              )}
 
-            {!isEditor && (
-              <Switch
-                checked={!isDisabledMap[categoryName]}
-                onCheckedChange={() =>
-                  toggleCategoryStatus(
-                    isDisabledMap[categoryName],
-                    categoryData.categoryId,
-                    categoryName
-                  )
-                }
-              />
-            )}
+              {!isEditor && (
+                <Switch
+                  checked={!isDisabledMap[categoryName]}
+                  onCheckedChange={() =>
+                    toggleCategoryStatus(
+                      isDisabledMap[categoryName],
+                      categoryData.categoryId,
+                      categoryName
+                    )
+                  }
+                />
+              )}
 
-            {isEditor && (
-              <div className="flex gap-x-2">
-                <AlertDialog>
-                  <AlertDialogTrigger>
-                    <Dustbin />
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="font-poppins">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Confirmation</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure you want to delete this category?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        className="text-white"
-                        onClick={() =>
-                          handleDeleteCategory(
-                            categoryName,
-                            categoryData.categoryId
-                          )
-                        }
-                      >
-                        Continue
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-                <button onClick={() => handleEditCategory(categoryName)}>
-                  <Pencil />
-                </button>
+              {isEditor && (
+                <div className="flex gap-x-2">
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Dustbin />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="font-poppins">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Confirmation</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete this category?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="text-white"
+                          onClick={() =>
+                            handleDeleteCategory(
+                              categoryName,
+                              categoryData.categoryId
+                            )
+                          }
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <button onClick={() => handleEditCategory(categoryName)}>
+                    <Pencil />
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            {/* Show Add Subcategories when category is selected */}
+            {selectedCategory === categoryName && (
+              <div className="px-6 py-2 mt-2">
+                <div className="flex items-center gap-x-2 text-[14px] font-bold text-blue-700 cursor-pointer font-poppins">
+                  <Plus /> Add Subcategories
+                </div>
               </div>
             )}
           </div>
@@ -289,14 +334,24 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
            
             <AlertDialogContent className="font-poppins">
         
-              <AddCategory/>
-              <AlertDialogHeader>
-               
+             
+              <AlertDialogHeader className="font-semibold">
+               Add New Category
               </AlertDialogHeader>
+              <Input 
+                className="my-2 shadow-none border border-gray-300 rounded p-2 w-full" 
+                placeholder="Add Name"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+              />
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction className="text-white">
-                  Continue
+                <AlertDialogCancel onClick={() => setNewCategoryName("")}>Cancel</AlertDialogCancel>
+                <AlertDialogAction 
+                  className="text-white"
+                  onClick={handleAddCategory}
+                  disabled={isLoading || !newCategoryName.trim()}
+                >
+                  {isLoading ? "Adding..." : "Continue"}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

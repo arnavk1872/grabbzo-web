@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Plus from "../Icons/Plus";
 import { usePathname } from "next/navigation";
-import { deleteItem, getItemDetails, inStock } from "@/helpers/api-utils";
+import { deleteItem, inStock } from "@/helpers/api-utils";
+import { getItemDetails, addBlankItem } from "@/helpers/menu-utils";
 import Dustbin from "../Icons/Dustbin";
 import Pencil from "../Icons/Pencil";
 import { useSnackbar } from "notistack";
@@ -52,7 +53,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-
+const {setItemId} = useItemStore();
   useEffect(() => {
     const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
 
@@ -66,12 +67,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
 
 
   const handleEditItem = async (itemId: number) => {
-    try {
-      const response = await getItemDetails(itemId);
-      useItemStore.getState().setSelectedItem(response);
-    } catch (error) {
-      console.error("Error fetching item details:", error);
-    }
+    setItemId(itemId);
   };
 
   const handleToggle = async (id: number, currentStatus: boolean) => {
@@ -116,6 +112,40 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
     }
   };
 
+  const handleAddBlankItem = async () => {
+    try {
+      console.log("Creating new blank item...");
+      const response = await addBlankItem();
+      console.log("Add blank item response:", response);
+      
+      // The response from addBlankItem is response.data directly
+      const newItem = {
+        id: response.id || response.data?.id || Date.now(), // Fallback to timestamp if no ID
+        title: "New Item",
+        isEnabled: false,
+      };
+      
+      console.log("New item created:", newItem);
+      setLocalItems((prevItems: any[]) => {
+        console.log("Previous items:", prevItems);
+        const updatedItems = [...prevItems, newItem];
+        console.log("Updated items:", updatedItems);
+        return updatedItems;
+      });
+      
+      enqueueSnackbar("New item created!", {
+        variant: "success",
+        className: "font-poppins",
+      });
+    } catch (error) {
+      console.error("Error adding blank item:", error);
+      enqueueSnackbar("Failed to create item", {
+        variant: "error",
+        className: "font-poppins",
+      });
+    }
+  };
+
 
   return (
     <div className="flex w-[80%] flex-col">
@@ -124,9 +154,9 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
       </div>
       <div className="border rounded-[30px] p-4 bg-white w-[90%] min-w-[200px] h-[80vh] px-8 mx-6  overflow-y-auto no-scrollbar">
         {localItems?.length > 0 ? (
-          localItems.map((item: any) => (
+          localItems.map((item: any, index: number) => (
             <div
-              key={item.id}
+              key={`item-${item.id}-${index}`}
               className="flex items-center cursor-pointer w-full font-poppins justify-between py-2 border-b last:border-b-0"
             >
               <div className="w-11/12">
@@ -206,9 +236,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
         )}
         {isEditor && (
           <div
-            onClick={() => {
-              changeToggleEditor(true);
-            }}
+            onClick={handleAddBlankItem}
             className="flex my-4 items-center w-fit cursor-pointer gap-x-1 text-[14px] font-poppins font-bold text-blue-700"
           >
             <Plus /> Add Item

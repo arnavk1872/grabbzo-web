@@ -7,15 +7,13 @@ import {
   TooltipTrigger,
 } from '@/components/UI/Tooltip';
 
-
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from './MenuSheet'; // Adjust path as per your project
+} from './MenuSheet';
 import VariantGroupEditor from './VariantGroupEditor';
 
 type VariantOption = {
@@ -70,6 +68,11 @@ const ItemVariant: React.FC = () => {
   const [selectedVariant, setSelectedVariant] = useState<VariantOption | null>(null);
   const [open, setOpen] = useState(false);
 
+  const handleVariantClick = (opt: VariantOption) => {
+    setSelectedVariant(opt);
+    setOpen(true);
+  };
+
   return (
     <div className="space-y-4 font-poppins">
       {/* Title with tooltip */}
@@ -78,8 +81,11 @@ const ItemVariant: React.FC = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Info className="w-4 h-4 text-teal-700 cursor-pointer" />
+              <span className="cursor-pointer">
+                <Info className="w-4 h-4 text-teal-700" />
+              </span>
             </TooltipTrigger>
+
             <TooltipContent side="right" className="text-sm max-w-xs text-white">
               You can offer customisation options like quantity, extras, add-ons for customer.
               You can also define if customer selection of these options is optional or mandatory.
@@ -91,40 +97,44 @@ const ItemVariant: React.FC = () => {
       {/* Option Grid */}
       <div className="grid grid-cols-2 gap-4 font-poppins">
         {variantOptions.map((opt, idx) => (
-          <Sheet key={idx} open={open && selectedVariant?.title === opt.title} onOpenChange={setOpen} >
-            <SheetTrigger asChild>
-              <div
-                onClick={() => setSelectedVariant(opt)}
-                className={`flex items-start gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
-                ${opt.bgColor} ${opt.border ? 'border-2 border-blue-400' : ''}`}
-              >
-                <div className="mt-1">{opt.icon}</div>
-                <div>
-                  <h3 className="font-semibold">{opt.title}</h3>
-                  <p className="text-sm text-gray-700">{opt.description}</p>
-                </div>
-              </div>
-            </SheetTrigger>
-            <SheetContent className='w-1/2'>
-              <SheetHeader>
-                <SheetTitle>Add {selectedVariant?.title}</SheetTitle>
-              </SheetHeader>
-              {selectedVariant && (
-                <VariantGroupEditor
-                  title={selectedVariant.title}
-                  basePrice={20}
-                  onCancel={() => setOpen(false)}
-                  onSave={(data) => {
-                    console.log('Saved:', data);
-                    setOpen(false);
-                  }}
-                />
-              )}
-            </SheetContent>
-
-          </Sheet>
+          <div
+            key={idx}
+            onClick={() => handleVariantClick(opt)}
+            className={`flex items-start gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
+              ${opt.bgColor} ${opt.border ? 'border-2 border-blue-400' : ''}`}
+          >
+            <div className="mt-1">{opt.icon}</div>
+            <div>
+              <h3 className="font-semibold">{opt.title}</h3>
+              <p className="text-sm text-gray-700">{opt.description}</p>
+            </div>
+          </div>
         ))}
       </div>
+
+      {/* Shared Sheet Modal */}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          {/* Invisible trigger to satisfy Sheet API */}
+          <button type="button" className="hidden" aria-hidden="true" tabIndex={-1} />
+        </SheetTrigger>
+        <SheetContent className="w-1/2">
+          <SheetHeader>
+            <SheetTitle>Add {selectedVariant?.title}</SheetTitle>
+          </SheetHeader>
+          {selectedVariant && (
+            <VariantGroupEditor
+              title={selectedVariant.title}
+              basePrice={20}
+              onCancel={() => setOpen(false)}
+              onSave={(data) => {
+                console.log('Saved:', data);
+                setOpen(false);
+              }}
+            />
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
