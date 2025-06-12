@@ -9,6 +9,8 @@ interface ItemState {
   setCategoryId: (category: number) => void;
   itemId: number;
   setItemId: (itemId: number) => void;
+  addonGroupId: number;
+  setAddonGroupId: (addonGroupId: number) => void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
@@ -20,4 +22,6 @@ export const useItemStore = create<ItemState>((set) => ({
   setCategoryId: (category) => set({ categoryId: category }),
   itemId: 0,
   setItemId: (item) => set({ itemId: item }),
+  addonGroupId: 0,
+  setAddonGroupId: (addonGroupId) => set({ addonGroupId: addonGroupId }),
 }));
