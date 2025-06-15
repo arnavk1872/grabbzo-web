@@ -174,34 +174,7 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
         </div>
       </div>
 
-      {/* Add options block */}
-      <div>
-        <label className="text-sm font-medium text-gray-700">
-          Add options <span className="text-red-500">*</span>
-        </label>
-        <div
-          className={`mt-2 p-6 border-dashed border-2 text-center rounded-md transition ${isSaved
-              ? 'border-blue-200 bg-blue-50 cursor-pointer hover:bg-blue-100'
-              : 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-50'
-            }`}
-          onClick={() => {
-            if (isSaved) {
-              setShowAddOnCreation(true);
-            }
-          }}
-        >
-          <div className={`flex flex-col items-center gap-2 ${isSaved ? 'text-blue-600' : 'text-gray-400'}`}>
-            <Plus className="w-6 h-6" />
-            <p className="font-medium">Add Options To This Add-on Group</p>
-            <p className="text-xs text-gray-600">
-              {isSaved
-                ? 'Select options to add and complete this add-on group'
-                : 'Save the add-on group first to add options'
-              }
-            </p>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };

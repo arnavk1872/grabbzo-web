@@ -188,7 +188,7 @@ const MenuItemForm = forwardRef<
       >
         {accordionSections.map(({ title, content }, index) => (
           <AccordionItem key={index} value={`section-${index}`}>
-            <AccordionTrigger className="text-lg text-black font-semibold">
+            <AccordionTrigger className="text-lg text-black font-semibold w-[490px]">
               {title} {compulsary.includes(title) ? "" : <span className="text-red-500">*</span>}
             </AccordionTrigger>
             <AccordionContent className="text-lg font-medium text-black">

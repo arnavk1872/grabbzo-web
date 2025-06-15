@@ -121,7 +121,7 @@ const {setItemId} = useItemStore();
       
       // The response from addBlankItem is response.data directly
       const newItem = {
-        id: response.id || response.data?.id || Date.now(), // Fallback to timestamp if no ID
+        id: response.id || response.data?.id , // Fallback to timestamp if no ID
         title: "New Item",
         isEnabled: false,
       };
@@ -149,7 +149,7 @@ const {setItemId} = useItemStore();
 
 
   return (
-    <div className="flex w-[250px] flex-col">
+    <div className="flex  flex-col w-full">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         ITEMS | {localItems?.length}
       </div>
@@ -235,14 +235,14 @@ const {setItemId} = useItemStore();
           <div className=" font-poppins cursor-pointer w-full rounded-lg px-2 py-8 text-[16px] bg-[#E5F2FF] flex flex-col items-center justify-center">
             <Plus /><div className="text-center text-[#1E3A56] font-semibold">Add Items To This New Category</div><div className="text-center text-[12px] py-2">You need to add items to this category as it cannot be empty</div></div>
         )}
-        {isEditor && (
+        {/* {isEditor && (
           <div
             onClick={handleAddBlankItem}
             className="flex my-4 items-center w-fit cursor-pointer gap-x-1 text-[14px] font-poppins font-bold text-blue-700"
           >
             <Plus /> Add Item
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

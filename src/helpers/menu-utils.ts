@@ -60,6 +60,9 @@ export const addNewCategory = async (value: string) => {
 
   if (!token) return;
 
+  console.log(value, "CATEGORY VALUE");
+  
+
   try {
     const response = await axios.post(
       `${IP}/restaurant/menu/category/add`,
@@ -71,8 +74,8 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-    console.log(response);
-    return response.data.data;
+    console.log('Category API Response:', response.data);
+    return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
     throw error;
@@ -104,6 +107,8 @@ export const getAllCategories = async () => {
 export const deleteCategory = async (id: number) => {
   const token = await getToken();
   if (!token) return;
+
+  console.log(id, "CATEGORY ID");
 
   try {
     const response = await axios.delete(
@@ -173,6 +178,9 @@ export const getItemDetails = async (ItemId: number) => {
   }
 };
 
+
+
+
 export const addNewItem = async (formData: any) => {
   const token = await getToken();
 
@@ -231,6 +239,9 @@ export const addBlankItem = async () => {
 export const addItemImage = async (id: number, image: any) => {
   const token = await getToken();
 
+  console.log(id, "ID");
+  
+
   if (!token) return;
   try {
     const response = await axios.post(
@@ -253,7 +264,7 @@ export const addItemImage = async (id: number, image: any) => {
 export const deleteMenuItem = async (itemId: number) => {
   const token = await getToken();
   if (!token) return;
- console.log(itemId, "ITEM ID");
+ console.log(itemId, "ITEM ID S");
  
   try {
     const response = await axios.delete(

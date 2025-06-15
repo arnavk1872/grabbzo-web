@@ -19,16 +19,11 @@ import {
 import {
   changeCategoryStatus,
 } from "@/helpers/api-utils";
-import { deleteCategory,editCategory } from "@/helpers/api-utils";
+import { editCategory } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
+import { deleteCategory } from "@/helpers/menu-utils";
 import { Input } from "../UI/Input";
 import { addNewCategory, addNewSubcategory, deleteSubCategory, editSubCategory } from "@/helpers/menu-utils";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../UI/Accordion";
 import { useItemStore } from "@/store/MenuStore";
 
 interface Item {
@@ -144,12 +139,17 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         delete updatedCategories[categoryName];
         return updatedCategories;
       });
-    } catch (error) {
-      console.error("Failed to delete category:", error);
-      enqueueSnackbar("Failed to delete category!", {
-        variant: "error",
-        className: "font-poppins",
-      });
+    } catch (error: any) {
+      console.log(error, "error");
+    
+      const maybeAxiosError = error?.toString?.();
+      const is409 = maybeAxiosError?.includes("status code 500");
+    
+      const message = is409
+        ? "Category has menu items. Delete them first."
+        : "Failed to delete subcategory";
+    
+      enqueueSnackbar(message, { variant: "error" });
     }
   };
 
@@ -206,15 +206,17 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     setIsLoading(true);
     try {
       const newCategory = await addNewCategory(newCategoryName.trim());
+      console.log(newCategory, "newCategory");
+      
       enqueueSnackbar("Category added successfully!", { variant: "success" });
       setNewCategoryName("");
-      
+
       // Add the new category to the local state
       setCategories((prevCategories) => ({
         ...prevCategories,
         [newCategoryName.trim()]: {
           isDisabled: false,
-          categoryId: newCategory?.id || Date.now(),
+          categoryId: newCategory.id,
           items: []
         }
       }));
@@ -227,18 +229,32 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   };
 
   const handleAddSubcategory = async () => {
-    console.log('Adding subcategory:', { name: newSubcategoryName, categoryId });
-    
     if (!newSubcategoryName.trim()) {
-      console.log('Validation failed: name is required');
       enqueueSnackbar("Subcategory name is required", { variant: "error" });
+      return;
+    }
+
+    // Check if subcategory already exists
+    const existingSubcategory = categories[selectedCategory]?.subCategories?.find(
+      (sub: any) => sub.name.toLowerCase() === newSubcategoryName.trim().toLowerCase()
+    );
+
+    if (existingSubcategory) {
+      enqueueSnackbar("Subcategory already exists", { variant: "error" });
       return;
     }
 
     setIsAddingSubcategory(true);
     try {
-      const response = await addNewSubcategory(newSubcategoryName.trim(), categoryId);
-      console.log('New subcategory response:', response);
+      // Get the correct category ID from the categories object
+      const parentCategoryId = categories[selectedCategory]?.categoryId;
+      if (!parentCategoryId) {
+        throw new Error('Parent category ID not found');
+      }
+      console.log(parentCategoryId,categories[selectedCategory], "parentCategoryId");
+      
+
+      const response = await addNewSubcategory(newSubcategoryName.trim(), parentCategoryId);
       
       if (!response?.id) {
         throw new Error('Failed to get subcategory ID from response');
@@ -246,17 +262,24 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       
       enqueueSnackbar("Subcategory added successfully!", { variant: "success" });
       
-      // Add the new subcategory to the local state
+      // Update categories state with a single operation
       setCategories((prevCategories) => {
         const updatedCategories = { ...prevCategories };
-        if (!updatedCategories[selectedCategory].subCategories) {
-          updatedCategories[selectedCategory].subCategories = [];
+        const category = updatedCategories[selectedCategory];
+        
+        if (!category.subCategories) {
+          category.subCategories = [];
         }
-        updatedCategories[selectedCategory].subCategories.push({
-          id: response.id,
-          name: newSubcategoryName.trim(),
-          items: []
-        });
+        
+        // Check again before adding to prevent duplicates
+        if (!category.subCategories.some((sub: any) => sub.id === response.id)) {
+          category.subCategories.push({
+            id: response.id,
+            name: newSubcategoryName.trim(),
+            items: []
+          });
+        }
+        
         return updatedCategories;
       });
 
@@ -284,9 +307,20 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         return updated;
       });
       enqueueSnackbar("Subcategory has been deleted!", { variant: "error" });
-    } catch (error) {
-      enqueueSnackbar("Failed to delete subcategory", { variant: "error" });
+    } catch (error: any) {
+      console.log(error, "error");
+    
+      const maybeAxiosError = error?.toString?.();
+      const is409 = maybeAxiosError?.includes("status code 409");
+    
+      const message = is409
+        ? "Category has menu items. Delete them first."
+        : "Failed to delete subcategory";
+    
+      enqueueSnackbar(message, { variant: "error" });
     }
+    
+    
   };
 
   const handleEditSubcategory = (categoryName: string, subcategoryName: string) => {
@@ -331,10 +365,8 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       });
     }
   };
-
-  console.log(categories, "categories");
-  
-console.log(selectedCategory, "selectedCategory");
+ 
+console.log(categories, "categories");
 
   return (
     <div>
@@ -504,8 +536,7 @@ console.log(selectedCategory, "selectedCategory");
                     ))}
                   </div>
                 )}
-                {/* Add Subcategories Button (unchanged) */}
-                <AlertDialog>
+                {isEditor && <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <div className="flex items-center gap-x-2 text-[14px] font-bold text-blue-700 cursor-pointer font-poppins">
                       <Plus /> Add Subcategories
@@ -534,7 +565,7 @@ console.log(selectedCategory, "selectedCategory");
                             return;
                           }
                           setSelectedCategoryForSubcategory(categoryName);
-                          setTimeout(() => handleAddSubcategory(), 0);
+                          handleAddSubcategory();
                         }}
                         disabled={isAddingSubcategory || !newSubcategoryName.trim()}
                       >
@@ -542,7 +573,8 @@ console.log(selectedCategory, "selectedCategory");
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
-                </AlertDialog>
+                </AlertDialog> }
+                
               </div>
             )}
           </div>

@@ -345,7 +345,7 @@ console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
                       <Info className="w-3 h-3" />
                     </span>
                   </TooltipTrigger>
-                  <TooltipContent side="right" className="text-sm max-w-xs text-white bg-blue-700">
+                  <TooltipContent side="right" className="text-sm max-w-xs text-white bg-blue-700 font-poppins">
                     You can offer customisation options like toppings, extras, and add-ons for your customers.
                     You can also define whether selection is optional or mandatory.
                   </TooltipContent>
@@ -475,7 +475,7 @@ console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
       {/* Create Addon Item Sheet */}
       <Sheet open={openCreateAddonItemSheet} onOpenChange={setOpenCreateAddonItemSheet}>
         <SheetContent className='w-fit'>
-          <SheetHeader className='text-xl font-semibold font-poppins'>Add New Item</SheetHeader>
+          <SheetHeader className='text-xl font-semibold font-poppins'>Add New Addon Item</SheetHeader>
           <CreateAddOnForm
             onBack={() => {
               setOpenCreateAddonItemSheet(false);

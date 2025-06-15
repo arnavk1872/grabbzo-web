@@ -105,10 +105,42 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
             const existingItems = prevCategories[categoryValue]?.items || [];
             const existingSubCategories = prevCategories[categoryValue]?.subCategories || [];
           
+            // If the item is being added to a subcategory
+            if (categoryValue.includes('/')) {
+              const [mainCategory, subCategoryName] = categoryValue.split('/');
+              const subCategoryIndex = existingSubCategories.findIndex(
+                (sub: any) => sub.name === subCategoryName
+              );
+
+              if (subCategoryIndex !== -1) {
+                const updatedSubCategories = [...existingSubCategories];
+                updatedSubCategories[subCategoryIndex] = {
+                  ...updatedSubCategories[subCategoryIndex],
+                  items: [
+                    ...updatedSubCategories[subCategoryIndex].items,
+                    {
+                      isEnabled: true,
+                      id: response.id,
+                      title: response.title,
+                    },
+                  ],
+                };
+
+                return {
+                  ...prevCategories,
+                  [mainCategory]: {
+                    ...prevCategories[mainCategory],
+                    subCategories: updatedSubCategories,
+                  },
+                };
+              }
+            }
+
+            // If the item is being added to a main category
             return {
               ...prevCategories,
               [categoryValue]: {
-                ...prevCategories[categoryValue], // Preserve all existing category data
+                ...prevCategories[categoryValue],
                 isDisabled: false,
                 categoryId: categoryId,
                 items: [
@@ -119,7 +151,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
                     title: response.title,
                   },
                 ],
-                subCategories: existingSubCategories // Preserve subcategories
+                subCategories: existingSubCategories,
               },
             };
           });
@@ -156,7 +188,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         Save Changes
       </Button>
       </div>
-      <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[375px] 2xl:w-[600px] rounded-[24px] my-4 mr-4">
+      <div className="bg-white h-fit min-h-[800px] pb-6  rounded-[24px] my-4 mr-4">
           <MenuItemForm ref={itemDataRef}
              categories={categories}
           formData={formData}

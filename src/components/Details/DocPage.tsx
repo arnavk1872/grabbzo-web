@@ -96,10 +96,7 @@ const DocPage = () => {
   docDetailsData.BankAccountNumber &&
   docDetailsData.ReBankAccountNumber &&
   docDetailsData.BankIfscCode &&
-  docDetailsData.GstNumber &&
-  docDetailsData.pan &&
-  docDetailsData.gst &&
-  docDetailsData.fssai;
+  docDetailsData.GstNumber 
 
   return (
     <div className="font-poppins max-md:mx-6 sm:ml-32 md:ml-10 md:min-w-[750px] max-md:-mt-10">

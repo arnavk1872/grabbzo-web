@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const DocFormSchema = z.object({
-  panNumber: z
-    .string()
-    .min(1, { message: "PAN Number is required!" })
-    .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, {
-      message: "PAN Number is invalid!",
-    }),
+  // panNumber: z
+  //   .string()
+  //   .min(1, { message: "PAN Number is required!" })
+  //   .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, {
+  //     message: "PAN Number is invalid!",
+  //   }),
 
-  GstNumber: z.string().min(1, { message: "GST Number is required!" }),
+  // GstNumber: z.string().min(1, { message: "GST Number is required!" }),
   // .regex(
   //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
   //   { message: "GST Number is invalid!" }

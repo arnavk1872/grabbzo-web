@@ -162,7 +162,7 @@ const ItemVariant: React.FC<ItemVariantProps> = ({ onAccordionOpen }) => {
               </span>
             </TooltipTrigger>
 
-            <TooltipContent side="right" className="text-sm max-w-xs text-white">
+            <TooltipContent side="right" className="text-sm max-w-xs text-white font-poppins">
               You can offer customisation options like quantity, extras, add-ons for customer.
               You can also define if customer selection of these options is optional or mandatory.
             </TooltipContent>
@@ -255,7 +255,7 @@ const ItemVariant: React.FC<ItemVariantProps> = ({ onAccordionOpen }) => {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="w-1/2">
           <SheetHeader>
-            <SheetTitle>Add {selectedVariant?.title}</SheetTitle>
+            <SheetTitle className='font-poppins text-[24px]'>Add {selectedVariant?.title}</SheetTitle>
           </SheetHeader>
           {selectedVariant && (
             <VariantGroupEditor
