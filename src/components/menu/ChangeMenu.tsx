@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { Button } from "../UI/Button";
-import AddItem from "./AddItem";
 import {
   addNewCategory,
   updateItemDetails,
