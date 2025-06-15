@@ -16,41 +16,72 @@ interface MenuEditorProps {
       name: string;
       isEnabled: boolean;
     }[];
+    subCategories?: Array<{
+      id: number;
+      name: string;
+      items: {
+        title: any;
+        isStock: any;
+        id: number;
+        name: string;
+        isEnabled: boolean;
+      }[];
+    }>;
   }[];
 }
 
 type Item = {
   id: number;
-  title: string; // Transformed from `name`
+  title: string;
   isEnabled: boolean;
 };
 
-type LocalItem = {
+type CategoryData = {
   isDisabled: boolean;
   categoryId: number;
   items: Item[];
+  subCategories?: Array<{
+    id: number;
+    name: string;
+    items: Item[];
+  }>;
 };
 
 const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
   const [toggleEditor, changeToggleEditor] = useState(true);
-  const [localItems, setLocalItems] = useState<LocalItem[]>([]);
+  const [localItems, setLocalItems] = useState<CategoryData[]>([]);
 
   const categoryData = useMemo(() => {
-    return allCategories.reduce<
-      Record<string, { isDisabled: boolean; categoryId: number; items: Item[] }>
-    >((acc, category) => {
-      acc[category.name] = {
+    const transformedData: Record<string, CategoryData> = {};
+    
+    allCategories.forEach(category => {
+      const transformedCategory: CategoryData = {
         isDisabled: category.isDisabled,
         categoryId: category.id,
-        items: category.items.map((item) => ({
+        items: category.items.map(item => ({
           id: item.id,
           title: item.title,
           isEnabled: item.isStock,
-        })),
+        }))
       };
-      return acc;
-    }, {});
-  }, [JSON.stringify(allCategories)]);
+
+      if (category.subCategories && category.subCategories.length > 0) {
+        transformedCategory.subCategories = category.subCategories.map(subcat => ({
+          id: subcat.id,
+          name: subcat.name,
+          items: subcat.items.map(item => ({
+            id: item.id,
+            title: item.title,
+            isEnabled: item.isStock,
+          }))
+        }));
+      }
+
+      transformedData[category.name] = transformedCategory;
+    });
+
+    return transformedData;
+  }, [allCategories]);
 
   const [categories, setCategories] = useState(categoryData);
 
@@ -62,7 +93,7 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
   return (
     <>
       <AvailableMenu
-        allCategories={allCategories as any}
+        allCategories={allCategories}
         changeToggleEditor={changeToggleEditor}
         categories={categories}
         setCategories={setCategories}
@@ -72,7 +103,7 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
       />
       <ChangeMenu
         toggleEditor={toggleEditor}
-        allCategories={allCategories as any}
+        allCategories={allCategories}
         categories={categories}
         setCategories={setCategories}
         localItems={localItems}

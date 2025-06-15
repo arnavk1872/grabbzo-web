@@ -17,13 +17,41 @@ interface AvailableMenuProps {
       name: string;
       isEnabled: boolean;
     }[];
+    subCategories?: Array<{
+      id: number;
+      name: string;
+      items: {
+        title: any;
+        isStock: any;
+        id: number;
+        name: string;
+        isEnabled: boolean;
+      }[];
+    }>;
   }[];
-  categories: any;
-  setCategories: any;
-  categoryCount: any;
-  localItems: any;
-  setLocalItems: any;
-  changeToggleEditor?: (toggle: boolean) => void; // Adjusted type
+  categories: Record<string, {
+    isDisabled: boolean;
+    categoryId: number;
+    items: {
+      id: number;
+      title: string;
+      isEnabled: boolean;
+    }[];
+    subCategories?: Array<{
+      id: number;
+      name: string;
+      items: {
+        id: number;
+        title: string;
+        isEnabled: boolean;
+      }[];
+    }>;
+  }>;
+  setCategories: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+  categoryCount: number;
+  localItems: any[];
+  setLocalItems: React.Dispatch<React.SetStateAction<any[]>>;
+  changeToggleEditor?: (toggle: boolean) => void;
 }
 
 const AvailableMenu: React.FC<AvailableMenuProps> = ({
@@ -35,6 +63,7 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
   localItems,
   setLocalItems,
 }) => {
+  
   const [selectedCategory, setSelectedCategory] = useState<string>(
     allCategories[0]?.name || ""
   );
@@ -50,23 +79,44 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
     const selectedCategoryName = Object.keys(categories).find(
       (key) => categories[key].categoryId === selectedCategoryId
     );
-  
+
+    // Check if we're in a subcategory
+    if (selectedCategory?.includes('/')) {
+      const [mainCategory, subCategoryName] = selectedCategory.split('/');
+      const subCategory = categories[mainCategory]?.subCategories?.find(
+        (sub: any) => sub.name === subCategoryName
+      );
+      
+      if (subCategory) {
+        const subCategoryItems = subCategory.items || [];
+        const localSubCategoryItems = localItems.filter(
+          (item: any) => item.subcategoryId === subCategory.id
+        );
+
+        return [
+          ...subCategoryItems,
+          ...localSubCategoryItems.filter(
+            (localItem: any) =>
+              !subCategoryItems.some((item: any) => item.id === localItem.id)
+          ),
+        ];
+      }
+    }
+
+    // Handle main category items
     const categoryItems = categories[selectedCategoryName || ""]?.items || [];
-  
     const localCategoryItems = localItems.filter(
       (item: any) => item.categoryId === selectedCategoryId
     );
-  
-    const merged = [
+
+    return [
       ...categoryItems,
       ...localCategoryItems.filter(
         (localItem: any) =>
           !categoryItems.some((item: any) => item.id === localItem.id)
       ),
     ];
-  
-    return merged;
-  }, [categories, localItems, selectedCategoryId]);
+  }, [categories, localItems, selectedCategoryId, selectedCategory]);
 
   
 

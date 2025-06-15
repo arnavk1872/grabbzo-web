@@ -408,27 +408,7 @@ export const getOrderbyId = async (id: string) => {
   }
 };
 
-export const addItemImage = async (id: number, image: any) => {
-  const token = await getToken();
 
-  if (!token) return;
-  try {
-    const response = await axios.post(
-      `${IP}/api/menu/restaurant/item/${id}/upload-Menuimage`,
-      image,
-      {
-        headers: {
-          Authorization: ` ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error updating stock status:", error);
-    throw error;
-  }
-};
 
 // --------------------------------------------------- MENU API's END --------------------------------------------------
 
