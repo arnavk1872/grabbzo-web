@@ -1,14 +1,15 @@
 import React, { useRef } from "react";
 import { Button } from "../UI/Button";
 import AddItem from "./AddItem";
-import AddCategory from "./AddCategory";
 import {
   addNewCategory,
-  addNewItem,
   updateItemDetails,
 } from "@/helpers/api-utils";
+import { addNewItem } from "@/helpers/menu-utils";
 import { useSnackbar } from "notistack";
 import { useItemStore } from "@/store/MenuStore";
+import MenuItemForm from "./MenuItemForm";
+import MenuHelpTooltip from "./MenuHelpTooltip";
 
 interface ChangeMenuProps {
   toggleEditor: boolean;
@@ -37,6 +38,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
     servingInfo: null,
     portionSize: null,
     isStock: true,
+    categoryId:'',
     restaurantCategory: {
       id: null,
     },
@@ -63,7 +65,6 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (toggleEditor) {
       const validationErrors = itemDataRef.current?.getItemData();
 
       if (validationErrors && Object.keys(validationErrors).length > 0) {
@@ -102,10 +103,12 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
           ]);
           setCategories((prevCategories: any) => {
             const existingItems = prevCategories[categoryValue]?.items || [];
+            const existingSubCategories = prevCategories[categoryValue]?.subCategories || [];
           
             return {
               ...prevCategories,
               [categoryValue]: {
+                ...prevCategories[categoryValue], // Preserve all existing category data
                 isDisabled: false,
                 categoryId: categoryId,
                 items: [
@@ -116,6 +119,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
                     title: response.title,
                   },
                 ],
+                subCategories: existingSubCategories // Preserve subcategories
               },
             };
           });
@@ -128,6 +132,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
             servingInfo: null,
             portionSize: null,
             isStock: false,
+            categoryId:'',
             restaurantCategory: {
               id: null,
             },
@@ -137,57 +142,25 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       } catch (error) {
         console.error("Error adding item:", error);
       }
-    } else {
-      if (!categoryName.trim()) {
-        return;
-      }
-
-      try {
-        const response = await addNewCategory(categoryName);
-
-        setCategories((prevCategories: any) => ({
-          ...prevCategories, // Keep existing categories
-          [categoryName]: {
-            // Add new category with dynamic key
-            isDisabled: false,
-            categoryId: response.id,
-            items: [],
-          },
-        }));
-
-        enqueueSnackbar("Category added successfully !", {
-          variant: "success",
-          className: "font-poppins",
-        });
-        setCategoryName("");
-      } catch (error) {
-        console.error("Error adding category:", error);
-      }
-    }
+    
   };
 
   return (
     <div className="flex flex-col items-end pr-6">
+      <div className="flex items-center gap-2 mr-6">
+        <MenuHelpTooltip />
       <Button
         onClick={handleSaveChanges}
-        className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 mr-6 text-[16px]"
+          className="bg-blue-600 hover:bg-blue-800 text-white 2xl:w-1/4 text-[16px]"
       >
         Save Changes
       </Button>
+      </div>
       <div className="bg-white h-fit min-h-[800px] pb-6 min-w-[375px] 2xl:w-[600px] rounded-[24px] my-4 mr-4">
-        {toggleEditor ? (
-          <AddItem
-            ref={itemDataRef}
-            categories={categories}
-            formData={formData}
-            onFormDataChange={handleFormDataChange}
-          />
-        ) : (
-          <AddCategory
-            categoryName={categoryName}
-            setCategoryName={setCategoryName}
-          />
-        )}
+          <MenuItemForm ref={itemDataRef}
+             categories={categories}
+          formData={formData}
+             onFormDataChange={handleFormDataChange} />
       </div>
     </div>
   );
