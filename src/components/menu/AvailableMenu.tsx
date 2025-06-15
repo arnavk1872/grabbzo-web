@@ -17,13 +17,41 @@ interface AvailableMenuProps {
       name: string;
       isEnabled: boolean;
     }[];
+    subCategories?: Array<{
+      id: number;
+      name: string;
+      items: {
+        title: any;
+        isStock: any;
+        id: number;
+        name: string;
+        isEnabled: boolean;
+      }[];
+    }>;
   }[];
-  categories: any;
-  setCategories: any;
-  categoryCount: any;
-  localItems: any;
-  setLocalItems: any;
-  changeToggleEditor?: (toggle: boolean) => void; // Adjusted type
+  categories: Record<string, {
+    isDisabled: boolean;
+    categoryId: number;
+    items: {
+      id: number;
+      title: string;
+      isEnabled: boolean;
+    }[];
+    subCategories?: Array<{
+      id: number;
+      name: string;
+      items: {
+        id: number;
+        title: string;
+        isEnabled: boolean;
+      }[];
+    }>;
+  }>;
+  setCategories: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+  categoryCount: number;
+  localItems: any[];
+  setLocalItems: React.Dispatch<React.SetStateAction<any[]>>;
+  changeToggleEditor?: (toggle: boolean) => void;
 }
 
 const AvailableMenu: React.FC<AvailableMenuProps> = ({
@@ -35,6 +63,7 @@ const AvailableMenu: React.FC<AvailableMenuProps> = ({
   localItems,
   setLocalItems,
 }) => {
+  
   const [selectedCategory, setSelectedCategory] = useState<string>(
     allCategories[0]?.name || ""
   );

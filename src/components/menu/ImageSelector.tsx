@@ -1,52 +1,76 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X } from 'lucide-react';
+import { useItemStore } from '@/store/MenuStore';
+import { addItemImage } from '@/helpers/menu-utils';
+import { useSnackbar } from 'notistack';
 
 const ACCEPTED_FORMATS = ['image/jpeg', 'image/png'];
-const MAX_SIZE_MB = 20;
-const REQUIRED_DIMENSIONS = { width: 133, height: 133 };
+const MAX_SIZE_MB = 0.5; // 500KB
 
 const ImageSelector: React.FC = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { itemId, selectedItem } = useItemStore();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleImageChange = (file: File) => {
-    setError(null);
-    const reader = new FileReader();
+  useEffect(() => {
+    if (selectedItem?.data?.imageUrl) {
+      setPreviewUrl(selectedItem.data.imageUrl);
+    }
+  }, [selectedItem]);
 
-    reader.onloadend = () => {
-      const img = new Image();
-      img.onload = () => {
-        if (
-          img.width !== REQUIRED_DIMENSIONS.width ||
-          img.height !== REQUIRED_DIMENSIONS.height
-        ) {
-          setError(`Image must be ${REQUIRED_DIMENSIONS.width}px × ${REQUIRED_DIMENSIONS.height}px`);
-          return;
-        }
-        setPreviewUrl(reader.result as string);
-      };
-      img.src = reader.result as string;
-    };
-
-    if (!ACCEPTED_FORMATS.includes(file.type)) {
-      setError('Only JPG or PNG formats are allowed.');
-    } else if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-      setError(`Image must be under ${MAX_SIZE_MB}MB.`);
-    } else {
-      reader.readAsDataURL(file);
+  const handleRemoveImage = () => {
+    setPreviewUrl(null);
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleImageChange(file);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!ACCEPTED_FORMATS.includes(file.type)) {
+      setError('Only JPG or PNG formats are allowed.');
+      return;
+    }
+
+    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+      setError(`File size must be under ${MAX_SIZE_MB}MB.`);
+      return;
+    }
+
+    setError(null);
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
   };
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) handleImageChange(file);
-  };
+  useEffect(() => {
+    if (!itemId || !selectedFile) return;
+
+    const uploadImage = async () => {
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        await addItemImage(itemId, formData);
+        enqueueSnackbar("Image uploaded successfully", {
+          variant: "success",
+          className: "font-poppins",
+        });
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        enqueueSnackbar("Failed to upload image", {
+          variant: "error",
+          className: "font-poppins",
+        });
+      }
+    };
+
+    uploadImage();
+  }, [itemId, selectedFile]);
 
   return (
     <div className="max-w-md mx-auto p-4 space-y-4">
@@ -57,17 +81,27 @@ const ImageSelector: React.FC = () => {
       </div>
 
       <div
-        onDrop={onDrop}
-        onDragOver={(e) => e.preventDefault()}
         onClick={() => fileInputRef.current?.click()}
-        className="h-40 border-2 border-dashed border-blue-300 bg-blue-50 rounded-md flex items-center justify-center cursor-pointer"
+        className="h-40 border-2 border-dashed border-blue-300 bg-blue-50 rounded-md flex items-center justify-center cursor-pointer relative"
       >
         {previewUrl ? (
-          <img
-            src={previewUrl}
-            alt="Preview"
-            className="h-full object-contain rounded"
-          />
+          <>
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="h-full object-contain rounded"
+            />
+            <button
+              type="button"
+              className="absolute top-1 right-1 bg-gray-500 text-white rounded-full p-1 hover:bg-red-600"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRemoveImage();
+              }}
+            >
+              <X size={18} />
+            </button>
+          </>
         ) : (
           <div className="text-center text-blue-600 font-semibold">
             <div className="text-3xl mb-1">⬆</div>
@@ -77,7 +111,7 @@ const ImageSelector: React.FC = () => {
         <input
           type="file"
           ref={fileInputRef}
-          onChange={onFileChange}
+          onChange={handleFileSelect}
           accept="image/jpeg, image/png"
           className="hidden"
         />
@@ -91,18 +125,10 @@ const ImageSelector: React.FC = () => {
           <br /> JPG, PNG
         </div>
         <div>
-          <strong>DIMENSIONS</strong>
-          <br /> 512px × 512px
-        </div>
-        <div>
           <strong>MAX SIZE</strong>
-          <br /> 3 MB
+          <br /> 500 KB
         </div>
       </div>
-
-      <p className="text-xs text-center text-gray-500">
-        Quantity should be same as you serve for dine-in customers
-      </p>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Plus from "../Icons/Plus";
 import { usePathname } from "next/navigation";
 import { deleteItem, inStock } from "@/helpers/api-utils";
+import { deleteMenuItem } from "@/helpers/menu-utils";
 import { getItemDetails, addBlankItem } from "@/helpers/menu-utils";
 import Dustbin from "../Icons/Dustbin";
 import Pencil from "../Icons/Pencil";
@@ -97,7 +98,7 @@ const {setItemId} = useItemStore();
 
   const handleDeleteItem = async (itemId: number) => {
     try {
-      await deleteItem(itemId);
+      await deleteMenuItem(itemId);
       enqueueSnackbar("Item Deleted!", {
         variant: "error",
         className: "font-poppins",
@@ -148,7 +149,7 @@ const {setItemId} = useItemStore();
 
 
   return (
-    <div className="flex w-[80%] flex-col">
+    <div className="flex w-[250px] flex-col">
       <div className="flex justify-between w-full font-semibold text-[18px] font-poppins px-6 my-4">
         ITEMS | {localItems?.length}
       </div>

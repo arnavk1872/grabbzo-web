@@ -37,7 +37,7 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
     }
 
     const formData = {
-      title: title.trim(),
+      name: title.trim(),
       description: description.trim(),
       isRequired: selectionType === 'compulsory',
       maxSelection: parseInt(maxSelection)

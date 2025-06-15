@@ -11,6 +11,8 @@ interface ItemState {
   setItemId: (itemId: number) => void;
   addonGroupId: number;
   setAddonGroupId: (addonGroupId: number) => void;
+  subcategoryId: number;
+  setSubcategoryId: (subcategoryId: number) => void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
@@ -21,7 +23,9 @@ export const useItemStore = create<ItemState>((set) => ({
   categoryId: 0,
   setCategoryId: (category) => set({ categoryId: category }),
   itemId: 0,
-  setItemId: (item) => set({ itemId: item }),
+  setItemId: (itemId) => set({ itemId: itemId }),
   addonGroupId: 0,
   setAddonGroupId: (addonGroupId) => set({ addonGroupId: addonGroupId }),
+  subcategoryId: 0,
+  setSubcategoryId: (subcategoryId) => set({ subcategoryId: subcategoryId }),
 }));

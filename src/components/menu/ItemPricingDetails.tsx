@@ -14,7 +14,7 @@ const ItemPricingDetails: React.FC<ItemPricingDetailsProps> = ({
   setErrors,
 }) => {
     // Use formData for price if available, otherwise default
-    const price = formData?.price ? Number(formData.price) : 20;
+    const price = formData?.price ? Number(formData.price) : 0;
     const [packaging, setPackaging] = useState<number>(0);
     const [gst, setGst] = useState<number>(0);
     const [finalPrice, setFinalPrice] = useState<number>(0);
