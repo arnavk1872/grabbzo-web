@@ -101,58 +101,65 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
             },
           ]);
           setCategories((prevCategories: any) => {
-            const existingItems = prevCategories[categoryValue]?.items || [];
-            const existingSubCategories = prevCategories[categoryValue]?.subCategories || [];
-          
+            const updatedCategories = { ...prevCategories };
+            
             // If the item is being added to a subcategory
             if (categoryValue.includes('/')) {
               const [mainCategory, subCategoryName] = categoryValue.split('/');
-              const subCategoryIndex = existingSubCategories.findIndex(
-                (sub: any) => sub.name === subCategoryName
-              );
+              const category = updatedCategories[mainCategory];
+              
+              if (category?.subCategories) {
+                const subCategoryIndex = category.subCategories.findIndex(
+                  (sub: any) => sub.name === subCategoryName
+                );
 
-              if (subCategoryIndex !== -1) {
-                const updatedSubCategories = [...existingSubCategories];
-                updatedSubCategories[subCategoryIndex] = {
-                  ...updatedSubCategories[subCategoryIndex],
+                if (subCategoryIndex !== -1) {
+                  const updatedSubCategories = [...category.subCategories];
+                  updatedSubCategories[subCategoryIndex] = {
+                    ...updatedSubCategories[subCategoryIndex],
+                    items: [
+                      ...(updatedSubCategories[subCategoryIndex].items || []),
+                      {
+                        isEnabled: true,
+                        id: response.id,
+                        title: response.title,
+                      },
+                    ],
+                  };
+
+                  return {
+                    ...updatedCategories,
+                    [mainCategory]: {
+                      ...category,
+                      subCategories: updatedSubCategories,
+                    },
+                  };
+                }
+              }
+            }
+
+            // If the item is being added to a main category
+            const category = updatedCategories[categoryValue];
+            if (category) {
+              return {
+                ...updatedCategories,
+                [categoryValue]: {
+                  ...category,
+                  isDisabled: false,
+                  categoryId: categoryId,
                   items: [
-                    ...updatedSubCategories[subCategoryIndex].items,
+                    ...(category.items || []),
                     {
                       isEnabled: true,
                       id: response.id,
                       title: response.title,
                     },
                   ],
-                };
-
-                return {
-                  ...prevCategories,
-                  [mainCategory]: {
-                    ...prevCategories[mainCategory],
-                    subCategories: updatedSubCategories,
-                  },
-                };
-              }
+                },
+              };
             }
-
-            // If the item is being added to a main category
-            return {
-              ...prevCategories,
-              [categoryValue]: {
-                ...prevCategories[categoryValue],
-                isDisabled: false,
-                categoryId: categoryId,
-                items: [
-                  ...existingItems,
-                  {
-                    isEnabled: true,
-                    id: response.id,
-                    title: response.title,
-                  },
-                ],
-                subCategories: existingSubCategories,
-              },
-            };
+            
+            return updatedCategories;
           });
           setFormData({
             title: '',

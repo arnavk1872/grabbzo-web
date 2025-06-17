@@ -103,6 +103,9 @@ const DishCard: React.FC<DishCardProps> = ({
           maxLength={MAX_CHARS}
           placeholder="Enter description"
         />
+        <div className="mt-2 bg-[#FFE5BC] border border-yellow-400 text-yellow-800 text-xs p-2 rounded">
+        Adding description will help increase the sales of this item.
+            </div>
       </div>
 
       <div className="text-sm text-gray-500 text-right">

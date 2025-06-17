@@ -30,6 +30,12 @@ import {
 } from './MenuSheet';
 import VariantGroupEditor from './VariantGroupEditor';
 import VariantManager from './VariantManager';
+import Quantity from '../Icons/MenuIcons/Quantity';
+import Prepration from '../Icons/MenuIcons/Prepration';
+import Size from '../Icons/MenuIcons/Size';
+import Base from '../Icons/MenuIcons/Base';
+import Rice from '../Icons/MenuIcons/Rice';
+import Plus from '../Icons/MenuIcons/Plus';
 
 type VariantOption = {
   title: string;
@@ -43,38 +49,38 @@ const variantOptions: VariantOption[] = [
   {
     title: 'Quantity',
     description: 'Quantity variations like - Small, medium, large, etc',
-    icon: <span className="text-3xl">🍶</span>,
-    bgColor: 'bg-teal-100',
+    icon: <Quantity/>,
+    bgColor: 'bg-[#D0EFEC]',
     border: true,
   },
   {
     title: 'Preparation type',
     description: 'Item preparation style, eg - Halal, Non-Halal, etc',
-    icon: <span className="text-3xl">🍳</span>,
-    bgColor: 'bg-blue-100',
+    icon: <span className="text-3xl"><Prepration/></span>,
+    bgColor: 'bg-[#D1E8F2]',
   },
   {
     title: 'Size',
     description: 'Different sizes of an item, eg- bread size, pizza - 6", 12", etc',
-    icon: <span className="text-3xl">🍟</span>,
+    icon: <span className="text-3xl"><Size/></span>,
     bgColor: 'bg-indigo-100',
   },
   {
     title: 'Base',
     description: 'Item Base types, eg - wheat bread, multi grain bread, etc',
-    icon: <span className="text-3xl">🥖</span>,
+    icon: <span className="text-3xl"><Base/></span>,
     bgColor: 'bg-rose-100',
   },
   {
     title: 'Rice',
     description: "Choice of item's rice selection.",
-    icon: <span className="text-3xl">🍚</span>,
+    icon: <span className="text-3xl"><Rice/></span>,
     bgColor: 'bg-yellow-100',
   },
   {
     title: 'Make your own',
     description: "Build your own addon group if you didn't find one above",
-    icon: <span className="text-3xl">➕</span>,
+    icon: <span className="text-3xl"><Plus/></span>,
     bgColor: 'border border-dashed',
   },
 ];
@@ -162,9 +168,8 @@ const ItemVariant: React.FC<ItemVariantProps> = ({ onAccordionOpen }) => {
               </span>
             </TooltipTrigger>
 
-            <TooltipContent side="right" className="text-sm max-w-xs text-white font-poppins">
-              You can offer customisation options like quantity, extras, add-ons for customer.
-              You can also define if customer selection of these options is optional or mandatory.
+            <TooltipContent side="right" className="text-sm max-w-xs text-white font-poppins bg-teal-600">
+            You can offer product variants like quantity, Size, or Prepration type for the customer to choose from. Declaring a variant for an item is optional.
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -239,7 +244,7 @@ const ItemVariant: React.FC<ItemVariantProps> = ({ onAccordionOpen }) => {
           <div
             key={idx}
             onClick={() => handleVariantClick(opt)}
-            className={`flex items-start gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
+            className={`flex items-center gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
               ${opt.bgColor} ${opt.border ? 'border-2 border-blue-400' : ''}`}
           >
             <div className="mt-1">{opt.icon}</div>

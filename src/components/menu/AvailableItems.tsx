@@ -54,7 +54,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-const {setItemId} = useItemStore();
+const {setItemId, setAccordionValue} = useItemStore();
   useEffect(() => {
     const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
 
@@ -69,6 +69,7 @@ const {setItemId} = useItemStore();
 
   const handleEditItem = async (itemId: number) => {
     setItemId(itemId);
+    setAccordionValue('section-0');
   };
 
   const handleToggle = async (id: number, currentStatus: boolean) => {

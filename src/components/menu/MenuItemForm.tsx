@@ -36,9 +36,8 @@ const MenuItemForm = forwardRef<
   MenuItemFormProps
 >(({ categories, formData, onFormDataChange }, ref) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [accordionValue, setAccordionValue] = useState<string | undefined>();
 
-  const { selectedItem, setSelectedItem, itemId, categoryValue, categoryId } = useItemStore();
+  const { selectedItem, setSelectedItem, itemId, categoryValue, categoryId, accordionValue, setAccordionValue } = useItemStore();
 
   const prevCategoryIdRef = useRef<number | null>(null);
 

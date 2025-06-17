@@ -73,7 +73,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
-  const { categoryId } = useItemStore();
+  const { categoryId, setAccordionValue } = useItemStore();
   const [editingSubcategory, setEditingSubcategory] = useState<{category: string, name: string} | null>(null);
   const [updatedSubcategoryName, setUpdatedSubcategoryName] = useState<string>("");
 
@@ -392,6 +392,7 @@ console.log(categories, "categories");
                 if (!(e.target as HTMLElement).closest('.subcategory-item')) {
                   onCategoryChange(categoryName);
                   onCategoryIdChange(categoryData.categoryId);
+                  setAccordionValue('section-0');
                 }
               }}
             >
@@ -483,6 +484,7 @@ console.log(categories, "categories");
                           e.stopPropagation();
                           onCategoryChange(`${categoryName}/${subcategoryData.name}`);
                           onCategoryIdChange(subcategoryData.id);
+                          setAccordionValue('section-0');
                         }}
                       >
                         {editingSubcategory?.category === categoryName && editingSubcategory?.name === subcategoryData.name ? (

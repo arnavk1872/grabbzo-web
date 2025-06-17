@@ -13,6 +13,8 @@ interface ItemState {
   setAddonGroupId: (addonGroupId: number) => void;
   subcategoryId: number;
   setSubcategoryId: (subcategoryId: number) => void;
+  accordionValue: string | undefined;
+  setAccordionValue: (value: string | undefined) => void;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
@@ -28,4 +30,6 @@ export const useItemStore = create<ItemState>((set) => ({
   setAddonGroupId: (addonGroupId) => set({ addonGroupId: addonGroupId }),
   subcategoryId: 0,
   setSubcategoryId: (subcategoryId) => set({ subcategoryId: subcategoryId }),
+  accordionValue: undefined,
+  setAccordionValue: (value) => set({ accordionValue: value }),
 }));

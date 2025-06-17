@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Plus,
   Info,
   UtensilsCrossed,
   Pizza,
@@ -40,6 +39,9 @@ import { getAllLinkedToItem, UnlinkAddOnToItem, getAddonItemsPerGroup, deleteAdd
 import { useItemStore } from '@/store/MenuStore';
 import { useSnackbar } from 'notistack';
 import ViewAvailableAddOns from './ViewAvailableAddOns';
+import Extras from '../Icons/MenuIcons/Extras';
+import Toppings from '../Icons/MenuIcons/Toppings';
+import Plus from '../Icons/MenuIcons/Plus';
 
 
 
@@ -57,25 +59,25 @@ const options: ItemAddOn[] = [
     type: 'Add-ons',
     title: 'Add-ons',
     description: 'Add-ons like Curd, Coke, Raita, etc',
-    icon: <UtensilsCrossed className="w-6 h-6" />,
+    icon: <UtensilsCrossed className="w-10 h-10" />,
   },
   {
     type: 'Extras',
     title: 'Extras',
     description: 'Extra ingredients like cheese, tomato, mushroom, etc',
-    icon: <LucideReceiptCent className="w-6 h-6" />,
+    icon: <Extras />,
   },
   {
     type: 'Toppings',
     title: 'Toppings',
     description: 'Sauces like Pesto, Mint Mayonnaise, Honey Mustard, etc',
-    icon: <Pizza className="w-6 h-6" />,
+    icon: <Toppings className="w-6 h-6" />,
   },
   {
     type: 'Make your own',
     title: 'Make your own',
     description: "Build your own addon group if you didn't find one above",
-    icon: <Plus className="w-6 h-6" />,
+    icon: <Plus/>,
   },
 ];
 
@@ -337,15 +339,15 @@ console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
         <>
           <div className="flex items-center justify-between">
             <TooltipProvider>
-              <div className="flex items-center gap-2 text-teal-600 font-semibold font-poppins">
+              <div className="flex items-center gap-2 text-teal-700 font-semibold font-poppins">
                 <span>What's this</span>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <span className="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs cursor-pointer">
-                      <Info className="w-3 h-3" />
-                    </span>
+                  <span className="cursor-pointer">
+                <Info className="w-4 h-4 text-teal-700" />
+              </span>
                   </TooltipTrigger>
-                  <TooltipContent side="right" className="text-sm max-w-xs text-white bg-blue-700 font-poppins">
+                  <TooltipContent side="right" className="text-sm max-w-xs text-white bg-teal-600 font-poppins">
                     You can offer customisation options like toppings, extras, and add-ons for your customers.
                     You can also define whether selection is optional or mandatory.
                   </TooltipContent>
@@ -363,7 +365,7 @@ console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
                 <div
                   key={opt.type}
                   className={`
-                    p-4 rounded-md cursor-pointer transition border
+                    p-4 rounded-md flex items-center  cursor-pointer transition border
                     ${opt.type === 'Make your own'
                       ? 'border-dashed border-gray-400 text-gray-700'
                       : isSelected
