@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Info,
   UtensilsCrossed,
-  Pizza,
-  LucideReceiptCent,
   Loader,
   Trash2,
 } from 'lucide-react';
@@ -141,7 +139,6 @@ const ItemAddOns: React.FC = () => {
     
     try {
       const response = await getAddonItemsPerGroup(groupId);
-      console.log('Addon items response:', response);
       setAddonItemsData(response);
     } catch (error) {
       console.error('Error fetching addon items:', error);
@@ -158,10 +155,8 @@ const ItemAddOns: React.FC = () => {
     if (itemId) {
       try {
         setLoading(true);
-        console.log(itemId,"ITEM ID");
         
         const response = await getAllLinkedToItem(itemId);
-        console.log('Linked add-ons response:', response);
         setLinkedAddOns(response || []);
       } catch (error) {
         console.error('Error fetching linked add-ons:', error);
@@ -223,7 +218,7 @@ const ItemAddOns: React.FC = () => {
       </div>
     );
   }
-console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
+
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-4 font-poppins">
@@ -257,8 +252,7 @@ console.log(linkedAddOns, "LINKED ADD ONS", "LINKED ADD ONS");
           
           <div className="space-y-2">
             {linkedAddOns.map((group) => {
-              console.log('Group:', group);
-              console.log('Addon Items:', group.addonItems);
+        
               return (
                 <div
                   key={group.id}

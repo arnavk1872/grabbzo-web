@@ -116,22 +116,15 @@ const {setItemId, setAccordionValue} = useItemStore();
 
   const handleAddBlankItem = async () => {
     try {
-      console.log("Creating new blank item...");
       const response = await addBlankItem();
-      console.log("Add blank item response:", response);
-      
-      // The response from addBlankItem is response.data directly
       const newItem = {
-        id: response.id || response.data?.id , // Fallback to timestamp if no ID
+        id: response.id || response.data?.id , 
         title: "New Item",
         isEnabled: false,
       };
-      
-      console.log("New item created:", newItem);
+
       setLocalItems((prevItems: any[]) => {
-        console.log("Previous items:", prevItems);
         const updatedItems = [...prevItems, newItem];
-        console.log("Updated items:", updatedItems);
         return updatedItems;
       });
       

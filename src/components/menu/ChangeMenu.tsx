@@ -1,10 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "../UI/Button";
-import {
-  addNewCategory,
-  updateItemDetails,
-} from "@/helpers/api-utils";
-import { addNewItem } from "@/helpers/menu-utils";
+import { updateItemDetails } from "@/helpers/menu-utils";
+import { addNewItem, getItemDetails } from "@/helpers/menu-utils";
 import { useSnackbar } from "notistack";
 import { useItemStore } from "@/store/MenuStore";
 import MenuItemForm from "./MenuItemForm";
@@ -27,6 +24,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   setLocalItems,
 }) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
+  const [itemDetails, setItemDetails] = React.useState<any>(null);
 
   const [formData, setFormData] = React.useState({
     title: "",
@@ -44,7 +42,38 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   });
 
   const itemDataRef = useRef<any>(null);
+  const { itemId } = useItemStore();
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const getItemDetail = async () => {
+      if (itemId) {
+        try {
+          const itemDetailsResponse = await getItemDetails(itemId);
+  
+          if (itemDetailsResponse) {
+            setItemDetails(itemDetailsResponse);
+            
+            // Populate form data with the fetched item details
+            setFormData(prev => ({
+              ...prev,
+              title: itemDetailsResponse.title || "",
+              description: itemDetailsResponse.description || "",
+              price: itemDetailsResponse.price?.toString() || "",
+              isVeg: itemDetailsResponse.isVeg ?? true,
+              servingInfo: itemDetailsResponse.servingInfo || null,
+              portionSize: itemDetailsResponse.portionSize || null,
+              isStock: itemDetailsResponse.isStock ?? true,
+              categoryId: itemDetailsResponse.categoryId || "",
+            }));
+          }
+        } catch (error) {
+          console.error("Error fetching item details:", error);
+        }
+      }
+    };
+    getItemDetail();
+  }, [itemId]);
 
   const handleFormDataChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -62,6 +91,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       })
     : "";
 
+
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const validationErrors = itemDataRef.current?.getItemData();
@@ -70,13 +100,12 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       console.log("Validation failed, not saving item", validationErrors);
       return;
     }
-    
+
     try {
-      if (selectedItem && savedItem && Object.keys(JSON.parse(savedItem)).length > 1) {
+      if (itemId) {
         const response = await updateItemDetails(
-          selectedItem.id,
-          categoryId,
-          savedItem
+          itemId,
+          formData
         );
         enqueueSnackbar("Item updated successfully !", {
           variant: "success",
@@ -84,7 +113,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
         });
         setLocalItems((prevItems: any[]) =>
           prevItems.map((item) =>
-            item.id === selectedItem.id ? { ...item, ...selectedItem } : item
+            item.id === itemId ? { ...item, ...formData } : item
           )
         );
       } else {

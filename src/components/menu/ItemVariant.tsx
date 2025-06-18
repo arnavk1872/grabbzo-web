@@ -238,23 +238,36 @@ const ItemVariant: React.FC<ItemVariantProps> = ({ onAccordionOpen }) => {
         </div>
       ) : null}
 
-      {/* Option Grid */}
-      <div className="grid grid-cols-2 gap-4 font-poppins">
-        {variantOptions.map((opt, idx) => (
-          <div
-            key={idx}
-            onClick={() => handleVariantClick(opt)}
-            className={`flex items-center gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
-              ${opt.bgColor} ${opt.border ? 'border-2 border-blue-400' : ''}`}
+      {/* Add Variant Group Button (shown when groups exist) or Option Grid (shown when no groups) */}
+      {variantGroups.length > 0 ? (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={() => handleVariantClick(variantOptions[5])} // "Make your own" option
+            className="flex items-center  px-4 py-2 border-teal-600 border text-teal-600 rounded-lg hover:bg-teal-500 hover:text-white transition-colors font-semibold"
           >
-            <div className="mt-1">{opt.icon}</div>
-            <div>
-              <h3 className="font-semibold">{opt.title}</h3>
-              <p className="text-sm text-gray-700">{opt.description}</p>
+            
+            Add Variant Group
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4 font-poppins">
+          {variantOptions.map((opt, idx) => (
+            <div
+              key={idx}
+              onClick={() => handleVariantClick(opt)}
+              className={`flex items-center gap-3 p-4 rounded-md cursor-pointer shadow-sm transition hover:shadow-md
+                ${opt.bgColor} ${opt.border ? 'border-2 border-blue-400' : ''}`}
+            >
+              <div className="mt-1">{opt.icon}</div>
+              <div>
+                <h3 className="font-semibold">{opt.title}</h3>
+                <p className="text-sm text-gray-700">{opt.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Shared Sheet Modal for creating new groups */}
       <Sheet open={open} onOpenChange={setOpen}>

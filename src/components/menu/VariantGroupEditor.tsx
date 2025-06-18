@@ -39,6 +39,7 @@ const VariantGroupEditor: React.FC<Props> = ({
             enqueueSnackbar("Variant group created successfully", { variant: "success" });
             setGroupId(response.id);
             onSave(response.id);
+            onCancel(); // Close the sheet after successful creation
         } catch (error) {
             console.error("Error creating variant group:", error);
             enqueueSnackbar("Failed to create variant group", { variant: "error" });
