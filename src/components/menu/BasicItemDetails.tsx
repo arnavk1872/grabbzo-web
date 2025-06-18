@@ -10,7 +10,7 @@ type DishCardProps = {
   initialIsVeg?: boolean;
 };
 
-const MAX_CHARS = 100;
+const MAX_CHARS = 150;
 
 const DishCard: React.FC<DishCardProps> = ({
   formData,

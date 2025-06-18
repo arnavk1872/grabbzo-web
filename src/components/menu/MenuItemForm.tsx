@@ -131,7 +131,36 @@ const MenuItemForm = forwardRef<
           validationErrors[path] = err.message;
         });
         setErrors(validationErrors);
+        
+        // Auto-open accordion based on error type
+        const errorFields = Object.keys(validationErrors);
+        console.log("Error fields detected:", errorFields);
+        console.log("All validation errors:", validationErrors);
+        
+        const hasPriceError = errorFields.includes('price');
+        // Only check for actual user-input errors in basic details (not auto-populated fields)
+        const hasUserBasicDetailErrors = errorFields.some(field => 
+          ['title', 'description'].includes(field)
+        );
+        
+        console.log("Has price error:", hasPriceError);
+        console.log("Has user basic detail errors:", hasUserBasicDetailErrors);
+        console.log("Current formData:", formData);
+        
+        if (hasUserBasicDetailErrors) {
+          console.log("Opening Basic Item Details accordion for user input errors");
+          setAccordionValue('section-0'); // Basic Item Details
+        } else if (hasPriceError) {
+          console.log("Opening Item Pricing accordion for price error");
+          setAccordionValue('section-1'); // Item Pricing
+        } else {
+          console.log("Opening Basic Item Details accordion for category/selection errors");
+          setAccordionValue('section-0'); // Default to basic details for category selection issues
+        }
+        
+        return validationErrors; // Return the errors
       }
+      return {}; // Return empty object if no errors
     },
   }));
 

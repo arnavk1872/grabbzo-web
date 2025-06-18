@@ -64,123 +64,123 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
 
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-      const validationErrors = itemDataRef.current?.getItemData();
+    const validationErrors = itemDataRef.current?.getItemData();
 
-      if (validationErrors && Object.keys(validationErrors).length > 0) {
-        return;
-      }
-      try {
-        if (savedItem && Object.keys(savedItem).length > 1) {
-          const response = await updateItemDetails(
-            selectedItem.id,
-            categoryId,
-            savedItem
-          );
-          enqueueSnackbar("Item updated successfully !", {
-            variant: "success",
-            className: "font-poppins",
-          });
-          setLocalItems((prevItems: any[]) =>
-            prevItems.map((item) =>
-              item.id === selectedItem.id ? { ...item, ...selectedItem } : item
-            )
-          );
-        } else {
-          const response = await addNewItem(formData);
-          setItemId(response.id);
-          enqueueSnackbar("Item added successfully !", {
-            variant: "success",
-            className: "font-poppins",
-          });
-          setLocalItems((prevItems: any[]) => [
-            ...prevItems, // Keep existing items
-            {
-              isEnabled: true,
-              id: response.id,
-              title: response.title,
-            },
-          ]);
-          setCategories((prevCategories: any) => {
-            const updatedCategories = { ...prevCategories };
+    if (validationErrors && Object.keys(validationErrors).length > 0) {
+      console.log("Validation failed, not saving item", validationErrors);
+      return;
+    }
+    
+    try {
+      if (selectedItem && savedItem && Object.keys(JSON.parse(savedItem)).length > 1) {
+        const response = await updateItemDetails(
+          selectedItem.id,
+          categoryId,
+          savedItem
+        );
+        enqueueSnackbar("Item updated successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+        setLocalItems((prevItems: any[]) =>
+          prevItems.map((item) =>
+            item.id === selectedItem.id ? { ...item, ...selectedItem } : item
+          )
+        );
+      } else {
+        const response = await addNewItem(formData);
+        setItemId(response.id);
+        enqueueSnackbar("Item added successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+        setLocalItems((prevItems: any[]) => [
+          ...prevItems, // Keep existing items
+          {
+            isEnabled: true,
+            id: response.id,
+            title: response.title,
+          },
+        ]);
+        setCategories((prevCategories: any) => {
+          const updatedCategories = { ...prevCategories };
+          
+          // If the item is being added to a subcategory
+          if (categoryValue.includes('/')) {
+            const [mainCategory, subCategoryName] = categoryValue.split('/');
+            const category = updatedCategories[mainCategory];
             
-            // If the item is being added to a subcategory
-            if (categoryValue.includes('/')) {
-              const [mainCategory, subCategoryName] = categoryValue.split('/');
-              const category = updatedCategories[mainCategory];
-              
-              if (category?.subCategories) {
-                const subCategoryIndex = category.subCategories.findIndex(
-                  (sub: any) => sub.name === subCategoryName
-                );
+            if (category?.subCategories) {
+              const subCategoryIndex = category.subCategories.findIndex(
+                (sub: any) => sub.name === subCategoryName
+              );
 
-                if (subCategoryIndex !== -1) {
-                  const updatedSubCategories = [...category.subCategories];
-                  updatedSubCategories[subCategoryIndex] = {
-                    ...updatedSubCategories[subCategoryIndex],
-                    items: [
-                      ...(updatedSubCategories[subCategoryIndex].items || []),
-                      {
-                        isEnabled: true,
-                        id: response.id,
-                        title: response.title,
-                      },
-                    ],
-                  };
-
-                  return {
-                    ...updatedCategories,
-                    [mainCategory]: {
-                      ...category,
-                      subCategories: updatedSubCategories,
-                    },
-                  };
-                }
-              }
-            }
-
-            // If the item is being added to a main category
-            const category = updatedCategories[categoryValue];
-            if (category) {
-              return {
-                ...updatedCategories,
-                [categoryValue]: {
-                  ...category,
-                  isDisabled: false,
-                  categoryId: categoryId,
+              if (subCategoryIndex !== -1) {
+                const updatedSubCategories = [...category.subCategories];
+                updatedSubCategories[subCategoryIndex] = {
+                  ...updatedSubCategories[subCategoryIndex],
                   items: [
-                    ...(category.items || []),
+                    ...(updatedSubCategories[subCategoryIndex].items || []),
                     {
                       isEnabled: true,
                       id: response.id,
                       title: response.title,
                     },
                   ],
-                },
-              };
+                };
+
+                return {
+                  ...updatedCategories,
+                  [mainCategory]: {
+                    ...category,
+                    subCategories: updatedSubCategories,
+                  },
+                };
+              }
             }
-            
-            return updatedCategories;
-          });
-          setFormData({
-            title: '',
-            description: '',
-            price: '',
-            selectedCategory: null,
-            isVeg: true,
-            servingInfo: null,
-            portionSize: null,
-            isStock: false,
-            categoryId:'',
-            restaurantCategory: {
-              id: null,
-            },
-          });
+          }
+
+          // If the item is being added to a main category
+          const category = updatedCategories[categoryValue];
+          if (category) {
+            return {
+              ...updatedCategories,
+              [categoryValue]: {
+                ...category,
+                isDisabled: false,
+                categoryId: categoryId,
+                items: [
+                  ...(category.items || []),
+                  {
+                    isEnabled: true,
+                    id: response.id,
+                    title: response.title,
+                  },
+                ],
+              },
+            };
+          }
           
-        }
-      } catch (error) {
-        console.error("Error adding item:", error);
+          return updatedCategories;
+        });
+        setFormData({
+          title: '',
+          description: '',
+          price: '',
+          selectedCategory: null,
+          isVeg: true,
+          servingInfo: null,
+          portionSize: null,
+          isStock: false,
+          categoryId:'',
+          restaurantCategory: {
+            id: null,
+          },
+        });
       }
-    
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
   };
 
   return (
