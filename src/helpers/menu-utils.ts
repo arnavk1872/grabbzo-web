@@ -160,6 +160,7 @@ export const editCategory = async (
 export const getItemDetails = async (ItemId: number) => {
   const token = await getToken();
   if (!token) return;
+console.log(ItemId,"ITEM ID");
 
   try {
     const response = await axios.get(
@@ -178,6 +179,31 @@ export const getItemDetails = async (ItemId: number) => {
   }
 };
 
+export const updateItemDetails = async (
+  ItemId: number | string | undefined,
+  updatedItem: any
+) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.put(
+      `${IP}/restaurant/menu/menuItem/modify/${ItemId}`,
+      updatedItem,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE UPDATE ITEM DETAILS");
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
 
 
 

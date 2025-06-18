@@ -11,7 +11,7 @@ export function connectStompSocket(): void {
   stompClient = new Client({
     webSocketFactory: (): WebSocket => new SockJS('https://api.grabbzo.com/ws') as WebSocket,
     connectHeaders: {
-      Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsIm5hbWUiOiIxMCIsInJvbGVzIjpbIlJFU1RBVVJBTlQiXSwidXNlcklkIjoxMCwiaWF0IjoxNzQ5NzU2MjI3LCJleHAiOjE3NjUzMDgyMjd9.Fbx37D4uyN4Pj49xEwU8UpfJ_Tx21xEl2VTWmUKxlVItDVYdoL6nmraAFJKoFkEb5OEgcbye0ex9zzMu6wxXkw`,
+      Authorization: `Bearer token`,
     },
     reconnectDelay: 5000,
     debug: (msg: string): void => {

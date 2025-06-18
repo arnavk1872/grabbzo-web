@@ -1,10 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "../UI/Button";
-import {
-  addNewCategory,
-  updateItemDetails,
-} from "@/helpers/api-utils";
-import { addNewItem } from "@/helpers/menu-utils";
+import { updateItemDetails } from "@/helpers/menu-utils";
+import { addNewItem, getItemDetails } from "@/helpers/menu-utils";
 import { useSnackbar } from "notistack";
 import { useItemStore } from "@/store/MenuStore";
 import MenuItemForm from "./MenuItemForm";
@@ -27,6 +24,7 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   setLocalItems,
 }) => {
   const [categoryName, setCategoryName] = React.useState<string>("");
+  const [itemDetails, setItemDetails] = React.useState<any>(null);
 
   const [formData, setFormData] = React.useState({
     title: "",
@@ -44,7 +42,38 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
   });
 
   const itemDataRef = useRef<any>(null);
+  const { itemId } = useItemStore();
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const getItemDetail = async () => {
+      if (itemId) {
+        try {
+          const itemDetailsResponse = await getItemDetails(itemId);
+  
+          if (itemDetailsResponse) {
+            setItemDetails(itemDetailsResponse);
+            
+            // Populate form data with the fetched item details
+            setFormData(prev => ({
+              ...prev,
+              title: itemDetailsResponse.title || "",
+              description: itemDetailsResponse.description || "",
+              price: itemDetailsResponse.price?.toString() || "",
+              isVeg: itemDetailsResponse.isVeg ?? true,
+              servingInfo: itemDetailsResponse.servingInfo || null,
+              portionSize: itemDetailsResponse.portionSize || null,
+              isStock: itemDetailsResponse.isStock ?? true,
+              categoryId: itemDetailsResponse.categoryId || "",
+            }));
+          }
+        } catch (error) {
+          console.error("Error fetching item details:", error);
+        }
+      }
+    };
+    getItemDetail();
+  }, [itemId]);
 
   const handleFormDataChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -62,61 +91,65 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
       })
     : "";
 
+
   const handleSaveChanges = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-      const validationErrors = itemDataRef.current?.getItemData();
+    const validationErrors = itemDataRef.current?.getItemData();
 
-      if (validationErrors && Object.keys(validationErrors).length > 0) {
-        return;
-      }
-      try {
-        if (savedItem && Object.keys(savedItem).length > 1) {
-          const response = await updateItemDetails(
-            selectedItem.id,
-            categoryId,
-            savedItem
-          );
-          enqueueSnackbar("Item updated successfully !", {
-            variant: "success",
-            className: "font-poppins",
-          });
-          setLocalItems((prevItems: any[]) =>
-            prevItems.map((item) =>
-              item.id === selectedItem.id ? { ...item, ...selectedItem } : item
-            )
-          );
-        } else {
-          const response = await addNewItem(formData);
-          setItemId(response.id);
-          enqueueSnackbar("Item added successfully !", {
-            variant: "success",
-            className: "font-poppins",
-          });
-          setLocalItems((prevItems: any[]) => [
-            ...prevItems, // Keep existing items
-            {
-              isEnabled: true,
-              id: response.id,
-              title: response.title,
-            },
-          ]);
-          setCategories((prevCategories: any) => {
-            const existingItems = prevCategories[categoryValue]?.items || [];
-            const existingSubCategories = prevCategories[categoryValue]?.subCategories || [];
+    if (validationErrors && Object.keys(validationErrors).length > 0) {
+      console.log("Validation failed, not saving item", validationErrors);
+      return;
+    }
+
+    try {
+      if (itemId) {
+        const response = await updateItemDetails(
+          itemId,
+          formData
+        );
+        enqueueSnackbar("Item updated successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+        setLocalItems((prevItems: any[]) =>
+          prevItems.map((item) =>
+            item.id === itemId ? { ...item, ...formData } : item
+          )
+        );
+      } else {
+        const response = await addNewItem(formData);
+        setItemId(response.id);
+        enqueueSnackbar("Item added successfully !", {
+          variant: "success",
+          className: "font-poppins",
+        });
+        setLocalItems((prevItems: any[]) => [
+          ...prevItems, // Keep existing items
+          {
+            isEnabled: true,
+            id: response.id,
+            title: response.title,
+          },
+        ]);
+        setCategories((prevCategories: any) => {
+          const updatedCategories = { ...prevCategories };
           
-            // If the item is being added to a subcategory
-            if (categoryValue.includes('/')) {
-              const [mainCategory, subCategoryName] = categoryValue.split('/');
-              const subCategoryIndex = existingSubCategories.findIndex(
+          // If the item is being added to a subcategory
+          if (categoryValue.includes('/')) {
+            const [mainCategory, subCategoryName] = categoryValue.split('/');
+            const category = updatedCategories[mainCategory];
+            
+            if (category?.subCategories) {
+              const subCategoryIndex = category.subCategories.findIndex(
                 (sub: any) => sub.name === subCategoryName
               );
 
               if (subCategoryIndex !== -1) {
-                const updatedSubCategories = [...existingSubCategories];
+                const updatedSubCategories = [...category.subCategories];
                 updatedSubCategories[subCategoryIndex] = {
                   ...updatedSubCategories[subCategoryIndex],
                   items: [
-                    ...updatedSubCategories[subCategoryIndex].items,
+                    ...(updatedSubCategories[subCategoryIndex].items || []),
                     {
                       isEnabled: true,
                       id: response.id,
@@ -126,54 +159,57 @@ const ChangeMenu: React.FC<ChangeMenuProps> = ({
                 };
 
                 return {
-                  ...prevCategories,
+                  ...updatedCategories,
                   [mainCategory]: {
-                    ...prevCategories[mainCategory],
+                    ...category,
                     subCategories: updatedSubCategories,
                   },
                 };
               }
             }
+          }
 
-            // If the item is being added to a main category
+          // If the item is being added to a main category
+          const category = updatedCategories[categoryValue];
+          if (category) {
             return {
-              ...prevCategories,
+              ...updatedCategories,
               [categoryValue]: {
-                ...prevCategories[categoryValue],
+                ...category,
                 isDisabled: false,
                 categoryId: categoryId,
                 items: [
-                  ...existingItems,
+                  ...(category.items || []),
                   {
                     isEnabled: true,
                     id: response.id,
                     title: response.title,
                   },
                 ],
-                subCategories: existingSubCategories,
               },
             };
-          });
-          setFormData({
-            title: '',
-            description: '',
-            price: '',
-            selectedCategory: null,
-            isVeg: true,
-            servingInfo: null,
-            portionSize: null,
-            isStock: false,
-            categoryId:'',
-            restaurantCategory: {
-              id: null,
-            },
-          });
+          }
           
-        }
-      } catch (error) {
-        console.error("Error adding item:", error);
+          return updatedCategories;
+        });
+        setFormData({
+          title: '',
+          description: '',
+          price: '',
+          selectedCategory: null,
+          isVeg: true,
+          servingInfo: null,
+          portionSize: null,
+          isStock: false,
+          categoryId:'',
+          restaurantCategory: {
+            id: null,
+          },
+        });
       }
-    
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
   };
 
   return (

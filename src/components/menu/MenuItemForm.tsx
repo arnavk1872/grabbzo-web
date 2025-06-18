@@ -36,9 +36,8 @@ const MenuItemForm = forwardRef<
   MenuItemFormProps
 >(({ categories, formData, onFormDataChange }, ref) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [accordionValue, setAccordionValue] = useState<string | undefined>();
 
-  const { selectedItem, setSelectedItem, itemId, categoryValue, categoryId } = useItemStore();
+  const { selectedItem, setSelectedItem, itemId, categoryValue, categoryId, accordionValue, setAccordionValue } = useItemStore();
 
   const prevCategoryIdRef = useRef<number | null>(null);
 
@@ -132,7 +131,29 @@ const MenuItemForm = forwardRef<
           validationErrors[path] = err.message;
         });
         setErrors(validationErrors);
+        
+        // Auto-open accordion based on error type
+        const errorFields = Object.keys(validationErrors);
+
+        
+        const hasPriceError = errorFields.includes('price');
+        const hasUserBasicDetailErrors = errorFields.some(field => 
+          ['title', 'description'].includes(field)
+        );
+      
+        
+        if (hasUserBasicDetailErrors) {
+          setAccordionValue('section-0');
+        } else if (hasPriceError) {
+
+          setAccordionValue('section-1'); 
+        } else {
+          setAccordionValue('section-0'); 
+        }
+        
+        return validationErrors; 
       }
+      return {}; // Return empty object if no errors
     },
   }));
 

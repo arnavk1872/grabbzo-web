@@ -54,7 +54,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-const {setItemId} = useItemStore();
+const {setItemId, setAccordionValue} = useItemStore();
   useEffect(() => {
     const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
 
@@ -69,6 +69,7 @@ const {setItemId} = useItemStore();
 
   const handleEditItem = async (itemId: number) => {
     setItemId(itemId);
+    setAccordionValue('section-0');
   };
 
   const handleToggle = async (id: number, currentStatus: boolean) => {
@@ -115,22 +116,15 @@ const {setItemId} = useItemStore();
 
   const handleAddBlankItem = async () => {
     try {
-      console.log("Creating new blank item...");
       const response = await addBlankItem();
-      console.log("Add blank item response:", response);
-      
-      // The response from addBlankItem is response.data directly
       const newItem = {
-        id: response.id || response.data?.id , // Fallback to timestamp if no ID
+        id: response.id || response.data?.id , 
         title: "New Item",
         isEnabled: false,
       };
-      
-      console.log("New item created:", newItem);
+
       setLocalItems((prevItems: any[]) => {
-        console.log("Previous items:", prevItems);
         const updatedItems = [...prevItems, newItem];
-        console.log("Updated items:", updatedItems);
         return updatedItems;
       });
       

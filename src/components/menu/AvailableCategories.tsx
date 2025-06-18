@@ -73,12 +73,10 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const pathname = usePathname();
   const isEditor = pathname.includes("editor");
-  const { categoryId } = useItemStore();
+  const { categoryId, setAccordionValue } = useItemStore();
   const [editingSubcategory, setEditingSubcategory] = useState<{category: string, name: string} | null>(null);
   const [updatedSubcategoryName, setUpdatedSubcategoryName] = useState<string>("");
 
-  console.log(categories, "categoriesssss");
-  
 
   useEffect(() => {
     if (selectedCategory && categories[selectedCategory]) {
@@ -140,14 +138,13 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
         return updatedCategories;
       });
     } catch (error: any) {
-      console.log(error, "error");
-    
+ 
       const maybeAxiosError = error?.toString?.();
-      const is409 = maybeAxiosError?.includes("status code 500");
+      const is409 = maybeAxiosError?.includes("status code 409");
     
       const message = is409
-        ? "Category has menu items. Delete them first."
-        : "Failed to delete subcategory";
+        ? "Category has menu items/subcategories. Delete them first."
+        : "Failed to delete category";
     
       enqueueSnackbar(message, { variant: "error" });
     }
@@ -206,7 +203,6 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     setIsLoading(true);
     try {
       const newCategory = await addNewCategory(newCategoryName.trim());
-      console.log(newCategory, "newCategory");
       
       enqueueSnackbar("Category added successfully!", { variant: "success" });
       setNewCategoryName("");
@@ -251,9 +247,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
       if (!parentCategoryId) {
         throw new Error('Parent category ID not found');
       }
-      console.log(parentCategoryId,categories[selectedCategory], "parentCategoryId");
-      
-
+ 
       const response = await addNewSubcategory(newSubcategoryName.trim(), parentCategoryId);
       
       if (!response?.id) {
@@ -336,8 +330,7 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
 
     try {
       const response = await editSubCategory(subcategoryId, updatedSubcategoryName);
-      console.log('Edit subcategory response:', response);
-
+ 
       enqueueSnackbar("Subcategory updated successfully!", {
         variant: "success",
         className: "font-poppins",
@@ -366,7 +359,6 @@ const AvailableCategories: React.FC<CategorySelectorProps> = ({
     }
   };
  
-console.log(categories, "categories");
 
   return (
     <div>
@@ -392,6 +384,7 @@ console.log(categories, "categories");
                 if (!(e.target as HTMLElement).closest('.subcategory-item')) {
                   onCategoryChange(categoryName);
                   onCategoryIdChange(categoryData.categoryId);
+                  setAccordionValue('section-0');
                 }
               }}
             >
@@ -483,6 +476,7 @@ console.log(categories, "categories");
                           e.stopPropagation();
                           onCategoryChange(`${categoryName}/${subcategoryData.name}`);
                           onCategoryIdChange(subcategoryData.id);
+                          setAccordionValue('section-0');
                         }}
                       >
                         {editingSubcategory?.category === categoryName && editingSubcategory?.name === subcategoryData.name ? (
