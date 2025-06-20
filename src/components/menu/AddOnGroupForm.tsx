@@ -3,7 +3,6 @@ import { Plus, Info } from 'lucide-react';
 import { Input } from '@/components/UI/Input';
 import { Button } from '@/components/UI/Button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/UI/Select';
-import AddOnCreationView from './AddOnCreationView';
 import { addNewAddOnGroup, LinkAddOnToItem } from '@/helpers/menu-utils';
 import { useSnackbar } from 'notistack';
 import { useItemStore } from '@/store/MenuStore';
@@ -16,17 +15,13 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
   const [title, setTitle] = useState('Add-ons');
   const [description, setDescription] = useState('');
   const [selectionType, setSelectionType] = useState<'compulsory' | 'optional'>('compulsory');
-  const [minSelection, setMinSelection] = useState<string>('');
   const [maxSelection, setMaxSelection] = useState<string>('1');
-  const [showAddOnCreation, setShowAddOnCreation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
-  const { addonGroupId, setAddonGroupId,itemId } = useItemStore();
+  const { addonGroupId, setAddonGroupId, itemId } = useItemStore();
 
-  console.log(itemId,"ITEM ID");
-  
 
   const isFormValid = title.trim() && description.trim();
 
@@ -50,8 +45,7 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
       setIsSaved(true);
       setAddonGroupId(response.data?.id || response.id);
       await LinkAddOnToItem(itemId, response.data?.id || response.id);
-      console.log('Add-on group created:', response);
-      
+
       // Call the success callback to refresh the parent component
       if (onSuccess) {
         onSuccess();
@@ -64,12 +58,6 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
     }
   };
 
-  if (showAddOnCreation) {
-    return <AddOnCreationView
-      onBack={() => setShowAddOnCreation(false)}
-      onBackToMainForm={() => setShowAddOnCreation(false)}
-    />;
-  }
 
   return (
     <div className="space-y-2 font-poppins">
@@ -174,7 +162,7 @@ const AddOnGroupForm: React.FC<AddOnGroupFormProps> = ({ onSuccess }) => {
         </div>
       </div>
 
-      
+
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Heart, Loader, Timer } from "lucide-react";
-import { getItemDetails, updateItemDetails } from "@/helpers/api-utils";
+import { updateItemDetails } from "@/helpers/menu-utils";
+import { getItemDetails } from "@/helpers/menu-utils";
 import { cn } from "@/lib/utils";
-import { useItemStore } from "@/store/MenuStore";
 import { useSnackbar } from "notistack";
 
 interface ItemData {
@@ -26,7 +26,7 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
   const [itemData, setItemData] = useState<ItemData | null>(null);
   const [isRecommended, setIsRecommended] = useState(false);
 
-  const { categoryId } = useItemStore();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const changeRecommendation = async () => {
@@ -34,7 +34,7 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
       const updatedValue = !isRecommended;
       setIsRecommended(updatedValue);
       const payload = { recommended: updatedValue };
-      await updateItemDetails(itemData.id, categoryId, payload);
+      await updateItemDetails(itemData.id, payload);
       enqueueSnackbar(
         updatedValue ? "Recommendation Added" : "Recommendation Removed",
         {
@@ -49,8 +49,8 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
     const getItemData = async () => {
       try {
         const response = await getItemDetails(itemId);
-        setItemData(response.data);
-        setIsRecommended(response.data.recommended);
+        setItemData(response);
+        setIsRecommended(response.recommended);
       } catch (error) {
         console.error("Failed to fetch item details:", error);
       }
@@ -92,7 +92,7 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
 
       {/* Extra Info & Actions */}
       <div className="flex flex-col items-start gap-2">
-        {itemData.portionSize && (
+        {/* {itemData.portionSize && (
           <p className="text-sm text-gray-700">
             <span className="font-semibold">Portion Size:</span>{" "}
             {itemData.portionSize}
@@ -104,7 +104,7 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
             <span className="font-semibold">Serving Info: </span>
             {itemData.servingInfo}
           </p>
-        )}
+        )} */}
 
         <button
           onClick={changeRecommendation}
@@ -121,12 +121,12 @@ const ViewItem: React.FC<ViewItemProps> = ({ itemId }) => {
           </span>
         </button>
 
-        {itemData.preparationTime > 0 && (
+        {/* {itemData.preparationTime > 0 && (
           <div className="text-sm flex gap-x-2 border rounded-full py-1 px-2 whitespace-nowrap items-center justify-center w-[120px] text-gray-700">
             <Timer size={23} />
             <div className="text-md">{itemData.preparationTime} mins</div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

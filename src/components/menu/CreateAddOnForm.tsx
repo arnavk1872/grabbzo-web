@@ -35,7 +35,7 @@ const CreateAddOnForm: React.FC<CreateAddOnFormProps> = ({ onBack }) => {
     try {
       const response = await addNewAddOnItem(formData, addonGroupId);
       enqueueSnackbar('Add-on item created successfully!', { variant: 'success' });
-      console.log('Add-on item created:', response);
+
       // Reset form
       setName('');
       setExtraPrice('0');

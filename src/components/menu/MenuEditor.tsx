@@ -58,7 +58,7 @@ const MenuEditor: React.FC<MenuEditorProps> = ({ allCategories }) => {
       const transformedCategory: CategoryData = {
         isDisabled: category.isDisabled,
         categoryId: category.id,
-        items: category.items.map(item => ({
+        items: category?.items?.map(item => ({
           id: item.id,
           title: item.title,
           isEnabled: item.isStock,

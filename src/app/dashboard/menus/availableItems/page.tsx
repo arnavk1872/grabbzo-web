@@ -1,5 +1,4 @@
 import MenuOverview from "@/components/menu/MenuOverview";
-import { getCategories } from "@/helpers/api-utils";
 import { getAllCategories } from "@/helpers/menu-utils";
 import React from "react";
 
