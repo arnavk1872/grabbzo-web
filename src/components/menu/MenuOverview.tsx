@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import AvailableMenu from "./AvailableMenu";
 
 interface MenuOverViewProps {
@@ -58,7 +58,7 @@ const MenuOverview = ({ allCategories }: MenuOverViewProps) => {
       const transformedCategory: CategoryData = {
         isDisabled: category.isDisabled,
         categoryId: category.id,
-        items: category.items.map(item => ({
+        items: category?.items?.map(item => ({
           id: item.id,
           title: item.title,
           isEnabled: !!item.isStock,

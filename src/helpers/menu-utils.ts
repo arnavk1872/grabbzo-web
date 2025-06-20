@@ -60,9 +60,6 @@ export const addNewCategory = async (value: string) => {
 
   if (!token) return;
 
-  console.log(value, "CATEGORY VALUE");
-  
-
   try {
     const response = await axios.post(
       `${IP}/restaurant/menu/category/add`,
@@ -74,7 +71,7 @@ export const addNewCategory = async (value: string) => {
         },
       }
     );
-    console.log('Category API Response:', response.data);
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -107,8 +104,6 @@ export const getAllCategories = async () => {
 export const deleteCategory = async (id: number) => {
   const token = await getToken();
   if (!token) return;
-
-  console.log(id, "CATEGORY ID");
 
   try {
     const response = await axios.delete(
@@ -160,7 +155,6 @@ export const editCategory = async (
 export const getItemDetails = async (ItemId: number) => {
   const token = await getToken();
   if (!token) return;
-console.log(ItemId,"ITEM ID");
 
   try {
     const response = await axios.get(
@@ -197,7 +191,33 @@ export const updateItemDetails = async (
         },
       }
     );
-    console.log(response.data, "RESPONSE UPDATE ITEM DETAILS");
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
+export const disableItem = async (
+  ItemId: number | string | undefined,
+  updatedItem: any
+) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.put(
+      `${IP}/restaurant/menu/menuItem/disable/${ItemId}?disable=${updatedItem}`,
+    {},
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -213,11 +233,6 @@ export const addNewItem = async (formData: any) => {
   if (!token) return;
   const CategoryId = formData?.restaurantCategory.id;
   try {
-    console.log("Sending form data:", {
-      ...formData,
-      categoryId: formData.categoryId,
-      subcategoryId: formData.subcategoryId
-    });
 
     const response = await axios.post(
       `${IP}/restaurant/menu/menuItem/add`,
@@ -229,7 +244,7 @@ export const addNewItem = async (formData: any) => {
         },
       }
     );
-    console.log("Response:", response.data);
+  
     return response.data;
   } catch (error) {
     console.error("Error adding item:", error);
@@ -253,7 +268,6 @@ export const addBlankItem = async () => {
         },
       }
     );
-    console.log(response.data, "RESPONSE ADD BLANK ITEM");
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -265,9 +279,7 @@ export const addBlankItem = async () => {
 export const addItemImage = async (id: number, image: any) => {
   const token = await getToken();
 
-  console.log(id, "ID");
   
-
   if (!token) return;
   try {
     const response = await axios.post(
@@ -290,7 +302,6 @@ export const addItemImage = async (id: number, image: any) => {
 export const deleteMenuItem = async (itemId: number) => {
   const token = await getToken();
   if (!token) return;
- console.log(itemId, "ITEM ID S");
  
   try {
     const response = await axios.delete(
@@ -302,7 +313,7 @@ export const deleteMenuItem = async (itemId: number) => {
         },
       }
     );
-    console.log(response.data, "DELETE ITEM RESPONSE");
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -320,7 +331,7 @@ export const addNewVariant = async (formData: any, groupId: number) => {
   if (!token) return;
 
   try {
-    console.log(formData, "FORM DATA");
+  
 
     const response = await axios.post(
       `${IP}/restaurant/menu/variantGroup/${groupId}/variants`,
@@ -332,7 +343,7 @@ export const addNewVariant = async (formData: any, groupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE");
+  
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -354,7 +365,7 @@ export const getAllVariants = async (ItemId: number) => {
         },
       }
     );
-    console.log(response.data, "GET ALL VARIANTS RESPONSE");
+   
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -376,7 +387,7 @@ export const deleteVariant = async (variantId: number) => {
         },
       }
     );
-    console.log(response.data, "DELETE RESPONSE");
+ 
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -392,8 +403,7 @@ export const addNewVariantGroup = async (name: string,menuItemId: number) => {
   if (!token) return;
 
   try {
-    console.log(name, "NAME");
-
+   
     const response = await axios.post(
       `${IP}/restaurant/menu/variantGroup/${menuItemId}`,
       {name: name},
@@ -404,7 +414,7 @@ export const addNewVariantGroup = async (name: string,menuItemId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE ADD VARIANT GROUP");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -416,9 +426,6 @@ export const getAllVariantGroups = async (ItemId: number) => {
   const token = await getToken();
   if (!token) return;
 
-  console.log(ItemId, "ITEM ID");
-  
-
   try {
     const response = await axios.get(
       `${IP}/restaurant/menu/variantGroup/${ItemId}/menuItem`,
@@ -429,7 +436,7 @@ export const getAllVariantGroups = async (ItemId: number) => {
         },
       }
     );
-    console.log(response.data, "GET ALL VARIANT GROUPS RESPONSE");
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -451,7 +458,7 @@ export const deleteVariantGroup = async (variantGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "DELETE VARIANT GROUP RESPONSE");
+   
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -468,7 +475,7 @@ export const addNewAddOnGroup = async (formData: any) => {
   if (!token) return;
 
   try {
-    console.log(formData, "FORM DATA");
+    
 
     const response = await axios.post(
       `${IP}/restaurant/menu/addonGroup`,
@@ -480,7 +487,7 @@ export const addNewAddOnGroup = async (formData: any) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE ADD ON GROUP");
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -494,7 +501,7 @@ export const addNewAddOnItem = async (formData: any, addonGroupId: number) => {
   if (!token) return;
 
   try {
-    console.log(formData, "FORM DATA");
+    
 
     const response = await axios.post(
       `${IP}/restaurant/menu/group/${addonGroupId}`,
@@ -506,7 +513,7 @@ export const addNewAddOnItem = async (formData: any, addonGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE ADD ON ITEM");
+   
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -531,7 +538,7 @@ export const getAllItemsInGroup = async (groupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE GET ALL ITEMS IN GROUP");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -553,7 +560,7 @@ export const getAllLinkedToItem = async (ItemId: number) => {
         },
       }
     );
-    console.log(response.data, "GET ALL LINKED TO ITEM RESPONSE");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -578,7 +585,7 @@ export const LinkAddOnToItem = async (itemId: number, addonGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE LINK ADD ON TO ITEM");
+  
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -602,7 +609,7 @@ export const UnlinkAddOnToItem = async (itemId: number, addonGroupId: number) =>
         },
       }
     );
-    console.log(response.data, "RESPONSE UNLINK ADD ON TO ITEM");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -615,7 +622,7 @@ export const deleteAddonGroup = async ( addonGroupId: number) => {
 
   if (!token) return;
  
-  console.log(addonGroupId, "ADDON GROUP ID");
+
   try {
 
     const response = await axios.delete(
@@ -627,7 +634,7 @@ export const deleteAddonGroup = async ( addonGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE DELETE ADDON GROUP");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -651,7 +658,7 @@ export const getAddonItemsPerGroup = async (addonGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "GET ALL LINKED TO ITEM RESPONSE");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -675,7 +682,7 @@ export const deleteAddonItemsPerGroup = async (addonGroupId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE DELETE ADD ON ITEMS PER GROUP");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -699,7 +706,7 @@ export const deleteAddonItems = async (addonItemId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE DELETE ADD");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -753,7 +760,7 @@ export const getAddonItemsPerRestaurant = async () => {
         },
       }
     );
-    console.log(response.data, "GET ALL ADDON ITEMS PER RESTAURANT");
+    
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -768,7 +775,6 @@ export const addNewSubcategory = async (name: string, categoryId: number) => {
   const token = await getToken();
 
   if (!token) return;
-  console.log(name, categoryId, "NAME AND CATEGORY ID");
 
   try {
     const response = await axios.post(
@@ -784,7 +790,7 @@ export const addNewSubcategory = async (name: string, categoryId: number) => {
         },
       }
     );
-    console.log('API Response:', response.data);
+
     return response.data;
   } catch (error) {
     console.error("Error adding subcategory:", error);
@@ -796,7 +802,7 @@ export const deleteSubCategory = async (subCategoryId: number) => {
   const token = await getToken();
 
   if (!token) return;
-  console.log(subCategoryId, "SUB CATEGORY ID");
+ 
 
   try {
 
@@ -809,7 +815,7 @@ export const deleteSubCategory = async (subCategoryId: number) => {
         },
       }
     );
-    console.log(response.data, "RESPONSE DELETE SUB CATEGORY");
+
     return response.data;
   } catch (error) {
     console.error("Error updating stock status:", error);
@@ -844,4 +850,29 @@ export const editSubCategory = async (
     throw error;
   }
 };
+
+export const changeCategoryStatus = async (status: any, id: number) => {
+  const token = await getToken();
+
+  if (!token) return;
+
+  try {
+    const response = await axios.patch(
+      `${IP}/restaurant/menu/category/status/${id}?status=${status}`,
+      {},
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating stock status:", error);
+    throw error;
+  }
+};
+
 

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Plus from "../Icons/Plus";
 import { usePathname } from "next/navigation";
-import { deleteItem, inStock } from "@/helpers/api-utils";
-import { deleteMenuItem } from "@/helpers/menu-utils";
-import { getItemDetails, addBlankItem } from "@/helpers/menu-utils";
+import { getItemDetails, addBlankItem, deleteMenuItem, disableItem } from "@/helpers/menu-utils";
 import Dustbin from "../Icons/Dustbin";
 import Pencil from "../Icons/Pencil";
 import { useSnackbar } from "notistack";
@@ -54,7 +52,7 @@ const AvailableItems: React.FC<AvailableItemsProps> = ({
   const { enqueueSnackbar } = useSnackbar();
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-const {setItemId, setAccordionValue} = useItemStore();
+  const { setItemId, setAccordionValue } = useItemStore();
   useEffect(() => {
     const filteredItems = items.filter((item) => !deletedIds.includes(item.id));
 
@@ -75,7 +73,7 @@ const {setItemId, setAccordionValue} = useItemStore();
   const handleToggle = async (id: number, currentStatus: boolean) => {
     try {
       const updatedStatus = !currentStatus;
-      await inStock(id, updatedStatus);
+      await disableItem(id, currentStatus);
       if (updatedStatus == true) {
         enqueueSnackbar("Item in Stock !", {
           variant: "success",
@@ -118,7 +116,7 @@ const {setItemId, setAccordionValue} = useItemStore();
     try {
       const response = await addBlankItem();
       const newItem = {
-        id: response.id || response.data?.id , 
+        id: response.id || response.data?.id,
         title: "New Item",
         isEnabled: false,
       };
@@ -127,7 +125,7 @@ const {setItemId, setAccordionValue} = useItemStore();
         const updatedItems = [...prevItems, newItem];
         return updatedItems;
       });
-      
+
       enqueueSnackbar("New item created!", {
         variant: "success",
         className: "font-poppins",
