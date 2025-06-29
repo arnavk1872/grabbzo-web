@@ -23,6 +23,9 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
     router.push(`/dashboard/${orderId}`);
   };
 
+  console.log(orderDetails , "orderDetails pe");
+  
+
   function formatDate(apiDate: string): string {
     const date = new Date(apiDate);
 
@@ -42,7 +45,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
   }
 
   return (
-    <div className="flex justify-center items-center overflow-x-auto border border-gray-300 md:mx-8 my-2 font-poppins rounded-[30px]">
+    <div className="flex justify-center items-center overflow-x-auto border border-gray-300 md:mx-8 my-2 font-poppins rounded-[30px] mb-12">
       <table className="md:min-w-full">
         <thead className="bg-[#1663DE] text-white rounded-[30px] block py-2 my-2 mx-1">
           <tr className="flex justify-between rounded-[24px] px-4 py-2 m-2">

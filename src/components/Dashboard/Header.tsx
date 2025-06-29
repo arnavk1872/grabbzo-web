@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React ,{useEffect,useState} from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import {
@@ -37,11 +37,14 @@ import UserDetailsPopup from "./UserDetailsPopup";
 import { usePageStore } from "@/store/CurrentPage";
 import { Button } from "../UI/Button";
 import Sidebar from "./Sidebar";
-import { changeStatus } from "@/helpers/api-utils";
+import { changeStatus,getRestaurantPlans } from "@/helpers/api-utils";
 import { useRouter } from "next/navigation";
 
 const Header = ({ storeStatus }: { storeStatus: boolean }) => {
-  const { planDetails } = usePageStore();
+
+  const [planDetails, setPlanDetails] = useState<any>({});
+  console.log(planDetails,"KYA HAI BHAOI");
+  
   const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
   const restaurantName = planDetails["Restaurant Name"] || "Restaurant";
 
@@ -55,6 +58,22 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
       router.push("/restaurant");
     }
   };
+
+  useEffect(() => {
+    const getPlanDetails = async () => {
+      try {
+        const response = await getRestaurantPlans();
+
+        setPlanDetails(response);
+        console.log(response,"PLAN DETAIaaaaaaLS");
+        
+      } catch (err) {
+        console.error("Error in Fetching Plans", err);
+      }
+    };
+
+    getPlanDetails();
+  }, []);
 
   const Routes: any[] = [
     {
@@ -116,7 +135,7 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
         <Link href="/wallet">
           <div className="border rounded-full border-borderColor p-2 flex items-center mt-1 justify-center gap-x-2 pr-3 cursor-pointer ">
             <Wallet className="text-[#8a8a8f]" />
-            <span className="font-poppins font-medium">₹0 </span>
+            <span className="font-poppins font-medium">₹{planDetails.Wallet} </span>
           </div>
         </Link>
         <Sheet>

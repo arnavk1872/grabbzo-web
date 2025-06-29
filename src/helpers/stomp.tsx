@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from 'react';
 import { connectStompSocket , disconnectStompSocket } from '../lib/stomp';
 

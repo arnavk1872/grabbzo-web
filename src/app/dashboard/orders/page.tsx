@@ -1,19 +1,13 @@
-import NoNewOrders from "@/components/Orders/NoNewOrders";
-import OrderTable from "@/components/Orders/OrderTable";
-import { getOrders } from "@/helpers/api-utils";
 import React from "react";
+import StompConnection from "@/helpers/stomp";
+import RealTimeOrders from "@/components/Orders/RealTimeOrders";
 
 const page = async () => {
-  const orderDetails = await getOrders("NEW");
-
   return (
-    <div className="w-full">
-      {true ? (
-        <NoNewOrders />
-      ) : (
-        <OrderTable orderDetails={orderDetails} />
-      )}
-    </div>
+    <>
+      <StompConnection />
+      <RealTimeOrders orderType="NEW" />
+    </>
   );
 };
 

@@ -1,18 +1,24 @@
-import NoPreparingOrders from "@/components/Orders/NoPreparingOrders";
-import OrderTable from "@/components/Orders/OrderTable";
 import { getOrders } from "@/helpers/api-utils";
+import OrdersWithPagination from "@/components/Orders/OrdersWithPagination";
 import React from "react";
 
-const page = async () => {
-  const orderDetails = await getOrders("PREPARING");
+interface PageProps {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+const page = async ({ searchParams }: PageProps) => {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "0", 10);
+  const orderDetails = await getOrders("PREPARING", currentPage, 10);
+  
   return (
-    <div>
-      {true ? (
-        <NoPreparingOrders />
-      ) : (
-        <OrderTable orderDetails={orderDetails} />
-      )}
-    </div>
+    <OrdersWithPagination 
+      initialData={orderDetails} 
+      orderType="PREPARING"
+      initialPage={currentPage}
+    />
   );
 };
 

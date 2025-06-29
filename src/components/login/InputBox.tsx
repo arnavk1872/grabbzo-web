@@ -93,10 +93,14 @@ const InputBox = () => {
           try {
             const planDetails = await getRestaurantPlans();
             setPlanDetails(planDetails);
+            console.log(planDetails,"PLAN DETAILS");
+            
             const daysLeft = getDaysLeft(planDetails?.Expiry);
             if (daysLeft === "Plan Expired") {
               setCookie("planExpired", true);
               return router.push("plan-expired");
+            } else if (planDetails?.Verified === false) {
+              return router.push("/profile-completion");
             } else {
               router.push("/dashboard");
             }

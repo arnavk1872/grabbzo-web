@@ -7,6 +7,7 @@ import AppFeatures from "@/components/HomePage/AppFeatures";
 import image from "@public/image.png";
 import Link from "next/link";
 import BlogSection from "@/components/aboutus/BlogSection";
+import DownloadAppSection from "@/components/HomePage/DownloadAppSection";
 
 const page = () => {
 
@@ -44,10 +45,30 @@ const page = () => {
           <h1 className="text-white md:text-3xl mt-8">
             Explore delicious food & drinks near you
           </h1>
+           <div className={`flex gap-3 -ml-2 mb-2 mt-6 `}>
+              <Link className="cursor-pointer" href={"https://play.google.com/store/apps/details?id=com.grabbzo.customer&hl=en_IN"}>
+            <Image
+              src={`${S3_BASE_URL}/public/play_store.png`}
+              height={230}
+              width={177}
+              alt="Grabbzo logo"
+            />
+            </Link>
+            <Link className="cursor-pointer mt-[10px]" href={"https://apps.apple.com/in/app/grabbzo-restaurant-partner/id6745562089"}>
+            <Image
+              src={`${S3_BASE_URL}/public/app_store.png`}
+              height={145}
+              width={145}
+              alt="Grabbzo logo"
+            />
+            </Link>
+            </div>
         </div>
       </div>
-      <AppFeatures />
+      {/* <AppFeatures /> */}
+
       <AppExperience />
+      <DownloadAppSection/>
       <BlogSection/>
       <Footer isHome={true} />
     </>

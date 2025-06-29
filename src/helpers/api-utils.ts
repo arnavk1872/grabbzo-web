@@ -53,12 +53,12 @@ export const getToken = async (): Promise<string> => {
   return token;
 };
 
-export const getOrders = async (type: string) => {
+export const getOrders = async (type: string, page = 0, size = 10) => {
   const token = await getToken();
   if (!token) return;
 
   try {
-    const response = await axios.get(`${IP}/orders?state=${type}`, {
+    const response = await axios.get(`${IP}/orders?state=${type}&page=${page}&size=${size}`, {
       headers: {
         Authorization: `${token}`,
         "Content-Type": "application/json",
@@ -111,6 +111,57 @@ export const changeStatus = async (status: boolean) => {
     );
 
     return response.data.status;
+  } catch (error) {
+    console.error("Error changing status:", error);
+    throw error;
+  }
+};
+
+export const acceptOrder = async (payload:any) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.post(
+      `${IP}/orders/accept`,
+      payload,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE ACCEPT ORDER");
+    return response.data;
+  } catch (error) {
+    console.error("Error changing status:", error);
+    throw error;
+  }
+};
+
+export const rejectOrder = async (orderId:string,reason:string) => {
+  const token = await getToken();
+  if (!token) return;
+
+  const payload = {
+    orderId: orderId,
+    rejectionReason: reason,
+  };
+
+  try {
+    const response = await axios.post(
+      `${IP}/orders/reject`,
+      payload,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE REJECT ORDER");
+    return response.data;
   } catch (error) {
     console.error("Error changing status:", error);
     throw error;

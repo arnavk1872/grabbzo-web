@@ -1,19 +1,24 @@
-import NoPickedOrders from "@/components/Orders/NoPickedOrders";
-import OrderTable from "@/components/Orders/OrderTable";
 import { getOrders } from "@/helpers/api-utils";
+import OrdersWithPagination from "@/components/Orders/OrdersWithPagination";
 import React from "react";
 
-const page = async () => {
-  const orderDetails = await getOrders("COMPLETED");
+interface PageProps {
+  searchParams: Promise<{
+    page?: string;
+  }>;
+}
+
+const page = async ({ searchParams }: PageProps) => {
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "0", 10);
+  const orderDetails = await getOrders("COMPLETED", currentPage, 10);
+  
   return (
-    <div>
-      {/* {orderDetails.length == 0 ? ( */}
-       {true ? (
-        <NoPickedOrders />
-      ) : (
-        <OrderTable orderDetails={orderDetails} />
-      )}
-    </div>
+    <OrdersWithPagination 
+      initialData={orderDetails} 
+      orderType="COMPLETED"
+      initialPage={currentPage}
+    />
   );
 };
 

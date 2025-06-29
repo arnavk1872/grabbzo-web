@@ -26,7 +26,7 @@ const Balance = () => {
       </div>
 
       <div className="text-center p-4 border border-borderColor rounded-md bg-blue-200 text-gray-500">
-        It may take up to 7 days to complete this transaction
+        It may take  to 2-4 days to complete this transaction
       </div>
 
       <Button className="bg-blue-500 text-white">Withdraw Money</Button>
