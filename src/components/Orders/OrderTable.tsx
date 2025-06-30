@@ -1,4 +1,5 @@
 "use client";
+import { Car } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -10,6 +11,7 @@ interface Order {
   total: string;
   status: string;
   type: string;
+  carDelivery?: boolean;
 }
 
 interface OrderTableProps {
@@ -23,8 +25,6 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
     router.push(`/dashboard/${orderId}`);
   };
 
-  console.log(orderDetails , "orderDetails pe");
-  
 
   function formatDate(apiDate: string): string {
     const date = new Date(apiDate);
@@ -51,7 +51,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
           <tr className="flex justify-between rounded-[24px] px-4 py-2 m-2">
             <th className="flex-1 text-center">Order ID</th>
             <th className="flex-1 text-center xl:block hidden">Date</th>
-            <th className="flex-1 text-center"> Name</th>
+            {/* <th className="flex-1 text-center"> Name</th> */}
             <th className="flex-1 text-center xl:block hidden">ETA</th>
             <th className="flex-1 text-center">Amount</th>
             <th className="flex-1 text-center">Order Type</th>
@@ -63,13 +63,17 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
             <tr
               onClick={() => checkOrderDetails(order.id)}
               key={order.id}
-              className="flex gap-x-2 xl:px-2 py-4 cursor-pointer"
+              className={`flex gap-x-2 xl:px-2 py-4 cursor-pointer ${
+                order.carDelivery 
+                  ? "bg-orange-50 border-l-4 border-orange-500 hover:bg-orange-100" 
+                  : "hover:bg-gray-50"
+              }`}
             >
               <td className="flex-1 text-center">{order.id}</td>
               <td className="flex-1 text-center xl:block hidden">
                 {formatDate(order.createdAt)}
               </td>
-              <td className="flex-1 text-center">{order.customerName}</td>
+              {/* <td className="flex-1 text-center">{order.customerName}</td> */}
               <td className="flex-1 text-center xl:block hidden">
                 {formatDate(order.customerArrivingTime)}
               </td>
@@ -80,12 +84,18 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
                     ? "text-green-600"
                     : order.type === "TAKEAWAY"
                     ? "text-blue-600"
-                    : order.type === "CAR DELIVERY"
+                    : order.type === "CAR DELIVERY" || order.carDelivery
                     ? "text-orange-600"
                     : ""
                 }`}
               >
-                {order.type}
+                {order.carDelivery && order.type !== "CAR DELIVERY" ? (
+                  <span className="flex items-center justify-center gap-1">
+                    <Car/>{order.type}
+                  </span>
+                ) : (
+                  order.type
+                )}
               </td>
               <td className="flex-1 text-center">
                 <span

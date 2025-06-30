@@ -205,7 +205,10 @@ export const rejectOrder = async (orderId:string,reason:string) => {
 
 export const getOrderbyId = async (id: string) => {
   const token = await getToken();
-  if (!token) return;
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
 
   try {
     const response = await axios.get(`${IP}/orders/getOrderDetails/${id}`, {
@@ -214,10 +217,11 @@ export const getOrderbyId = async (id: string) => {
         "Content-Type": "application/json",
       },
     });
+    console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error updating stock status:", error);
-    throw error;
+    console.error("Error fetching order details:", error);
+    return null;
   }
 };
 
@@ -441,11 +445,12 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
   //   status: orderStatus,
   // };
   const token = await getToken();
+console.log(orderId,orderStatus,"ORDER ID AND ORDER STATUS");
 
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/orders/status?orderId=${orderId}&status=${orderStatus}`,
+      `${IP}/orders/status?orderId=${orderId}&status=${orderStatus}`,{},
       {
         headers: {
           Authorization: ` ${token}`,
@@ -453,6 +458,7 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
         },
       }
     );
+    console.log(response.data, "RESPONSE CHANGE ORDER STATUS");
     return response.data;
   } catch (error) {
     console.error("Error :", error);

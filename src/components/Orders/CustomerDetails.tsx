@@ -61,36 +61,42 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
         </div>
       </div>
 
-      {/* Car Details Section - Only show if carDelivery is true */}
-      {orderDetails?.carDelivery  && (
-        <div className="border border-borderColor rounded-[24px] w-full my-4 bg-white p-4">
-          <h3 className="font-poppins text-[18px] font-semibold mb-3 text-center text-[#1663DE]">
-            Car Details
+      {/* Car Delivery Section - Only show if carDelivery is true */}
+      {orderDetails?.carDelivery && (
+        <div className="border border-borderColor rounded-[24px] w-full my-4 bg-white p-6">
+          <h3 className="font-poppins text-[18px] font-semibold mb-4 text-left text-black">
+            Car Delivery
           </h3>
-          <div className="space-y-2">
-            {orderDetails.carModel && (
-              <div className="flex justify-between">
-                <span className="font-poppins text-[14px] text-gray-600">Model:</span>
-                <span className="font-poppins text-[14px] font-semibold">{orderDetails.carModel}</span>
+          <div className="space-y-4">
+            <div>
+              <label className="block font-poppins text-[14px] text-gray-600 mb-1">
+                Car Number
+              </label>
+              <div className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 font-poppins text-[14px] text-gray-800">
+                {orderDetails.carNumber || "Not provided"}
               </div>
-            )}
-            {orderDetails.carNumber && (
-              <div className="flex justify-between">
-                <span className="font-poppins text-[14px] text-gray-600">Number:</span>
-                <span className="font-poppins text-[14px] font-semibold">{orderDetails.carNumber}</span>
+            </div>
+            <div>
+              <label className="block font-poppins text-[14px] text-gray-600 mb-1">
+                Car Model
+              </label>
+              <div className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 font-poppins text-[14px] text-gray-800">
+                {orderDetails.carModel || "Not provided"}
               </div>
-            )}
-            {orderDetails.carColor && (
-              <div className="flex justify-between">
-                <span className="font-poppins text-[14px] text-gray-600">Color:</span>
-                <span className="font-poppins text-[14px] font-semibold">{orderDetails.carColor}</span>
+            </div>
+            <div>
+              <label className="block font-poppins text-[14px] text-gray-600 mb-1">
+                Car Color
+              </label>
+              <div className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 font-poppins text-[14px] text-gray-800">
+                {orderDetails.carColor || "Not provided"}
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}
 
-      {orderDetails.status === "PREPARING" && (
+      {/* {orderDetails.status === "PREPARING" && (
         <div className="border border-borderColor rounded-[24px] w-full my-4 bg-white flex gap-x-4 items-center justify-center py-4">
           <div className="border border-borderColor rounded-full bg-[#1663DE] p-2 ">
             <PhoneIcon />
@@ -102,9 +108,9 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
             <div className="font-poppins text-[14px]">+91 9879385252</div>
           </div>
         </div>
-      )}
-
-      <div className="border mt-2 border-borderColor rounded-[24px] w-full bg-white flex gap-x-4 items-center justify-center py-4">
+      )} */}
+     {orderDetails?.status !== "COMPLETED" && (
+      <div className="border mt-2 mb-6 border-borderColor rounded-[24px] w-full bg-white flex gap-x-4 items-center justify-center py-4">
         <Clock />
         <span className=" font-poppins font-bold">
           <ETATimer targetTime={
@@ -114,6 +120,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({ orderDetails }) => {
           } />
         </span>
       </div>
+     )}
     </div>
   );
 };

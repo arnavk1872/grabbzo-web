@@ -4,6 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getOrders } from "@/helpers/api-utils";
 import OrderTable from "./OrderTable";
 import NoNewOrders from "./NoNewOrders";
+import NoPreparingOrders from "./NoPreparingOrders";
+import NoReadyOrders from "./NoReadyOrders";
+import NoPickedOrders from "./NoPickedOrders";
 
 interface OrdersResponse {
   orders: {
@@ -94,6 +97,20 @@ const OrdersWithPagination: React.FC<OrdersWithPaginationProps> = ({
     }
   }, [currentPage, initialPage, orderType]);
 
+  // Function to render appropriate "no orders" component based on orderType
+  const renderNoOrdersComponent = () => {
+    switch (orderType) {
+      case "PREPARING":
+        return <NoPreparingOrders />;
+      case "READY":
+        return <NoReadyOrders />;
+      case "COMPLETED":
+        return <NoPickedOrders />;
+      default:
+        return <NoNewOrders />;
+    }
+  };
+
   const renderPaginationButtons = () => {
     if (!orderData?.orders) return null;
 
@@ -150,7 +167,7 @@ const OrdersWithPagination: React.FC<OrdersWithPaginationProps> = ({
   return (
     <div className="w-full">
       {!hasOrders ? (
-        <NoNewOrders />
+        renderNoOrdersComponent()
       ) : (
         <>
           <div className="relative">
