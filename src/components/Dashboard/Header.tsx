@@ -43,10 +43,11 @@ import { useRouter } from "next/navigation";
 const Header = ({ storeStatus }: { storeStatus: boolean }) => {
 
   const [planDetails, setPlanDetails] = useState<any>({});
-  console.log(planDetails,"KYA HAI BHAOI");
   
   const ownerName = planDetails["Owner Name"]?.charAt(0) || "";
   const restaurantName = planDetails["Restaurant Name"] || "Restaurant";
+
+  const { setWalletDetails } = usePageStore();
 
   const router = useRouter();
 
@@ -65,7 +66,7 @@ const Header = ({ storeStatus }: { storeStatus: boolean }) => {
         const response = await getRestaurantPlans();
 
         setPlanDetails(response);
-        console.log(response,"PLAN DETAIaaaaaaLS");
+        setWalletDetails(response);
         
       } catch (err) {
         console.error("Error in Fetching Plans", err);

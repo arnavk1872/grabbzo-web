@@ -701,3 +701,56 @@ export const numberCheck = async (number:string) => {
   }
 };
 
+export const getAllPayouts = async () => {
+  
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(
+      `${IP}/api/restaurant/payout`,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data.payouts, "RESPONSE PAYOUT");
+
+    return response.data.payouts;
+
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const requestPayout = async (amount: number) => {
+  const token = await getToken();
+  if (!token) return;
+
+  const payload = {
+    amount: amount,
+  };
+
+  try {
+    const response = await axios.post(
+      `${IP}/api/restaurant/payout`,
+      payload,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response, "RESPONSE PAYOUT REQUEST");
+
+    return response.data;
+  } catch (error: unknown) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+

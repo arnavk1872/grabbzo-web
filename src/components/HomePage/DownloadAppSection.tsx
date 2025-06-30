@@ -4,6 +4,7 @@ import Image from "next/image";
 import qrcode from "@public/hovercode.png"
 import { S3_BASE_URL } from "@/lib/constants";
 import Link from "next/link";
+import AppleStoreButton from "@/components/AppleStoreButton";
 
 export default function DownloadAppSection() {
   return (
@@ -29,14 +30,9 @@ export default function DownloadAppSection() {
               alt="Grabbzo logo"
             />
             </Link>
-            <Link className="cursor-pointer mt-[10px]" href={"https://apps.apple.com/in/app/grabbzo-restaurant-partner/id6745562089"}>
-            <Image
-              src={`${S3_BASE_URL}/public/app_store.png`}
-              height={140}
-              width={145}
-              alt="Grabbzo logo"
-            />
-            </Link>
+            <div className="mt-[10px]">
+              <AppleStoreButton />
+            </div>
             </div>
         </div>
 

@@ -8,6 +8,7 @@ import image from "@public/image.png";
 import Link from "next/link";
 import BlogSection from "@/components/aboutus/BlogSection";
 import DownloadAppSection from "@/components/HomePage/DownloadAppSection";
+import AppleStoreButton from "@/components/AppleStoreButton";
 
 const page = () => {
 
@@ -54,14 +55,7 @@ const page = () => {
               alt="Grabbzo logo"
             />
             </Link>
-            <Link className="cursor-pointer mt-[10px]" href={"https://apps.apple.com/in/app/grabbzo-restaurant-partner/id6745562089"}>
-            <Image
-              src={`${S3_BASE_URL}/public/app_store.png`}
-              height={145}
-              width={145}
-              alt="Grabbzo logo"
-            />
-            </Link>
+            <AppleStoreButton />
             </div>
         </div>
       </div>
