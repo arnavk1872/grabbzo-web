@@ -1,92 +1,98 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../Dashboard/Avatar";
+"use client"
 
-type Transaction = {
+import React, { useEffect, useState } from "react";
+import { getAllPayouts } from "@/helpers/api-utils";
+
+type PayoutData = {
   id: number;
-  bankName: string;
-  transactionType: string;
-  amount: string;
-  logo: string;
+  amount: number;
+  completed: boolean;
+  timestamp: string;
 };
 
-const transactions: Transaction[] = [
-  // {
-  //   id: 1,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 2,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 3,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 4,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 5,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-  // {
-  //   id: 6,
-  //   bankName: "SBI",
-  //   transactionType: "Bank Account Debit",
-  //   amount: "₹1,000",
-  //   logo: "/sbi-logo.png",
-  // },
-];
+interface WithdrawlHistoryProps {
+  refreshTrigger?: number;
+}
 
-const WithdrawlHistory: React.FC = () => {
+const WithdrawlHistory: React.FC<WithdrawlHistoryProps> = ({ refreshTrigger = 0 }) => {
+  const [payouts, setPayouts] = useState<PayoutData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPayouts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getAllPayouts();
+        setPayouts(response || []);
+      } catch (error) {
+        console.error("Error fetching payouts:", error);
+        setPayouts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPayouts();
+  }, [refreshTrigger]);
+
+  const formatDate = (timestamp: string) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-IN', { 
+      day: '2-digit', 
+      month: 'short', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
-    <div className=" p-4 bg-white rounded-lg shadow w-full font-poppins">
+    <div className="p-4 bg-white rounded-lg shadow w-full font-poppins">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">Recent Withdrawals</h2>
-        <select className=" border-borderColor rounded-[16px] p-1 text-[14px]">
-          <option> 3 months</option>
-          <option> 6 months</option>
-          <option> 12 months</option>
+        <select className="border-borderColor rounded-[16px] p-1 text-[14px]">
+          <option>3 months</option>
+          <option>6 months</option>
+          <option>12 months</option>
         </select>
       </div>
-      {/* <p className="text-gray-500 text-sm mb-2">Yesterday</p> */}
+      
       <div className="space-y-3">
-        {transactions.length == 0 ? (
-          <div className="text-center">No recent Transactions</div>
+        {isLoading ? (
+          <div className="text-center py-4">Loading...</div>
+        ) : payouts.length === 0 ? (
+          <div className="text-center py-4">No recent withdrawals</div>
         ) : (
-          transactions.map((transaction) => (
+          payouts.map((payout) => (
             <div
-              key={transaction.id}
-              className="flex justify-between items-center pr-2"
+              key={payout.id}
+              className="flex justify-between items-center p-3 border rounded-lg"
             >
               <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>TM</AvatarFallback>
-                </Avatar>
-                <span className="text-gray-800 font-medium max-sm:w-[125px] text-ellipsis overflow-hidden whitespace-nowrap">
-                  {transaction.transactionType}
+                
+                <div className="flex flex-col">
+                  <span className="text-gray-800 font-medium">
+                    Withdrawal #{payout.id}
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    {formatDate(payout.timestamp)}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex flex-col items-end">
+                <span className="text-gray-800 font-semibold">
+                  ₹{payout.amount}
+                </span>
+                <span 
+                  className={`text-xs px-2 py-1 rounded-full ${
+                    payout.completed 
+                      ? 'bg-green-100 text-green-700' 
+                      : 'bg-yellow-100 text-yellow-700'
+                  }`}
+                >
+                  {payout.completed ? 'Completed' : 'Processing'}
                 </span>
               </div>
-              <span className="text-gray-800 font-semibold">
-                {transaction.amount}
-              </span>
             </div>
           ))
         )}

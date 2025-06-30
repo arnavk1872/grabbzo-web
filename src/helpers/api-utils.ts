@@ -53,12 +53,12 @@ export const getToken = async (): Promise<string> => {
   return token;
 };
 
-export const getOrders = async (type: string) => {
+export const getOrders = async (type: string, page = 0, size = 10) => {
   const token = await getToken();
   if (!token) return;
 
   try {
-    const response = await axios.get(`${IP}/orders?state=${type}`, {
+    const response = await axios.get(`${IP}/orders?state=${type}&page=${page}&size=${size}`, {
       headers: {
         Authorization: `${token}`,
         "Content-Type": "application/json",
@@ -117,6 +117,57 @@ export const changeStatus = async (status: boolean) => {
   }
 };
 
+export const acceptOrder = async (payload:any) => {
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.post(
+      `${IP}/orders/accept`,
+      payload,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE ACCEPT ORDER");
+    return response.data;
+  } catch (error) {
+    console.error("Error changing status:", error);
+    throw error;
+  }
+};
+
+export const rejectOrder = async (orderId:string,reason:string) => {
+  const token = await getToken();
+  if (!token) return;
+
+  const payload = {
+    orderId: orderId,
+    rejectionReason: reason,
+  };
+
+  try {
+    const response = await axios.post(
+      `${IP}/orders/reject`,
+      payload,
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE REJECT ORDER");
+    return response.data;
+  } catch (error) {
+    console.error("Error changing status:", error);
+    throw error;
+  }
+};
+
 // export const changeStatus = async (status: boolean) => {
 //   const token = await getToken();
 //   if (!token) return;
@@ -154,7 +205,10 @@ export const changeStatus = async (status: boolean) => {
 
 export const getOrderbyId = async (id: string) => {
   const token = await getToken();
-  if (!token) return;
+  if (!token) {
+    console.error("No token found");
+    return null;
+  }
 
   try {
     const response = await axios.get(`${IP}/orders/getOrderDetails/${id}`, {
@@ -163,10 +217,11 @@ export const getOrderbyId = async (id: string) => {
         "Content-Type": "application/json",
       },
     });
+    console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error updating stock status:", error);
-    throw error;
+    console.error("Error fetching order details:", error);
+    return null;
   }
 };
 
@@ -390,11 +445,12 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
   //   status: orderStatus,
   // };
   const token = await getToken();
+console.log(orderId,orderStatus,"ORDER ID AND ORDER STATUS");
 
   if (!token) return;
   try {
     const response = await axios.post(
-      `${IP}/orders/status?orderId=${orderId}&status=${orderStatus}`,
+      `${IP}/orders/status?orderId=${orderId}&status=${orderStatus}`,{},
       {
         headers: {
           Authorization: ` ${token}`,
@@ -402,6 +458,7 @@ export const changeOrderStatus = async (orderStatus: string, orderId: any) => {
         },
       }
     );
+    console.log(response.data, "RESPONSE CHANGE ORDER STATUS");
     return response.data;
   } catch (error) {
     console.error("Error :", error);
@@ -645,6 +702,59 @@ export const numberCheck = async (number:string) => {
     return response;
     
   } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const getAllPayouts = async () => {
+  
+  const token = await getToken();
+  if (!token) return;
+
+  try {
+    const response = await axios.get(
+      `${IP}/api/restaurant/payout`,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data.payouts, "RESPONSE PAYOUT");
+
+    return response.data.payouts;
+
+  } catch (error) {
+    console.error("Error :", error);
+    throw error;
+  }
+};
+
+export const requestPayout = async (amount: number) => {
+  const token = await getToken();
+  if (!token) return;
+
+  const payload = {
+    amount: amount,
+  };
+
+  try {
+    const response = await axios.post(
+      `${IP}/api/restaurant/payout`,
+      payload,
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response, "RESPONSE PAYOUT REQUEST");
+
+    return response.data;
+  } catch (error: unknown) {
     console.error("Error :", error);
     throw error;
   }

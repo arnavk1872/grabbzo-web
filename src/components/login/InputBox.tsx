@@ -40,7 +40,7 @@ const InputBox = () => {
   const [isContinueDisabled, setIsContinueDisabled] = useState(false);
   const [isOtpLoading, setIsOtpLoading] = useState(false);
 
-  const { setPlanDetails } = usePageStore();
+
   const router = useRouter();
 
   const handleClick = async () => {
@@ -92,11 +92,13 @@ const InputBox = () => {
           }
           try {
             const planDetails = await getRestaurantPlans();
-            setPlanDetails(planDetails);
+
             const daysLeft = getDaysLeft(planDetails?.Expiry);
             if (daysLeft === "Plan Expired") {
               setCookie("planExpired", true);
               return router.push("plan-expired");
+            } else if (planDetails?.Verified === false) {
+              return router.push("/profile-completion");
             } else {
               router.push("/dashboard");
             }

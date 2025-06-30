@@ -31,7 +31,7 @@ const OrderStatusCard: React.FC<
     >
       <span className="sm:block hidden"><Image src={image} height={95} width={85} alt={label} /></span>
       <div className="flex flex-col justify-center text-center md:text-left">
-        <span className={`${color}  text-[16px]   sm:text-[32px] font-bold font-sans`}>{count}</span>
+        {/* <span className={`${color}  text-[16px]   sm:text-[32px] font-bold font-sans`}>{count}</span> */}
         <div className="text-[10px] sm:text-[16px] font-semibold">{label}</div>
       </div>
     </div>
