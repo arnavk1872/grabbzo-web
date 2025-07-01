@@ -17,13 +17,13 @@ const MetricCard = dynamic(() => import("@/components/Dashboard/MetricCard"), {
 
 const Dashboard = () => {
 
-  const { planDetails } = usePageStore();
+  const { walletDetails } = usePageStore();
 
   return (
     <section className="lg:pr-10 overflow-x-hidden">
       <div className="md:flex md:gap-x-4">
         {" "}
-        <SalesOverview planDetails={planDetails} />
+        <SalesOverview planDetails={walletDetails} />
         <Feedback />
       </div>
       <div className="md:flex py-4 md:gap-x-4 ">
@@ -47,7 +47,7 @@ const Dashboard = () => {
       <div className="md:flex md:justify-between  pb-4 px-4 md:gap-x-4">
         {" "}
         <div className={`transition-all duration-300`}>
-          <PeakHoursChart planDetails={planDetails} />
+          <PeakHoursChart planDetails={walletDetails} />
         </div>
         <RecentOrders />
       </div>
