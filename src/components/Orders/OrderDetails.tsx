@@ -106,6 +106,14 @@ const OrderDetails = ({
                   autoHideDuration: 3000 
                 });
                 setViewButton("preparing");
+                
+                // Dispatch order status update event to stop notification sound
+                window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
+                  detail: {
+                    orderId: parseInt(String(slug)),
+                    status: 'PREPARING'
+                  }
+                }));
               }
             } catch (error) {
               console.error("Error accepting order:", error);
@@ -133,6 +141,14 @@ const OrderDetails = ({
                 autoHideDuration: 3000 
               });
               setViewButton("ready");
+              
+              // Dispatch order status update event
+              window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
+                detail: {
+                  orderId: parseInt(String(slug)),
+                  status: 'READY'
+                }
+              }));
             } catch (error) {
               console.error("Error marking order as ready:", error);
               enqueueSnackbar("Failed to mark order as ready. Please try again.", { 
@@ -159,6 +175,14 @@ const OrderDetails = ({
                 autoHideDuration: 3000 
               });
               setViewButton("completed");
+              
+              // Dispatch order status update event
+              window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
+                detail: {
+                  orderId: parseInt(String(slug)),
+                  status: 'COMPLETED'
+                }
+              }));
             } catch (error) {
               console.error("Error completing order:", error);
               enqueueSnackbar("Failed to complete order. Please try again.", { 
@@ -258,6 +282,15 @@ const OrderDetails = ({
                     });
                     setShowRejectDialog(false);
                     setRejectionReason("");
+                    
+                    // Dispatch order status update event to stop notification sound
+                    window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
+                      detail: {
+                        orderId: parseInt(String(slug)),
+                        status: 'REJECTED'
+                      }
+                    }));
+                    
                     router.push("/dashboard/orders");
                   }
                 } catch (error) {

@@ -1,32 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useSnackbar } from "notistack";
+import Link from "next/link";
 import { S3_BASE_URL } from "@/lib/constants";
 
 const AppleStoreButton = () => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const handleClick = () => {
-    enqueueSnackbar("Coming to iOS soon!", {
-      variant: "info",
-      className: "font-poppins",
-    });
-  };
-
   return (
-    <button 
-      className="cursor-pointer " 
-      onClick={handleClick}
-      type="button"
+    <Link 
+      href="https://apps.apple.com/ca/app/grabbzo/id6748091093"
+      target="_blank"
+      className="cursor-pointer transform hover:scale-105 transition-transform duration-200 mt-[10px]"
     >
       <Image
         src={`${S3_BASE_URL}/public/app_store.png`}
         height={145}
         width={145}
-        alt="Grabbzo logo"
+        alt="Download Grabbzo on the App Store"
       />
-    </button>
+    </Link>
   );
 };
 

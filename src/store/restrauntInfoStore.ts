@@ -42,8 +42,8 @@ const useRestaurantInfoStore = create<RestaurantInfoState>((set, get) => ({
     city: "",
     pinCode: "",
     landmark: "",
-    latitude: "28.632136674970926",
-    longitude: "77.21846936089494",
+    latitude: "",
+    longitude: "",
     primaryMobileNo:"",
   },
   setBasicDetailsData: (field, value) => {

@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useOrderStore } from "@/store/OrderStore";
 import { getOrders } from "@/helpers/api-utils";
+import { useGlobalAudio } from "@/helpers/useGlobalAudio";
 import OrderTable from "./OrderTable";
 import NoNewOrders from "./NoNewOrders";
 import NoPreparingOrders from "./NoPreparingOrders";
@@ -53,7 +54,80 @@ const RealTimeOrders: React.FC<RealTimeOrdersProps> = ({
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [loading, setLoading] = useState(false);
   const [stompOrders, setStompOrders] = useState<any[]>([]);
+  const [notificationAudio, setNotificationAudio] = useState<HTMLAudioElement | null>(null);
+  const [pendingNotification, setPendingNotification] = useState(false);
+  const { audioUnlocked } = useGlobalAudio();
   const pageSize = 10;
+
+  // Use refs to store the latest store functions
+  const addNewOrderRef = useRef(addNewOrder);
+  const removeOrderRef = useRef(removeOrder);
+  const updateOrderStatusRef = useRef(updateOrderStatus);
+  const stopNotificationSoundRef = useRef<() => void>();
+
+  // Update refs when store functions change
+  useEffect(() => {
+    addNewOrderRef.current = addNewOrder;
+    removeOrderRef.current = removeOrder;
+    updateOrderStatusRef.current = updateOrderStatus;
+  }, [addNewOrder, removeOrder, updateOrderStatus]);
+
+  // Unlock audio on any user interaction
+  useEffect(() => {
+    let isUnlocking = false;
+    
+    const unlockAudio = async () => {
+      if (audioUnlocked || isUnlocking) return;
+      isUnlocking = true;
+      
+      try {
+        // Create a very short audio to unlock the audio context
+        const audio = new Audio();
+        audio.src = 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYIJHfH8N2QQAoUXrTp66hVFApGn+DyvmUdCG+LwpJ8QjsAIYTJ8tOIOwYXZLnt6qBUEwk+n+Hqwm8fBjGN0fzOUyYI';
+        
+        // Set volume to nearly silent but not zero (some browsers require actual audio)
+        audio.volume = 0.01;
+        
+        // Play and immediately pause to unlock
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          audio.pause();
+        }
+      
+        
+        // Remove all event listeners after successful unlock
+        unlockEvents.forEach(event => {
+          document.removeEventListener(event, handleUserInteraction, true);
+        });
+        
+      } catch (error) {
+        console.log('Audio unlock attempt failed:', error);
+        isUnlocking = false;
+      }
+    };
+
+    // List of events that can unlock audio
+    const unlockEvents = ['mousedown', 'mouseup', 'click', 'touchstart', 'touchend', 'keydown', 'keyup'];
+    
+    const handleUserInteraction = (e: Event) => {
+      unlockAudio();
+    };
+
+    // Add listeners for user interaction if not already unlocked
+    if (!audioUnlocked) {
+      unlockEvents.forEach(event => {
+        document.addEventListener(event, handleUserInteraction, { capture: true, once: false });
+      });
+    }
+
+    return () => {
+      // Cleanup listeners
+      unlockEvents.forEach(event => {
+        document.removeEventListener(event, handleUserInteraction, true);
+      });
+    };
+  }, [audioUnlocked]);
 
   // Initialize API orders on component mount
   useEffect(() => {
@@ -126,6 +200,69 @@ const RealTimeOrders: React.FC<RealTimeOrdersProps> = ({
     }
   }, [currentPage, initialPage, orderType]);
 
+  // Function to play notification sound on loop
+  const playNotificationSound = () => {
+
+    if (!audioUnlocked) {
+      console.log('Audio not unlocked yet, setting pending notification');
+      setPendingNotification(true);
+      return;
+    }
+
+    // Clear pending notification since we're about to play
+    setPendingNotification(false);
+
+    try {
+      // Stop any currently playing notification
+      if (notificationAudio) {
+        notificationAudio.pause();
+        notificationAudio.currentTime = 0;
+      }
+
+      // Create new audio element
+      const audio = new Audio('/new_order.mp3');
+      audio.loop = true;
+      audio.volume = 0.7;
+    
+      
+      // Play the audio
+      audio.play().then(() => {
+        setNotificationAudio(audio);
+      }).catch(error => {
+        console.log('Could not play notification sound:', error);
+        // If audio fails, try to unlock again on next interaction
+
+      });
+      
+    } catch (error) {
+      console.log('Could not play notification sound:', error);
+    }
+  };
+
+  // Play pending notification when audio gets unlocked
+  useEffect(() => {
+    if (audioUnlocked && pendingNotification && orderType === "NEW") {
+      console.log('Audio unlocked, playing pending notification');
+      playNotificationSound();
+    }
+  }, [audioUnlocked, pendingNotification, orderType]);
+
+  // Function to stop notification sound
+  const stopNotificationSound = () => {
+    console.log('Stopping notification sound...', notificationAudio);
+    if (notificationAudio) {
+      notificationAudio.pause();
+      notificationAudio.currentTime = 0;
+      setNotificationAudio(null);
+    }
+    setPendingNotification(false); // Also clear any pending notifications
+  };
+
+  // Update the stop function ref whenever the function changes
+  useEffect(() => {
+    stopNotificationSoundRef.current = stopNotificationSound;
+  }, [notificationAudio, pendingNotification]);
+
   // Listen for new orders from stomp connection
   useEffect(() => {
     const handleNewOrder = (event: any) => {
@@ -143,7 +280,12 @@ const RealTimeOrders: React.FC<RealTimeOrdersProps> = ({
         type: orderData?.order?.type 
       };
       
-      addNewOrder(formattedOrder);
+      addNewOrderRef.current(formattedOrder);
+      
+      // Play notification sound only for NEW orders page and when it's actually a new order
+      if (orderType === "NEW" && formattedOrder.status === "NEW") {
+        playNotificationSound();
+      }
     };
 
     const handleStatusUpdate = (event: any) => {
@@ -151,11 +293,14 @@ const RealTimeOrders: React.FC<RealTimeOrdersProps> = ({
       console.log('Received status update:', statusData);
       
       if (statusData.orderId && statusData.status) {
-        updateOrderStatus(statusData.orderId, statusData.status);
+        updateOrderStatusRef.current(statusData.orderId, statusData.status);
         
-        // If order status changed from NEW, remove it from new orders
+        // If order status changed from NEW, remove it from new orders and stop notification
         if (statusData.status !== "NEW") {
-          removeOrder(statusData.orderId);
+          removeOrderRef.current(statusData.orderId);
+          if (stopNotificationSoundRef.current) {
+            stopNotificationSoundRef.current();
+          }
         }
       }
     };
@@ -167,7 +312,27 @@ const RealTimeOrders: React.FC<RealTimeOrdersProps> = ({
       window.removeEventListener('newOrder', handleNewOrder);
       window.removeEventListener('orderStatusUpdate', handleStatusUpdate);
     };
-  }, [addNewOrder, updateOrderStatus, removeOrder]);
+  }, [orderType]);
+
+  // Cleanup notification sound when component unmounts or order type changes
+  useEffect(() => {
+    return () => {
+      if (stopNotificationSoundRef.current) {
+        stopNotificationSoundRef.current();
+      }
+    };
+  }, [orderType]);
+
+  // Also cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (notificationAudio) {
+        notificationAudio.pause();
+        notificationAudio.currentTime = 0;
+        setNotificationAudio(null);
+      }
+    };
+  }, [notificationAudio]);
 
   // Function to render appropriate "no orders" component based on orderType
   const renderNoOrdersComponent = () => {

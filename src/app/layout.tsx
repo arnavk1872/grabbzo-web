@@ -3,6 +3,7 @@ import "./globals.css";
 import CustomSnackbarProvider from "@/components/NotistackProvider";
 import Script from "next/script";
 import SchemaScript from "@/components/SchemaScript";
+import { GlobalAudioUnlocker } from "@/helpers/useGlobalAudio";
 
 export const metadata: Metadata = {
   title: "Grabbzo",
@@ -48,6 +49,7 @@ export default function RootLayout({
         src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=XTdBfH"
       ></Script>
       <body className="bg-bgGray">
+        <GlobalAudioUnlocker />
         <CustomSnackbarProvider>{children}</CustomSnackbarProvider>
       </body>
     </html>
