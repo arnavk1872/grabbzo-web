@@ -17,7 +17,7 @@ export default function DownloadAppSection() {
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
             Enjoy hassle‑free online ordering—<br className="hidden sm:inline" />
-            exclusively on the Grabzzo app.
+            exclusively on the Grabbzo app.
           </p>
 
           {/* STORE BADGES */}
