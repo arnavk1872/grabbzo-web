@@ -40,7 +40,7 @@ const MenuPage = () => {
   }, []);
 
   useEffect(
-    () => setMenuDetailsData("cuisineId", selectedCuisines),
+    () => setMenuDetailsData("cuisineIds", selectedCuisines),
     [selectedCuisines]
   );
 
@@ -66,8 +66,11 @@ const MenuPage = () => {
   };
 
   useEffect(() => {
-    if (canNavigateTo(lastSegment)) {
-      setCurrentPage(lastSegment);
+    // Extract the page name from the pathname (e.g., "menu" from "/details/menu")
+    const pageName = lastSegment;
+    
+    if (canNavigateTo(pageName)) {
+      setCurrentPage(pageName);
     } else {
       // Otherwise, block navigation and redirect back to currentPage
       router.push(`/details/${currentPage.page}`);

@@ -17,7 +17,7 @@ export default function DownloadAppSection() {
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
             Enjoy hassle‑free online ordering—<br className="hidden sm:inline" />
-            exclusively on the Grabzzo app.
+            exclusively on the Grabbzo app.
           </p>
 
           {/* STORE BADGES */}
@@ -38,20 +38,59 @@ export default function DownloadAppSection() {
 
         {/* PHONE MOCKUP */}
         <div className="flex justify-center md:justify-end">
-          <Card className="w-72 h-[500px] rounded-3xl shadow-lg relative overflow-hidden">
-            {/* Screen */}
-            <CardContent className="flex flex-col items-center pt-16 px-4">
-              <p className="text-center text-sm font-semibold text-muted-foreground mb-4">
-                Scan the QR and<br />download the app
-              </p>
-              {/* QR Placeholder */}
-              <div className="w-45 h-45 border border-dashed border-gray-300 rounded-lg flex mx-2 items-center justify-center">
-                <Image src={qrcode} height={220} width={220} alt="Grabbzo QR Code"/>
+          <div className="relative">
+            {/* Phone Frame */}
+            <div className="relative w-72 h-[550px] rounded-[3rem] bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 p-2 shadow-2xl">
+              {/* Screen Bezel */}
+              <div className="w-full h-full rounded-[2.5rem] bg-gradient-to-b from-gray-100 to-gray-200 p-1">
+                {/* Screen Content */}
+                <div className="w-full h-full rounded-[2.3rem] bg-white overflow-hidden relative">
+                  {/* Dynamic Island */}
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full flex items-center justify-center">
+                    <div className="flex items-center gap-1">
+                      
+                    </div>
+                  </div>
+                  
+                  {/* Main Content */}
+                  <div className="pt-8 px-6 pb-6 h-full flex flex-col">
+                    <div className="flex-1 flex flex-col items-center justify-center">
+                      <div className="text-center mb-6">
+                        
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          Scan to download<br />the <b>Grabbzo </b>app
+                        </p>
+                      </div>
+                      
+                      {/* QR Code Container */}
+                      <div className="relative">
+                       
+                          <div className="w-full h-full bg-white rounded-xl p-3 shadow-inner">
+                            <Image 
+                              src={qrcode} 
+                              height={180} 
+                              width={180} 
+                              alt="Grabbzo QR Code"
+                              className="rounded-lg"
+                            />
+                          </div>
+                        
+                      </div>
+                      
+                      <div className="mt-6 text-center">
+                        <p className="text-xs text-gray-500 font-medium">
+                          Available on iOS & Android
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </CardContent>
-            {/* Camera Notch */}
-            <span className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-1 rounded-full bg-gray-300" />
-          </Card>
+              
+              {/* Side Button */}
+              <div className="absolute top-20 -right-1 w-1 h-8 bg-gray-900 rounded-full"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

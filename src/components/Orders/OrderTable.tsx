@@ -51,7 +51,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
           <tr className="flex justify-between rounded-[24px] px-4 py-2 m-2">
             <th className="flex-1 text-center">Order ID</th>
             <th className="flex-1 text-center xl:block hidden">Date</th>
-            {/* <th className="flex-1 text-center"> Name</th> */}
+            <th className="flex-1 text-center"> Arriving Time</th>
             <th className="flex-1 text-center xl:block hidden">ETA</th>
             <th className="flex-1 text-center">Amount</th>
             <th className="flex-1 text-center">Order Type</th>
@@ -73,7 +73,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
               <td className="flex-1 text-center xl:block hidden">
                 {formatDate(order.createdAt)}
               </td>
-              {/* <td className="flex-1 text-center">{order.customerName}</td> */}
+              <td className="flex-1 text-center">{formatDate(order.customerArrivingTime)}</td>
               <td className="flex-1 text-center xl:block hidden">
                 {formatDate(order.customerArrivingTime)}
               </td>
@@ -101,10 +101,10 @@ const OrderTable: React.FC<OrderTableProps> = ({ orderDetails }) => {
                 <span
                   className={`rounded-full text-white text-sm min-w-[100px] inline-block ${
                     order.status.toLowerCase() === "ready"
-                      ? "bg-LightGreen px-3 py-1"
-                      : order.status.toLowerCase() === "cancelled"
-                      ? "bg-Red px-3 py-1"
-                      : order.status.toLowerCase() === "pickup"
+                      ? "bg-purple-500 px-3 py-1"
+                      : order.status.toLowerCase() === "completed"
+                      ? "bg-green-500 px-3 py-1"
+                      : order.status.toLowerCase() === "new"
                       ? "bg-Orange px-3 py-1"
                       : "bg-Purple px-3 py-1"
                   }`}
