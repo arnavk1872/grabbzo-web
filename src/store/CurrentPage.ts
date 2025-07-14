@@ -23,7 +23,7 @@ export const usePageStore = create<PageState>((set, get) => ({
   currentPage: {
     page: "information",
   },
-  pageHistory: ["information"], 
+  pageHistory: ["information"], // Start with information page
 
   setCurrentPage: (value: string) => {
     const { pageHistory } = get();
@@ -42,8 +42,9 @@ export const usePageStore = create<PageState>((set, get) => ({
   },
 
   canNavigateTo: (value: string) => {
-    const { pageHistory } = get();
-    return pageHistory.includes(value);
+    const { pageHistory, currentPage } = get();
+    // Allow navigation to any page in history OR to the current page
+    return pageHistory.includes(value) || currentPage.page === value;
   },
 
   Franchise: false,

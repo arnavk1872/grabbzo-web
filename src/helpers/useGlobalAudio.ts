@@ -45,7 +45,6 @@ export const useGlobalAudio = () => {
       
       globalAudioUnlocked = true;
       localStorage.setItem('globalAudioUnlocked', 'true');
-      console.log('Global audio context unlocked successfully');
       
       // Notify all listeners
       unlockListeners.forEach(listener => listener());
@@ -72,8 +71,7 @@ export const GlobalAudioUnlocker = () => {
     const handleUserInteraction = async (e: Event) => {
       if (isUnlocking || globalAudioUnlocked) return;
       isUnlocking = true;
-      
-      console.log('Global user interaction detected:', e.type);
+   
       const success = await unlockAudio();
       
       if (success) {

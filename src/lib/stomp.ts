@@ -28,15 +28,12 @@ export async function connectStompSocket(): Promise<void> {
 
       // Global order updates
       const orderUpdates: StompSubscription = stompClient!.subscribe(`/topic/orders/${restaurantId}`, (message: IMessage) => {
-        console.log(message, '1', message.body);  
+
         try {
           const orderData = JSON.parse(message.body);
-          console.log('Parsed order data:', orderData);
-          
-          // Add to order store if it's a new order
+
           if (orderData.status === 'NEW') {
-            // Get the store instance - this needs to be done in a component/hook context
-            // For now we'll dispatch a custom event that components can listen to
+
             window.dispatchEvent(new CustomEvent('newOrder', { detail: orderData }));
           }
         } catch (error) {
@@ -46,12 +43,9 @@ export async function connectStompSocket(): Promise<void> {
 
       // Order status updates
       const orderStatusUpdates: StompSubscription = stompClient!.subscribe('/topic/order-status', (message: IMessage) => {
-        console.log(message, '2', message.body);
         try {
           const statusData = JSON.parse(message.body);
-          console.log('Parsed status data:', statusData);
-          
-          // Dispatch status update event
+    
           window.dispatchEvent(new CustomEvent('orderStatusUpdate', { detail: statusData }));
         } catch (error) {
           console.error('Error parsing status data:', error);
