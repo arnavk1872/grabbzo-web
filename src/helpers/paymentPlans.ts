@@ -13,8 +13,8 @@ export const plans: Plan[] = [
   {
     name: "SILVER",
     duration: "1 month",
-    originalCost: "₹599.00",
-    cost: "₹299.00",
+    originalCost: "₹1199.00",
+    cost: "₹599.00",
     features: [
       "Join for ₹10/day",
       "4% commission on pre dine-in orders",
@@ -24,15 +24,15 @@ export const plans: Plan[] = [
       "Order History",
     ],
     buttonBg:
-      "bg-gray-400 hover:bg-gray-800 text-white border border-gray-400 font-semibold rounded-full",
+      "bg-gray-500 hover:bg-gray-800 text-white border border-gray-400 font-semibold rounded-full",
     btnText: "Enjoy 3 months FREE",
     border: "border-borderColor rounded-md mt-8",
   },
   {
     name: "GOLD",
     duration: "3 months",
-    originalCost: "₹1499.00",
-    cost: "₹749.00",
+    originalCost: "₹2999.00",
+    cost: "₹1499.00",
     features: [
       "Join for ₹9/day",
       "3% commission on pre dine-in orders",
@@ -47,8 +47,8 @@ export const plans: Plan[] = [
   {
     name: "DIAMOND",
     duration: "6 months",
-    originalCost: "₹2999.00",
-    cost: "₹1499.00",
+    originalCost: "₹5999.00",
+    cost: "₹2999.00",
     features: [
       "Join for ₹8/day",
       "₹500 ad credits",
@@ -65,8 +65,8 @@ export const plans: Plan[] = [
   {
     name: "PLATINUM",
     duration: "12 months",
-    originalCost: "₹4999.00",
-    cost: "₹2499.00",
+    originalCost: "₹9999.00",
+    cost: "₹4999.00",
     features: [
       "Join for ₹6.5/day",
       "₹750 ad credits",

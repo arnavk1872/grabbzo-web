@@ -18,7 +18,7 @@ const UserBtn: React.FC<UserBtnProps> = ({ orderNumber, date, amount }) => {
         <span className="text-lg font-medium"># {orderNumber}</span>
         <p className="text-sm text-gray-500">{date}</p>
       </div>
-      <p className="text-start font-medium">$ {amount.toFixed(2)}</p>
+      <p className="text-start font-medium">Rs. {amount.toFixed(2)}</p>
     </div>
   );
 };
