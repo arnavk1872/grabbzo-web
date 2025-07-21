@@ -34,10 +34,10 @@ const Footer: React.FC<FooterProps> = ({ isHome }) => {
             <BlueMail /> contact@grabbzo.com
           </Link>
           <Link
-            href="tel:+917889864398"
+            href="tel:+918899314024"
             className="flex gap-2 text-blue-500 items-center underline underline-offset-4 hover:text-blue-700"
           >
-            <BlueMobile /> +91-7889864398
+            <BlueMobile /> +91-8899314024
           </Link>
           <div>
             <h6 className="text-lg font-semibold uppercase underline underline-offset-4 mt-4">
