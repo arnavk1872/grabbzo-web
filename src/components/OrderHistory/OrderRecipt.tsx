@@ -1,88 +1,80 @@
 import React from "react";
-import Item from "./Item";
-import Subtotal from "./Subtotal";
+import { Order } from "../../../types/type";
 
-const OrderRecipt = () => {
-  const OrderBill = {
-    OrderId: 5521,
-    items: [
-      {
-        Item: "Butter Chicken",
-        Additional: "Extra Cream",
-        No: 1,
-        Price: 250,
-      },
-      {
-        Item: "Garlic Naan",
-        Additional: "",
-        No: 5,
-        Price: 150,
-      },
-      {
-        Item: "Gulab Jamun",
-        Additional: "",
-        No: 2,
-        Price: 100,
-      },
-    ],
-    bill: {
-      Subtotal: 500,
-      Gst: 15.21,
-      Platform: 15,
-    },
-    Total: 530.21,
-    type: {
-      OrderType: "Takeaway",
-      CustomerName: "Harsh Ghai",
-      Email: "harshghai22@gmail.com",
-      TableNo: "",
-      CarModel: "",
-      CarNumber: "",
-    },
-  };
+interface OrderReceiptProps {
+  order: Order;
+}
+
+const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
+  const item = order.orderItems[0]; 
+
   return (
-    <div className="min-w-full pl-12">
-      <h3 className="text-xl font-semibold">#{OrderBill.OrderId}</h3>
-
-      <h2 className="text-3xl font-semibold mt-10">Orders Details</h2>
-      <div className="mt-12 p-10 bg-blue-50 rounded-3xl">
-        <div className="w-[700px]">
-          {OrderBill.items.map((item, key) => (
-            <Item
-              key={key}
-              Item={item.Item}
-              Additional={item.Additional}
-              No={item.No}
-              Price={item.Price}
-            />
-          ))}
+    
+    <div
+      className="bg-white rounded-lg shadow-md flex flex-col justify-between"
+      style={{
+        minWidth: 400,
+        width: 1050, 
+        height: "100%", 
+        marginLeft: -50,
+        marginTop: 0,
+        borderLeft: "1px solid #eee",
+        borderRadius: "0 8px 8px 0",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+      }}
+    >
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold mb-2">Order #{order.id}</h2>
+        <div className="flex justify-between items-start mb-2">
+          <div>
+            <div className="font-bold text-lg">{item.menuItem.title}</div>
+            <div className="text-sm text-gray-600">Size: N/A</div>
+            <div className="text-sm text-gray-600">Additional Ingredients: None</div>
+            <div className="text-sm text-gray-600">No. of pieces: {item.quantity}</div>
+          </div>
+          <div className="font-bold text-blue-700 text-lg mt-1">
+            ${item.totalItemPrice.toFixed(2)}
+          </div>
         </div>
+        <hr className="my-3" />
         <div>
-          <Subtotal bill={OrderBill.bill} />
+          <div className="flex justify-between text-sm mb-1">
+            <span>Sub Total</span>
+            <span>${order.subtotal.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-sm mb-1">
+            <span>Delivery Charge</span>
+            <span>$1.00</span>
+          </div>
+          <div className="flex justify-between text-sm mb-1">
+            <span>Driver Tip</span>
+            <span>$1.00</span>
+          </div>
+          <div className="flex justify-between text-sm mb-1">
+            <span>Service Fee (9%)</span>
+            <span>$9.00</span>
+          </div>
+          <div className="flex justify-between font-bold text-lg mt-2">
+            <span>Total</span>
+            <span>${(order.subtotal + 1 + 1 + 9).toFixed(2)}</span>
+          </div>
         </div>
-        <div className="flex justify-between items-center pt-5">
-          <h4 className="text-2xl font-medium">Total</h4>
-          <h6 className="text-blue-600 font-bold text-xl">{OrderBill.Total}</h6>
-        </div>
-      </div>
-      <div className="mt-10">
-        <h2 className="text-3xl font-semibold">{OrderBill.type.OrderType}</h2>
-        <div className="my-4 pl-10 py-5 bg-blue-50 rounded-3xl">
-          <p className="text-gray-500">{OrderBill.type.CustomerName}</p>
-          <p className="text-gray-500">{OrderBill.type.Email}</p>
-          {OrderBill.type.CarModel.length > 0 && (
-            <p className="text-gray-500">{OrderBill.type.CarModel}</p>
-          )}
-          {OrderBill.type.CarNumber.length > 0 && (
-            <p className="text-gray-500">{OrderBill.type.CarNumber}</p>
-          )}
-          {OrderBill.type.TableNo.length > 0 && (
-            <p className="text-gray-500">{OrderBill.type.TableNo}</p>
-          )}
+        {order.carDelivery && (
+          <div className="mt-4">
+            <div className="font-semibold mb-2">Car Delivery Info</div>
+            <div className="text-sm"><strong>Model:</strong> {order.carModel}</div>
+            <div className="text-sm"><strong>Number:</strong> {order.carNumber}</div>
+            <div className="text-sm"><strong>Color:</strong> {order.carColor}</div>
+          </div>
+        )}
+        <div className="mt-4 text-sm">
+          <div><strong>Order Note:</strong> {order.orderNote}</div>
+          <div><strong>Created At:</strong> {new Date(order.createdAt).toLocaleString()}</div>
+          <div><strong>OTP:</strong> {order.otp}</div>
         </div>
       </div>
     </div>
   );
 };
 
-export default OrderRecipt;
+export default OrderReceipt;
