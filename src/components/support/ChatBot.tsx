@@ -15,7 +15,7 @@ const fallbackContact = (
   <div className="mt-2 text-sm text-red-600">
     Still need help? Reach out to us:
     <br />
-    📞 <b>+91-8899314024</b>
+    📞 <b>+91-7889864398</b>
     <br />
     📧{" "}
     <Link
