@@ -40,7 +40,7 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
             <div className="text-sm text-gray-600">No. of pieces: {item.quantity}</div>
           </div>
           <div className="font-bold text-blue-700 text-lg mt-1">
-            ${item.totalItemPrice.toFixed(2)}
+            Rs {item.totalItemPrice.toFixed(2)}
           </div>
         </div>
 
@@ -49,15 +49,15 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
         <div>
           <div className="flex justify-between text-sm mb-1">
             <span>Sub Total</span>
-            <span>${order.subtotal.toFixed(2)}</span>
+            <span>Rs {order.subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>Platform Fee</span>
-            <span>${platformfees.toFixed(2)}</span>
+            <span>Rs {platformfees.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>GST</span>
-            <span>${gst.toFixed(2)}</span>
+            <span>Rs {gst.toFixed(2)}</span>
           </div>
           {/* <div className="flex justify-between text-sm mb-1">
             <span>Service Fee</span>
@@ -65,7 +65,7 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
           </div> */}
           <div className="flex justify-between font-bold text-lg mt-2">
             <span>Total</span>
-            <span>${calculatedTotal.toFixed(2)}</span>
+            <span>Rs {calculatedTotal.toFixed(2)}</span>
           </div>
         </div>
 
