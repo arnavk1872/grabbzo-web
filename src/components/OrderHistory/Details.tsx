@@ -1,11 +1,20 @@
 import React from "react";
 import NoDetailsPage from "./NoDetailsPage";
-import OrderRecipt from "./OrderRecipt";
+import OrderReceipt from "./OrderRecipt";
+import { Order } from "../../../types/type";
 
-const Details = () => {
+interface DetailsProps {
+  selectedOrder: Order | null;
+}
+
+const Details: React.FC<DetailsProps> = ({ selectedOrder }) => {
   return (
-    <div className={`${true && "flex justify-center items-center w-full"}`}>
-      {false ? <OrderRecipt /> : <NoDetailsPage />}
+    <div className="flex justify-center items-center w-full">
+      {selectedOrder ? (
+        <OrderReceipt order={selectedOrder} />
+      ) : (
+        <NoDetailsPage />
+      )}
     </div>
   );
 };

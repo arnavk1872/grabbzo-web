@@ -1,15 +1,30 @@
-import Details from "@/components/OrderHistory/Details";
-import Sidebar from "@/components/OrderHistory/Sidebar";
-import React from "react";
+"use client";
 
-const page = () => {
+import React, { useEffect, useState } from "react";
+import Sidebar from "@/components/OrderHistory/Sidebar";
+import Details from "@/components/OrderHistory/Details";
+import { Order } from "../../../types/type";
+import { fetchCompletedOrders } from "@/helpers/orderAction";
+
+const Page = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  useEffect(() => {
+    const getOrders = async () => {
+      const result = await fetchCompletedOrders();
+      setOrders(result);
+    };
+    getOrders();
+  }, []);
+
   return (
     <div className="flex mt-12">
-      <h1 className="hidden">Order History Page</h1>
-      <Sidebar />
-      <Details />
+      <Sidebar orders={orders} setSelectedOrder={setSelectedOrder} />
+      <Details selectedOrder={selectedOrder} />
     </div>
   );
 };
 
-export default page;
+export default Page;
+
