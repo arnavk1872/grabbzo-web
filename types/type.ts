@@ -29,4 +29,5 @@ export interface Order {
   deliveryCharge?: number;
   driverTip?: number;
   serviceFee?: number;
+  gst?: number;
 }

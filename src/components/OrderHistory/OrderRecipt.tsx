@@ -9,11 +9,11 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
   const item = order.orderItems[0];
 
   // Use defaults if values are missing
-  const deliveryCharge = order.deliveryCharge ?? 0;
-  const driverTip = order.driverTip ?? 0;
-  const serviceFee = order.serviceFee ?? 0;
+  const platformfees = order.platformFees ?? 0
+  const gst = order.gst ?? 0
 
-  const calculatedTotal = order.subtotal + deliveryCharge + driverTip + serviceFee;
+
+  const calculatedTotal = order.subtotal + platformfees + gst ;
 
   return (
     <div
@@ -52,17 +52,17 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
             <span>${order.subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
-            <span>Delivery Charge</span>
-            <span>${deliveryCharge.toFixed(2)}</span>
+            <span>Platform Fee</span>
+            <span>${platformfees.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
-            <span>Driver Tip</span>
-            <span>${driverTip.toFixed(2)}</span>
+            <span>GST</span>
+            <span>${gst.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-sm mb-1">
+          {/* <div className="flex justify-between text-sm mb-1">
             <span>Service Fee</span>
             <span>${serviceFee.toFixed(2)}</span>
-          </div>
+          </div> */}
           <div className="flex justify-between font-bold text-lg mt-2">
             <span>Total</span>
             <span>${calculatedTotal.toFixed(2)}</span>
