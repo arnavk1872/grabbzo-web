@@ -6,16 +6,22 @@ interface OrderReceiptProps {
 }
 
 const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
-  const item = order.orderItems[0]; 
+  const item = order.orderItems[0];
+
+  // Use defaults if values are missing
+  const deliveryCharge = order.deliveryCharge ?? 0;
+  const driverTip = order.driverTip ?? 0;
+  const serviceFee = order.serviceFee ?? 0;
+
+  const calculatedTotal = order.subtotal + deliveryCharge + driverTip + serviceFee;
 
   return (
-    
     <div
       className="bg-white rounded-lg shadow-md flex flex-col justify-between"
       style={{
         minWidth: 400,
-        width: 1050, 
-        height: "100%", 
+        width: 1050,
+        height: "100%",
         marginLeft: -50,
         marginTop: 0,
         borderLeft: "1px solid #eee",
@@ -25,6 +31,7 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
     >
       <div className="p-6">
         <h2 className="text-2xl font-semibold mb-2">Order #{order.id}</h2>
+
         <div className="flex justify-between items-start mb-2">
           <div>
             <div className="font-bold text-lg">{item.menuItem.title}</div>
@@ -36,7 +43,9 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
             ${item.totalItemPrice.toFixed(2)}
           </div>
         </div>
+
         <hr className="my-3" />
+
         <div>
           <div className="flex justify-between text-sm mb-1">
             <span>Sub Total</span>
@@ -44,31 +53,33 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>Delivery Charge</span>
-            <span>$1.00</span>
+            <span>${deliveryCharge.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>Driver Tip</span>
-            <span>$1.00</span>
+            <span>${driverTip.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
-            <span>Service Fee (9%)</span>
-            <span>$9.00</span>
+            <span>Service Fee</span>
+            <span>${serviceFee.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-bold text-lg mt-2">
             <span>Total</span>
-            <span>${(order.subtotal + 1 + 1 + 9).toFixed(2)}</span>
+            <span>${calculatedTotal.toFixed(2)}</span>
           </div>
         </div>
+
         {order.carDelivery && (
           <div className="mt-4">
             <div className="font-semibold mb-2">Car Delivery Info</div>
-            <div className="text-sm"><strong>Model:</strong> {order.carModel}</div>
-            <div className="text-sm"><strong>Number:</strong> {order.carNumber}</div>
-            <div className="text-sm"><strong>Color:</strong> {order.carColor}</div>
+            <div className="text-sm"><strong>Model:</strong> {order.carModel || "N/A"}</div>
+            <div className="text-sm"><strong>Number:</strong> {order.carNumber || "N/A"}</div>
+            <div className="text-sm"><strong>Color:</strong> {order.carColor || "N/A"}</div>
           </div>
         )}
+
         <div className="mt-4 text-sm">
-          <div><strong>Order Note:</strong> {order.orderNote}</div>
+          <div><strong>Order Note:</strong> {order.orderNote || "None"}</div>
           <div><strong>Created At:</strong> {new Date(order.createdAt).toLocaleString()}</div>
           <div><strong>OTP:</strong> {order.otp}</div>
         </div>

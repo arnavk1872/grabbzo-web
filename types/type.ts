@@ -26,4 +26,7 @@ export interface Order {
   tableNo?: string;
   orderNote?: string;
   orderItems: OrderItem[];
+  deliveryCharge?: number;
+  driverTip?: number;
+  serviceFee?: number;
 }
