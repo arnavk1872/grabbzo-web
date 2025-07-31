@@ -18,7 +18,6 @@ const Sidebar: React.FC<SidebarProps> = ({ orders, setSelectedOrder }) => {
           <div
             key={order.id}
             onClick={() => setSelectedOrder(order)}
-            className="cursor-pointer hover:bg-gray-100 px-4 py-2 rounded-xl"
           >
             <UserBtn
               orderNumber={order.id}

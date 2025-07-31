@@ -17,7 +17,7 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md flex flex-col justify-between"
+      className="bg-white rounded-lg shadow-md flex flex-col justify-between font-poppins"
       style={{
         minWidth: 400,
         width: 1050,
@@ -35,8 +35,6 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
         <div className="flex justify-between items-start mb-2">
           <div>
             <div className="font-bold text-lg">{item.menuItem.title}</div>
-            <div className="text-sm text-gray-600">Size: N/A</div>
-            <div className="text-sm text-gray-600">Additional Ingredients: None</div>
             <div className="text-sm text-gray-600">No. of pieces: {item.quantity}</div>
           </div>
           <div className="font-bold text-blue-700 text-lg mt-1">
@@ -49,20 +47,16 @@ const OrderReceipt: React.FC<OrderReceiptProps> = ({ order }) => {
         <div>
           <div className="flex justify-between text-sm mb-1">
             <span>Sub Total</span>
-            <span>Rs {order.subtotal.toFixed(2)}</span>
+            <span className="text-blue-700 font-semibold">Rs {order.subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>Platform Fee</span>
-            <span>Rs {platformfees.toFixed(2)}</span>
+            <span className="text-blue-700 font-semibold">Rs {platformfees.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-1">
             <span>GST</span>
-            <span>Rs {gst.toFixed(2)}</span>
+            <span className="text-blue-700 font-semibold">Rs {gst.toFixed(2)}</span>
           </div>
-          {/* <div className="flex justify-between text-sm mb-1">
-            <span>Service Fee</span>
-            <span>${serviceFee.toFixed(2)}</span>
-          </div> */}
           <div className="flex justify-between font-bold text-lg mt-2">
             <span>Total</span>
             <span>Rs {calculatedTotal.toFixed(2)}</span>
