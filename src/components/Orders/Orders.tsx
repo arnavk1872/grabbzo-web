@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { S3_BASE_URL } from "@/lib/constants";
 
@@ -39,11 +39,19 @@ const OrderStatusCard: React.FC<
 };
 
 const Orders: React.FC = () => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
   const router = useRouter();
+  const pathname = usePathname();
 
-  const handleCardClick = (index: number, route: string) => {
-    setSelectedIndex(index);
+  // Determine selected index based on current URL
+  const getSelectedIndex = () => {
+    if (pathname === "/dashboard/orders") return 0; 
+    if (pathname === "/dashboard/orders/preparing") return 1; 
+    if (pathname === "/dashboard/orders/ready") return 2; 
+    if (pathname === "/dashboard/orders/pickedup") return 3; 
+    return 0; 
+  };
+
+  const handleCardClick = (route: string) => {
     router.push(route); 
   };
 
@@ -57,8 +65,8 @@ const Orders: React.FC = () => {
           label={status.label}
           color={status.color}
           route={status.route}
-          isSelected={selectedIndex === index} 
-          onClick={() => handleCardClick(index, status.route)} 
+          isSelected={getSelectedIndex() === index} 
+          onClick={() => handleCardClick(status.route)} 
         />
       ))}
     </div>

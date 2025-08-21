@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Input } from "../UI/Input";
 import { Button } from "../UI/Button";
 import { EditFormSchema } from "./formSchema";
-import { updateRestaurantDetails } from "@/helpers/api-utils";
+import { updateRestaurantDetails, uploadDocuments } from "@/helpers/api-utils";
 import { S3_BASE_URL } from "@/lib/constants";
 import { usePageStore } from "@/store/CurrentPage";
 import { useSnackbar } from "notistack";
@@ -80,6 +80,7 @@ interface ResEditProps {
 
 const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
   const [edit, setEdit] = useState<boolean>(false);
+  const [isImageUploading, setIsImageUploading] = useState(false);
 
   const { Franchise } = usePageStore();
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -114,6 +115,8 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
     },
   });
 
+  console.log(restaurantData, "RESTAURANT DATA",data);
+
   const setEditDetailsData = (key: string, value: any) => {
     setRestaurantData((prev) => ({
       ...prev,
@@ -122,6 +125,66 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
   };
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleImageUpdate = async (newImageUrl: string) => {
+    setEditDetailsData("restaurantImageUrl", newImageUrl);
+    enqueueSnackbar("Restaurant image updated successfully", {
+      variant: "success",
+      className: "font-poppins",
+    });
+  };
+
+  const handleImageClick = () => {
+    if (!edit) return;
+    
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        enqueueSnackbar("Please select an image file", {
+          variant: "warning",
+          className: "font-poppins",
+        });
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        enqueueSnackbar("File size should be less than 5MB", {
+          variant: "warning",
+          className: "font-poppins",
+        });
+        return;
+      }
+
+      setIsImageUploading(true);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("documentType", "image");
+
+        const response = await uploadDocuments(formData);
+
+        if (response?.documentUrl) {
+          await handleImageUpdate(response.documentUrl);
+        }
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        enqueueSnackbar("Failed to upload image. Please try again.", {
+          variant: "error",
+          className: "font-poppins",
+        });
+      } finally {
+        setIsImageUploading(false);
+      }
+    };
+    input.click();
+  };
 
   const validateForm = () => {
     const validationResult = EditFormSchema.safeParse(restaurantData);
@@ -171,14 +234,36 @@ const RestaurantEditPage: React.FC<ResEditProps> = ({ data }) => {
         </Button>
       </div>
       <div className="my-12 md:mx-24 flex gap-10">
-        <div className="h-[450px] w-[650px] md:block hidden">
-          <Image
-            src={`${S3_BASE_URL}/public/settings_sheet_image.jpg`}
-            width={1000}
-            height={1000}
-            alt="Restaurant-Image"
-            className=" rounded-3xl "
-          />
+        <div className="h-[450px] w-[650px] md:block hidden relative">
+          <div className="relative">
+            <Image
+              src={restaurantData.restaurantImageUrl || `${S3_BASE_URL}/public/settings_sheet_image.jpg`}
+              width={1000}
+              height={1000}
+              alt="Restaurant-Image"
+              className="rounded-3xl w-full h-full object-cover"
+            />
+            
+            {/* Edit Icon - Only show when in edit mode */}
+            {edit && (
+              <div className="absolute top-4 right-4">
+                <button
+                  onClick={handleImageClick}
+                  disabled={isImageUploading}
+                  className=" hover:bg-blue-400 text-white p-3 rounded-full transition-colors disabled:opacity-50"
+                  title="Edit Image"
+                >
+                  {isImageUploading ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="w-full">

@@ -13,7 +13,7 @@ const Page = () => {
       <Header/>
       <h1 className="hidden">Pricing Page</h1>
       {/* <Header /> */}
-      <div className="flex flex-col items-center justify-center my-8 font-poppins text-center relative pt-24">
+      <div className="flex flex-col -mt-8 items-center justify-center my-8 font-poppins text-center relative pt-24">
         
         <div className="relative">
           <Crown className="absolute -top-28 -left-28 rotate-[-20deg] max-sm:hidden" />
