@@ -1,5 +1,7 @@
 export const S3_BASE_URL = "https://publicimgbucket.s3.us-east-1.amazonaws.com";
 
+export const serverUrl = process.env.NEXT_PUBLIC_SERVER;
+export const IP = serverUrl === "staging" ? "https://staging.api.grabbzo.com" : "https://api.grabbzo.com";
 
 export const schema = {
   "@context": "https://schema.org",

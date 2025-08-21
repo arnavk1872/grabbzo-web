@@ -1,9 +1,8 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
+import { IP } from "@/lib/constants";
 
-const serverUrl = process.env.NEXT_PUBLIC_SERVER;
-const IP = serverUrl === "staging" ? "https://staging.api.grabbzo.com" : "https://api.grabbzo.com";
 
 export async function decodeJWT(token: string) {
   if (!token) {
