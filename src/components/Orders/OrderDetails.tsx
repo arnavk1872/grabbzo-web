@@ -1,10 +1,9 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../UI/Button";
 import { MoveLeftIcon } from "lucide-react";
-import { changeOrderStatus } from "@/helpers/api-utils";
-import { acceptOrder,rejectOrder } from "@/helpers/api-utils";
+import { changeOrderStatus, acceptOrder, rejectOrder, completeOrder } from "@/helpers/api-utils";
 import { useSnackbar } from "notistack";
 import {
   AlertDialog,
@@ -16,7 +15,20 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../AlertDialog";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../UI/Dialog";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "../UI/InputOtp";
+import { Loader2 } from "lucide-react";
 
 interface OrderDetailsProps {
   orderDetails: any;
@@ -48,6 +60,10 @@ const OrderDetails = ({
   const { slug } = useParams();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const [showOtpDialog, setShowOtpDialog] = useState(false);
+  const [otp, setOtp] = useState<string>("");
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
+
   const buttonConfig = {
     accept: {
       status: "NEW",
@@ -167,29 +183,8 @@ const OrderDetails = ({
           text: "Picked Up",
           className: "bg-yellow-600 hover:bg-yellow-700",
           disabled: false,
-          onClick: async () => {
-            try {
-              await changeOrderStatus("COMPLETED", slug);
-              enqueueSnackbar(`Order #${slug} has been completed successfully`, { 
-                variant: "success",
-                autoHideDuration: 3000 
-              });
-              setViewButton("completed");
-              
-              // Dispatch order status update event
-              window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
-                detail: {
-                  orderId: parseInt(String(slug)),
-                  status: 'COMPLETED'
-                }
-              }));
-            } catch (error) {
-              console.error("Error completing order:", error);
-              enqueueSnackbar("Failed to complete order. Please try again.", { 
-                variant: "error",
-                autoHideDuration: 3000 
-              });
-            }
+          onClick: () => {
+            setShowOtpDialog(true);
           },
         },
       ],
@@ -205,6 +200,53 @@ const OrderDetails = ({
         },
       ],
     },
+  };
+
+  const handleOtpVerification = async () => {
+    if (!otp || otp.length !== 4) {
+      enqueueSnackbar("Please enter a valid 4-digit OTP", {
+        variant: "warning",
+        className: "font-poppins",
+      });
+      return;
+    }
+
+    setIsOtpLoading(true);
+    try {
+      const response = await completeOrder(parseInt(otp), String(slug));
+      if (response && response.statusCode === 200 && response.status === 'success') {
+        enqueueSnackbar(`Order #${slug} has been completed successfully`, { 
+          variant: "success",
+          autoHideDuration: 3000 
+        });
+        setViewButton("completed");
+        setShowOtpDialog(false);
+        setOtp("");
+        
+        // Dispatch order status update event
+        window.dispatchEvent(new CustomEvent('orderStatusUpdate', {
+          detail: {
+            orderId: parseInt(String(slug)),
+            status: 'COMPLETED'
+          }
+        }));
+      }
+    } catch (error) {
+      console.error("Error completing order:", error);
+      enqueueSnackbar("Invalid OTP. Please try again.", { 
+        variant: "error",
+        autoHideDuration: 3000 
+      });
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleOtpVerification();
+    }
   };
 
   return (
@@ -235,6 +277,54 @@ const OrderDetails = ({
           ))}
         </div>
       </section>
+
+      {/* OTP Dialog for Picked Up */}
+      <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
+        <DialogContent className="flex flex-col font-poppins">
+          <DialogHeader>
+            <DialogTitle className="pb-2 text-xl">Enter OTP</DialogTitle>
+            <DialogDescription className="pb-2">
+              4 digit OTP is required to complete the order
+            </DialogDescription>
+          </DialogHeader>
+
+          <InputOTP
+            maxLength={4}
+            value={otp}
+            onChange={(value) => setOtp(value)}
+            onKeyDown={handleKeyDown}
+          >
+            <InputOTPGroup className="flex justify-center space-x-3 w-full">
+              {[...Array(4)].map((_, index) => (
+                <InputOTPSlot
+                  key={index}
+                  index={index}
+                  className={`w-14 h-14 rounded-full text-center focus:outline-gray-500 font-bold text-xl flex items-center justify-center transition-all ${
+                    otp[index] ? "bg-blue-600 text-white" : "bg-gray-100"
+                  }`}
+                />
+              ))}
+            </InputOTPGroup>
+          </InputOTP>
+
+          <DialogFooter className="w-full flex justify-center">
+            <Button
+              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold disabled:opacity-50"
+              onClick={handleOtpVerification}
+              disabled={isOtpLoading}
+            >
+              {isOtpLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Complete Order"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Rejection Confirmation Dialog */}
       <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>

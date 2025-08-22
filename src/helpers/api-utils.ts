@@ -1,8 +1,7 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
-
-const IP = "https://api.grabbzo.com";
+import { IP } from "@/lib/constants";
 
 export async function decodeJWT(token: string) {
   if (!token) {
@@ -111,6 +110,31 @@ export const changeStatus = async (status: boolean) => {
     );
 
     return response.data.status;
+  } catch (error) {
+    console.error("Error changing status:", error);
+    throw error;
+  }
+};
+
+export const completeOrder = async (otp:number,orderId:string) => {
+  const token = await getToken();
+  if (!token) return;
+
+
+  console.log(otp,orderId, "OTP AND ORDER ID");
+  try {
+    const response = await axios.post(
+      `${IP}/orders/status/completed?otp=${otp}&orderId=${orderId}`,
+      {},
+      {
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data, "RESPONSE COMPLETE ORDER");
+    return response.data;
   } catch (error) {
     console.error("Error changing status:", error);
     throw error;

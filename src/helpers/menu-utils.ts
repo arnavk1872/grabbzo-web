@@ -1,8 +1,8 @@
 "use server";
 import axios from "axios";
 import { cookies } from "next/headers";
+import { IP } from "@/lib/constants";
 
-const IP = "https://api.grabbzo.com";
 
 export async function decodeJWT(token: string) {
   if (!token) {

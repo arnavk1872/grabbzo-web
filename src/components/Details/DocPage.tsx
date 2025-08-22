@@ -21,6 +21,7 @@ const DocPage = () => {
   const pathname = usePathname();
   const { currentPage, setCurrentPage,canNavigateTo } = usePageStore();
   const lastSegment: string = pathname.split("/").pop() || "information";
+  
   useEffect(() => {
     if (canNavigateTo(lastSegment)) {
       setCurrentPage(lastSegment);
@@ -110,6 +111,7 @@ const DocPage = () => {
           className="object-contain max-w-full max-h-full"
         />
       </div>
+
       <div className="bg-white rounded-3xl border border-black border-opacity-25 px-5 py-8 flex flex-col gap-8 shadow-xl">
         <div>
           <h3 className="text-zinc-800 text-xl font-extrabold">
