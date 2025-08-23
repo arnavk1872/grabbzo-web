@@ -21,8 +21,10 @@ export interface Order {
   subtotal: number;
   total: number;
   platformFees: number;
+  carDelivery?: boolean;
   carModel?: string;
   carNumber?: string;
+  carColor?: string;
   tableNo?: string;
   orderNote?: string;
   orderItems: OrderItem[];
@@ -30,4 +32,5 @@ export interface Order {
   driverTip?: number;
   serviceFee?: number;
   gst?: number;
+  otp?: string;
 }
